@@ -19,6 +19,18 @@
   --color-primary-800: #5e0114;
   --color-primary-900: #4e0111;
 
+  /* == PRIMARY SYSTEM COLORS (2026 — ungu, sesuai Figma) == */
+  --color-primary-light: #ede8f0;
+  --color-primary-light-hover: #e4dde9;
+  --color-primary-light-active: #c7b9d2;
+  --color-primary-normal: #491d6d;
+  --color-primary-normal-hover: #421a62;
+  --color-primary-normal-active: #3a1757;
+  --color-primary-dark: #371652;
+  --color-primary-dark-hover: #2c1141;
+  --color-primary-dark-active: #210d31;
+  --color-primary-darker: #1a0a26;
+
   /* == Secondary Colors == */
   --color-secondary-100: #faf9f6;
   --color-secondary-200: #f7f4f0;
@@ -29,6 +41,18 @@
   --color-secondary-700: #c0baaf;
   --color-secondary-800: #9a958c;
   --color-secondary-900: #747069;
+
+  /* == SECONDARY SYSTEM COLORS (2026 — crimson, sesuai Figma) == */
+  --color-secondary-light: #f8e9ee;
+  --color-secondary-light-hover: #f5dde5;
+  --color-secondary-light-active: #ebb9c9;
+  --color-secondary-normal: #bd1e51;
+  --color-secondary-normal-hover: #aa1b49;
+  --color-secondary-normal-active: #971841;
+  --color-secondary-dark: #8e173d;
+  --color-secondary-dark-hover: #711231;
+  --color-secondary-dark-active: #550d24;
+  --color-secondary-darker: #420b1c;
 
   /* == Default Colors == */
   --color-default-dark: #383838;
@@ -63,6 +87,18 @@
   --color-black-dark-active: #03040e;
   --color-black-darker: #02030b;
 
+  /* == NEUTRAL SYSTEM COLORS (2026, sesuai Figma) == */
+  --color-neutral-light: #e8e7ea;
+  --color-neutral-light-hover: #dddae0;
+  --color-neutral-light-active: #b8b3be;
+  --color-neutral-normal: #1a0b2e;
+  --color-neutral-normal-hover: #170a29;
+  --color-neutral-normal-active: #150925;
+  --color-neutral-dark: #140823;
+  --color-neutral-dark-hover: #10071c;
+  --color-neutral-dark-active: #0c0515;
+  --color-neutral-darker: #090410;
+
   /* == BLUE SYSTEM COLORS == */
   --color-blue-light: #e8ebf5;
   --color-blue-light-hover: #dce1f0;
@@ -88,16 +124,16 @@
   --color-green-darker: #204504;
 
   /* == ORANGE SYSTEM COLORS == */
-  --color-orange-light: #fcede6;
-  --color-orange-light-hover: #fae4d9;
-  --color-orange-light-active: #f4c7b1;
-  --color-orange-normal: #dc4a03;
-  --color-orange-normal-hover: #c64303;
-  --color-orange-normal-active: #b03b02;
-  --color-orange-dark: #a53802;
-  --color-orange-dark-hover: #842c02;
-  --color-orange-dark-active: #632101;
-  --color-orange-darker: #4d1a01;
+  --color-orange-light: #ffeded;
+  --color-orange-light-hover: #ffe4e4;
+  --color-orange-light-active: #ffc8c8;
+  --color-orange-normal: #ff4d4d;
+  --color-orange-normal-hover: #e64545;
+  --color-orange-normal-active: #cc3e3e;
+  --color-orange-dark: #bf3a3a;
+  --color-orange-dark-hover: #992e2e;
+  --color-orange-dark-active: #732323;
+  --color-orange-darker: #591b1b;
 
   /* == PINK SYSTEM COLORS == */
   --color-pink-light: #ffecf6;
@@ -124,16 +160,16 @@
   --color-violet-darker: #1b124a;
 
   /* == YELLOW SYSTEM COLORS == */
-  --color-yellow-light: #fff7e6;
-  --color-yellow-light-hover: #fff3d9;
-  --color-yellow-light-active: #fee7b0;
-  --color-yellow-normal: #fcb200;
-  --color-yellow-normal-hover: #e3a000;
-  --color-yellow-normal-active: #ca8e00;
-  --color-yellow-dark: #bd8600;
-  --color-yellow-dark-hover: #976b00;
-  --color-yellow-dark-active: #715000;
-  --color-yellow-darker: #583e00;
+  --color-yellow-light: #fff5ec;
+  --color-yellow-light-hover: #fff1e3;
+  --color-yellow-light-active: #ffe1c5;
+  --color-yellow-normal: #ff9f43;
+  --color-yellow-normal-hover: #e68f3c;
+  --color-yellow-normal-active: #cc7f36;
+  --color-yellow-dark: #bf7732;
+  --color-yellow-dark-hover: #995f28;
+  --color-yellow-dark-active: #73481e;
+  --color-yellow-darker: #593817;
 
   /* Alert Colors */
   --color-danger: #ea3333;
