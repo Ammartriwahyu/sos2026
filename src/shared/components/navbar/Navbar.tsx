@@ -7,7 +7,7 @@ import { Button } from "../ui/Button";
 import { Sling as Hamburger } from "hamburger-react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import Image from "next/image";
-import LogoSoS from "@/assets/logo-sos.svg";
+import LogoSoS from "@/assets/assetsos26/logo-sos26.svg";
 import { useAuthContext } from "@/shared/hooks/useAuthContext";
 import NavbarDropdown from "./NavbarDropdown";
 import { authService } from "@/api/services/auth";
@@ -64,7 +64,7 @@ const Navbar = () => {
   }, [pathname, user]);
   return (
     <>
-      <nav className="w-screen py-2 xl:py-2 2xl:py-4 bg-primary-600 fixed z-[999]">
+      <nav className="w-screen py-2 xl:py-2 2xl:py-4 bg-violet-darker fixed z-[999]">
         <div className="mycontainer w-full h-full flex items-center justify-between">
           <div className="flex-2 md:flex-1 flex justify-start ">
             <Link
@@ -100,7 +100,7 @@ const Navbar = () => {
                 <NavbarDropdown onLogout={handleLogout} user={user} />
               ) : (
                 <Link href="/login">
-                  <Button className="bg-[#F3EFE8] px-5 text-black font-bold py-3 whitespace-nowrap">
+                  <Button className="bg-violet-light-active hover:bg-violet-light-hover px-5 text-black font-bold py-3 whitespace-nowrap">
                     Masuk
                   </Button>
                 </Link>
@@ -109,7 +109,7 @@ const Navbar = () => {
 
             {/* Mobile Menu Button */}
             <div className="lg:hidden">
-              <div className="rounded-xl bg-[#F3EFE8] m-1">
+              <div className="rounded-xl bg-violet-light-active m-1">
                 <Hamburger
                   toggled={isMenuOpen}
                   toggle={setIsMenuOpen}
@@ -125,7 +125,7 @@ const Navbar = () => {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="fixed inset-0 z-50 bg-primary-600 text-white flex flex-col items-center pt-32  lg:hidden"
+            className="fixed inset-0 z-50 bg-violet-darker text-white flex flex-col items-center pt-32  lg:hidden"
             variants={menuVariants}
             initial="hidden"
             animate="visible"
@@ -143,7 +143,7 @@ const Navbar = () => {
                 <NavbarDropdown onLogout={handleLogout} user={user} />
               ) : (
                 <Link href="/login">
-                  <Button className="bg-[#F3EFE8] px-8 text-black font-bold py-3">
+                  <Button className="bg-violet-light-active hover:bg-violet-light-hover px-8 text-black font-bold py-3">
                     Masuk
                   </Button>
                 </Link>

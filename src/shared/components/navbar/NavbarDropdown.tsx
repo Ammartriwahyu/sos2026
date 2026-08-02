@@ -53,12 +53,12 @@ const NavbarDropdown: React.FC<NavbarDropdownProps> = ({ user, onLogout }) => {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-secondary-400 to-secondary-600 text-default-dark font-semibold cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-500 focus-visible:ring-offset-2 px-2 sm:px-4 py-2 sm:py-2.5 rounded-xl hover:from-secondary-500 hover:to-secondary-700 transition-all duration-200 shadow-lg hover:shadow-xl group"
+        className="flex items-center gap-2 sm:gap-3 bg-violet-light-active text-default-dark font-semibold cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-normal focus-visible:ring-offset-2 px-2 sm:px-4 py-2 sm:py-2.5 rounded-xl hover:bg-violet-light-hover transition-all duration-200 shadow-lg hover:shadow-xl group"
         aria-haspopup="true"
         aria-expanded={isOpen}
         aria-controls={dropdownId}
       >
-        <div className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 bg-white/20 rounded-lg">
+        <div className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 bg-white/40 rounded-lg">
           <User className="w-3 h-3 sm:w-4 sm:h-4" />
         </div>
         <span className="block max-w-20 sm:max-w-24 text-sm sm:text-base truncate">
