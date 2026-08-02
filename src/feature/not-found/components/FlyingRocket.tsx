@@ -2,10 +2,6 @@ import Image from "next/image";
 import React from "react";
 import rocket from "@/assets/assetsos26/error/rocket.png";
 
-/**
- * Roket yang melintas dari kiri ke kanan secara berulang, membawa efek cahaya
- * (nf404-glow) di ekornya. Animasi gerak diatur di globals.css (nf404-fly).
- */
 const FlyingRocket = () => {
   return (
     <div className="nf404-rocket-wrap" aria-hidden>

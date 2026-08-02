@@ -1,9 +1,5 @@
 import React from "react";
 
-/**
- * Ombak yang bergerak terus. Tiap ombak di-render 2x berdampingan lalu digeser
- * -50% agar loop mulus. Dipakai di lapisan navy maupun di dalam curtain ungu.
- */
 type Wave = {
   d: string;
   opacity: number;

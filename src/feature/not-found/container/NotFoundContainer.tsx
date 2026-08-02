@@ -9,11 +9,6 @@ import NotFoundText from "../components/NotFoundText";
 import FlyingRocket from "../components/FlyingRocket";
 import { wavePath } from "../waveShape";
 
-/**
- * Halaman 404 — SATU timeline GSAP mengatur roket, ombak (clipPath), dan teks 404
- * dari SATU state bersama, sehingga semuanya tertarik BERBARENGAN.
- * Kecepatan tarik: cepat masuk → MELAMBAT di tengah layar (jeda) → cepat keluar.
- */
 const NotFoundContainer = () => {
   const rootRef = useRef<HTMLElement>(null);
 
@@ -33,12 +28,10 @@ const NotFoundContainer = () => {
     const tagline = root.querySelector<HTMLElement>(".nf404-tagline");
     const cta = root.querySelector<HTMLElement>(".nf404-cta");
 
-    // state bersama: rx = translateX ekor roket (vw), wp = puncak ombak (fraksi lebar)
     const st = { rx: -18, wp: -0.18 };
     const apply = () => {
       if (rocket) rocket.style.transform = `translateX(${st.rx}vw)`;
       if (wavePathEl) wavePathEl.setAttribute("d", wavePath(st.wp));
-      // 404 mengikuti roket (offset tetap 112vw) → tertarik berbarengan, berhenti di tengah
       if (content)
         content.style.transform = `translateX(${Math.min(0, st.rx - 112)}vw)`;
     };
@@ -63,7 +56,6 @@ const NotFoundContainer = () => {
 
       const tl = gsap.timeline();
 
-      // === FASE TARIK: cepat → melambat di TENGAH (jeda) → cepat keluar ===
       tl.to(
         st,
         {
@@ -75,7 +67,6 @@ const NotFoundContainer = () => {
         },
         0,
       )
-        // segmen tengah lambat = "delay" di tengah layar
         .to(
           st,
           { rx: 64, wp: 0.64, duration: 1.5, ease: "none", onUpdate: apply },
@@ -94,7 +85,6 @@ const NotFoundContainer = () => {
         );
       const pullEnd = 4.1;
 
-      // Huruf "404" bergelombang berjalan (stagger) saat masuk & melewati tengah
       if (chars.length) {
         tl.to(
           chars,
@@ -114,7 +104,6 @@ const NotFoundContainer = () => {
         );
       }
 
-      // === FASE SELESAI: roket keluar & hilang, ombak menutup penuh ===
       tl.to(
         st,
         { rx: 150, duration: 0.9, ease: "power1.in", onUpdate: apply },
@@ -131,7 +120,6 @@ const NotFoundContainer = () => {
           pullEnd + 0.25,
         );
 
-      // 404 mengambang (di elemen anak agar tak bentrok dgn posisi x dari apply)
       tl.to(
         contentFloat,
         {

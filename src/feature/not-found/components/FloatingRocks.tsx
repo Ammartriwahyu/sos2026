@@ -2,11 +2,6 @@ import Image from "next/image";
 import React from "react";
 import rocks from "@/assets/assetsos26/error/rocks.svg";
 
-/**
- * Beberapa batu (rocks.svg dipakai ulang) tersebar seperti pada desain,
- * masing-masing mengambang dengan tempo berbeda agar terasa hidup.
- * Posisi & ukuran memakai persen/vw supaya responsif di semua device.
- */
 type Rock = {
   top: string;
   left: string;
