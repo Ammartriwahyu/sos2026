@@ -29,9 +29,11 @@ const NotFoundContainer = () => {
     const cta = root.querySelector<HTMLElement>(".nf404-cta");
 
     const st = { rx: -18, wp: -0.18 };
+    const t0 = performance.now();
     const apply = () => {
+      const t = (performance.now() - t0) / 1000;
       if (rocket) rocket.style.transform = `translateX(${st.rx}vw)`;
-      if (wavePathEl) wavePathEl.setAttribute("d", wavePath(st.wp));
+      if (wavePathEl) wavePathEl.setAttribute("d", wavePath(st.wp, t));
       if (content)
         content.style.transform = `translateX(${Math.min(0, st.rx - 112)}vw)`;
     };
