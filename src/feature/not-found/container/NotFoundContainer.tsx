@@ -35,9 +35,11 @@ const NotFoundContainer = () => {
 
     // state bersama: rx = translateX ekor roket (vw), wp = puncak ombak (fraksi lebar)
     const st = { rx: -18, wp: -0.18 };
+    const t0 = performance.now();
     const apply = () => {
+      const t = (performance.now() - t0) / 1000; // fase waktu → ombak beriak
       if (rocket) rocket.style.transform = `translateX(${st.rx}vw)`;
-      if (wavePathEl) wavePathEl.setAttribute("d", wavePath(st.wp));
+      if (wavePathEl) wavePathEl.setAttribute("d", wavePath(st.wp, t));
       // 404 mengikuti roket (offset tetap 112vw) → tertarik berbarengan, berhenti di tengah
       if (content)
         content.style.transform = `translateX(${Math.min(0, st.rx - 112)}vw)`;
