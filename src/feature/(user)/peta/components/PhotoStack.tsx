@@ -14,10 +14,6 @@ type Slot = { xPercent: number; yPercent: number; rotate: number; z: number };
 const FRONT: Slot = { xPercent: 0, yPercent: 0, rotate: -5, z: 20 };
 const BACK: Slot = { xPercent: 24, yPercent: 28, rotate: 8, z: 10 };
 
-/**
- * Dua foto bertumpuk seperti kartu. Klik foto mana pun → tumpukan bertukar:
- * kartu yang maju sedikit terangkat lalu berpindah ke depan. Responsif untuk mobile.
- */
 const PhotoStack = ({ photos, alt = "Dokumentasi" }: PhotoStackProps) => {
   const cardsRef = useRef<Array<HTMLButtonElement | null>>([]);
   const topRef = useRef(0);
@@ -46,7 +42,6 @@ const PhotoStack = ({ photos, alt = "Dokumentasi" }: PhotoStackProps) => {
     const reduce = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    // posisi awal tumpukan (tanpa animasi)
     if (reduce) {
       cardsRef.current.forEach((el, i) => {
         if (el) gsap.set(el, { ...(i === 0 ? FRONT : BACK) });
@@ -55,8 +50,6 @@ const PhotoStack = ({ photos, alt = "Dokumentasi" }: PhotoStackProps) => {
     layout(false);
   }, [layout]);
 
-  // Klik kartu mana pun menukar tumpukan: kalau kartu yang diklik sudah di depan,
-  // kartu berikutnya yang dimajukan (jadi klik selalu memicu animasi & selalu bisa).
   const shuffle = (clicked: number) => {
     if (animatingRef.current) return;
     const n = cardsRef.current.length;
@@ -72,7 +65,6 @@ const PhotoStack = ({ photos, alt = "Dokumentasi" }: PhotoStackProps) => {
           animatingRef.current = false;
         },
       })
-      // angkat kartu yang akan maju ke depan
       .set(rising, { zIndex: 30 })
       .to(rising, {
         yPercent: BACK.yPercent - 26,
@@ -80,7 +72,6 @@ const PhotoStack = ({ photos, alt = "Dokumentasi" }: PhotoStackProps) => {
         duration: 0.22,
         ease: "power2.out",
       })
-      // tukar tumpukan
       .add(() => {
         topRef.current = newTop;
       })

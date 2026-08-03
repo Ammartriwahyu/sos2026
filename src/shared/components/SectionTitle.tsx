@@ -6,19 +6,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/shared/utils/cn";
 
 interface SectionTitleProps {
-  /** Teks judul — cukup ganti ini untuk memakai di halaman lain. */
   children: React.ReactNode;
   className?: string;
 }
 
-/**
- * Judul section reusable berbentuk banner selebar penuh: gradient lavender lembut
- * dengan garis tipis di atas & bawah, teks di tengah, dan pencahayaan di belakang.
- * Saat masuk viewport: banner memudar-masuk, garis melebar dari tengah, teks + glow
- * muncul.
- *
- * Pemakaian: <SectionTitle>Rangkaian</SectionTitle>
- */
 const SectionTitle = ({ children, className }: SectionTitleProps) => {
   const rootRef = useRef<HTMLDivElement>(null);
 

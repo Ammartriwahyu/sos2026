@@ -36,7 +36,6 @@ const FlashbackCarousel = ({ photos }: { photos: StaticImageData[] }) => {
     };
   }, [startAutoplay]);
 
-  // navigasi manual → reset timer autoplay
   const navigate = (dir: number) => {
     go(dir);
     startAutoplay();

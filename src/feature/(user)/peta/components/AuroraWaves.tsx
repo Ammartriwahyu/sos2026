@@ -12,14 +12,11 @@ type Ribbon = {
   reverse?: boolean;
 };
 
-// Pita aurora dengan lekukan dalam yang undulasi horizontal
-// (bukan ombak yang menumpuk di bawah).
 const BAND_A =
   "M0,110 C220,10 460,210 720,110 C980,10 1220,210 1440,110 L1440,205 C1220,300 980,110 720,205 C460,300 220,110 0,205 Z";
 const BAND_B =
   "M0,145 C260,25 500,255 720,145 C940,25 1180,255 1440,145 L1440,235 C1180,300 940,130 720,235 C500,300 260,130 0,235 Z";
 
-// Warna --color-bg-secondary (#ECE5DB) yang ditransparankan.
 const RIBBONS: Ribbon[] = [
   {
     top: "6%",

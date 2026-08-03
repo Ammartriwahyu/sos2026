@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 import Grass from "@/assets/assetsos26/shared/grass.svg";
 
-/** Rumput ungu pemisah antara section Rangkaian dan Flashback. */
 const GrassDivider = () => {
   return (
     <div

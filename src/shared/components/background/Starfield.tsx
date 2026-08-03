@@ -11,8 +11,6 @@ interface StarConfig {
   delay: number;
 }
 
-// Posisi ditetapkan manual (bukan random) agar tidak terjadi hydration mismatch
-// dan tetap konsisten antar-render.
 const STARS: StarConfig[] = [
   { top: "8%", left: "6%", size: 16, floatDur: 6.5, twDur: 3.2, delay: 0 },
   { top: "14%", left: "88%", size: 12, floatDur: 5.5, twDur: 3.8, delay: 0.6 },
@@ -30,7 +28,6 @@ const STARS: StarConfig[] = [
   { top: "90%", left: "26%", size: 16, floatDur: 5.9, twDur: 4.1, delay: 1.0 },
 ];
 
-/** Bintang (star.svg) tersebar yang mengambang & berkelap-kelip. */
 const Starfield = () => {
   return (
     <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>

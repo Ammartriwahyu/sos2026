@@ -88,7 +88,6 @@ const RangkaianRow = ({ item }: { item: RangkaianItem }) => {
       ref={rootRef}
       className="flex flex-col items-center gap-10 md:flex-row md:items-center md:justify-between md:gap-8"
     >
-      {/* Mobile: foto dulu, lalu teks. Desktop: urutan sesuai reverse. */}
       {reverse ? (
         <>
           <div className="order-1 w-full md:order-1 md:w-[54%]">

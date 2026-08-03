@@ -5,13 +5,10 @@ export interface RangkaianItem {
   id: string;
   title: string;
   description: string;
-  /** Dua foto yang ditumpuk seperti kartu. */
   photos: [StaticImageData, StaticImageData];
-  /** true = teks di kanan, foto di kiri (baris kedua). */
   reverse: boolean;
 }
 
-// NOTE: foto sementara memakai picture-template.webp; ganti saat foto final tersedia.
 export const rangkaianItems: RangkaianItem[] = [
   {
     id: "initiating-the-odyssey",
@@ -31,7 +28,6 @@ export const rangkaianItems: RangkaianItem[] = [
   },
 ];
 
-// Foto untuk carousel "Kilas Dibalik SOS". Ganti saat foto final tersedia.
 export const flashbackPhotos: StaticImageData[] = Array.from(
   { length: 6 },
   () => PictureTemplate,
