@@ -7,6 +7,7 @@ type Ribbon = {
   d: string;
   opacity: number;
   duration: string;
+  bobDuration: string;
   blur: number;
   reverse?: boolean;
 };
@@ -24,7 +25,8 @@ const RIBBONS: Ribbon[] = [
     height: 240,
     d: BAND_A,
     opacity: 0.07,
-    duration: "42s",
+    duration: "18s",
+    bobDuration: "7s",
     blur: 14,
   },
   {
@@ -32,7 +34,8 @@ const RIBBONS: Ribbon[] = [
     height: 280,
     d: BAND_B,
     opacity: 0.055,
-    duration: "58s",
+    duration: "24s",
+    bobDuration: "9s",
     blur: 20,
     reverse: true,
   },
@@ -41,7 +44,8 @@ const RIBBONS: Ribbon[] = [
     height: 250,
     d: BAND_A,
     opacity: 0.05,
-    duration: "50s",
+    duration: "21s",
+    bobDuration: "8s",
     blur: 16,
   },
 ];
@@ -70,6 +74,7 @@ const AuroraWaves = () => {
               viewBox="0 0 1440 300"
               preserveAspectRatio="none"
               xmlns="http://www.w3.org/2000/svg"
+              style={{ "--peta-bob-dur": r.bobDuration } as React.CSSProperties}
             >
               <path
                 d={r.d}
