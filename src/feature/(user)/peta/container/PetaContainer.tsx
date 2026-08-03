@@ -5,7 +5,7 @@ import FlashbackSection from "../components/FlashbackSection";
 
 const PetaContainer = () => {
   return (
-    <main className="peta-rangkaian-bg overflow-x-hidden">
+    <main className="space-bg overflow-x-hidden">
       <RangkaianSection />
       <GrassDivider />
       <FlashbackSection />
