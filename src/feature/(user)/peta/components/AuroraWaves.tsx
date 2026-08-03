@@ -12,41 +12,42 @@ type Ribbon = {
   reverse?: boolean;
 };
 
-// Pita aurora yang undulasi horizontal (bukan ombak yang menumpuk di bawah).
+// Pita aurora dengan lekukan dalam yang undulasi horizontal
+// (bukan ombak yang menumpuk di bawah).
 const BAND_A =
-  "M0,120 C240,50 480,190 720,120 C960,50 1200,190 1440,120 L1440,210 C1200,280 960,140 720,210 C480,280 240,140 0,210 Z";
+  "M0,110 C220,10 460,210 720,110 C980,10 1220,210 1440,110 L1440,205 C1220,300 980,110 720,205 C460,300 220,110 0,205 Z";
 const BAND_B =
-  "M0,150 C300,70 520,230 720,150 C920,70 1140,230 1440,150 L1440,240 C1140,300 920,170 720,240 C520,300 300,170 0,240 Z";
+  "M0,145 C260,25 500,255 720,145 C940,25 1180,255 1440,145 L1440,235 C1180,300 940,130 720,235 C500,300 260,130 0,235 Z";
 
 // Warna --color-bg-secondary (#ECE5DB) yang ditransparankan.
 const RIBBONS: Ribbon[] = [
   {
-    top: "8%",
-    height: 240,
+    top: "6%",
+    height: 260,
     d: BAND_A,
-    opacity: 0.07,
-    duration: "18s",
-    bobDuration: "7s",
-    blur: 14,
+    opacity: 0.09,
+    duration: "13s",
+    bobDuration: "5s",
+    blur: 12,
   },
   {
-    top: "34%",
-    height: 280,
+    top: "32%",
+    height: 300,
     d: BAND_B,
-    opacity: 0.055,
-    duration: "24s",
-    bobDuration: "9s",
-    blur: 20,
+    opacity: 0.07,
+    duration: "17s",
+    bobDuration: "6s",
+    blur: 18,
     reverse: true,
   },
   {
-    top: "56%",
-    height: 250,
+    top: "54%",
+    height: 270,
     d: BAND_A,
-    opacity: 0.05,
-    duration: "21s",
-    bobDuration: "8s",
-    blur: 16,
+    opacity: 0.06,
+    duration: "15s",
+    bobDuration: "5.5s",
+    blur: 14,
   },
 ];
 
