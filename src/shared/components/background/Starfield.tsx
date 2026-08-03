@@ -30,6 +30,7 @@ const STARS: StarConfig[] = [
   { top: "90%", left: "26%", size: 16, floatDur: 5.9, twDur: 4.1, delay: 1.0 },
 ];
 
+/** Bintang (star.svg) tersebar yang mengambang & berkelap-kelip. */
 const Starfield = () => {
   return (
     <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>

@@ -893,7 +893,7 @@ body[data-scroll-locked] {
 /* == Halaman PETA (2026) — space theme ======================== */
 /* ============================================================= */
 
-.peta-rangkaian-bg {
+.space-bg {
   background-color: var(--color-space-base);
 }
 .peta-flashback-bg {
@@ -951,7 +951,7 @@ body[data-scroll-locked] {
   }
 }
 
-.peta-title-glow {
+.section-title-glow {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1016,6 +1016,8 @@ body[data-scroll-locked] {
   width: 50%;
   flex: 0 0 50%;
   height: 100%;
+  will-change: transform;
+  animation: peta-aurora-bob var(--peta-bob-dur, 8s) ease-in-out infinite;
 }
 @keyframes peta-wave {
   from {
@@ -1023,6 +1025,15 @@ body[data-scroll-locked] {
   }
   to {
     transform: translateX(-50%);
+  }
+}
+@keyframes peta-aurora-bob {
+  0%,
+  100% {
+    transform: translateY(-24px) scaleY(0.9);
+  }
+  50% {
+    transform: translateY(24px) scaleY(1.1);
   }
 }
 
@@ -1047,7 +1058,8 @@ body[data-scroll-locked] {
   .peta-spin,
   .peta-glow,
   .peta-star,
-  .peta-aurora {
+  .peta-aurora,
+  .peta-aurora-svg {
     animation: none !important;
   }
   .peta-reveal {
