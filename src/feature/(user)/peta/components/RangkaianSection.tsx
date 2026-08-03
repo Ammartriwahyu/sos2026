@@ -1,18 +1,17 @@
 import React from "react";
-import RangkaianTitle from "./RangkaianTitle";
+import SpaceBackground from "@/shared/components/background/SpaceBackground";
+import SectionTitle from "@/shared/components/SectionTitle";
 import RangkaianRow from "./RangkaianRow";
 import SolarDecorations from "./SolarDecorations";
-import Starfield from "./Starfield";
 import { rangkaianItems } from "../data/rangkaian";
 
 const RangkaianSection = () => {
   return (
-    <section className="peta-rangkaian-bg relative overflow-hidden">
+    <SpaceBackground>
       <SolarDecorations />
-      <Starfield />
 
       <div className="relative z-10 mx-auto w-full max-w-6xl px-6 py-20 md:px-10 md:py-28">
-        <RangkaianTitle />
+        <SectionTitle>Rangkaian</SectionTitle>
 
         <div className="mt-16 flex flex-col gap-24 md:mt-24 md:gap-32">
           {rangkaianItems.map((item) => (
@@ -20,7 +19,7 @@ const RangkaianSection = () => {
           ))}
         </div>
       </div>
-    </section>
+    </SpaceBackground>
   );
 };
 
