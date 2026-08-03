@@ -15,8 +15,8 @@ const SolarDecorations = () => {
       {/* Glow tengah di antara ketiga aset */}
       <div className="peta-glow left-1/2 top-1/2 h-[45%] w-[55%] -translate-x-1/2 -translate-y-1/2" />
 
-      {/* KIRI: solar-system, setengah keluar dari tepi kiri */}
-      <div className="absolute top-[6%] left-0 w-[340px] -translate-x-1/2 sm:w-[420px] lg:w-[520px]">
+      {/* KIRI: solar-system, setengah keluar dari tepi kiri (posisi lebih ke bawah) */}
+      <div className="absolute top-[45%] left-0 w-[340px] -translate-x-1/2 sm:w-[420px] lg:w-[520px]">
         <div className="peta-glow inset-0 h-full w-full opacity-70" />
         <Image
           src={SolarSystem}
