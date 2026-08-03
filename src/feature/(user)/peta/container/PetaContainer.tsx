@@ -1,12 +1,14 @@
 import React from "react";
-import PetaSection from "../components/PetaSection";
-import KilasBalikSection from "../components/KilasBalikSection";
+import RangkaianSection from "../components/RangkaianSection";
+import GrassDivider from "../components/GrassDivider";
+import FlashbackSection from "../components/FlashbackSection";
 
 const PetaContainer = () => {
   return (
-    <main className="bg-login lg:min-h-screen overflow-x-hidden">
-      <PetaSection />
-      <KilasBalikSection />
+    <main className="space-bg overflow-x-hidden">
+      <RangkaianSection />
+      <GrassDivider />
+      <FlashbackSection />
     </main>
   );
 };
