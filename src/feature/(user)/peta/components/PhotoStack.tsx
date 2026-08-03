@@ -15,8 +15,8 @@ const FRONT: Slot = { xPercent: 0, yPercent: 0, rotate: -5, z: 20 };
 const BACK: Slot = { xPercent: 24, yPercent: 28, rotate: 8, z: 10 };
 
 /**
- * Dua foto bertumpuk seperti kartu. Klik foto belakang → foto sedikit terangkat
- * lalu berpindah ke depan (tumpukan bertukar). Responsif untuk mobile.
+ * Dua foto bertumpuk seperti kartu. Klik foto mana pun → tumpukan bertukar:
+ * kartu yang maju sedikit terangkat lalu berpindah ke depan. Responsif untuk mobile.
  */
 const PhotoStack = ({ photos, alt = "Dokumentasi" }: PhotoStackProps) => {
   const cardsRef = useRef<Array<HTMLButtonElement | null>>([]);
@@ -55,10 +55,15 @@ const PhotoStack = ({ photos, alt = "Dokumentasi" }: PhotoStackProps) => {
     layout(false);
   }, [layout]);
 
-  const bringToFront = (i: number) => {
-    if (animatingRef.current || i === topRef.current) return;
-    const el = cardsRef.current[i];
-    if (!el) return;
+  // Klik kartu mana pun menukar tumpukan: kalau kartu yang diklik sudah di depan,
+  // kartu berikutnya yang dimajukan (jadi klik selalu memicu animasi & selalu bisa).
+  const shuffle = (clicked: number) => {
+    if (animatingRef.current) return;
+    const n = cardsRef.current.length;
+    const newTop =
+      clicked === topRef.current ? (topRef.current + 1) % n : clicked;
+    const rising = cardsRef.current[newTop];
+    if (!rising) return;
     animatingRef.current = true;
 
     gsap
@@ -67,9 +72,9 @@ const PhotoStack = ({ photos, alt = "Dokumentasi" }: PhotoStackProps) => {
           animatingRef.current = false;
         },
       })
-      // angkat kartu yang diklik
-      .set(el, { zIndex: 30 })
-      .to(el, {
+      // angkat kartu yang akan maju ke depan
+      .set(rising, { zIndex: 30 })
+      .to(rising, {
         yPercent: BACK.yPercent - 26,
         scale: 1.06,
         duration: 0.22,
@@ -77,7 +82,7 @@ const PhotoStack = ({ photos, alt = "Dokumentasi" }: PhotoStackProps) => {
       })
       // tukar tumpukan
       .add(() => {
-        topRef.current = i;
+        topRef.current = newTop;
       })
       .to(
         cardsRef.current,
@@ -106,8 +111,8 @@ const PhotoStack = ({ photos, alt = "Dokumentasi" }: PhotoStackProps) => {
           ref={(el) => {
             cardsRef.current[i] = el;
           }}
-          onClick={() => bringToFront(i)}
-          aria-label={`${alt} ${i + 1} — klik untuk memunculkan ke depan`}
+          onClick={() => shuffle(i)}
+          aria-label={`${alt} ${i + 1} — klik untuk menukar tumpukan foto`}
           className="peta-card absolute top-0 left-0 aspect-[3/2] w-[80%] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-putih/70"
         >
           <Image
