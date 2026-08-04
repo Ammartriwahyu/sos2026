@@ -1,37 +1,38 @@
 import React from "react";
-import Kapal from "@/assets/user/kapal.svg";
-import Maskot from "@/assets/user/maskot-sos-basic.svg";
+import Maskot from "@/assets/assetsos26/illustrasions/Maskot.svg";
 import Image from "next/image";
-import { Button } from "@/shared/components/ui/Button";
 import Link from "next/link";
+import SpaceBackground from "@/shared/components/background/SpaceBackground";
+import AktivitasButton from "@/shared/components/ui/ButtonSos26";
+
 const AktivitasBeforeLogin = () => {
   return (
-    <div className="mycontainer w-full  overflow-hidden lg:min-h-screen relative flex items-start lg:items-center py-24">
-      <div className="flex lg:-mt-20  justify-center flex-col-reverse w-full lg:flex-row items-center gap-10  ">
-        <Image
-          src={Maskot}
-          alt="Maskot"
-          className="w-[18rem] z-20 relative md:w-[25rem] lg:w-[25rem] 2xl:w-[30rem] h-auto"
-        />
-        <div className="lg:bg-secondary-100  lg:border z-20 flex lg:w-[35rem] flex-col items-center lg:border-secondary-700 lg:shadow-xl rounded-2xl lg:p-10 h-fit ">
-          <h4 className="text-4xl text-center font-semibold text-primary-500">
-            Halo, Maba DSI!
-          </h4>
-          <span className="text-black text-base lg:text-xl text-center mt-6">
-            Yuk, masuk dulu biar bisa akses semua hal seru yang udah disiapin
-            buat kamu!
-          </span>
-          <div className="lg:w-full mt-10">
-            <Link href="/login">
-              <Button className="w-full px-10">Masuk</Button>
-            </Link>
+    <SpaceBackground className="w-full lg:min-h-screen">
+      <div className="mycontainer w-full overflow-hidden lg:min-h-screen relative flex items-start lg:items-center py-24 px-4 sm:px-6 lg:px-8">
+        <div className="flex lg:-mt-35 justify-center flex-col-reverse w-full lg:flex-row items-center gap-10">
+          <Image
+            src={Maskot}
+            alt="Maskot"
+            className="hidden lg:block w-[110px] h-[236px] md:w-[130px] md:h-[280px] lg:w-[152px] lg:h-[327px] z-20 relative object-contain"
+          />
+
+          <div className="z-20 flex w-full max-w-[530px] lg:h-[228px] flex-col justify-center items-center rounded-[12px] p-[24px] gap-[20px] bg-white/[0.15] backdrop-blur-[16px] border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] h-fit">
+            <h4 className="text-3xl sm:text-4xl text-center font-semibold text-white">
+              Halo, Adik Maba!
+            </h4>
+            <span className="text-white text-sm sm:text-base lg:text-xl text-center my-4">
+              Yuk, masuk dulu biar bisa akses semua hal seru yang udah disiapin
+              buat kamu!
+            </span>
+            <div className="w-full">
+              <Link href="/login">
+                <AktivitasButton>Masuk</AktivitasButton>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
-      <div className="absolute hidden md:block top-1/2 right-0  transform -translate-y-1/2">
-        <Image src={Kapal} alt="Kapal" className="w-full h-auto" />
-      </div>
-    </div>
+    </SpaceBackground>
   );
 };
 
