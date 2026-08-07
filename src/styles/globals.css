@@ -1046,12 +1046,31 @@ body[data-scroll-locked] {
   background: var(--color-neutral-normal);
 }
 
+.akademik-prodi-bg {
+  background: linear-gradient(180deg, #161a3d 0%, #001126 100%);
+}
+
+.akademik-float {
+  will-change: transform;
+  animation: akademik-float 3.6s ease-in-out infinite;
+}
+@keyframes akademik-float {
+  0%,
+  100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, -26%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .peta-spin,
   .peta-glow,
   .peta-star,
   .peta-aurora,
-  .peta-aurora-svg {
+  .peta-aurora-svg,
+  .akademik-float {
     animation: none !important;
   }
   .peta-reveal {
