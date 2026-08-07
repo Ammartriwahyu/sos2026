@@ -1,14 +1,13 @@
-import { DepartemenSection } from "../components/DepartemenSection";
-import { ProdiSection } from "../components/ProdiSection";
-import { AnimatedDiv } from "@/shared/components/ui/AnimatedDiv";
+import DepartemenSection from "../components/DepartemenSection";
+import ProdiSection from "../components/ProdiSection";
+import GrassDivider from "@/shared/components/background/GrassDivider";
 
 export const AkademikContainer = () => {
   return (
-    <>
-      <AnimatedDiv className="w-full">
-        <DepartemenSection />
-        <ProdiSection />
-      </AnimatedDiv>
-    </>
+    <main className="space-bg overflow-x-hidden">
+      <DepartemenSection />
+      <GrassDivider />
+      <ProdiSection />
+    </main>
   );
 };
