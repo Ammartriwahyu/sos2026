@@ -1,118 +1,79 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { prodiData } from "../data/prodiData";
-import PerkamenBg from "@/assets/user/horizontal-perkament.svg";
-import PerkamenBgMobile from "@/assets/user/mobile-perkament.svg";
-import { motion, AnimatePresence } from "framer-motion";
-import { SectionTitle } from "./SectionTitle";
+import SectionTitle from "@/shared/components/SectionTitle";
+import Starfield from "@/shared/components/background/Starfield";
 import { ProdiTabs } from "./ProdiTabs";
+import ProdiContent from "./ProdiContent";
 
-export const ProdiSection = () => {
+const ProdiSection = () => {
   const [activeProdiId, setActiveProdiId] = useState("sistem_informasi");
+  const rootRef = useRef<HTMLDivElement>(null);
 
-  const activeProdiData = useMemo(() => {
-    return prodiData.find((p) => p.id === activeProdiId);
-  }, [activeProdiId]);
+  const activeProdi = useMemo(
+    () => prodiData.find((p) => p.id === activeProdiId) ?? prodiData[0],
+    [activeProdiId],
+  );
 
-  const contentVariants = {
-    hidden: { opacity: 0, y: 15 },
-    visible: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -15 },
-  };
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      const reveal = gsap.utils.toArray<HTMLElement>(".akd-reveal");
+      const reduce = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      if (reduce) {
+        gsap.set(reveal, { opacity: 1, y: 0 });
+        return;
+      }
+
+      gsap.set(reveal, { opacity: 0, y: 32 });
+      gsap.to(reveal, {
+        opacity: 1,
+        y: 0,
+        duration: 0.65,
+        ease: "power2.out",
+        stagger: 0.15,
+        scrollTrigger: { trigger: root, start: "top 78%", once: true },
+      });
+    }, root);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section className="relative bg-red-800 py-24 px-2 md:px-6 text-white">
-      <div className="mycontainer flex flex-col items-center gap-4 md:gap-20">
+    <section className="akademik-prodi-bg relative overflow-hidden py-20 md:py-28">
+      <Starfield />
+
+      <div
+        ref={rootRef}
+        className="relative z-10 mx-auto w-full max-w-6xl px-6 md:px-10"
+      >
         <SectionTitle>Kenalin Prodi DSI</SectionTitle>
 
-        <div className="grid w-full grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 items-start">
-          <div className="flex flex-row justify-center md:flex-col gap-4">
+        <div className="mt-14 grid grid-cols-1 gap-10 md:mt-20 md:grid-cols-5 md:items-start md:gap-14">
+          <div className="akd-reveal peta-reveal md:col-span-2">
             <ProdiTabs
               activeProdiId={activeProdiId}
               onSelectProdi={setActiveProdiId}
             />
           </div>
 
-          <div className="md:col-span-2">
-            <div
-              className="text-default-dark md:hidden drop-shadow"
-              style={{
-                borderStyle: "solid",
-                borderWidth: "40px",
-                borderImageSource: `url(${PerkamenBgMobile.src})`,
-                borderImageSlice: "45 fill",
-                borderImageRepeat: "stretch",
-                height: "850px",
-              }}
-            >
-              <AnimatePresence mode="wait">
-                {activeProdiData && (
-                  <motion.div
-                    key={activeProdiId}
-                    variants={contentVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                  >
-                    <p className="mb-8 text-base text-justify">
-                      {activeProdiData.deskripsi}
-                    </p>
-                    <h4 className="font-bold text-lg mb-4">
-                      Adapun prospek kerja dari prodi ini sebagai berikut!
-                    </h4>
-                    <ul className="list-disc pl-5 space-y-2">
-                      {activeProdiData.prospek.map((item, index) => (
-                        <li key={index} className="text-base">
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-            <div
-              className="hidden md:block text-default-dark drop-shadow"
-              style={{
-                border: "60px solid transparent",
-                borderImageSource: `url(${PerkamenBg.src})`,
-                borderImageSlice: "80 fill",
-                borderImageRepeat: "stretch",
-                height: "800px",
-              }}
-            >
-              <div className="p-8">
-                <AnimatePresence mode="wait">
-                  {activeProdiData && (
-                    <motion.div
-                      key={activeProdiId}
-                      variants={contentVariants}
-                      initial="hidden"
-                      animate="visible"
-                      exit="exit"
-                    >
-                      <p className="mb-8 text-lg text-justify">
-                        {activeProdiData.deskripsi}
-                      </p>
-                      <h4 className="font-bold text-lg mb-4">
-                        Adapun prospek kerja dari prodi ini sebagai berikut!
-                      </h4>
-                      <ul className="list-disc pl-5 space-y-3.5">
-                        {activeProdiData.prospek.map((item, index) => (
-                          <li key={index} className="text-lg">
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </div>
+          <div className="akd-reveal peta-reveal md:col-span-3">
+            <ProdiContent key={activeProdiId} prodi={activeProdi} />
           </div>
         </div>
       </div>
     </section>
   );
 };
+
+export default ProdiSection;
