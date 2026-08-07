@@ -1,6 +1,6 @@
 import React from "react";
 import RangkaianSection from "../components/RangkaianSection";
-import GrassDivider from "../components/GrassDivider";
+import GrassDivider from "@/shared/components/background/GrassDivider";
 import FlashbackSection from "../components/FlashbackSection";
 
 const PetaContainer = () => {
