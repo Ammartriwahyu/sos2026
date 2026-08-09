@@ -2,36 +2,40 @@ import React from "react";
 import Image from "next/image";
 import CustomAsset from "@/assets/assetsos26/decorations/bg_bawah.svg";
 
-const ORNAMENTS_CONFIG = [
-  {
-    position: "bottom-0 left-1/2 -translate-x-1/2",
-    opacity: "opacity-60",
-  },
-];
+interface BgBawahProps {
+  gradientHeight?: string;
+  className?: string;
+}
 
-const BackgroundOrnaments = () => {
+const BgBawah: React.FC<BgBawahProps> = ({
+  gradientHeight = "h-[160px] md:h-[110px]",
+  className = "",
+}) => {
   return (
     <div
-      className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+      className={`pointer-events-none absolute bottom-0 left-0 w-full z-0 flex flex-col overflow-hidden ${className}`}
       aria-hidden
     >
-      {ORNAMENTS_CONFIG.map((item, index) => (
-        <div
-          key={index}
-          className={`absolute w-full ${item.position} ${item.opacity}`}
-        >
-          <Image
-            src={CustomAsset}
-            alt=""
-            width={2000}
-            height={2000}
-            className="w-full h-auto object-bottom object-cover"
-            priority
-          />
-        </div>
-      ))}
+      <div className="w-full opacity-100">
+        <Image
+          src={CustomAsset}
+          alt=""
+          width={2000}
+          height={2000}
+
+          className="w-full h-auto object-bottom object-cover"
+          priority
+        />
+      </div>
+
+      <div
+        className={`w-full ${gradientHeight}`}
+        style={{
+          background: "linear-gradient(180deg, #161A3D 0%, #07132D 100%)",
+        }}
+      />
     </div>
   );
 };
 
-export default BackgroundOrnaments;
+export default BgBawah;

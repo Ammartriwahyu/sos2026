@@ -1,9 +1,11 @@
 import { AuthProfile } from "@/api/services/auth";
 import React from "react";
-import Maskor2 from "@/assets/user/masket-sos-2.svg";
-import Image from "next/image";
 import AktivitasListSection from "./AktivitasListSection";
-import PatternImg from "@/assets/login/pattern.svg";
+import SpaceBackground from "@/shared/components/background/SpaceBackground";
+import CircleGLow from "@/shared/components/background/CircleGlow";
+import BgBawah from "@/shared/components/background/BgBawah";
+import Image from "next/image";
+import Maskot from "@/assets/assetsos26/illustrasions/maskot.svg";
 
 interface AktivitasAfterLoginProps {
   user: AuthProfile;
@@ -11,86 +13,86 @@ interface AktivitasAfterLoginProps {
 
 const AktivitasAfterLogin = ({ user }: AktivitasAfterLoginProps) => {
   return (
-    <div className="w-screen   flex flex-col min-h-screen relative  pt-20 lg:pt-40">
-      <div className="content-container ">
-        <div className="flex  justify-between flex-col   md:flex-row ">
-          <div className="bg-secondary-100 mb-4 h-fit w-full border rounded-2xl md:w-[1000px] xl:w-[1000px] z-20 border-secondary-700 p-6">
-            <div className="bg-primary-500 p-5 rounded-2xl text-white">
-              <h4 className="lg:text-3xl xl:text-4xl font-medium">
-                Penanggung Jawab Lapangan
-              </h4>
-              <div className="grid grid-cols-1 gap-y-4 md:grid-cols-2 lg:text-lg xl:text-xl mt-6">
-                {user.kelompok?.distrik?.list_pjl.map((pjl, idx) => (
-                  <div key={idx} className="flex flex-col">
-                    <span className="text-base lg:text-xl">{pjl.nama}</span>
-                    <span className="text-sm font-bold text-white">
-                      Line
-                      <span className="text-white font-medium">
-                        : {pjl.line.replace(/@/g, "")}
+    <SpaceBackground className="w-full min-h-screen">
+      <CircleGLow />
+      <BgBawah gradientHeight="h-[400px]" />
+
+      <div className="w-full flex flex-col min-h-[1227px] relative pt-24 lg:pt-36 pb-36 lg:pb-48 z-10 justify-between">
+        <div className="mycontainer w-full">
+          <div className="flex flex-col items-center justify-center w-full">
+            <div className="w-full md:w-[805px] h-auto md:h-[458px] flex flex-col gap-[16px] z-20 relative mb-20 lg:mb-28">
+              <div className="w-full md:w-[805px] md:h-[124px] bg-white/[0.15] backdrop-blur-[16px] border border-white/20 rounded-[12px] py-4 md:py-[24px] px-6 md:px-[48px] shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] flex flex-col justify-center">
+                <h4 className="text-4xl font-semibold text-white mb-1 md:mb-2">
+                  Fasilitator
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-80 gap-y-1">
+                  {user.kelompok?.distrik?.list_pjl.map((pjl, idx) => (
+                    <div key={idx} className="flex items-center gap-2">
+                      <span className="text-2xl text-white">{pjl.nama}</span>
+                      <span className="text-2xl font-normal text-white/90">
+                        Line:{" "}
+                        <span className="text-white font-normal">
+                          {pjl.line.replace(/@/g, "")}
+                        </span>
                       </span>
-                    </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="w-full md:w-[805px] md:h-[318px] bg-white/[0.15] backdrop-blur-[16px] border border-white/20 rounded-[12px] py-4 md:py-[24px] px-6 md:px-[48px] shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] flex flex-col justify-center">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-12 gap-x-80">
+                  <div>
+                    <p className="text-white text-2xl font-medium">
+                      Nama Lengkap
+                    </p>
+                    <p className="text-xl text-white mt-0.5 font-normal">
+                      {user.nama}
+                    </p>
                   </div>
-                ))}
+                  <div>
+                    <p className="text-white text-2xl font-medium">Distrik</p>
+                    <p className="text-xl text-white mt-4 font-normal">
+                      {user.kelompok?.distrik?.nama_distrik}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-white text-2xl font-medium">
+                      Program Studi
+                    </p>
+                    <p className="text-xl text-white mt-4 font-normal">
+                      {user.prodi}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-white text-2xl font-medium">Kelompok</p>
+                    <p className="text-xl text-white mt-4 font-normal">
+                      {user.kelompok?.nama_kelompok}
+                    </p>
+                  </div>
+                  <div className="md:col-span-2">
+                    <p className="text-white text-2xl font-medium">NIM</p>
+                    <p className="text-xl text-white mt-4 font-normal">
+                      {user.nim}
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-8 p-5">
-              <div>
-                <p className="text-primary-500 lg:text-xl xl:text-2xl font-medium">
-                  Nama Lengkap
-                </p>
-                <p className="lg:text-lg xl:text-xl text-black mt-1">
-                  {user.nama}
-                </p>
-              </div>
-              <div>
-                <p className="text-primary-500 lg:text-xl xl:text-2xl font-medium">
-                  Distrik
-                </p>
-                <p className="lg:text-lg xl:text-xl text-black mt-1">
-                  {user.kelompok?.distrik?.nama_distrik}
-                </p>
-              </div>
-              <div>
-                <p className="text-primary-500 lg:text-xl xl:text-2xl font-medium">
-                  Program Studi
-                </p>
-                <p className="lg:text-lg xl:text-xl text-black mt-1">
-                  {user.prodi}
-                </p>
-              </div>
-              <div>
-                <p className="text-primary-500 lg:text-xl xl:text-2xl font-medium">
-                  Kelompok
-                </p>
-                <p className="lg:text-lg xl:text-xl text-black mt-1">
-                  {user.kelompok?.nama_kelompok}
-                </p>
-              </div>
-              <div>
-                <p className="text-primary-500 lg:text-xl xl:text-2xl font-medium">
-                  NIM
-                </p>
-                <p className="lg:text-lg xl:text-xl text-black mt-1">
-                  {user.nim}
-                </p>
-              </div>
+
+              <Image
+                src={Maskot}
+                alt="Maskot"
+                className="hidden lg:block absolute -bottom-55 -right-25 w-[152px] h-[327px] z-50 pointer-events-none object-contain -scale-x-100"
+              />
             </div>
           </div>
-          <Image
-            className="md:-ml-30 md:mt-4 xl:w-1/3 md:w-1/2 z-30"
-            src={Maskor2}
-            alt="Maskot"
-          />
+        </div>
+
+        <div className="mycontainer w-full mt-16 lg:mt-24 z-20">
+          <AktivitasListSection />
         </div>
       </div>
-      <Image
-        src={PatternImg}
-        alt=" Pattern"
-        className="w-full h-14 object-cover md:h-auto mt-20"
-        aria-hidden="true"
-      />
-      <AktivitasListSection />
-    </div>
+    </SpaceBackground>
   );
 };
 

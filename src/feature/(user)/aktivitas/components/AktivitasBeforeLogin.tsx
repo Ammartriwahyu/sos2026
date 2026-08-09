@@ -1,14 +1,20 @@
 import React from "react";
-import Maskot from "@/assets/assetsos26/illustrasions/Maskot.svg";
+import Maskot from "@/assets/assetsos26/illustrasions/maskot.svg";
 import Image from "next/image";
 import Link from "next/link";
-import SpaceBackground from "@/shared/components/background/SpaceBackground";
+import Starfield from "@/shared/components/background/Starfield";
+import CircleGLow from "@/shared/components/background/CircleGlow";
+import BgBawah from "@/shared/components/background/BgBawah";
 import AktivitasButton from "@/shared/components/ui/ButtonSos26";
 
 const AktivitasBeforeLogin = () => {
   return (
-    <SpaceBackground className="w-full lg:min-h-screen">
-      <div className="mycontainer w-full overflow-hidden lg:min-h-screen relative flex items-start lg:items-center py-24 px-4 sm:px-6 lg:px-8">
+    <div className="space-bg relative w-full min-h-screen overflow-hidden flex flex-col justify-between bg-[#07132D]">
+      <CircleGLow />
+      <Starfield />
+      <BgBawah />
+
+      <div className="mycontainer w-full overflow-hidden min-h-screen relative z-10 flex items-start lg:items-center py-24 px-4 sm:px-6 lg:px-8">
         <div className="flex lg:-mt-35 justify-center flex-col-reverse w-full lg:flex-row items-center gap-10">
           <Image
             src={Maskot}
@@ -32,7 +38,7 @@ const AktivitasBeforeLogin = () => {
           </div>
         </div>
       </div>
-    </SpaceBackground>
+    </div>
   );
 };
 

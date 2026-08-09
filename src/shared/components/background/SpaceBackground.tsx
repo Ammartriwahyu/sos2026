@@ -1,8 +1,9 @@
 import React from "react";
 import { cn } from "@/shared/utils/cn";
 import Starfield from "./Starfield";
-import BackgroundOrnaments from "./BgBawah";
+import BgBawah from "./BgBawah";
 import CircleGLow from "./CircleGlow";
+import GradientBG from "./GradientBackground";
 
 interface SpaceBackgroundProps {
   children: React.ReactNode;
@@ -17,8 +18,6 @@ const SpaceBackground = ({ children, className }: SpaceBackgroundProps) => {
         className,
       )}
     >
-      <BackgroundOrnaments />
-      <CircleGLow />
       <Starfield />
 
       <div className="relative z-10 w-full flex-1">{children}</div>
