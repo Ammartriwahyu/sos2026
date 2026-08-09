@@ -6,7 +6,7 @@ export const AkademikContainer = () => {
   return (
     <main className="space-bg overflow-x-hidden">
       <DepartemenSection />
-      <GrassDivider />
+      <GrassDivider className="md:-mt-24 lg:-mt-32" />
       <ProdiSection />
     </main>
   );
