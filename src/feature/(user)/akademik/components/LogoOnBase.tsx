@@ -9,6 +9,8 @@ interface LogoOnBaseProps {
   float?: boolean;
   className?: string;
   priority?: boolean;
+  logoWidth?: string;
+  logoBottom?: string;
 }
 
 const LogoOnBase = ({
@@ -17,6 +19,8 @@ const LogoOnBase = ({
   float = false,
   className,
   priority = false,
+  logoWidth = "w-[64%]",
+  logoBottom = "bottom-[34%]",
 }: LogoOnBaseProps) => {
   return (
     <div className={cn("relative w-full", className)}>
@@ -32,7 +36,9 @@ const LogoOnBase = ({
         alt={alt}
         priority={priority}
         className={cn(
-          "absolute bottom-[34%] left-1/2 w-[64%] select-none",
+          "absolute left-1/2 select-none",
+          logoBottom,
+          logoWidth,
           float ? "akademik-float" : "-translate-x-1/2",
         )}
       />

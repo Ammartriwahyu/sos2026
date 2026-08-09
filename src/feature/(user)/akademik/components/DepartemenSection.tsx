@@ -67,7 +67,7 @@ const DepartemenSection = () => {
       >
         <div className="flex flex-col gap-8 md:flex-row md:items-stretch md:gap-8 lg:gap-14">
           <div className="flex flex-col md:w-[210px] md:shrink-0 lg:w-[240px]">
-            <p className="akd-fade-up peta-reveal text-3xl font-semibold whitespace-nowrap text-putih lg:text-4xl">
+            <p className="akd-fade-up peta-reveal text-4xl font-semibold whitespace-nowrap text-putih lg:text-5xl">
               Apa sih itu
             </p>
             <div className="akd-fade-up peta-reveal mt-6 hidden w-full md:block">
@@ -81,7 +81,7 @@ const DepartemenSection = () => {
 
           <div className="flex flex-1 flex-col">
             <div className="flex items-start justify-between gap-4">
-              <div className="akd-fade-up peta-reveal flex items-start">
+              <div className="akd-fade-up peta-reveal flex items-start mt-10">
                 <h1 className="text-6xl font-bold text-putih lg:text-8xl">
                   DSI
                 </h1>
@@ -93,17 +93,19 @@ const DepartemenSection = () => {
                 />
               </div>
 
-              <div className="akd-fade peta-reveal w-[220px] shrink-0 md:-mt-6 lg:-mt-12 lg:w-[360px]">
+              <div className="akd-fade peta-reveal w-[220px] shrink-0 md:-mt-6 lg:-mt-2 lg:w-[360px]">
                 <LogoOnBase
                   logo={LogoDepartemen}
                   alt="Logo Departemen Sistem Informasi"
                   float
                   priority
+                  logoWidth="w-[64%]"
+                  logoBottom="bottom-[45%]"
                 />
               </div>
             </div>
 
-            <div className="akd-fade-up peta-reveal mt-8 text-justify text-lg leading-8 text-putih/90 lg:text-xl lg:leading-9">
+            <div className="akd-fade-up peta-reveal lg:mt-6 xl:mt-12 text-justify text-lg leading-8 text-putih/90 md:text-xl lg:text-2xl xl:text-3xl xl:leading-9">
               <p>
                 Departemen Sistem Informasi (DSI) adalah salah satu departemen
                 di Fakultas Ilmu Komputer (FILKOM) Universitas Brawijaya (UB).

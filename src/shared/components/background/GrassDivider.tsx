@@ -1,11 +1,19 @@
 import React from "react";
 import Image from "next/image";
+import { cn } from "@/shared/utils/cn";
 import Grass from "@/assets/assetsos26/shared/grass.svg";
 
-const GrassDivider = () => {
+interface GrassDividerProps {
+  className?: string;
+}
+
+const GrassDivider = ({ className }: GrassDividerProps) => {
   return (
     <div
-      className="pointer-events-none relative z-20 -mb-px w-full"
+      className={cn(
+        "pointer-events-none relative z-20 -mb-px w-full",
+        className,
+      )}
       aria-hidden
     >
       <Image
