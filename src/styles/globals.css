@@ -19,7 +19,7 @@
   --color-primary-800: #5e0114;
   --color-primary-900: #4e0111;
 
-  /* == PRIMARY SYSTEM COLORS (2026 — ungu, sesuai Figma) == */
+  /* == PRIMARY SYSTEM COLORS == */
   --color-primary-light: #ede8f0;
   --color-primary-light-hover: #e4dde9;
   --color-primary-light-active: #c7b9d2;
@@ -42,7 +42,7 @@
   --color-secondary-800: #9a958c;
   --color-secondary-900: #747069;
 
-  /* == SECONDARY SYSTEM COLORS (2026 — crimson, sesuai Figma) == */
+  /* == SECONDARY SYSTEM COLORS == */
   --color-secondary-light: #f8e9ee;
   --color-secondary-light-hover: #f5dde5;
   --color-secondary-light-active: #ebb9c9;
@@ -65,9 +65,9 @@
   --color-bg-secondary: #ece5db;
   --color-bg-tertiary: #e9e9e9;
 
-  /* == SPACE (tema Peta 2026) == */
-  --color-space-base: #001126; /* BG utama */
-  --color-space-top: #161a3d; /* atas gradient flashback */
+  /* == SPACE == */
+  --color-space-base: #001126;
+  --color-space-top: #161a3d;
   --color-putih: #eaeaea;
 
   --color-badgeOverdue: #cf2a4a;
@@ -92,7 +92,7 @@
   --color-black-dark-active: #03040e;
   --color-black-darker: #02030b;
 
-  /* == NEUTRAL SYSTEM COLORS (2026, sesuai Figma) == */
+  /* == NEUTRAL SYSTEM COLORS == */
   --color-neutral-light: #e8e7ea;
   --color-neutral-light-hover: #dddae0;
   --color-neutral-light-active: #b8b3be;
@@ -347,7 +347,7 @@ body[data-scroll-locked] {
 :root {
   --radius: 0.625rem;
 
-  /* == Token halaman 404 (dari Figma) == */
+  /* == Token halaman 404 == */
   --BG-utama: #001126;
   --Api-roket: #161a3d;
 
@@ -462,15 +462,10 @@ body[data-scroll-locked] {
     flex-direction: column-reverse;
     gap: 0.5rem;
     width: calc(100% - 40px);
-    max-width: 320px; /* Reduced from 420px to 320px for smaller width */
+    max-width: 320px;
   }
 }
 
-/* ============================================================
-   HALAMAN 404 (NOT FOUND) — native CSS, sekali jalan (sesuai desain)
-   Roket melintas 1x sambil menyeret "ombak" ungu + teks 404,
-   menutup latar #001126 hingga menjadi ungu berbintang.
-   ============================================================ */
 .nf404-root {
   position: relative;
   width: 100%;
@@ -482,14 +477,12 @@ body[data-scroll-locked] {
   justify-content: center;
 }
 
-/* Lapisan latar AWAL (navy) — menampung ombak; ikut tertutup curtain ungu */
 .nf404-navy {
   position: absolute;
   inset: 0;
   z-index: 1;
 }
 
-/* --- Gelombang latar yang bergerak terus --- */
 .nf404-wave-row {
   position: absolute;
   inset: 0;
@@ -513,7 +506,6 @@ body[data-scroll-locked] {
   }
 }
 
-/* --- Bintang berkedip --- */
 .nf404-stars {
   position: absolute;
   inset: 0;
@@ -543,7 +535,7 @@ body[data-scroll-locked] {
   opacity: 0.95;
   animation: nf404-twinkle 3.4s ease-in-out infinite;
 }
-/* Lapisan bintang kedua — posisi & tempo berbeda supaya kelap-kelip acak */
+
 .nf404-stars-b {
   position: absolute;
   inset: 0;
@@ -573,7 +565,6 @@ body[data-scroll-locked] {
   }
 }
 
-/* --- Batu (rocks.svg) tersebar & mengambang sendiri-sendiri --- */
 .nf404-rocks {
   position: absolute;
   inset: 0;
@@ -600,7 +591,6 @@ body[data-scroll-locked] {
   }
 }
 
-/* --- "Ombak" ungu yang dibawa roket: tersingkap dari kiri (1x) --- */
 .nf404-curtain {
   position: absolute;
   inset: 0;
@@ -615,13 +605,10 @@ body[data-scroll-locked] {
     #262c62 42%,
     #171a3d 100%
   );
-  /* Bentuk ombak = kurva Bézier halus & fleksibel, digambar + dianimasikan
-     (SMIL) lewat SVG <clipPath> di komponen PurpleCurtain. Puncak kurva
-     mengikuti api roket, tepinya melengkung organik (bukan garis lurus kaku). */
+
   clip-path: url("#nf404-wave-clip");
 }
 
-/* --- Roket melintas + efek cahaya yang dibawa --- */
 .nf404-rocket-wrap {
   position: absolute;
   top: 50%;
@@ -635,7 +622,6 @@ body[data-scroll-locked] {
   display: inline-flex;
   align-items: center;
   will-change: transform;
-  /* posisi awal (di luar layar kiri); gerak di-handle GSAP */
   transform: translateX(-18vw);
 }
 @keyframes nf404-fly-once {
@@ -697,17 +683,14 @@ body[data-scroll-locked] {
   }
 }
 
-/* --- Teks 404: masuk dari kiri (dalam curtain), diam di tengah, lalu mengambang --- */
 .nf404-content {
   position: relative;
   z-index: 3;
   text-align: center;
   padding: 1.5rem;
-  /* posisi awal (jauh di luar layar kiri); posisi & float di-handle GSAP */
   transform: translateX(-130vw);
 }
 .nf404-content-float {
-  /* animasi mengambang di-handle GSAP */
 }
 @keyframes nf404-title-slide {
   0% {
@@ -733,7 +716,6 @@ body[data-scroll-locked] {
   font-size: clamp(5rem, 20vw, 15rem);
   line-height: 1;
   letter-spacing: 0.02em;
-  /* gradient dengan sorotan putih di tengah untuk efek kilau */
   background: linear-gradient(
     100deg,
     #ffecee 0%,
@@ -747,16 +729,13 @@ body[data-scroll-locked] {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
-  /* bersinar seperti bintang: glow berdenyut + kilau menyapu */
   animation:
     nf404-title-shine 3.4s ease-in-out infinite,
     nf404-title-sweep 5s linear infinite;
 }
-/* tiap huruf "404" beranimasi gelombang bergiliran saat ditarik roket */
 .nf404-char {
   display: inline-block;
   will-change: transform;
-  /* gelombang huruf di-handle GSAP (traveling wave saat ditarik roket) */
 }
 @keyframes nf404-char-wave {
   0%,
@@ -793,7 +772,6 @@ body[data-scroll-locked] {
   }
 }
 
-/* Tagline + tombol — muncul setelah "404" diam di tengah */
 .nf404-tagline {
   margin-top: 1.1rem;
   color: #d7cbee;
@@ -802,7 +780,6 @@ body[data-scroll-locked] {
   margin-left: auto;
   margin-right: auto;
   opacity: 0;
-  /* kemunculan di-handle GSAP setelah 404 diam di tengah */
 }
 .nf404-cta {
   display: inline-block;
@@ -859,7 +836,6 @@ body[data-scroll-locked] {
   transform: translateY(-2px);
 }
 
-/* --- Hormati preferensi kurangi-gerak: langsung tampilkan kondisi akhir --- */
 @media (prefers-reduced-motion: reduce) {
   .nf404-wave-row,
   .nf404-rocks,
@@ -889,10 +865,6 @@ body[data-scroll-locked] {
   }
 }
 
-/* ============================================================= */
-/* == Halaman PETA (2026) — space theme ======================== */
-/* ============================================================= */
-
 .space-bg {
   background-color: var(--color-space-base);
 }
@@ -904,7 +876,6 @@ body[data-scroll-locked] {
   );
 }
 
-/* --- Solar system / lingkaran berputar seperti roda --- */
 .peta-spin {
   transform-origin: 50% 50%;
   will-change: transform;
@@ -925,7 +896,6 @@ body[data-scroll-locked] {
   }
 }
 
-/* --- Cahaya/glow di tengah dekorasi & di belakang judul --- */
 .peta-glow {
   position: absolute;
   border-radius: 9999px;
@@ -969,8 +939,6 @@ body[data-scroll-locked] {
   );
 }
 
-/* Banner judul: gradient lavender lembut di antara garis atas & bawah.
-   Ujung kiri-kanan dipudarkan (mask) agar menyatu dengan background. */
 .section-title-band {
   background:
     radial-gradient(
@@ -999,7 +967,6 @@ body[data-scroll-locked] {
   );
 }
 
-/* --- Bintang tersebar: mengambang + kelap-kelip --- */
 .peta-star {
   position: absolute;
   pointer-events: none;
@@ -1029,7 +996,6 @@ body[data-scroll-locked] {
   }
 }
 
-/* --- Aurora latar section Flashback: pita cahaya lembut yang mengalir --- */
 .peta-aurora {
   position: absolute;
   left: 0;
@@ -1067,13 +1033,10 @@ body[data-scroll-locked] {
   }
 }
 
-/* Elemen yang direveal oleh GSAP: sembunyikan dulu agar tak berkedip.
-   GSAP akan menimpanya (inline style menang atas class). */
 .peta-reveal {
   opacity: 0;
 }
 
-/* --- Kartu foto (photo stack & carousel) --- */
 .peta-card {
   will-change: transform;
   border-radius: 18px;
@@ -1083,13 +1046,31 @@ body[data-scroll-locked] {
   background: var(--color-neutral-normal);
 }
 
-/* Hormati preferensi kurangi-gerak */
+.akademik-prodi-bg {
+  background: linear-gradient(180deg, #161a3d 0%, #001126 100%);
+}
+
+.akademik-float {
+  will-change: transform;
+  animation: akademik-float 3.6s ease-in-out infinite;
+}
+@keyframes akademik-float {
+  0%,
+  100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, -26%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .peta-spin,
   .peta-glow,
   .peta-star,
   .peta-aurora,
-  .peta-aurora-svg {
+  .peta-aurora-svg,
+  .akademik-float {
     animation: none !important;
   }
   .peta-reveal {
