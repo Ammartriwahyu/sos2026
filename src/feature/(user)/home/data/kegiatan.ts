@@ -1,6 +1,6 @@
-import Voyage from "@/assets/home/voyage.webp";
+import type { StaticImageData } from "next/image";
 import Symphonic from "@/assets/home/symphonic.webp";
-import { StaticImageData } from "next/image";
+import Voyage from "@/assets/home/voyage.webp";
 export interface Kegiatan {
   id: number;
   title: string;
