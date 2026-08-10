@@ -13,7 +13,7 @@ const AktivitasButton = forwardRef<HTMLButtonElement, AktivitasButtonProps>(
         disabled={disabled}
         className={cn(
           "flex w-full justify-center items-center rounded-2xl",
-          "px-5 py-3 text-base font-semibold text-white",
+          "px-[12px] py-[12px] text-base font-bold text-white",
           "transition-all duration-300",
 
           "bg-[#605992] hover:bg-[#524c7f] active:bg-[#453f6c]",

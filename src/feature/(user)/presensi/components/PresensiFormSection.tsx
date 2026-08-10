@@ -1,15 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import MaskotPresensi from "@/assets/presensi/presensi-bg.svg";
-import ArrowBack from "@/assets/presensi/back-arrow.svg";
 import { Input } from "@/shared/components/ui/Input";
 import { Button } from "@/shared/components/ui/Button";
-import { SectionTitle } from "../../akademik/components/SectionTitle";
 import { Modal } from "@/shared/components/ui/Modal";
 import { useSubmitPresensi } from "../hooks/useSubmitPresensi";
-import Link from "next/link";
+import AktivitasButton from "@/shared/components/ui/ButtonSos26";
 import Image from "next/image";
+import Maskot from "@/assets/assetsos26/illustrasions/maskot_cewe.svg";
 
 interface PresensiFormSectionProps {
   refreshPresensi: () => void;
@@ -43,80 +41,57 @@ const PresensiFormSection = ({ refreshPresensi }: PresensiFormSectionProps) => {
 
   return (
     <>
-      <div className="flex flex-col items-center">
-        <div className="w-full">
-          <div className="w-full">
-            <Link
-              href={"/aktivitas"}
-              className="flex items-center gap-4 text-lg  font-medium text-default-dark"
-            >
-              <Image
-                src={ArrowBack}
-                width={200}
-                height={200}
-                alt="ArrowBack"
-                className="w-6"
-              />
-              Kembali
-            </Link>
-          </div>
-          <div className="text-center mt-12 md:mt-24">
-            <SectionTitle lineColor="bg-primary-500">
+      <div className="flex flex-col items-center justify-center w-full px-4 sm:px-6">
+        <div className="relative w-full max-w-[714px] flex flex-col items-center justify-center z-20">
+          <div
+            className="w-full min-h-[246px] rounded-[12px] px-6 sm:px-[92px] py-[32px] flex flex-col items-center justify-center z-20 relative"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 100%)",
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
+              border: "1px solid rgba(255, 255, 255, 0.25)",
+              boxShadow:
+                "0 12px 40px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.3)",
+            }}
+          >
+            <h3 className="text-xl sm:text-2xl font-semibold text-white text-center mb-[28px] drop-shadow-md whitespace-nowrap">
               Masukan Kode Presensi
-            </SectionTitle>
-          </div>
-        </div>
-        <div className="hidden md:block md:w-[44rem] lg:w-[52rem] mx-auto">
-          <div className="w-full">
-            <div
-              className="text-default-dark drop-shadow flex justify-center items-center flex-col h-[40rem] lg:h-[48rem]"
-              style={{
-                borderStyle: "solid",
-                borderWidth: "40px",
-                borderImageSource: `url(${MaskotPresensi.src})`,
-                borderImageSlice: "45 fill",
-                borderImageRepeat: "stretch",
-              }}
-            >
-              <div className="w-5/12 flex flex-col gap-4 justify-center items-center mr-10">
-                <Input value={kode} onChange={(e) => setKode(e.target.value)} />
-                <Button
-                  className="w-1/2"
+            </h3>
+
+            <div className="w-full flex flex-col items-center gap-[20px]">
+              <Input
+                value={kode}
+                onChange={(e) => setKode(e.target.value)}
+                className="w-full sm:max-w-[530px] h-[50px] text-white placeholder:text-white/50 rounded-[8px] px-4 text-center text-base sm:text-lg focus:outline-none focus:border-white/40 transition-all"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%)",
+                  backdropFilter: "blur(16px)",
+                  WebkitBackdropFilter: "blur(16px)",
+                  border: "1px solid rgba(255, 255, 255, 0.2)",
+                  boxShadow:
+                    "inset 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 2px 8px 0 rgba(0, 0, 0, 0.15)",
+                }}
+              />
+
+              <div className="w-[179px] h-[48px]">
+                <AktivitasButton
                   onClick={handleSubmit}
                   disabled={isSubmitting}
+                  className="w-full h-full flex items-center justify-center"
                 >
                   {isSubmitting ? "Mengirim..." : "Kirim"}
-                </Button>
+                </AktivitasButton>
               </div>
             </div>
           </div>
-        </div>
-        <div className="md:hidden w-full mx-auto">
-          <div className="w-full">
-            <div
-              className="text-default-dark drop-shadow flex justify-center items-center flex-col h-[24rem]"
-              style={{
-                borderImageSource: `url(${MaskotPresensi.src})`,
-                borderImageSlice: "45 fill",
-                borderImageRepeat: "stretch",
-              }}
-            >
-              <div className="w-5/12 flex flex-col gap-4 justify-center items-center mr-4">
-                <Input
-                  className="h-10"
-                  value={kode}
-                  onChange={(e) => setKode(e.target.value)}
-                />
-                <Button
-                  className="w-10/12 py-2 rounded-lg"
-                  onClick={handleSubmit}
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? "Mengirim..." : "Kirim"}
-                </Button>
-              </div>
-            </div>
-          </div>
+
+          <Image
+            src={Maskot}
+            alt="Maskot"
+            className="hidden lg:block absolute -bottom-65 -right-38 w-[161px] h-[310px] z-30 pointer-events-none object-contain scale-x-100"
+          />
         </div>
       </div>
 

@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { SectionTitle } from "../../akademik/components/SectionTitle";
 import PresensiCard from "./PresensiCard";
 import HeaderPresensiCard from "./HeaderPresensiCard";
 import { RekapPresensi } from "@/api/services/user/presensi";
@@ -18,29 +17,68 @@ const RekapPresensiSection = ({
 }: RekapPresensiSectionProps) => {
   if (isLoading) {
     return (
-      <div className="w-2/3 mx-auto min-h-[70vh] flex justify-center items-center">
-        <p className="text-default-dark text-xl">Loading presensi data...</p>
+      <div className="w-11/12 md:w-2/3 mx-auto min-h-[50vh] flex justify-center items-center">
+        <p className="text-white text-xl">Loading presensi data...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="w-2/3 mx-auto min-h-[70vh] flex justify-center items-center">
-        <p className="text-red-500 text-xl">Error: {error}</p>
+      <div className="w-11/12 md:w-2/3 mx-auto min-h-[50vh] flex justify-center items-center">
+        <p className="text-red-400 text-xl">Error: {error}</p>
       </div>
     );
   }
 
   return (
-    <div className="w-full md:w-3/4 mx-auto min-h-[70vh] overflow-hidden">
-      <SectionTitle underline={false}>Rekap Presensi</SectionTitle>
-      <div className="overflow-x-auto">
-        <div className="w-[800px] md:w-full flex flex-col gap-6">
+    <div className="w-full max-w-[1103px] mx-auto px-4 md:px-0 flex flex-col items-center">
+      <div
+        className="w-full max-w-[1103px] h-[2px]"
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(74, 52, 136, 0) 0%, rgba(74, 52, 136, 0.7) 50%, rgba(74, 52, 136, 0) 100%)",
+        }}
+      />
+
+      <div
+        className="w-full max-w-[1103px] h-[80px] flex items-center justify-center px-4"
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(74, 52, 136, 0) 0%, rgba(74, 52, 136, 0.4) 50%, rgba(74, 52, 136, 0) 100%)",
+        }}
+      >
+        <h2 className="text-3xl md:text-4xl font-bold text-white text-center">
+          Presensi
+        </h2>
+      </div>
+
+      <div
+        className="w-full max-w-[1103px] h-[2px] mb-[40px]"
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(74, 52, 136, 0) 0%, rgba(74, 52, 136, 0.7) 50%, rgba(74, 52, 136, 0) 100%)",
+        }}
+      />
+
+      {/* Wrapper Horizontal Scroll yang Responsif untuk Desktop 100% & Mobile */}
+      <div className="w-full overflow-x-auto pb-4 custom-scrollbar">
+        <div className="w-full max-w-[1103px] min-w-[1050px] flex flex-col gap-[12px] bg-transparent shadow-none border-none mx-auto">
           <HeaderPresensiCard />
-          {presensiData?.map((presensi: RekapPresensi, index: number) => (
-            <PresensiCard key={index} presensi={presensi} />
-          ))}
+
+          {presensiData && presensiData.length > 0 ? (
+            presensiData.map((presensi: RekapPresensi, index: number) => (
+              <PresensiCard
+                key={presensi.id ?? index}
+                presensi={presensi}
+                isLast={index === presensiData.length - 1}
+              />
+            ))
+          ) : (
+            <div className="w-full py-8 text-center text-white/70 text-lg bg-white/[0.05] backdrop-blur-[12px] rounded-[12px] border border-white/10">
+              Belum ada data presensi.
+            </div>
+          )}
         </div>
       </div>
     </div>
