@@ -22,17 +22,29 @@ const AktivitasBeforeLogin = () => {
             className="hidden lg:block w-[110px] h-[236px] md:w-[130px] md:h-[280px] lg:w-[152px] lg:h-[327px] z-20 relative object-contain"
           />
 
-          <div className="z-20 flex w-full max-w-[530px] lg:h-[228px] flex-col justify-center items-center rounded-[12px] p-[24px] gap-[20px] bg-white/[0.15] backdrop-blur-[16px] border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] h-fit">
-            <h4 className="text-3xl sm:text-4xl text-center font-semibold text-white">
+          <div
+            className="z-20 flex w-full max-w-[530px] flex-col justify-center items-center rounded-[12px] px-6 sm:px-6 py-[32px] gap-[20px] h-fit relative"
+            style={{
+              background: "linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 100%)",
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
+              border: "1px solid rgba(255, 255, 255, 0.25)",
+              boxShadow: "0 12px 40px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.3)"
+            }}
+          >
+            <h4 className="text-3xl sm:text-4xl text-center font-semibold text-white drop-shadow-md">
               Halo, Adik Maba!
             </h4>
-            <span className="text-white text-sm sm:text-base lg:text-xl text-center my-4">
+            <span className="text-white text-sm sm:text-base lg:text-xl text-center my-2 leading-relaxed">
               Yuk, masuk dulu biar bisa akses semua hal seru yang udah disiapin
               buat kamu!
             </span>
-            <div className="w-full">
-              <Link href="/login">
-                <AktivitasButton>Masuk</AktivitasButton>
+
+            <div className="w-full flex justify-center mt-2">
+              <Link href="/login" className="w-full h-[48px] block">
+                <AktivitasButton className="w-full h-full flex items-center justify-center">
+                  Masuk
+                </AktivitasButton>
               </Link>
             </div>
           </div>

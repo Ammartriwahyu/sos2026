@@ -61,7 +61,6 @@ const RekapPresensiSection = ({
         }}
       />
 
-      {/* Wrapper Horizontal Scroll yang Responsif untuk Desktop 100% & Mobile */}
       <div className="w-full overflow-x-auto pb-4 custom-scrollbar">
         <div className="w-full max-w-[1103px] min-w-[1050px] flex flex-col gap-[12px] bg-transparent shadow-none border-none mx-auto">
           <HeaderPresensiCard />

@@ -12,6 +12,15 @@ interface AktivitasAfterLoginProps {
 }
 
 const AktivitasAfterLogin = ({ user }: AktivitasAfterLoginProps) => {
+  // Gaya liquid glass konsisten yang disamakan dengan form presensi
+  const liquidGlassStyle = {
+    background: "linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 100%)",
+    backdropFilter: "blur(20px)",
+    WebkitBackdropFilter: "blur(20px)",
+    border: "1px solid rgba(255, 255, 255, 0.25)",
+    boxShadow: "0 12px 40px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.3)"
+  };
+
   return (
     <SpaceBackground className="w-full min-h-screen">
       <CircleGLow />
@@ -21,8 +30,12 @@ const AktivitasAfterLogin = ({ user }: AktivitasAfterLoginProps) => {
         <div className="mycontainer w-full">
           <div className="flex flex-col items-center justify-center w-full">
             <div className="w-full md:w-[805px] h-auto md:h-[458px] flex flex-col gap-[16px] z-20 relative mb-20 lg:mb-28">
-              <div className="w-full md:w-[805px] md:h-[124px] bg-white/[0.15] backdrop-blur-[16px] border border-white/20 rounded-[12px] py-4 md:py-[24px] px-6 md:px-[48px] shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] flex flex-col justify-center">
-                <h4 className="text-4xl font-semibold text-white mb-1 md:mb-2">
+
+              <div
+                className="w-full md:w-[805px] md:h-[124px] rounded-[12px] py-4 md:py-[24px] px-6 md:px-[48px] flex flex-col justify-center"
+                style={liquidGlassStyle}
+              >
+                <h4 className="text-4xl font-semibold text-white mb-1 md:mb-2 drop-shadow-md">
                   Fasilitator
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-80 gap-y-1">
@@ -40,7 +53,10 @@ const AktivitasAfterLogin = ({ user }: AktivitasAfterLoginProps) => {
                 </div>
               </div>
 
-              <div className="w-full md:w-[805px] md:h-[318px] bg-white/[0.15] backdrop-blur-[16px] border border-white/20 rounded-[12px] py-4 md:py-[24px] px-6 md:px-[48px] shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] flex flex-col justify-center">
+              <div
+                className="w-full md:w-[805px] md:h-[318px] rounded-[12px] py-4 md:py-[24px] px-6 md:px-[48px] flex flex-col justify-center"
+                style={liquidGlassStyle}
+              >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-y-12 gap-x-80">
                   <div>
                     <p className="text-white text-2xl font-medium">
