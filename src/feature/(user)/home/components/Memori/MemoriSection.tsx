@@ -1,10 +1,10 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { memoriData } from "../../data/memori";
-import Arrow from "@/assets/user/arrow-memori.svg";
 import Image from "next/image";
-import MemoriCard from "./MemoriCard";
 import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import Arrow from "@/assets/user/arrow-memori.svg";
+import { memoriData } from "../../data/memori";
+import MemoriCard from "./MemoriCard";
 
 const MemoriSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);

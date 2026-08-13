@@ -1,7 +1,7 @@
-import React from "react";
-import { Memori } from "../../data/memori";
 import Image from "next/image";
+import React from "react";
 import Texture from "@/assets/user/card-texture.png";
+import { Memori } from "../../data/memori";
 
 interface MemoriCardProps {
   memori: Memori;
