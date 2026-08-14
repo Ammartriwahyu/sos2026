@@ -7,6 +7,7 @@ import Badges from "../components/Badges";
 import ProgressIndicators from "../components/ProgressIndicators";
 import TaskCards from "../components/TaskCards";
 import Inputs from "../components/Inputs";
+import Colors from "../components/Colors";
 
 const DesignContainer = () => {
   return (
@@ -14,6 +15,7 @@ const DesignContainer = () => {
       <h1 className="text-4xl font-bold text-center text-primary-500">
         Design System
       </h1>
+      <Colors />
       <Buttons />
       <Accordions />
       <Dropdowns />

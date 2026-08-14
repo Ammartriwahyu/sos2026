@@ -1,8 +1,8 @@
 import { StaticImageData } from "next/image";
 
-import LogoSI from "@/assets/user/logo-si.svg";
-import LogoTI from "@/assets/user/logo-ti.svg";
-import LogoPTI from "@/assets/user/logo-pti.svg";
+import LogoSI from "@/assets/assetsos26/shared/logo-si.png";
+import LogoTI from "@/assets/assetsos26/shared/logo-ti.png";
+import LogoPTI from "@/assets/assetsos26/shared/logo-pti.png";
 
 export interface Prodi {
   id: string;
@@ -29,7 +29,7 @@ export const prodiData: Prodi[] = [
       "System Analyst",
       "Database Administrator",
       "Programmer Analyst",
-      "IS Project Manager",
+      "Project Manager",
     ],
   },
   {
@@ -38,15 +38,16 @@ export const prodiData: Prodi[] = [
     shortName: "TI",
     logo: LogoTI,
     deskripsi:
-      "Program Studi Teknologi Informasi berfokus pada pengembangan, implementasi, dan pengelolaan sistem teknologi berbasis komputer. Mahasiswa dibekali keterampilan dalam pemrograman, jaringan komputer, keamanan siber, serta rekayasa perangkat lunak untuk menjawab tantangan dunia digital yang terus berkembang.",
+      "Berfokus pada pengembangan keterampilan teknis dan manajerial di bidang teknologi informasi untuk menciptakan solusi digital yang inovatif dan sesuai kebutuhan industri modern. Mengasah kemampuan dalam membangun perangkat lunak hingga mampu menghadirkan sistem yang efektif dan berdaya saing.",
     prospek: [
-      "Software Developer / Programmer",
-      "Web Developer / Mobile App Developer",
-      "Data Analyst / Data Scientist",
-      "Network Engineer / Cloud Engineer",
-      "System Analyst / IT Consultant",
-      "Cyber Security Specialist",
-      "DevOps Engineer",
+      "Software Developer",
+      "Network Engineer",
+      "System Analyst",
+      "Database Administrator",
+      "Cyber Security Analyst",
+      "Cloud Computing Specialist",
+      "Web Developer",
+      "IT Consultant",
     ],
   },
   {
@@ -55,14 +56,16 @@ export const prodiData: Prodi[] = [
     shortName: "PTI",
     logo: LogoPTI,
     deskripsi:
-      "Program Studi Pendidikan Teknologi Informasi mempersiapkan lulusan yang mampu menguasai bidang teknologi informasi sekaligus memiliki kemampuan untuk mengajarkannya. Mahasiswa dilatih untuk menjadi tenaga pendidik, instruktur, atau pengembang pembelajaran di bidang TI, dengan fokus pada pemanfaatan teknologi secara efektif dan inovatif dalam proses belajar mengajar.",
+      "Berfokus pada pengembangan keahlian dalam memanfaatkan teknologi informasi untuk mendukung proses pembelajaran yang kreatif dan inovatif. Mendorong pemanfaatan media digital, platform pembelajaran daring, serta metode pengajaran inovatif guna memperkuat transformasi pendidikan berbasis teknologi.",
     prospek: [
-      "Guru atau Dosen di bidang TI",
-      "Instruktur pelatihan teknologi",
-      "Pengembang media dan konten pembelajaran digital",
-      "Konsultan pembelajaran berbasis teknologi",
-      "Edupreneur",
-      "Pengembang E-learning atau Learning Management System (LMS)",
+      "Guru TIK",
+      "Instruktur Pelatihan IT",
+      "Pengembangan Media Pembelajaran Digital",
+      "Dosen Pendidikan TI",
+      "LMS Administrator",
+      "Konsultan Teknologi Pendidikan",
+      "IT Support Pendidikan",
+      "Pengembang e-Learning",
     ],
   },
 ];
