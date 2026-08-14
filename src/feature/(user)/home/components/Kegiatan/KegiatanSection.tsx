@@ -31,7 +31,7 @@ export default function Kegiatan() {
           />
         </div>
         <div
-          className="absolute top-[-5%] md:top-[-10%] lg:top-[-20%] left-0 w-[120%] lg:w-[102%] pointer-events-none select-none"
+          className="absolute top-[-5%] md:top-[-10%] lg:top-[-20%] left-0 w-[200%] lg:w-[102%] pointer-events-none select-none"
           style={{ animation: "slideUpFade 1.2s ease-out 1.5s both" }}
         >
           <Image
@@ -47,7 +47,7 @@ export default function Kegiatan() {
           {kegiatanData.map((item, index) => (
             <div
               key={item.id}
-              className={`w-full max-w-125 ${index % 2 === 0 ? "activity-card-left" : "activity-card-right"} ${isVisible ? "activity-card-visible" : ""}`}
+              className={`w-full max-w-125 ${index % 2 === 0 ? "fade-tilt-left" : "fade-tilt-right"} ${isVisible ? "fade-tilt-visible" : ""}`}
             >
               <KegiatanCard item={item} />
             </div>

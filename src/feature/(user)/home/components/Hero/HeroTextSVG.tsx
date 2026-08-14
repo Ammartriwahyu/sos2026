@@ -1,5 +1,3 @@
-"use client";
-
 export const HeroTextSVG = ({ className }: { className?: string }) => {
   return (
     <svg

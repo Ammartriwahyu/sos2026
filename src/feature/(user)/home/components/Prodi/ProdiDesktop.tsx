@@ -10,6 +10,7 @@ import BookImg from "@/assets/home/buwku.webp";
 import { prodiData } from "@/feature/(user)/akademik/data/prodiData";
 import SpaceBackground from "@/shared/components/background/SpaceBackground";
 import { cn } from "@/shared/utils/cn";
+import SectionTitle from "../SectionTitle";
 import ProdiCard from "./ProdiCard";
 
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -78,7 +79,7 @@ export default function ProdiDesktop({ className }: { className?: string }) {
   return (
     <div
       ref={wrapperRef}
-      className={cn("relative z-0 mt-[-50vh] h-[200vh]", className)}
+      className={cn("relative z-0 mt-[-50vh] h-[300vh]", className)}
     >
       <section
         id="prodi-section-desktop"
@@ -87,14 +88,14 @@ export default function ProdiDesktop({ className }: { className?: string }) {
         <SpaceBackground className="w-full h-full flex flex-col items-center justify-end pb-[6vh] relative overflow-hidden gap-8">
           <div className="absolute bottom-0 right-[-5%] pointer-events-none flex justify-center items-center z-0">
             <div className="size-100 rounded-full bg-radial from-[#7C3AED]/35 to-transparent blur-[70px] animate-pulse-glow"></div>
-            <div className="size-72 absolute bottom-[-20%] right-[-30%] opacity-20 rounded-full border border-[#06B6D4] animate-float-ring" />
+            <div className="size-72 absolute bottom-[-20%] right-[-30%] opacity-20 rounded-full border border-[#06B6D4] animate-spin-float" />
           </div>
-          <h2
+          <SectionTitle
             ref={titleRef}
-            className="w-full max-w-5xl py-2.5 bg-linear-to-r from-[#4A3488]/0 via-[#4A3488]/15 to-[#4A3488]/0 border-y border border-[#4A3488]/15 flex justify-center items-center text-center text-putih text-4xl font-bold backdrop-blur-sm"
+            className="flex justify-center items-center"
           >
-            STUDY PROGRAM
-          </h2>
+            PROGRAM STUDI
+          </SectionTitle>
           <div ref={bookRef} className="relative w-64 z-10">
             <Image
               src={BookImg}

@@ -10,7 +10,7 @@ export default function ProdiCard({
 }) {
   return (
     <article
-      className="rounded-4xl bg-[#142645]/55 p-6 gap-4 flex flex-col items-center justify-center shadow-2xl h-64 w-48 md:h-90 md:w-70 z-10 relative backdrop-blur-xs animate-dynamic-float"
+      className="rounded-4xl bg-[#142645]/55 p-6 gap-4 flex flex-col items-center justify-center shadow-2xl h-64 w-48 md:h-90 md:w-70 z-10 relative backdrop-blur-xs animate-float-complex"
       style={{ animationDelay: `${index * -2.3}s` }}
     >
       <Image

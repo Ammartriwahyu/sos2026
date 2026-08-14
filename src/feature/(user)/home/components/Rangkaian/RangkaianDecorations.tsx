@@ -19,21 +19,21 @@ export default function RangkaianDecorations() {
         <Image
           src={PlanetCoklat}
           alt="Planet Coklat"
-          className="absolute right-[-12%] top-[2%] md:top-[10%] w-[70%] md:w-[34%] animate-simple-float select-none"
+          className="absolute right-[-12%] top-[2%] md:top-[10%] w-[70%] md:w-[34%] animate-float-basic select-none"
           draggable={false}
           style={{ animationDelay: "0s" }}
         />
         <Image
           src={PlanetUngu}
           alt="Planet Ungu"
-          className="absolute left-[-9%] top-[25%] md:top-[35%] w-[70%] md:w-[33%] animate-simple-float select-none"
+          className="absolute left-[-9%] top-[25%] md:top-[35%] w-[70%] md:w-[33%] animate-float-basic select-none"
           draggable={false}
           style={{ animationDelay: "2s" }}
         />
         <Image
           src={Asteroid}
           alt="Asteroids"
-          className="absolute right-[-2%] bottom-[35%] w-[60%] md:w-[21%] animate-simple-float select-none"
+          className="absolute right-[-2%] bottom-[35%] w-[60%] md:w-[21%] animate-float-basic select-none"
           draggable={false}
           style={{ animationDelay: "1s" }}
         />

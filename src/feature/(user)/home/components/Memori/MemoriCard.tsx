@@ -1,7 +1,6 @@
 import Image from "next/image";
-import React from "react";
 import Texture from "@/assets/user/card-texture.png";
-import { Memori } from "../../data/memori";
+import type { Memori } from "../../data/memori";
 
 interface MemoriCardProps {
   memori: Memori;
@@ -37,11 +36,11 @@ const MemoriCard = ({ memori, isActive }: MemoriCardProps) => {
         )}
       </div>
       <div
-        className={`w-full h-[10rem] rounded-[4rem] flex items-end  relative z-10 -mt-28 bg-primary-500 transition-all duration-300 ${
+        className={`w-full h-40 rounded-[4rem] flex items-end  relative z-10 -mt-28 bg-primary-500 transition-all duration-300 ${
           isActive ? "block" : "hidden"
         }`}
       >
-        <div className="h-[4rem] flex items-center    w-full">
+        <div className="h-16 flex items-center    w-full">
           <p className=" text-white  font-medium text-sm  text-center 2xl:text-lg  mx-auto">
             {memori.title}
           </p>

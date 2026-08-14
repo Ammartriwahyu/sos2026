@@ -10,7 +10,7 @@ export default function RangkaianCard({
 }) {
   return (
     <article
-      className="bg-[#363B6F]/20 px-6 py-10 flex flex-col gap-4  overflow-hidden rounded-sm backdrop-blur-sm border border-white/10 w-full animate-dynamic-float"
+      className="bg-[#363B6F]/20 px-6 py-10 flex flex-col gap-4  overflow-hidden rounded-sm backdrop-blur-sm border border-white/10 w-full animate-float-complex"
       style={{ animationDelay: `${index * 1.5}s` }}
     >
       <div className="relative w-full rounded-md overflow-hidden">

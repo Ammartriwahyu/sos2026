@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Arrow from "@/assets/user/arrow-memori.svg";
 import { memoriData } from "../../data/memori";
 import MemoriCard from "./MemoriCard";
@@ -80,6 +80,7 @@ const MemoriSection = () => {
       </h4>
       <div className="w-full flex justify-between items-center gap-4 md:gap-10 mt-24">
         <button
+          type="button"
           onClick={handlePrevious}
           className="opacity-100 hover:opacity-80 transition-opacity duration-300"
         >
@@ -95,7 +96,7 @@ const MemoriSection = () => {
         >
           {visibleMemories.map((memori, index) => (
             <Link
-              key={`${memori.id}-${currentIndex}-${index}`}
+              key={`${memori.id}-${currentIndex}`}
               href={memori.link}
               target="_blank"
               rel="noopener noreferrer"
@@ -106,6 +107,7 @@ const MemoriSection = () => {
         </div>
 
         <button
+          type="button"
           onClick={handleNext}
           className="opacity-100 hover:opacity-80 transition-opacity duration-300"
         >

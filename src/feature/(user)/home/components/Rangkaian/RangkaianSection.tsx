@@ -32,8 +32,8 @@ export default function RangkaianSection() {
         {rangkaianData.map((item, index) => (
           <div
             key={item.id}
-            className={`w-full max-w-md ${index === 1 ? "md:mt-40" : ""} rangkaian-card-base ${
-              isInView ? "rangkaian-card-visible" : ""
+            className={`w-full max-w-md ${index === 1 ? "md:mt-40" : ""} fade-up-base ${
+              isInView ? "fade-up-visible" : ""
             }`}
             style={{ transitionDelay: `${index * 200}ms` }}
           >
@@ -57,7 +57,7 @@ export default function RangkaianSection() {
             className={`size-20 absolute top-[-6%] right-[-6%] animate-pulse-glow`}
           />
           <PanduanCard
-            className={`w-full max-w-2xl mt-6 origin-bottom-right ${isBottomInView ? "animate-chat-bubble" : "opacity-0"}`}
+            className={`w-full max-w-2xl mt-6 origin-bottom-right ${isBottomInView ? "animate-pop-in" : "opacity-0"}`}
             style={{ animationDelay: "0.6s" }}
           />
         </div>
@@ -65,7 +65,7 @@ export default function RangkaianSection() {
         <Image
           src={MaskotCewe}
           alt="Mascot SOS"
-          className={`w-[15vw] h-auto object-contain select-none not-lg:scale-180 origin-bottom self-end z-20 ${isBottomInView ? "animate-mascot-spring" : "opacity-0"}`}
+          className={`w-[15vw] h-auto object-contain select-none not-lg:scale-180 origin-bottom self-end z-20 ${isBottomInView ? "animate-bounce-idle" : "opacity-0"}`}
           draggable={false}
         />
       </div>

@@ -1,3 +1,7 @@
+/* ==========================================================================
+   FADE & SLIDE ANIMATIONS
+   ========================================================================== */
+
 @keyframes slideUpFade {
   0% {
     transform: translateY(400px);
@@ -8,57 +12,51 @@
     opacity: 1;
   }
 }
-@keyframes skewAsap {
-  0%,
-  100% {
-    transform: skew(0deg, 0deg);
-  }
-  50% {
-    transform: skew(6deg, -4deg);
-  }
+.animate-slide-up-fade {
+  animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-.animate-skew-asap {
-  animation: skewAsap 7s ease-in-out infinite;
-}
-.activity-card-left,
-.activity-card-right {
+
+.fade-tilt-left,
+.fade-tilt-right {
   opacity: 0;
   will-change: transform, opacity;
 }
-.activity-card-left {
+
+.fade-tilt-left {
   transform: perspective(1000px) translateY(300px) rotateX(-30deg)
     rotateY(-90deg);
   transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.2);
 }
-.activity-card-right {
+
+.fade-tilt-right {
   transform: perspective(1000px) translateY(300px) rotateX(-30deg)
     rotateY(90deg);
   transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.2);
   transition-delay: 0.15s;
 }
-.activity-card-visible.activity-card-left,
-.activity-card-visible.activity-card-right {
+
+.fade-tilt-visible.fade-tilt-left,
+.fade-tilt-visible.fade-tilt-right {
   opacity: 1;
   transform: perspective(1000px) translateY(0) rotateX(0) rotateY(0);
 }
 
-@keyframes pulseGlow {
-  0%,
-  100% {
-    opacity: 0.6;
-    transform: scale(0.9);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.1);
-  }
+.fade-up-base {
+  opacity: 0;
+  transform: translateY(120px) scale(0.85);
+  transition: all 1.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.animate-pulse-glow {
-  animation: pulseGlow 4s ease-in-out infinite;
+.fade-up-visible.fade-up-base {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
-@keyframes floatRing {
+/* ==========================================================================
+   FLOAT ANIMATIONS
+   ========================================================================== */
+
+@keyframes spinFloat {
   0% {
     transform: rotate(0deg) scale(1) translateY(0px);
   }
@@ -69,12 +67,11 @@
     transform: rotate(360deg) scale(1) translateY(0px);
   }
 }
-
-.animate-float-ring {
-  animation: floatRing 15s linear infinite;
+.animate-spin-float {
+  animation: spinFloat 15s linear infinite;
 }
 
-@keyframes dynamicFloat {
+@keyframes floatComplex {
   0%,
   100% {
     transform: translateY(0px) rotate(0deg) scale(1);
@@ -86,12 +83,11 @@
     transform: translateY(-5px) rotate(-1.5deg) scale(0.98);
   }
 }
-
-.animate-dynamic-float {
-  animation: dynamicFloat 7s ease-in-out infinite;
+.animate-float-complex {
+  animation: floatComplex 7s ease-in-out infinite;
 }
 
-@keyframes simpleFloat {
+@keyframes floatBasic {
   0%,
   100% {
     transform: translateY(0);
@@ -100,23 +96,32 @@
     transform: translateY(-10px);
   }
 }
-
-.animate-simple-float {
-  animation: simpleFloat 4s ease-in-out infinite;
+.animate-float-basic {
+  animation: floatBasic 4s ease-in-out infinite;
 }
 
-.rangkaian-card-base {
-  opacity: 0;
-  transform: translateY(120px) scale(0.85);
-  transition: all 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+/* ==========================================================================
+   SKEW & WOBBLE ANIMATIONS
+   ========================================================================== */
+
+@keyframes skewWobble {
+  0%,
+  100% {
+    transform: skew(0deg, 0deg);
+  }
+  50% {
+    transform: skew(6deg, -4deg);
+  }
+}
+.animate-skew-wobble {
+  animation: skewWobble 7s ease-in-out infinite;
 }
 
-.rangkaian-card-visible.rangkaian-card-base {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
+/* ==========================================================================
+   BOUNCE & POP ANIMATIONS
+   ========================================================================== */
 
-@keyframes mascotSpring {
+@keyframes bounceSpring {
   0% {
     transform: scale(0) translateY(50px);
     opacity: 0;
@@ -134,7 +139,7 @@
   }
 }
 
-@keyframes mascotIdle {
+@keyframes idleWobble {
   0% {
     transform: scale(1) translateY(0) rotate(0deg);
     animation-timing-function: ease-out;
@@ -156,13 +161,13 @@
   }
 }
 
-.animate-mascot-spring {
+.animate-bounce-idle {
   animation:
-    mascotSpring 0.9s ease-in-out both,
-    mascotIdle 3.5s linear 0.9s infinite;
+    bounceSpring 0.9s ease-in-out both,
+    idleWobble 3.5s linear 0.9s infinite;
 }
 
-@keyframes chatBubbleEnter {
+@keyframes popIn {
   0% {
     transform: scale(0);
     opacity: 0;
@@ -172,7 +177,25 @@
     opacity: 1;
   }
 }
+.animate-pop-in {
+  animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
 
-.animate-chat-bubble {
-  animation: chatBubbleEnter 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+/* ==========================================================================
+   GLOW & PULSE ANIMATIONS
+   ========================================================================== */
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
 }

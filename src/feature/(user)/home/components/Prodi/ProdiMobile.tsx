@@ -10,6 +10,7 @@ import BookImg from "@/assets/home/buwku.webp";
 import { prodiData } from "@/feature/(user)/akademik/data/prodiData";
 import SpaceBackground from "@/shared/components/background/SpaceBackground";
 import { cn } from "@/shared/utils/cn";
+import SectionTitle from "../SectionTitle";
 import ProdiCard from "./ProdiCard";
 
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -106,7 +107,7 @@ export default function ProdiMobile({ className }: { className?: string }) {
   return (
     <div
       ref={wrapperRef}
-      className={cn("relative z-0 mt-[-50vh] h-[200vh]", className)}
+      className={cn("relative z-0 mt-[-50vh] h-[300vh]", className)}
     >
       <section
         id="prodi-section-mobile"
@@ -115,14 +116,14 @@ export default function ProdiMobile({ className }: { className?: string }) {
         <SpaceBackground className="w-full h-full flex flex-col items-center justify-end pb-4 relative overflow-hidden gap-4">
           <div className="absolute bottom-0 right-[-5%] pointer-events-none flex justify-center items-center z-0">
             <div className="size-50 rounded-full bg-radial from-[#7C3AED]/35 to-transparent blur-[70px] animate-pulse-glow"></div>
-            <div className="size-42 absolute bottom-[-20%] right-[-30%] opacity-20 rounded-full border border-[#06B6D4] animate-float-ring" />
+            <div className="size-42 absolute bottom-[-20%] right-[-30%] opacity-20 rounded-full border border-[#06B6D4] animate-spin-float" />
           </div>
-          <h2
+          <SectionTitle
             ref={titleRef}
-            className="w-full py-2.5 px-4 bg-linear-to-r from-violet-900/0 via-violet-900/20 to-violet-900/0 border-y border-violet-900/0 flex justify-center items-center text-center text-gray-200 text-2xl font-bold uppercase"
+            className="flex justify-center items-center"
           >
-            STUDY PROGRAM
-          </h2>
+            PROGRAM STUDI
+          </SectionTitle>
           <div ref={bookRef} className="relative w-48 z-10">
             <Image
               src={BookImg}

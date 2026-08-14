@@ -143,7 +143,7 @@ const Hero = () => {
       ref={containerRef}
       className="h-screen w-full flex bg-linear-to-b from-pink-950 to-blue-950 items-center justify-center overflow-hidden sticky top-0 -z-10"
     >
-      <div className="animate-skew-asap absolute left-[-40%] top-[-10%]  lg:left-[-15%] lg:top-[-45%] w-[120%] lg:w-[66%] opacity-10 blur-lg">
+      <div className="animate-skew-wobble absolute left-[-40%] top-[-10%]  lg:left-[-15%] lg:top-[-45%] w-[120%] lg:w-[66%] opacity-10 blur-lg">
         <Image
           {...imgProps}
           src={Asap}
@@ -151,7 +151,7 @@ const Hero = () => {
           className="asap-bg w-full rotate-95"
         />
       </div>
-      <div className="animate-skew-asap absolute right-[-35%] top-0 lg:right-[-20%] lg:top-[-45%] w-[120%] lg:w-[66%] opacity-10 blur-lg">
+      <div className="animate-skew-wobble absolute right-[-35%] top-0 lg:right-[-20%] lg:top-[-45%] w-[120%] lg:w-[66%] opacity-10 blur-lg">
         <Image
           {...imgProps}
           src={Asap}
