@@ -64,7 +64,7 @@ const Navbar = () => {
   }, [pathname, user]);
   return (
     <>
-      <nav className="w-screen py-2 xl:py-2 2xl:py-4 bg-violet-darker fixed z-[999]">
+      <nav className="w-screen py-2 xl:py-2 2xl:py-4 bg-navbar-bg fixed z-[999]">
         <div className="mycontainer w-full h-full flex items-center justify-between">
           <div className="flex-2 md:flex-1 flex justify-start ">
             <Link
@@ -125,7 +125,7 @@ const Navbar = () => {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="fixed inset-0 z-50 bg-violet-darker text-white flex flex-col items-center pt-32  lg:hidden"
+            className="fixed inset-0 z-50 bg-navbar-bg text-white flex flex-col items-center pt-32  lg:hidden"
             variants={menuVariants}
             initial="hidden"
             animate="visible"

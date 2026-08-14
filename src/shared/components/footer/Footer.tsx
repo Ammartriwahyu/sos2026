@@ -8,7 +8,7 @@ import LogoSoS from "@/assets/assetsos26/logo-sos26.svg";
 
 export const Footer = () => {
   return (
-    <footer className="bg-black-normal text-white">
+    <footer className="bg-footer-gradient text-white">
       <div className="mycontainer py-[89px] md:py-[56px]">
         <div className="flex flex-col items-center md:flex-row md:justify-around gap-[34px] md:gap-[22px]">
           <div className="flex flex-col md:flex-row items-center gap-[22px] text-center md:text-left">
@@ -23,7 +23,7 @@ export const Footer = () => {
                 The Future
               </h4>
               <p className="text-[10px] md:text-[13px] text-white/70">
-                Embark on the Journey, Unite in Symphony
+                Aether of Synergy: Constructing Character, Igniting Potential
               </p>
             </div>
           </div>
