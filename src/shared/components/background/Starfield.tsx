@@ -1,4 +1,3 @@
-import React from "react";
 import Image from "next/image";
 import Star from "@/assets/assetsos26/shared/star.svg";
 
@@ -31,9 +30,9 @@ const STARS: StarConfig[] = [
 const Starfield = () => {
   return (
     <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
-      {STARS.map((s, i) => (
+      {STARS.map((s) => (
         <span
-          key={i}
+          key={s.top + s.left}
           className="peta-star"
           style={
             {
