@@ -23,7 +23,7 @@ export const Footer = () => {
                 The Future
               </h4>
               <p className="text-[10px] md:text-[13px] text-white/70">
-                Aether of Synergy: Constructing Character, Igniting Potential
+                Embark on the Journey, Unite in Symphony
               </p>
             </div>
           </div>

@@ -40,10 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-<<<<<<< HEAD
 # Local AI context file
 AGENTS.md
-=======
-# agents ai
-AGENTS.md
->>>>>>> 0461ae73196d7c617815d6f495a0ca99a8d45b46
