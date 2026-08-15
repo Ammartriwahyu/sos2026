@@ -1,6 +1,7 @@
 import { apiClient } from "@/api/core/AxiosInstance";
 
 export interface RekapPresensi {
+  id: number;
   rangkaian: string;
   sesi: string;
   waktu: string;
@@ -31,10 +32,49 @@ class PresensiService {
   }
 
   async getRekapPresensi(): Promise<BackendResponse<PresensiRekapData>> {
+    // BYPASS MOCK UNTUK LOCAL DEMO / DEVELOPMENT
+    if (
+      typeof window !== "undefined" &&
+      document.cookie.includes("auth_session=mock_demo_token")
+    ) {
+      return {
+        status_code: 200,
+        message: "Berhasil mengambil rekap presensi (mock)",
+        data: [
+          {
+            id: 1,
+            rangkaian: "Opening Ceremony",
+            sesi: "Sesi 1",
+            waktu: "08:00 - 10:00",
+            tanggal: "2026-08-01",
+          },
+          {
+            id: 2,
+            rangkaian: "Workshop Kepemimpinan",
+            sesi: "Sesi 2",
+            waktu: "10:00 - 12:00",
+            tanggal: "2026-08-01",
+          },
+          {
+            id: 3,
+            rangkaian: "Sesi Kebersamaan",
+            sesi: "Sesi 1",
+            waktu: "13:00 - 15:00",
+            tanggal: "2026-08-02",
+          },
+          {
+            id: 4,
+            rangkaian: "Closing Ceremony",
+            sesi: "Sesi 1",
+            waktu: "15:00 - 17:00",
+            tanggal: "2026-08-03",
+          },
+        ],
+      };
+    }
+
     const cacheKey = "rekap_presensi";
     const cachedItem = this.cache.get(cacheKey);
-
-    console.log(cachedItem);
 
     if (cachedItem && cachedItem.expiry > Date.now()) {
       return cachedItem.data;
