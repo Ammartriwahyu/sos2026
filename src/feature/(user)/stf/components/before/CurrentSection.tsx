@@ -1,11 +1,12 @@
 "use client";
-import { SectionTitle } from "@/feature/(user)/akademik/components/SectionTitle";
 import Image from "next/image";
 import React, { useMemo, useState } from "react";
-import CaturPattern from "@/assets/user/pembatas.svg";
 import { ProdiTabs } from "./ProdiTabs";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { stfData2024 } from "../../data/stfData2024";
+import Bintang from "@/assets/assetsos26/stf/bintang.svg";
+import SetengahBulan from "@/assets/assetsos26/stf/setengahbulan.svg";
+import CirclePurple from "@/assets/assetsos26/shared/circle-purple.svg";
 
 const CurrentSection = () => {
   const [activeProdiId, setActiveProdiId] = useState("sistem_informasi");
@@ -15,211 +16,155 @@ const CurrentSection = () => {
   }, [activeProdiId]);
 
   const contentVariants: Variants = {
-    hidden: { opacity: 0, y: 15 },
-    visible: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -15 },
-  };
-
-  const slideLeftToRightVariants: Variants = {
-    hidden: { opacity: 0, x: -500 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        type: "spring",
-        stiffness: 200,
-        damping: 20,
-        delay: 0.2,
-      },
-    },
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: { opacity: 1, scale: 1 },
+    exit: { opacity: 0, scale: 0.95 },
   };
 
   return (
-    <section className="bg-no-repeat bg-cover bg-login">
-      <div className="mycontainer text-center py-24 md:py-32">
-        <SectionTitle underline={false}>
-          Shaping The Future 2024
-          <div className="h-2  mt-4 rounded-lg bg-primary-600 w-full"></div>
-        </SectionTitle>
-        <div className="grid w-full grid-cols-1 md:grid-cols-3 gap-10 md:gap-4 lg:gap-12  md:items-start">
-          <div className="flex flex-row justify-center md:flex-col gap-4 h-full">
+    <section className="relative z-10 w-full text-white overflow-hidden">
+      {/* Setengah Bulan at top right (negative top offset to align with viewport top) */}
+      <Image
+        src={SetengahBulan}
+        alt=""
+        className="absolute -top-10 right-0 w-[180px] md:w-[280px] lg:w-[350px] pointer-events-none z-30"
+      />
+
+      {/* Circle Glow on the left and right (matching the glow wrapper technique from Peta page) */}
+      <div className="absolute top-[60%] left-0 -translate-x-1/2 w-[250px] md:w-[400px] -translate-y-1/2 pointer-events-none z-10">
+        <div className="peta-glow inset-0 h-full w-full opacity-60" />
+        <Image
+          src={CirclePurple}
+          alt=""
+          className="relative w-full opacity-50 mix-blend-screen scale-x-[-1]"
+        />
+      </div>
+      <div className="absolute top-[70%] right-0 translate-x-1/2 w-[250px] md:w-[400px] -translate-y-1/2 pointer-events-none z-10">
+        <div className="peta-glow inset-0 h-full w-full opacity-60" />
+        <Image
+          src={CirclePurple}
+          alt=""
+          className="relative w-full opacity-50 mix-blend-screen"
+        />
+      </div>
+
+      <div className="mycontainer pt-16 pb-12 md:pt-24 md:pb-24 relative z-20">
+        <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center">
+          {/* Left Column */}
+          <div className="flex flex-col items-start text-left relative z-20 mt-8 lg:mt-0">
+            <h1 className="text-5xl md:text-6xl lg:text-[5.5rem] font-bold leading-tight mb-6 relative">
+              Shaping The
+              <br /> Future 2026
+            </h1>
+            <p className="text-lg md:text-xl text-white/80 mb-12 max-w-md">
+              Bersama kita membentuk masa depan dengan kepemimpinan yang
+              inspiratif
+            </p>
+
             <ProdiTabs
               activeProdiId={activeProdiId}
               onSelectProdi={setActiveProdiId}
             />
           </div>
 
-          <div className="md:col-span-2 ml-4 md:ml-0">
-            <div className="text-default-dark md:hidden drop-shadow">
-              <AnimatePresence mode="wait">
-                {activeProdiData && (
-                  <motion.div
-                    key={activeProdiId}
-                    variants={contentVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                  >
-                    <div className="bg-transparent">
-                      <div className="w-11/12 h-fit bg-primary-500 border rounded-s-4xl rounded-e-3xl flex items-start gap-6">
-                        <div className="w-full bg-white px-4 pt-4 pb-12 rounded-3xl">
-                          <Image
-                            src={activeProdiData.image}
-                            alt="Dummy"
-                            width={500}
-                            height={500}
-                            className="w-full h-[10rem] object-cover"
-                          />
-                        </div>
-                        <div className="w-full text-secondary flex flex-col text-left items-start gap-y-2 py-4 pr-4">
-                          <span className="text-sm font-normal">
-                            Ketua dan Wakil Ketua Angkatan
-                          </span>
-                          <h4 className="font-semibold text-2xl">
-                            {activeProdiData.shortName} 2024
-                          </h4>
-                        </div>
+          {/* Right Column (Candidate Card) */}
+          <div className="relative z-20 flex justify-center lg:justify-end mt-12 lg:mt-0 lg:pr-12">
+            <AnimatePresence mode="wait">
+              {activeProdiData && (
+                <motion.div
+                  key={activeProdiId}
+                  variants={contentVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  transition={{ duration: 0.4 }}
+                  className="relative flex flex-col items-center"
+                >
+                  {/* Arched Window - Saturated purple background */}
+                  <div className="relative w-[320px] sm:w-[380px] md:w-[450px] h-[380px] sm:h-[450px] md:h-[480px] rounded-t-[250px] border-[3px] border-[#a78bfa] shadow-[0_0_25px_rgba(167,139,250,0.5)] bg-[#311a68] flex flex-col items-center overflow-visible">
+                    {/* Decorative Star on the left edge of the arch - Enlarged & Animated */}
+                    <motion.div
+                      style={{ originX: 0.5, originY: 1 }}
+                      animate={{
+                        rotate: [-2.5, 2.5, -2.5],
+                        filter: [
+                          "drop-shadow(0px 0px 10px rgba(167,139,250,0.3))",
+                          "drop-shadow(0px 0px 50px rgba(167,139,250,1))",
+                          "drop-shadow(0px 0px 10px rgba(167,139,250,0.3))",
+                        ],
+                      }}
+                      transition={{
+                        duration: 7,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                      className="absolute left-0 bottom-0 -translate-x-1/2 translate-y-1/5 z-40 origin-bottom"
+                    >
+                      <Image
+                        src={Bintang}
+                        alt=""
+                        className="w-[300px] h-[300px] md:w-[600px] md:h-[600px] peta-spin-rev pointer-events-none"
+                      />
+                    </motion.div>
+
+                    {/* Decorative Star on the right edge of the arch - Enlarged & Animated */}
+                    <motion.div
+                      style={{ originX: 0.5, originY: 1 }}
+                      animate={{
+                        rotate: [2.5, -2.5, 2.5],
+                        filter: [
+                          "drop-shadow(0px 0px 10px rgba(167,139,250,0.3))",
+                          "drop-shadow(0px 0px 50px rgba(167,139,250,1))",
+                          "drop-shadow(0px 0px 10px rgba(167,139,250,0.3))",
+                        ],
+                      }}
+                      transition={{
+                        duration: 7,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                      className="absolute right-0 bottom-0 translate-x-1/2 translate-y-1/5 z-40 origin-bottom"
+                    >
+                      <div className="scale-x-[-1]">
+                        <Image
+                          src={Bintang}
+                          alt=""
+                          className="w-[300px] h-[300px] md:w-[600px] md:h-[600px] peta-spin-rev pointer-events-none"
+                        />
                       </div>
-                      <motion.div
-                        className="bg-secondary absolute right-3 top-26 w-[11rem] h-[5.5rem] rounded-2xl shadow-2xl"
-                        key={activeProdiId + "-animated"}
-                        initial="hidden"
-                        animate="visible"
-                        variants={slideLeftToRightVariants}
-                        style={{
-                          skewX: -14,
-                          rotate: -6,
-                        }}
-                      >
-                        <div className="w-full h-full flex justify-center items-center">
-                          <p className="text-default-dark font-semibold text-2xl">
-                            {activeProdiData.ketangWaketang}
-                          </p>
-                        </div>
-                      </motion.div>
+                    </motion.div>
+
+                    <div className="pt-8 md:pt-10 flex flex-col items-center text-center z-20">
+                      <p className="text-sm md:text-base text-white/80 font-medium tracking-wide">
+                        Ketua dan Wakil Ketua
+                      </p>
+                      <h2 className="text-2xl md:text-4xl font-bold text-white mt-2 drop-shadow-md">
+                        {activeProdiData.shortName} 2026
+                      </h2>
                     </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-            <div className="hidden md:block lg:hidden text-default-dark drop-shadow">
-              <div className="px-8">
-                <AnimatePresence mode="wait">
-                  {activeProdiData && (
-                    <motion.div
-                      key={activeProdiId}
-                      variants={contentVariants}
-                      initial="hidden"
-                      animate="visible"
-                      exit="exit"
-                    >
-                      <div className="bg-transparent mr-12">
-                        <div className="w-full h-fit bg-primary-500 border rounded-s-4xl rounded-e-3xl flex items-center gap-6">
-                          <div className="w-fit bg-white px-6 pt-6 pb-18 rounded-3xl">
-                            <Image
-                              src={activeProdiData.image}
-                              alt="Dummy"
-                              width={500}
-                              height={500}
-                              className="w-[14rem] h-[14rem] object-cover"
-                            />
-                          </div>
-                          <div className="h-[16rem] text-secondary flex flex-col items-start text-left gap-y-2">
-                            <span className="text-xl font-normal">
-                              Ketua dan Wakil Ketua Angkatan
-                            </span>
-                            <h4 className="font-semibold text-4xl">
-                              {activeProdiData.shortName} 2024
-                            </h4>
-                          </div>
-                        </div>
-                        <motion.div
-                          className="bg-secondary absolute right-5 top-1/2 bottom-50 w-[12rem] h-[7rem] rounded-2xl shadow-2xl"
-                          key={activeProdiId + "-animated"}
-                          initial="hidden"
-                          animate="visible"
-                          variants={slideLeftToRightVariants}
-                          style={{
-                            skewX: -14,
-                            rotate: -6,
-                          }}
-                        >
-                          <div className="w-full h-full flex justify-center items-center px-2">
-                            <p className="text-default-dark font-bold text-3xl">
-                              {activeProdiData.ketangWaketang}
-                            </p>
-                          </div>
-                        </motion.div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </div>
-            <div className="hidden lg:block text-default-dark drop-shadow">
-              <div className="px-8">
-                <AnimatePresence mode="wait">
-                  {activeProdiData && (
-                    <motion.div
-                      key={activeProdiId}
-                      variants={contentVariants}
-                      initial="hidden"
-                      animate="visible"
-                      exit="exit"
-                    >
-                      <div className="bg-transparent mr-16">
-                        <div className="w-full h-fit bg-primary-500 border rounded-s-4xl rounded-e-3xl flex items-center gap-10">
-                          <div className="w-fit bg-white px-6 pt-6 pb-18 rounded-3xl">
-                            <Image
-                              src={activeProdiData.image}
-                              alt="Dummy"
-                              width={500}
-                              height={500}
-                              className="w-[18rem] h-[18rem] object-cover"
-                            />
-                          </div>
-                          <div className="h-[18rem] text-secondary flex flex-col items-start gap-y-2 text-left">
-                            <span className="text-2xl font-normal">
-                              Ketua dan Wakil Ketua Angkatan
-                            </span>
-                            <h4 className="font-semibold text-6xl">
-                              {activeProdiData.shortName} 2024
-                            </h4>
-                          </div>
-                        </div>
-                        <motion.div
-                          className="bg-secondary absolute right-5 bottom-12 w-[20rem] h-[10rem] rounded-2xl shadow-2xl p-4"
-                          key={activeProdiId + "-animated"}
-                          initial="hidden"
-                          animate="visible"
-                          variants={slideLeftToRightVariants}
-                          style={{
-                            skewX: -14,
-                            rotate: -6,
-                          }}
-                        >
-                          <div className="w-full h-full flex justify-center items-center">
-                            <p className="text-default-dark font-bold text-5xl">
-                              {activeProdiData.ketangWaketang}
-                            </p>
-                          </div>
-                        </motion.div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </div>
+
+                    {/* Candidate Image */}
+                    <div className="absolute bottom-0 w-[95%] h-[75%] flex justify-center items-end overflow-hidden rounded-t-[220px] z-10">
+                      <Image
+                        src={activeProdiData.image}
+                        alt="Kandidat"
+                        className="w-[90%] h-auto object-contain object-bottom drop-shadow-2xl"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Banner at the bottom */}
+                  <div className="relative mt-4 md:mt-6 z-30 bg-[#a78bfa] text-white w-[320px] sm:w-[380px] md:w-[450px] py-2 md:py-3 rounded-t-[5px] rounded-b-[80px] shadow-xl text-center">
+                    <p className="text-xl md:text-3xl font-bold">
+                      {activeProdiData.ketangWaketang}
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>
-
-      <Image
-        src={CaturPattern}
-        alt="Pembatas"
-        className="w-full h-18 object-cover md:h-auto"
-        aria-hidden="true"
-      />
     </section>
   );
 };

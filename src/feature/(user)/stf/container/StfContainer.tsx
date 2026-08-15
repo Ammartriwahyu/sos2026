@@ -10,6 +10,8 @@ import CtaSection from "../components/before/CtaSection";
 import { useGetStfData } from "../hooks/useGetStfData";
 import GradientBackground from "@/shared/components/background/GradientBackground";
 import { useAuthContext } from "@/shared/hooks/useAuthContext";
+import SpaceBackground from "@/shared/components/background/SpaceBackground";
+import GrassDivider from "@/shared/components/background/GrassDivider";
 
 const StfContainer = () => {
   const { stfData, caketangList, isLoading, error } = useGetStfData();
@@ -68,10 +70,16 @@ const StfContainer = () => {
           )}
         </>
       ) : (
-        <>
+        <SpaceBackground className="w-full flex flex-col overflow-hidden">
           <CurrentSection />
+
+          <div className="relative z-20 w-full mt-24">
+            <GrassDivider className="translate-y-px" />
+            <div className="w-full h-16 md:h-24 peta-flashback-bg" />
+          </div>
+
           <CtaSection />
-        </>
+        </SpaceBackground>
       )}
     </>
   );
