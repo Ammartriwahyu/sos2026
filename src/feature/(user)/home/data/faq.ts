@@ -21,7 +21,14 @@ export const faqData: FAQ[] = [
   {
     id: 3,
     question:
-      "Bagaimana system komunikasi resmi dari panitia (Line, Email, grup WA)",
+      "Bagaimana sistem komunikasi resmi dari panitia (LINE, email, grup WA)?",
     answer: "Untuk komunikasi kita menggunakan Line ya.",
+  },
+  {
+    id: 4,
+    question:
+      "Bagaimana jika ada mahasiswa baru yang memiliki kebutuhan khusus atau disabilitas?",
+    answer:
+      "Panitia akan memfasilitasi setiap kebutuhan khusus. Silakan hubungi panitia melalui kontak resmi untuk informasi lebih lanjut.",
   },
 ];

@@ -48,11 +48,18 @@ export const MemoriCarousel = ({ children }: { children: React.ReactNode }) => {
           }}
         >
           {[...items, ...items, ...items].map((item, i) => {
-            const el = item as React.ReactElement<{ className?: string }>;
+            const el = item as React.ReactElement<{
+              className?: string;
+              style?: React.CSSProperties;
+            }>;
             return React.cloneElement(el, {
               key: `${el.key || "c"}-${i}`,
               "data-dist": i - idx,
               className: `${el.props.className || ""} card`,
+              style: {
+                ...(el.props.style || {}),
+                "--anim-delay": `${(i * 0.7) % 7}s`,
+              } as React.CSSProperties,
             } as React.HTMLAttributes<HTMLElement>);
           })}
         </div>

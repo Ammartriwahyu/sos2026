@@ -117,6 +117,19 @@
   animation: skewWobble 7s ease-in-out infinite;
 }
 
+@keyframes rotateIdle {
+  0%,
+  100% {
+    transform: rotate(-15deg);
+  }
+  50% {
+    transform: rotate(15deg);
+  }
+}
+.animate-rotate-idle {
+  animation: rotateIdle 5s ease-in-out infinite;
+}
+
 /* ==========================================================================
    BOUNCE & POP ANIMATIONS
    ========================================================================== */
