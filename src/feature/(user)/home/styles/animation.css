@@ -199,3 +199,158 @@
 .animate-pulse-glow {
   animation: pulseGlow 4s ease-in-out infinite;
 }
+
+/* ==========================================================================
+   CAROUSEL FALL & BLUR ANIMATIONS
+   ========================================================================== */
+
+.card {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  will-change: transform, opacity, filter;
+  backface-visibility: hidden;
+}
+
+@media (max-width: 767px) {
+  .card[data-dist="0"] {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .card[data-dist="0"],
+  .card[data-dist="1"] {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+}
+
+@media (min-width: 1024px) {
+  .card[data-dist="0"],
+  .card[data-dist="1"],
+  .card[data-dist="2"] {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+}
+
+@keyframes gravity-fall-left {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+    opacity: 1;
+    visibility: visible;
+  }
+  15% {
+    transform: translate3d(-30px, -20px, 0) rotate(-10deg);
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    transform: translate3d(-100px, 500px, 0) rotate(-45deg);
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes gravity-fall-right {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+    opacity: 1;
+    visibility: visible;
+  }
+  15% {
+    transform: translate3d(30px, -20px, 0) rotate(10deg);
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    transform: translate3d(100px, 500px, 0) rotate(45deg);
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes carousel-blur-in {
+  0% {
+    filter: blur(8px);
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.85);
+    visibility: visible;
+  }
+  100% {
+    filter: blur(0);
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    visibility: visible;
+  }
+}
+
+/* Disable conflicting transitions while the carousel is animating */
+.track[data-dir="1"] .card,
+.track[data-dir="-1"] .card {
+  transition: none;
+}
+
+.track[data-dir="1"] .card[data-dist="-1"] {
+  animation: gravity-fall-left 0.5s forwards
+    cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  visibility: visible;
+}
+.track[data-dir="-1"] .card[data-dist="1"] {
+  animation: gravity-fall-right 0.5s forwards
+    cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  visibility: visible;
+}
+.track[data-dir="1"] .card[data-dist="0"] {
+  animation: carousel-blur-in 0.5s forwards ease-out;
+  visibility: visible;
+}
+.track[data-dir="-1"] .card[data-dist="0"] {
+  animation: carousel-blur-in 0.5s forwards ease-out;
+  visibility: visible;
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .track[data-dir="-1"] .card[data-dist="1"] {
+    animation: none;
+    visibility: visible;
+  }
+  .track[data-dir="1"] .card[data-dist="0"] {
+    animation: none;
+    visibility: visible;
+  }
+  .track[data-dir="-1"] .card[data-dist="2"] {
+    animation: gravity-fall-right 0.5s forwards
+      cubic-bezier(0.55, 0.085, 0.68, 0.53);
+    visibility: visible;
+  }
+  .track[data-dir="1"] .card[data-dist="1"] {
+    animation: carousel-blur-in 0.5s forwards ease-out;
+    visibility: visible;
+  }
+}
+
+@media (min-width: 1024px) {
+  .track[data-dir="-1"] .card[data-dist="1"] {
+    animation: none;
+    visibility: visible;
+  }
+  .track[data-dir="1"] .card[data-dist="0"] {
+    animation: none;
+    visibility: visible;
+  }
+  .track[data-dir="-1"] .card[data-dist="3"] {
+    animation: gravity-fall-right 0.5s forwards
+      cubic-bezier(0.55, 0.085, 0.68, 0.53);
+    visibility: visible;
+  }
+  .track[data-dir="1"] .card[data-dist="2"] {
+    animation: carousel-blur-in 0.5s forwards ease-out;
+    visibility: visible;
+  }
+}

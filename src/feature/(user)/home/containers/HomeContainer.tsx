@@ -1,6 +1,6 @@
-import FaqSection from "../components/FAQ/FaqSection";
 import Hero from "../components/Hero/HeroSection";
 import Kegiatan from "../components/Kegiatan/KegiatanSection";
+import MemoriFaq from "../components/MemoriFaq/MemoriFaqSection";
 import Prodi from "../components/Prodi/ProdiSection";
 import Rangkaian from "../components/Rangkaian/RangkaianSection";
 import "../styles/animation.css";
@@ -12,7 +12,7 @@ const HomeContainer = () => {
       <Kegiatan />
       <Prodi />
       <Rangkaian />
-      <FaqSection />
+      <MemoriFaq />
     </main>
   );
 };

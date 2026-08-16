@@ -1,6 +1,9 @@
 "use client";
 
+import { useGSAP } from "@gsap/react";
 import { useInView } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { useRef } from "react";
 import Bintang from "@/assets/home/bintang.png";
@@ -11,17 +14,36 @@ import PanduanCard from "./PanduanCard";
 import RangkaianCard from "./RangkaianCard";
 import RangkaianDecorations from "./RangkaianDecorations";
 
+if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger, useGSAP);
+
 export default function RangkaianSection() {
+  const sectionRef = useRef<HTMLElement>(null);
   const ref = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "0px 0px -40% 0px" });
   const isBottomInView = useInView(bottomRef, {
     once: true,
-    margin: "0px 0px -20% 0px",
+    margin: "0px 0px 0% 0px",
   });
 
+  useGSAP(
+    () => {
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "bottom bottom",
+        end: "+=100%",
+        pin: true,
+        pinSpacing: false,
+      });
+    },
+    { scope: sectionRef },
+  );
+
   return (
-    <section className="flex flex-col min-h-screen items-center justify-center bg-linear-to-b from-[#161A3D] to-[#111633] overflow-visible relative pt-24 md:pt-48 lg:pb-24 xl:pb-12 mt-[-100vh]">
+    <section
+      ref={sectionRef}
+      className="flex flex-col min-h-screen items-center justify-center bg-linear-to-b from-[#161A3D] to-[#111633] overflow-visible relative pt-24 md:pt-48 lg:pb-24 xl:pb-12 mt-[-100vh]"
+    >
       <RangkaianDecorations />
 
       <SectionTitle className="not-md:mb-20">RANGKAIAN</SectionTitle>
