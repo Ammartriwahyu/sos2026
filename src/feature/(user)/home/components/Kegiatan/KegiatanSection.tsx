@@ -22,7 +22,7 @@ export default function Kegiatan() {
         Activities
       </h2>
       <SpaceBackground className="relative z-10 pt-56 pb-18 w-full flex flex-col justify-center items-center overflow-visible">
-        <div className="absolute lg:bottom-[-60%] left-[-50%] lg:left-[-50%] translate-x-1/2 size-200">
+        <div className="absolute lg:bottom-[-60%] left-[50%] lg:left-[-50%] -translate-x-1/2 size-100 md:size-150 lg:size-200">
           <div className="peta-glow inset-0 h-full w-full opacity-70" />
           <Image
             src={SolarSystem}
@@ -31,7 +31,7 @@ export default function Kegiatan() {
           />
         </div>
         <div
-          className="absolute top-[-5%] md:top-[-10%] lg:top-[-20%] left-0 w-[200%] lg:w-[102%] pointer-events-none select-none"
+          className="absolute top-[-5%] md:top-[-20%] left-0 w-[200%] lg:w-[102%] pointer-events-none select-none"
           style={{ animation: "slideUpFade 1.2s ease-out 1.5s both" }}
         >
           <Image
