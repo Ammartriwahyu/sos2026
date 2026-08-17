@@ -3,8 +3,9 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLenis } from "lenis/react";
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import Asap from "@/assets/home/asap.png";
 import AsapPink from "@/assets/home/asap-pink.webp";
 import batuIreng from "@/assets/home/batu-ireng.webp";
@@ -16,10 +17,29 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
   const containerRef = useRef<HTMLElement>(null);
+  const lenis = useLenis();
+  const hasUnlocked = useRef(false);
+
+  useEffect(() => {
+    if (hasUnlocked.current) return;
+
+    lenis?.stop();
+
+    const timer = setTimeout(() => {
+      hasUnlocked.current = true;
+      lenis?.start();
+    }, 3000);
+
+    return () => {
+      clearTimeout(timer);
+      lenis?.start();
+    };
+  }, [lenis]);
 
   useGSAP(
     () => {
       const tl = gsap.timeline();
+
       const commonTo = {
         y: 0,
         x: 0,
@@ -101,21 +121,22 @@ const Hero = () => {
           ease: "power2.out",
           onComplete: () => gsap.set(target, { webkitMaskImage: "none" }),
         });
-        tl.to(".asap-item", maskTo(".asap-item", 4), "-=5.5")
-          .to(".asap-bg", maskTo(".asap-bg", 8), "<")
-          .to(
-            ".asap-item",
-            {
-              skewX: 8,
-              skewY: -5,
-              repeat: -1,
-              yoyo: true,
-              duration: 4,
-              ease: "sine.inOut",
-              transformOrigin: "10% 80%",
-            },
-            "<",
-          );
+        tl.to(".asap-item", maskTo(".asap-item", 4), "-=5.5").to(
+          ".asap-bg",
+          maskTo(".asap-bg", 8),
+          "<",
+        );
+
+        gsap.to(".asap-item", {
+          skewX: 8,
+          skewY: -5,
+          repeat: -1,
+          yoyo: true,
+          duration: 4,
+          ease: "sine.inOut",
+          transformOrigin: "10% 80%",
+          delay: 0.5,
+        });
       }
 
       const pOpt = {
@@ -131,7 +152,11 @@ const Hero = () => {
       };
       window.addEventListener("mousemove", handleMouseMove);
 
-      return () => window.removeEventListener("mousemove", handleMouseMove);
+      return () => {
+        document.documentElement.style.overflow = "";
+        document.body.style.overflow = "";
+        window.removeEventListener("mousemove", handleMouseMove);
+      };
     },
     { scope: containerRef },
   );
@@ -148,7 +173,7 @@ const Hero = () => {
           {...imgProps}
           src={Asap}
           alt="Asap"
-          className="asap-bg w-full rotate-95"
+          className="asap-bg w-full rotate-95 select-none"
         />
       </div>
       <div className="animate-skew-wobble absolute right-[-35%] top-0 lg:right-[-20%] lg:top-[-45%] w-[120%] lg:w-[66%] opacity-10 blur-lg">
@@ -156,7 +181,7 @@ const Hero = () => {
           {...imgProps}
           src={Asap}
           alt="Asap"
-          className="asap-bg w-full rotate-45 lg:rotate-105 scale-y-[-1]"
+          className="asap-bg w-full rotate-45 lg:rotate-105 scale-y-[-1] select-none"
         />
       </div>
       <Image
