@@ -11,7 +11,7 @@ export default function LoginPageContainer() {
   const formLogic = useLoginForm();
   return (
     <div className="flex flex-col min-h-screen">
-      <SpaceBackground className="flex-1 flex flex-col relative pt-32 pb-0 overflow-hidden">
+      <SpaceBackground className="flex-1 flex flex-col relative min-h-[120vh] md:min-h-screen pt-32 pb-0 overflow-hidden">
         <LoginDecorations />
 
         {/* Bottom gradient glow (Gradasi bawah) */}
