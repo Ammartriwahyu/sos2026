@@ -201,7 +201,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
       </div>
 
       {/* BOTTOM CARDS ROW */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-6">
         {/* INFORMASI KESEHATAN CARD */}
         <div className={cardClassName}>
           <h2 className="text-white text-xl md:text-2xl font-bold mb-8">
