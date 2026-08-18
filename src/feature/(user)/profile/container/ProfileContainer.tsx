@@ -8,6 +8,7 @@ import { useProfile } from "../hooks/useProfile";
 
 import SpaceBackground from "@/shared/components/background/SpaceBackground";
 import CirclePurple from "@/assets/assetsos26/shared/circle-purple.svg";
+import GrassDivider from "@/shared/components/background/GrassDivider";
 
 const ProfileContainer: React.FC = () => {
   const {
@@ -22,7 +23,7 @@ const ProfileContainer: React.FC = () => {
   } = useProfile();
 
   return (
-    <SpaceBackground className="min-h-screen pt-24 pb-14 font-poppins relative overflow-hidden">
+    <SpaceBackground className="flex flex-col min-h-screen pt-24 pb-0 font-poppins relative overflow-hidden">
       {/* Glowing Purple Orbs and Dashed Circles */}
 
       {/* Kanan Atas (mepet navbar) */}
@@ -35,14 +36,14 @@ const ProfileContainer: React.FC = () => {
         <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 w-[400px] h-[400px] bg-[#3D2AA8] rounded-full blur-[140px] opacity-70"></div>
       </div>
 
-      {/* Kiri Bawah (mepet batu) */}
-      <div className="absolute bottom-[-220px] left-0 pointer-events-none z-0 flex items-center justify-start h-[450px]">
+      {/* Kiri Bawah (nempel rumput) */}
+      <div className="absolute bottom-16 md:bottom-24 left-0 pointer-events-none z-0 flex items-center justify-start h-[200px] md:h-[450px]">
         <Image
           src={CirclePurple}
           alt="Circle"
-          className="h-full w-auto object-contain -scale-x-100 opacity-60"
+          className="hidden md:block h-full w-auto object-contain -scale-x-100 opacity-60"
         />
-        <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 w-[300px] h-[300px] bg-[#4C34D2] rounded-full blur-[120px] opacity-70"></div>
+        <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 w-[200px] md:w-[300px] h-[200px] md:h-[300px] bg-[#4C34D2] rounded-full blur-[90px] md:blur-[120px] opacity-60 md:opacity-70"></div>
       </div>
 
       {/* Kiri Kecil (sebelah kotak identitas) */}
@@ -55,7 +56,7 @@ const ProfileContainer: React.FC = () => {
         <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 w-[200px] h-[200px] bg-[#4C34D2] rounded-full blur-[100px] opacity-60"></div>
       </div>
 
-      <section className="mycontainer relative z-10 max-w-5xl mx-auto">
+      <section className="mycontainer relative z-10 max-w-5xl mx-auto flex-1 mb-8 md:mb-24">
         <div className="flex flex-row justify-between items-center md:items-center">
           <h4 className="text-white text-3xl md:text-4xl font-bold tracking-wide">
             Profil
@@ -102,6 +103,11 @@ const ProfileContainer: React.FC = () => {
           />
         </div>
       </section>
+
+      <div className="relative z-20 mt-auto w-full">
+        <GrassDivider className="translate-y-px" />
+        <div className="w-full h-16 md:h-24 peta-flashback-bg" />
+      </div>
     </SpaceBackground>
   );
 };
