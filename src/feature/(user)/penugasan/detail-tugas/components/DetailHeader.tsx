@@ -1,10 +1,10 @@
-import { Badge, BadgeProps } from "@/shared/components/ui/Badge";
+import { BadgeSos, BadgeSosProps } from "@/shared/components/ui/BadgeSos26";
 
 interface DetailHeaderProps {
   judul: string;
   deadline: string;
   statusText: string;
-  statusVariant: BadgeProps["variant"];
+  statusVariant: BadgeSosProps["variant"];
 }
 
 export const DetailHeader = ({
@@ -14,22 +14,49 @@ export const DetailHeader = ({
   statusVariant,
 }: DetailHeaderProps) => {
   return (
-    <div className="flex flex-col gap-4 md:flex-row justify-center md:justify-between items-center md:items-start">
-      <div className="flex flex-col gap-1 items-center md:items-start">
-        <h1 className="text-3xl text-center lg:text-left font-semibold text-primary-600">
-          {judul}
-        </h1>
-        <p className="text-default-dark text-center md:text-left">
-          Deadline : {deadline}
-        </p>
+    <div className="flex flex-col items-center w-full gap-6">
+      <div className="w-full flex flex-col items-center">
+        {/* Garis Gradien Atas */}
+        <div
+          className="w-full h-[2px]"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(74, 52, 136, 0) 0%, rgba(74, 52, 136, 0.7) 50%, rgba(74, 52, 136, 0) 100%)",
+          }}
+        />
+
+        {/* Kotak Gradien Tengah */}
+        <div
+          className="w-full h-[80px] flex items-center justify-center px-4"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(74, 52, 136, 0) 0%, rgba(74, 52, 136, 0.4) 50%, rgba(74, 52, 136, 0) 100%)",
+          }}
+        >
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white text-center">
+            {judul}
+          </h1>
+        </div>
+
+        {/* Garis Gradien Bawah */}
+        <div
+          className="w-full h-[2px]"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(74, 52, 136, 0) 0%, rgba(74, 52, 136, 0.7) 50%, rgba(74, 52, 136, 0) 100%)",
+          }}
+        />
       </div>
 
-      <Badge
-        variant={statusVariant}
-        className="text-sm px-8 md:px-3 py-2 self-center md:self-start"
-      >
-        {statusText}
-      </Badge>
+      <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 px-2">
+        <p className="text-white text-base md:text-lg font-normal text-center md:text-left">
+          Deadline : {deadline}
+        </p>
+
+        <BadgeSos variant={statusVariant} className="text-sm px-6 py-2">
+          {statusText}
+        </BadgeSos>
+      </div>
     </div>
   );
 };

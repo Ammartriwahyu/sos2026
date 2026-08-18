@@ -31,15 +31,15 @@ const AktivitasAfterLogin = ({ user }: AktivitasAfterLoginProps) => {
       <div className="w-full flex flex-col min-h-[1227px] relative pt-24 lg:pt-36 pb-36 lg:pb-48 z-10 justify-between">
         <div className="mycontainer w-full">
           <div className="flex flex-col items-center justify-center w-full">
-            <div className="w-full md:w-[805px] h-auto md:h-[458px] flex flex-col gap-[16px] z-20 relative mb-20 lg:mb-28">
+            <div className="w-full max-w-[805px] h-auto min-h-[458px] flex flex-col gap-[16px] z-20 relative mb-20 lg:mb-28">
               <div
-                className="w-full md:w-[805px] md:h-[124px] rounded-[12px] py-4 md:py-[24px] px-6 md:px-[48px] flex flex-col justify-center"
+                className="w-full min-h-[124px] rounded-[12px] py-4 md:py-[24px] px-6 md:px-[48px] flex flex-col justify-center"
                 style={liquidGlassStyle}
               >
                 <h4 className="text-4xl font-semibold text-white mb-1 md:mb-2 drop-shadow-md">
                   Fasilitator
                 </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-80 gap-y-1">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-20 gap-y-1">
                   {user.kelompok?.distrik?.list_pjl.map((pjl, idx) => (
                     <div key={idx} className="flex items-center gap-2">
                       <span className="text-2xl text-white">{pjl.nama}</span>
@@ -55,10 +55,10 @@ const AktivitasAfterLogin = ({ user }: AktivitasAfterLoginProps) => {
               </div>
 
               <div
-                className="w-full md:w-[805px] md:h-[318px] rounded-[12px] py-4 md:py-[24px] px-6 md:px-[48px] flex flex-col justify-center"
+                className="w-full min-h-[318px] rounded-[12px] py-6 md:py-[24px] px-6 md:px-[48px] flex flex-col justify-center"
                 style={liquidGlassStyle}
               >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-12 gap-x-80">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-12 gap-x-8 md:gap-x-20">
                   <div>
                     <p className="text-white text-2xl font-medium">
                       Nama Lengkap

@@ -3,20 +3,28 @@ import { cn } from "@/shared/utils/cn";
 
 interface AktivitasButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
+  variant?: "primary" | "outline";
 }
 
 const AktivitasButton = forwardRef<HTMLButtonElement, AktivitasButtonProps>(
-  ({ className, children, disabled, ...props }, ref) => {
+  ({ className, children, disabled, variant = "primary", ...props }, ref) => {
     return (
       <button
         ref={ref}
         disabled={disabled}
         className={cn(
           "flex w-full justify-center items-center rounded-2xl",
-          "px-[12px] py-[12px] text-base font-bold text-white",
+
+          "px-[12px] py-[12px] text-base font-bold text-white gap-2",
           "transition-all duration-300",
 
-          "bg-[#605992] hover:bg-[#524c7f] active:bg-[#453f6c]",
+          variant === "primary" && [
+            "bg-[#605992] hover:bg-[#524c7f] active:bg-[#453f6c]",
+          ],
+          variant === "outline" && [
+            "bg-[#2A1F5C]/50 border border-[#605992]",
+            "hover:bg-[#2A1F5C]/80 active:bg-[#2A1F5C]",
+          ],
 
           "outline-none focus:outline-none focus-visible:outline-none",
           "focus:ring-2 focus:ring-[#7b72b3]",

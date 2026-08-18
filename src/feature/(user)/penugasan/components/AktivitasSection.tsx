@@ -1,4 +1,4 @@
-import { TaskCard, TaskStatus } from "@/shared/components/ui/TaskCard";
+import { TaskCard26, TaskStatus } from "@/shared/components/ui/TaskCardSos26";
 import { Kuis, Tugas } from "../types";
 import { cn } from "@/shared/utils/cn";
 import { Button } from "@/shared/components/ui/Button";
@@ -6,6 +6,7 @@ import { getIconForTask } from "../data/tugasIconData";
 import Image from "next/image";
 import maskot from "@/assets/user/maskot-sabar.svg";
 import Link from "next/link";
+import AktivitasButton from "@/shared/components/ui/ButtonSos26";
 
 interface AktivitasSectionProps {
   tugas: Tugas[];
@@ -21,10 +22,15 @@ export const AktivitasSection = ({
   onTabChange,
 }: AktivitasSectionProps) => {
   const getTugasStatus = (tugasItem: Tugas): TaskStatus => {
-    if (tugasItem.status?.toLowerCase() === "selesai") {
+    const statusLower = tugasItem.status?.toLowerCase().trim() || "";
+    if (statusLower === "selesai") {
       return "completed";
     }
-    if (new Date() > new Date(tugasItem.tenggat)) {
+    if (statusLower === "terlewat") {
+      return "overdue";
+    }
+    const deadlineDate = new Date(tugasItem.tenggat);
+    if (!isNaN(deadlineDate.getTime()) && new Date() > deadlineDate) {
       return "overdue";
     }
     return "default";
@@ -44,28 +50,34 @@ export const AktivitasSection = ({
   };
 
   return (
-    <div className="w-full flex flex-col gap-8 md:gap-10">
-      <div className="flex justify-center gap-4">
-        <Button
-          onClick={() => onTabChange("tugas")}
+    <div className="w-full flex flex-col gap-8 md:gap-10 mb-[300px]">
+      <div className="flex flex-wrap justify-center gap-4">
+        <AktivitasButton
+          onClick={() => {
+            console.log("saya ingin hands on slicing");
+            onTabChange("tugas");
+          }}
           variant={activeTab === "tugas" ? "primary" : "outline"}
-          className="font-semibold text-sm md:text-base px-10 md:px-14 rounded-2xl transition-all duration-300"
+          className="w-auto px-10 md:px-14 text-sm md:text-base"
         >
           Tugas
-        </Button>
-        <Button
-          onClick={() => onTabChange("kuis")}
+        </AktivitasButton>
+
+        <AktivitasButton
+          onClick={() => {
+            console.log("saya ingin hands on slicing");
+            onTabChange("kuis");
+          }}
           variant={activeTab === "kuis" ? "primary" : "outline"}
-          className="font-semibold text-sm md:text-base px-10 md:px-14 rounded-2xl transition-all duration-300"
+          className="w-auto px-10 md:px-14 text-sm md:text-base"
         >
           Kuis
-        </Button>
+        </AktivitasButton>
       </div>
 
       <div
         className={cn(
-          "grid grid-cols-2 gap-x-1 gap-y-4",
-          "lg:flex lg:flex-wrap lg:justify-center lg:gap-8",
+          "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-x-4 lg:gap-x-[40px] lg:gap-y-8 justify-items-center",
         )}
       >
         {activeTab === "tugas" &&
@@ -73,13 +85,16 @@ export const AktivitasSection = ({
             tugas.map((item) => {
               const Icon = getIconForTask(item.judul, "tugas");
               const deadlineDate = new Date(item.tenggat);
-              const formattedDeadline = `${deadlineDate.toLocaleDateString(
-                "id-ID",
-                { day: "numeric", month: "long", year: "numeric" },
-              )} • ${deadlineDate.toLocaleTimeString("id-ID", {
-                hour: "2-digit",
-                minute: "2-digit",
-              })} WIB`;
+              const formattedDeadline = isNaN(deadlineDate.getTime())
+                ? item.tenggat
+                : `${deadlineDate.toLocaleDateString("id-ID", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })} • ${deadlineDate.toLocaleTimeString("id-ID", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })} WIB`;
 
               const status = getTugasStatus(item);
 
@@ -89,7 +104,7 @@ export const AktivitasSection = ({
                   href={`/aktivitas/penugasan/${item.id_penugasan}`}
                   className="contents"
                 >
-                  <TaskCard
+                  <TaskCard26
                     taskName={item.judul}
                     deadline={formattedDeadline}
                     icon={
@@ -135,7 +150,7 @@ export const AktivitasSection = ({
                   href={`/aktivitas/kuis/${item.id_kuis}`}
                   className="contents"
                 >
-                  <TaskCard
+                  <TaskCard26
                     taskName={item.nama_kuis}
                     deadline={formattedDeadline}
                     icon={

@@ -23,7 +23,7 @@ const BgBawah: React.FC<BgBawahProps> = ({
           width={2000}
           height={2000}
 
-          className="w-full h-auto object-bottom object-cover"
+          className="w-full h-auto min-h-[100px] md:min-h-[150px] object-bottom object-cover"
           priority
         />
       </div>

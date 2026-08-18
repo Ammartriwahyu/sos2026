@@ -6,6 +6,9 @@ import { useGetPresensiRekap } from "../hooks/useGetPresensiRekap";
 import SpaceBackground from "@/shared/components/background/SpaceBackground";
 import CircleGLow from "@/shared/components/background/CircleGlow";
 import BgBawah from "@/shared/components/background/BgBawah";
+import Link from "next/link";
+import { ChevronLeft } from "lucide-react";
+import { AnimatedDiv } from "@/shared/components/ui/AnimatedDiv";
 
 const PresensiUserContainer = () => {
   const {
@@ -20,9 +23,24 @@ const PresensiUserContainer = () => {
       <CircleGLow />
       <BgBawah gradientHeight="h-[770px]" />
 
-      <div className="w-full flex flex-col min-h-[1227px] relative pt-[127px] px-6 py-8 md:px-8 lg:px-32 pb-36 lg:pb-48 z-10 gap-[357px]">
-        <PresensiFormSection refreshPresensi={refresh} />
+      <div className="w-full flex flex-col min-h-[1227px] relative mt-5 px-6 pt-8 md:px-8 lg:px-32 pb-36 lg:pb-48 z-10 gap-[350px]">
+        <div className="w-full flex flex-col gap-6">
+          <AnimatedDiv className="w-full flex justify-start">
+            <div className="w-full">
+              <Link
+                href="/aktivitas"
+                className="inline-flex items-center gap-1 text-white font-semibold text-lg md:text-xl hover:text-white/80 transition-colors"
+              >
+                <ChevronLeft className="w-8 h-8 md:w-10 md:h-10 text-white shrink-0" />
+                <span>Kembali</span>
+              </Link>
+            </div>
+          </AnimatedDiv>
 
+          <PresensiFormSection refreshPresensi={refresh} />
+        </div>
+
+        {/* Bagian Bawah: Rekap Presensi */}
         <RekapPresensiSection
           presensiData={presensiData ?? []}
           error={error}
