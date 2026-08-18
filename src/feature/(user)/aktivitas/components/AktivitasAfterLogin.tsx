@@ -7,6 +7,8 @@ import BgBawah from "@/shared/components/background/BgBawah";
 import Image from "next/image";
 import Maskot from "@/assets/assetsos26/illustrasions/maskot.svg";
 
+import { AnimatedDiv } from "@/shared/components/ui/AnimatedDiv";
+
 interface AktivitasAfterLoginProps {
   user: AuthProfile;
 }
@@ -32,82 +34,96 @@ const AktivitasAfterLogin = ({ user }: AktivitasAfterLoginProps) => {
         <div className="mycontainer w-full">
           <div className="flex flex-col items-center justify-center w-full">
             <div className="w-full max-w-[805px] h-auto min-h-[458px] flex flex-col gap-[16px] z-20 relative mb-20 lg:mb-28">
-              <div
-                className="w-full min-h-[124px] rounded-[12px] py-4 md:py-[24px] px-6 md:px-[48px] flex flex-col justify-center"
-                style={liquidGlassStyle}
-              >
-                <h4 className="text-4xl font-semibold text-white mb-1 md:mb-2 drop-shadow-md">
-                  Fasilitator
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-20 gap-y-1">
-                  {user.kelompok?.distrik?.list_pjl.map((pjl, idx) => (
-                    <div key={idx} className="flex items-center gap-2">
-                      <span className="text-2xl text-white">{pjl.nama}</span>
-                      <span className="text-2xl font-normal text-white/90">
-                        Line:{" "}
-                        <span className="text-white font-normal">
-                          {pjl.line.replace(/@/g, "")}
+              <AnimatedDiv className="w-full" delay={0.1}>
+                <div
+                  className="w-full min-h-[124px] rounded-[12px] py-4 md:py-[24px] px-6 md:px-[48px] flex flex-col justify-center"
+                  style={liquidGlassStyle}
+                >
+                  <h4 className="text-4xl font-semibold text-white mb-1 md:mb-2 drop-shadow-md">
+                    Fasilitator
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-20 gap-y-1">
+                    {user.kelompok?.distrik?.list_pjl.map((pjl, idx) => (
+                      <div key={idx} className="flex items-center gap-2">
+                        <span className="text-2xl text-white">{pjl.nama}</span>
+                        <span className="text-2xl font-normal text-white/90">
+                          Line:{" "}
+                          <span className="text-white font-normal">
+                            {pjl.line.replace(/@/g, "")}
+                          </span>
                         </span>
-                      </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </AnimatedDiv>
+
+              <AnimatedDiv className="w-full" delay={0.2}>
+                <div
+                  className="w-full min-h-[318px] rounded-[12px] py-6 md:py-[24px] px-6 md:px-[48px] flex flex-col justify-center"
+                  style={liquidGlassStyle}
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-y-12 gap-x-8 md:gap-x-20">
+                    <div>
+                      <p className="text-white text-2xl font-medium">
+                        Nama Lengkap
+                      </p>
+                      <p className="text-xl text-white mt-0.5 font-normal">
+                        {user.nama}
+                      </p>
                     </div>
-                  ))}
+                    <div>
+                      <p className="text-white text-2xl font-medium">Distrik</p>
+                      <p className="text-xl text-white mt-4 font-normal">
+                        {user.kelompok?.distrik?.nama_distrik}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-white text-2xl font-medium">
+                        Program Studi
+                      </p>
+                      <p className="text-xl text-white mt-4 font-normal">
+                        {user.prodi}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-white text-2xl font-medium">
+                        Kelompok
+                      </p>
+                      <p className="text-xl text-white mt-4 font-normal">
+                        {user.kelompok?.nama_kelompok}
+                      </p>
+                    </div>
+                    <div className="md:col-span-2">
+                      <p className="text-white text-2xl font-medium">NIM</p>
+                      <p className="text-xl text-white mt-4 font-normal">
+                        {user.nim}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </AnimatedDiv>
 
-              <div
-                className="w-full min-h-[318px] rounded-[12px] py-6 md:py-[24px] px-6 md:px-[48px] flex flex-col justify-center"
-                style={liquidGlassStyle}
+              <AnimatedDiv
+                delay={0.3}
+                className="hidden lg:block absolute -bottom-55 -right-25 z-50 pointer-events-none"
               >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-12 gap-x-8 md:gap-x-20">
-                  <div>
-                    <p className="text-white text-2xl font-medium">
-                      Nama Lengkap
-                    </p>
-                    <p className="text-xl text-white mt-0.5 font-normal">
-                      {user.nama}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-white text-2xl font-medium">Distrik</p>
-                    <p className="text-xl text-white mt-4 font-normal">
-                      {user.kelompok?.distrik?.nama_distrik}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-white text-2xl font-medium">
-                      Program Studi
-                    </p>
-                    <p className="text-xl text-white mt-4 font-normal">
-                      {user.prodi}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-white text-2xl font-medium">Kelompok</p>
-                    <p className="text-xl text-white mt-4 font-normal">
-                      {user.kelompok?.nama_kelompok}
-                    </p>
-                  </div>
-                  <div className="md:col-span-2">
-                    <p className="text-white text-2xl font-medium">NIM</p>
-                    <p className="text-xl text-white mt-4 font-normal">
-                      {user.nim}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <Image
-                src={Maskot}
-                alt="Maskot"
-                className="hidden lg:block absolute -bottom-55 -right-25 w-[152px] h-[327px] z-50 pointer-events-none object-contain -scale-x-100"
-              />
+                <Image
+                  src={Maskot}
+                  alt="Maskot"
+                  className="w-[152px] h-[327px] object-contain -scale-x-100"
+                />
+              </AnimatedDiv>
             </div>
           </div>
         </div>
 
-        <div className="mycontainer w-full mt-16 lg:mt-24 z-20">
+        <AnimatedDiv
+          className="mycontainer w-full mt-16 lg:mt-24 z-20"
+          delay={0.4}
+        >
           <AktivitasListSection />
-        </div>
+        </AnimatedDiv>
       </div>
     </SpaceBackground>
   );

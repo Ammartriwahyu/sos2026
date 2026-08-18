@@ -37,15 +37,19 @@ const PresensiUserContainer = () => {
             </div>
           </AnimatedDiv>
 
-          <PresensiFormSection refreshPresensi={refresh} />
+          <AnimatedDiv className="w-full" delay={0.1}>
+            <PresensiFormSection refreshPresensi={refresh} />
+          </AnimatedDiv>
         </div>
 
         {/* Bagian Bawah: Rekap Presensi */}
-        <RekapPresensiSection
-          presensiData={presensiData ?? []}
-          error={error}
-          isLoading={isLoading}
-        />
+        <AnimatedDiv className="w-full" delay={0.2}>
+          <RekapPresensiSection
+            presensiData={presensiData ?? []}
+            error={error}
+            isLoading={isLoading}
+          />
+        </AnimatedDiv>
       </div>
     </SpaceBackground>
   );
