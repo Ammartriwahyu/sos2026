@@ -8,10 +8,10 @@ import LogoSoS from "@/assets/assetsos26/logo-sos26.svg";
 
 export const Footer = () => {
   return (
-    <footer className="bg-footer-gradient text-white">
-      <div className="mycontainer py-[89px] md:py-[56px]">
-        <div className="flex flex-col items-center md:flex-row md:justify-around gap-[34px] md:gap-[22px]">
-          <div className="flex flex-col md:flex-row items-center gap-[22px] text-center md:text-left">
+    <footer className="relative z-50 bg-footer-gradient text-white -mt-[1px]">
+      <div className="mycontainer py-[12px] md:py-[56px]">
+        <div className="flex flex-col items-center md:flex-row md:justify-around gap-[12px] md:gap-[22px]">
+          <div className="flex flex-col md:flex-row items-center gap-[4px] md:gap-[22px] text-center md:text-left">
             <Image
               src={LogoSoS}
               alt="Logo Synergy Of Symphony"

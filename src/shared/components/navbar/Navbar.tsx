@@ -64,7 +64,7 @@ const Navbar = () => {
   }, [pathname, user]);
   return (
     <>
-      <nav className="w-screen py-2 xl:py-2 2xl:py-4 bg-navbar-bg fixed z-[999]">
+      <nav className="w-screen py-2 xl:py-2 2xl:py-4 bg-navbar-bg fixed top-0 left-0 z-[999]">
         <div className="mycontainer w-full h-full flex items-center justify-between">
           <div className="flex-2 md:flex-1 flex justify-start ">
             <Link
