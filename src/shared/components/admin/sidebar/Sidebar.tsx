@@ -28,17 +28,21 @@ export const Sidebar = () => {
 
   return (
     <Tooltip.Provider delayDuration={0}>
-      <aside className="hidden sm:flex sm:overflow-y-scroll lg:overflow-hidden fixed top-0 left-0 z-40 flex-col border-r border-gray-200 bg-white shadow-xl p-4 w-20 xl:w-64 h-screen transition-all duration-300">
-        <div className="flex items-center justify-center xl:justify-start gap-3">
-          <div className="w-10 h-10 rounded-xl flex-shrink-0">
-            <Image alt="logo SOS" className="w-full h-full" src={LogoSoS} />
+      <aside className="hidden sm:flex sm:overflow-y-scroll lg:overflow-hidden fixed top-0 left-0 z-40 flex-col bg-[#2A1F5C] shadow-xl pt-8 pb-0 w-20 xl:w-72 h-screen transition-all duration-300">
+        <div className="flex items-center justify-center xl:justify-start gap-4 px-6">
+          <div className="w-12 h-12 rounded-xl flex-shrink-0">
+            <Image
+              alt="logo SOS"
+              className="w-full h-full object-contain"
+              src={LogoSoS}
+            />
           </div>
-          <p className="hidden xl:block text-sm font-semibold">
-            Synergy Of Symphony & Shaping The Future
+          <p className="hidden xl:block text-[15px] leading-snug font-bold text-white">
+            Synergy Of Symphony <br />& Shaping The Future
           </p>
         </div>
 
-        <ul className="mt-2 xl:mt-8 flex flex-col gap-3">
+        <ul className="mt-12 flex flex-col gap-2 w-full">
           {sidebarMenuItems.map((item) => {
             const isActive =
               item.path === "/"
@@ -47,18 +51,20 @@ export const Sidebar = () => {
             return (
               <Tooltip.Root key={item.id}>
                 <Tooltip.Trigger asChild>
-                  <Link href={item.path} passHref>
+                  <Link href={item.path} passHref className="w-full">
                     <li
-                      className={`flex items-center justify-center xl:justify-start gap-x-3 rounded-xl p-3 transition-all duration-300 ${
+                      className={`flex items-center justify-center xl:justify-start gap-x-4 py-4 px-6 transition-all duration-300 w-full ${
                         isActive
-                          ? "bg-primary-500 text-white"
-                          : "text-primary-500 hover:bg-primary-500 hover:text-white"
+                          ? "bg-[#D8D3F0] text-[#2A1F5C]"
+                          : "text-white hover:bg-[#3D2F75]"
                       }`}
                     >
                       {React.createElement(item.icon, {
-                        className: "h-6 w-6 flex-shrink-0",
+                        className: "h-[22px] w-[22px] flex-shrink-0",
                       })}
-                      <span className="hidden xl:inline text-base">
+                      <span
+                        className={`hidden xl:inline text-lg ${isActive ? "font-medium" : ""}`}
+                      >
                         {item.label}
                       </span>
                     </li>
@@ -67,10 +73,10 @@ export const Sidebar = () => {
                 <Tooltip.Portal>
                   <Tooltip.Content
                     side="right"
-                    className="z-50 xl:hidden px-3 py-1.5 text-sm font-medium text-white bg-primary-500 rounded-md shadow-sm"
+                    className="z-50 xl:hidden px-3 py-1.5 text-sm font-medium text-[#2A1F5C] bg-[#D8D3F0] rounded-md shadow-sm"
                   >
                     {item.label}
-                    <Tooltip.Arrow className="fill-current text-white" />
+                    <Tooltip.Arrow className="fill-[#D8D3F0]" />
                   </Tooltip.Content>
                 </Tooltip.Portal>
               </Tooltip.Root>
@@ -78,48 +84,48 @@ export const Sidebar = () => {
           })}
         </ul>
 
-        <div className="mt-auto">
+        <div className="mt-auto w-full">
           <button
             onClick={handleLogout}
             title="Logout"
-            className="w-full flex gap-3 items-center justify-center xl:justify-start rounded-xl bg-primary-500 p-3 h-auto xl:h-14 text-white hover:bg-red-600 transition-colors"
+            className="w-full flex gap-x-4 items-center justify-center xl:justify-start py-5 px-6 bg-[#D8D3F0] text-[#2A1F5C] hover:bg-[#C4BCEB] transition-colors"
           >
-            <LogOut size={22} className="flex-shrink-0" />
-            <span className="hidden xl:inline font-medium text-base">
-              Logout
-            </span>
+            <LogOut size={24} className="flex-shrink-0" />
+            <span className="hidden xl:inline font-bold text-lg">Logout</span>
           </button>
         </div>
       </aside>
 
+      {/* Mobile Header / Hamburger */}
       <div className="sm:hidden">
         <button
           onClick={() => setIsMobileSidebarOpen(true)}
           title="Buka Menu"
-          className="fixed top-5 right-5 z-40 h-12 w-12 bg-primary-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-primary-600 transition-all"
+          className="fixed top-5 right-5 z-40 h-12 w-12 bg-[#2A1F5C] text-white rounded-full flex items-center justify-center shadow-lg hover:bg-[#3D2F75] transition-all"
         >
           <Menu size={24} />
         </button>
       </div>
 
+      {/* Mobile Sidebar */}
       {isMobileSidebarOpen && (
         <div className="sm:hidden fixed inset-0 z-50">
           <div
             onClick={() => setIsMobileSidebarOpen(false)}
             className="absolute inset-0 bg-black bg-opacity-50"
           />
-          <aside className="fixed top-0 right-0 h-full w-72 bg-white shadow-xl flex flex-col p-4">
-            <div className="flex items-center justify-between pb-4 border-b">
-              <span className="font-semibold text-lg">Menu</span>
+          <aside className="fixed top-0 right-0 h-full w-72 bg-[#2A1F5C] shadow-xl flex flex-col pt-6">
+            <div className="flex items-center justify-between pb-4 px-6 border-b border-white/20">
+              <span className="font-bold text-lg text-white">Menu</span>
               <button
                 onClick={() => setIsMobileSidebarOpen(false)}
                 title="Tutup Menu"
-                className="p-1 rounded-full hover:bg-gray-100"
+                className="p-1 rounded-full hover:bg-white/10 text-white"
               >
                 <X size={24} />
               </button>
             </div>
-            <ul className="flex-grow mt-6 flex flex-col gap-2">
+            <ul className="flex-grow mt-6 flex flex-col gap-2 w-full">
               {sidebarMenuItems.map((item) => {
                 const isActive =
                   item.path === "/"
@@ -130,25 +136,29 @@ export const Sidebar = () => {
                     key={item.id}
                     href={item.path}
                     onClick={() => setIsMobileSidebarOpen(false)}
-                    className={`flex items-center gap-4 p-3 rounded-lg transition-colors ${
+                    className={`flex items-center gap-4 py-4 px-6 transition-colors w-full ${
                       isActive
-                        ? "bg-primary-500 text-white"
-                        : "text-gray-600 hover:bg-gray-100"
+                        ? "bg-[#D8D3F0] text-[#2A1F5C]"
+                        : "text-white hover:bg-[#3D2F75]"
                     }`}
                   >
-                    <item.icon className="h-6 w-6 flex-shrink-0" />
-                    <span className="font-medium text-base">{item.label}</span>
+                    <item.icon className="h-[22px] w-[22px] flex-shrink-0" />
+                    <span
+                      className={`text-lg ${isActive ? "font-medium" : ""}`}
+                    >
+                      {item.label}
+                    </span>
                   </Link>
                 );
               })}
             </ul>
-            <div className="mt-auto">
+            <div className="mt-auto w-full">
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center gap-4 p-3 rounded-lg text-red-500 hover:bg-red-50 transition-colors"
+                className="w-full flex items-center gap-4 py-5 px-6 bg-[#D8D3F0] text-[#2A1F5C] hover:bg-[#C4BCEB] transition-colors"
               >
                 <LogOut className="h-6 w-6" />
-                <span className="font-medium text-base">Logout</span>
+                <span className="font-bold text-lg">Logout</span>
               </button>
             </div>
           </aside>
