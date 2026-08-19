@@ -12,6 +12,7 @@ import GradientBackground from "@/shared/components/background/GradientBackgroun
 import { useAuthContext } from "@/shared/hooks/useAuthContext";
 import SpaceBackground from "@/shared/components/background/SpaceBackground";
 import GrassDivider from "@/shared/components/background/GrassDivider";
+import AuroraWaves from "../../peta/components/AuroraWaves";
 
 const StfContainer = () => {
   const { stfData, caketangList, isLoading, error } = useGetStfData();
@@ -19,19 +20,15 @@ const StfContainer = () => {
   const { user } = useAuthContext();
 
   useEffect(() => {
-    if (
-      stfData?.pemilihan_is_active &&
-      caketangList?.length > 0 &&
-      !activeCardId
-    ) {
-      const selectedId =
+    if (caketangList && caketangList.length > 0 && !activeCardId) {
+      // Default pilih kartu tengah (index 1 jika ada)
+      const defaultId =
         caketangList.length > 1
           ? caketangList[1].id_caketang
           : caketangList[0].id_caketang;
-
-      setActiveCardId(selectedId);
+      setActiveCardId(defaultId);
     }
-  }, [stfData, caketangList, activeCardId]);
+  }, [caketangList, activeCardId]);
 
   if (isLoading) {
     return (
@@ -43,32 +40,55 @@ const StfContainer = () => {
     );
   }
 
+  // Tampilkan kondisi 2 jika pemilihan dibuka oleh backend
+  const showPemilihan =
+    stfData?.pemilihan_is_active && user?.tipe_mahasiswa !== "pemutihan";
+
   return (
     <>
-      {stfData?.pemilihan_is_active && user?.tipe_mahasiswa !== "pemutihan" ? (
-        <>
-          <HeroSection />
+      {showPemilihan ? (
+        <SpaceBackground className="w-full flex flex-col overflow-hidden relative">
+          <div className="relative z-10">
+            <HeroSection />
+          </div>
 
-          {caketangList && caketangList.length > 0 && (
-            <>
-              <VisiMisiSection
-                caketangList={caketangList || []}
-                isLoading={isLoading}
-                error={error}
-                activeCardId={activeCardId}
-                setActiveCardId={setActiveCardId}
-              />
-              <PemilihanSection
-                caketangList={caketangList || []}
-                isLoading={isLoading}
-                error={error}
-                activeCardId={activeCardId}
-                setActiveCardId={setActiveCardId}
-                kesempatan={stfData.kesempatan}
-              />
-            </>
-          )}
-        </>
+          <div className="relative w-full flex-grow flex flex-col z-20">
+            <GrassDivider className="translate-y-px relative z-20" />
+
+            <div className="w-full peta-flashback-bg relative flex-grow min-h-screen pb-32">
+              {/* Aurora Waves behind the 3 cards */}
+              <div className="absolute top-0 left-0 right-0 h-[800px] z-0 overflow-hidden pointer-events-none">
+                <AuroraWaves />
+              </div>
+
+              {caketangList && caketangList.length > 0 && (
+                <div className="relative z-10 w-full flex flex-col items-center">
+                  <VisiMisiSection
+                    caketangList={caketangList}
+                    isLoading={isLoading}
+                    error={error}
+                    activeCardId={activeCardId}
+                    setActiveCardId={setActiveCardId}
+                  />
+
+                  <div className="w-full relative z-20 mt-16 md:mt-24">
+                    <GrassDivider className="translate-y-px relative z-20" />
+                    <div className="w-full peta-flashback-bg relative pb-16 pt-8">
+                      <PemilihanSection
+                        caketangList={caketangList}
+                        isLoading={isLoading}
+                        error={error}
+                        activeCardId={activeCardId}
+                        setActiveCardId={setActiveCardId}
+                        kesempatan={stfData?.kesempatan ?? false}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </SpaceBackground>
       ) : (
         <SpaceBackground className="w-full flex flex-col overflow-hidden">
           <CurrentSection />
