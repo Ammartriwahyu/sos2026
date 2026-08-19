@@ -1,4 +1,3 @@
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FooterLinks } from "./FooterItems";
@@ -15,7 +14,7 @@ export const Footer = () => {
             <Image
               src={LogoSoS}
               alt="Logo Synergy Of Symphony"
-              className="w-[78px] md:w-[112px]"
+              className="w-19.5 md:w-28"
             />
             <div className="flex flex-col gap-[6px]">
               <h4 className="font-bold text-[17px] text-white">
@@ -28,13 +27,13 @@ export const Footer = () => {
             </div>
           </div>
 
-          <div className="flex flex-col-reverse items-center md:flex-row md:items-start gap-[17px] md:gap-[67px] lg:gap-[112px]">
+          <div className="flex flex-col-reverse items-center md:flex-row md:items-start gap-4.25 md:gap-16.75 lg:gap-28">
             <FooterLinks />
             <div className="flex flex-col items-center md:items-start gap-[17px]">
               <h3 className="hidden md:block font-semibold text-[14px] text-white">
                 Sosial Media
               </h3>
-              <div className="flex justify-center md:justify-start gap-[11px]">
+              <div className="flex justify-center md:justify-start gap-2.75">
                 {iconSosmedData.map((sosmed) => (
                   <Link
                     key={sosmed.name}
