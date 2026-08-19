@@ -38,7 +38,7 @@ const SelectTrigger = forwardRef<
     >
       {children}
       <SelectPrimitive.Icon asChild>
-        <ChevronDown className="h-5 w-5 transition-transform duration-200 group-data-[state=open]:rotate-180 text-default-dark/50" />
+        <ChevronDown className="h-5 w-5 transition-transform duration-200 group-data-[state=open]:rotate-180 opacity-50" />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   );

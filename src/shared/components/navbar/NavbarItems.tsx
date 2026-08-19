@@ -12,8 +12,10 @@ const NavbarItem = ({ href, title, isActive }: NavbarItemProps) => {
   return (
     <Link
       href={href}
-      className={`xl:text-lg   2xl:text-2xl text-xl md:text-lg font-normal  ${
-        isActive ? "text-white " : "text-[#F3EFE8CC]"
+      className={`xl:text-lg 2xl:text-2xl text-xl md:text-lg transition-all ${
+        isActive
+          ? "font-bold text-white border-b-2 border-white pb-1"
+          : "font-normal text-white/80"
       } hover:text-white`}
     >
       {title}

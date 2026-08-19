@@ -1,7 +1,28 @@
 {
   "workbench.colorCustomizations": {
+    "editorCursor.foreground": "#00FFAA",
     "activityBar.background": "#083430",
     "titleBar.activeBackground": "#0C4844",
     "titleBar.activeForeground": "#F2FDFC"
-  }
+  },
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.inlayHints.parameterNames.enabled": "literals",
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "editor.insertSpaces": true,
+  "editor.linkedEditing": true,
+  "editor.rulers": [
+    { "column": 100, "color": "#33ffaa33" },
+    { "column": 118, "color": "#ccff3333" },
+    { "column": 136, "color": "#ff335533" }
+  ],
+  "editor.smoothScrolling": true,
+  "editor.stickyScroll.enabled": true,
+  "workbench.list.smoothScrolling": true,
+  "explorer.compactFolders": false
 }

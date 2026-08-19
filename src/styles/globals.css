@@ -196,6 +196,10 @@
   /* == ANIMATIONS == */
   --animation-accordion-down: "accordion-down 0.2s ease-out";
   --animation-accordion-up: "accordion-up 0.2s ease-out";
+  /* Custom 2026 Navbar & Footer Colors from Figma */
+  --color-navbar-bg: #2a1f5c;
+  --color-footer-from: #001126;
+  --color-footer-to: #07132d;
 }
 
 .mycontainer {
@@ -243,14 +247,11 @@ body[data-scroll-locked] {
 }
 
 .bg-navbar {
-  background: linear-gradient(
-    90deg,
-    #9c0221 0%,
-    rgba(156, 2, 33, 0.9) 24.51%,
-    #9c0221 50.21%,
-    rgba(156, 2, 33, 0.9) 77.2%,
-    #9c0221 100%
-  );
+  background: #2a1f5c;
+}
+
+.bg-footer-gradient {
+  background: linear-gradient(180deg, #001126 0%, #07132d 100%);
 }
 
 /* Custom scrollbar */
@@ -417,12 +418,7 @@ body[data-scroll-locked] {
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 }
-.hero-bg {
-  background: url("../assets/home/hero.webp");
-  background-repeat: no-repeat;
-  background-position: center right 40%;
-  background-size: cover;
-}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
