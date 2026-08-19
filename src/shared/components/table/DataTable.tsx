@@ -80,7 +80,7 @@ export const DataTable = <TData extends object>({
           )}
         </div>
         <div className="bg-white w-full rounded-2xl shadow-sm overflow-hidden border border-gray-100">
-          <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b px-4 lg:px-6 py-3 lg:py-4 border-b-gray-200">
+          <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b-2 px-4 lg:px-6 py-3 lg:py-4 border-gray-400">
             <h4 className="text-lg lg:text-xl font-bold text-[#161A3D]">
               {title}
             </h4>
@@ -152,10 +152,10 @@ export const DataTable = <TData extends object>({
                       "h-14 lg:h-16 transition-colors",
                       whenOnClick && "cursor-pointer",
                       row.getIsSelected()
-                        ? "bg-gray-100 text-black"
+                        ? "bg-[#161A3D]/20 text-[#161A3D]"
                         : index % 2 === 1
                           ? "bg-white"
-                          : "bg-gray-50/50",
+                          : "bg-[#161A3D]/5",
                     )}
                     onClick={
                       whenOnClick

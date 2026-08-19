@@ -127,7 +127,7 @@ const DashboardContainer = () => {
 
   return (
     <main className="font-poppins p-6 md:p-10 bg-[#F3F2F7] min-h-screen w-full">
-      <div className="pb-4 border-b border-gray-300 mb-8">
+      <div className="pb-4 border-b-2 border-[#161A3D] mb-8">
         <h4 className="text-[#161A3D] font-bold text-3xl">Halo, Admin SOS!</h4>
       </div>
 
