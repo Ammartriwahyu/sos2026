@@ -1,10 +1,10 @@
 import { Footer } from "@/shared/components/footer/Footer";
 import Navbar from "@/shared/components/navbar/Navbar";
-import { AuthProvider } from "@/shared/context/AuthContext";
-import { ToastProvider } from "@/shared/context/ToastContext";
 import { QueryProvider } from "@/shared/components/provider/QueryProvider";
-import React from "react";
+import { ScrollProvider } from "@/shared/components/provider/ScrollProvider";
+import { AuthProvider } from "@/shared/context/AuthContext";
 import { AuthErrorProvider } from "@/shared/context/AuthErrorContext";
+import { ToastProvider } from "@/shared/context/ToastContext";
 import { protectedRoutes } from "@/shared/data/protectedRoutes";
 
 export default function UserLayout({
@@ -13,18 +13,18 @@ export default function UserLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-      <QueryProvider>
-        <AuthProvider>
-          <ToastProvider>
-            <AuthErrorProvider protectedRoutes={protectedRoutes}>
-              <Navbar />
-              <main className="pt-16 xl:pt-10 2xl:pt-14">{children}</main>
-            </AuthErrorProvider>
+    <QueryProvider>
+      <AuthProvider>
+        <ToastProvider>
+          <AuthErrorProvider protectedRoutes={protectedRoutes}>
+            <Navbar />
+            <ScrollProvider>
+              <main>{children}</main>
+            </ScrollProvider>
             <Footer />
-          </ToastProvider>
-        </AuthProvider>
-      </QueryProvider>
-    </>
+          </AuthErrorProvider>
+        </ToastProvider>
+      </AuthProvider>
+    </QueryProvider>
   );
 }

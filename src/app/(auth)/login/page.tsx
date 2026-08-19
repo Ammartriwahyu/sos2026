@@ -6,7 +6,7 @@ import React, { Suspense } from "react";
 
 const page = () => {
   return (
-    <main className="overflow-hidden">
+    <main className="w-full overflow-x-hidden">
       <ToastProvider>
         <AuthProvider>
           <Navbar />
