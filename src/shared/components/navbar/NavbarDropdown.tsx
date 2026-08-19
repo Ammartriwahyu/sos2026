@@ -53,12 +53,12 @@ const NavbarDropdown: React.FC<NavbarDropdownProps> = ({ user, onLogout }) => {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-secondary-400 to-secondary-600 text-default-dark font-semibold cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-500 focus-visible:ring-offset-2 px-2 sm:px-4 py-2 sm:py-2.5 rounded-xl hover:from-secondary-500 hover:to-secondary-700 transition-all duration-200 shadow-lg hover:shadow-xl group"
+        className="flex items-center gap-2 sm:gap-3 bg-violet-light-active text-default-dark font-semibold cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-normal focus-visible:ring-offset-2 px-2 sm:px-4 py-2 sm:py-2.5 rounded-xl hover:bg-violet-light-hover transition-all duration-200 shadow-lg hover:shadow-xl group"
         aria-haspopup="true"
         aria-expanded={isOpen}
         aria-controls={dropdownId}
       >
-        <div className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 bg-white/20 rounded-lg">
+        <div className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 bg-white/40 rounded-lg">
           <User className="w-3 h-3 sm:w-4 sm:h-4" />
         </div>
         <span className="block max-w-20 sm:max-w-24 text-sm sm:text-base truncate">
@@ -103,9 +103,9 @@ const NavbarDropdown: React.FC<NavbarDropdownProps> = ({ user, onLogout }) => {
               <Link href="/profile" passHref>
                 <span
                   onClick={handleLinkClick}
-                  className="flex items-center gap-2 sm:gap-3 w-full px-2 sm:px-3 py-2 sm:py-2.5 text-xs sm:text-sm text-default-dark hover:bg-secondary-200 hover:text-primary-600 rounded-xl transition-all duration-150 cursor-pointer group font-medium"
+                  className="flex items-center gap-2 sm:gap-3 w-full px-2 sm:px-3 py-2 sm:py-2.5 text-xs sm:text-sm text-default-dark hover:bg-violet-light/60 hover:text-violet-normal rounded-xl transition-all duration-150 cursor-pointer group font-medium"
                 >
-                  <div className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 bg-primary-100 text-primary-600 rounded-lg transition-colors duration-150 shrink-0">
+                  <div className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 bg-violet-light text-violet-normal group-hover:bg-violet-normal group-hover:text-white rounded-lg transition-colors duration-150 shrink-0">
                     <Settings className="w-3 h-3 sm:w-4 sm:h-4" />
                   </div>
                   <span className="truncate">Lihat Profil</span>
@@ -122,8 +122,8 @@ const NavbarDropdown: React.FC<NavbarDropdownProps> = ({ user, onLogout }) => {
                 onClick={handleLogoutClick}
                 className="flex items-center gap-2 sm:gap-3 w-full px-2 sm:px-3 py-2 sm:py-2.5 text-xs sm:text-sm text-red-600 hover:bg-red-50 hover:text-red-700 rounded-xl transition-all duration-150 group font-medium"
               >
-                <div className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 bg-red-100 group-hover:bg-red-200 rounded-lg transition-colors duration-150 shrink-0">
-                  <LogOut className="w-3 h-3 sm:w-4 sm:h-4 text-red-600" />
+                <div className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 bg-red-100 group-hover:bg-red-600 group-hover:text-white text-red-600 rounded-lg transition-colors duration-150 shrink-0">
+                  <LogOut className="w-3 h-3 sm:w-4 sm:h-4" />
                 </div>
                 <span className="truncate">Logout</span>
               </button>
