@@ -1,8 +1,8 @@
 import { StaticImageData } from "next/image";
-import IconInstagram from "@/assets/sosmed/Instagram.svg";
-import IconTiktok from "@/assets/sosmed/TikTok.svg";
-import IconYoutube from "@/assets/sosmed/YouTube.svg";
-import IconX from "@/assets/sosmed/X-twitter.svg";
+import IconInstagram from "@/assets/assetsos26/sosmed/instagram.svg";
+import IconTiktok from "@/assets/assetsos26/sosmed/Tiktok.svg";
+import IconYoutube from "@/assets/assetsos26/sosmed/Youtube.svg";
+import IconX from "@/assets/assetsos26/sosmed/X-twitter.svg";
 
 interface SocialMediaIcon {
   name: string;
