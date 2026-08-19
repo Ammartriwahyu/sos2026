@@ -126,89 +126,93 @@ const DashboardContainer = () => {
   }
 
   return (
-    <main className="font-poppins p-4 md:p-6">
-      <h4 className="text-black font-semibold text-2xl">Halo, Admin SOS!</h4>
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+    <main className="font-poppins p-6 md:p-10 bg-[#F3F2F7] min-h-screen w-full">
+      <div className="pb-4 border-b border-gray-300 mb-8">
+        <h4 className="text-[#161A3D] font-bold text-3xl">Halo, Admin SOS!</h4>
+      </div>
+
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <DashboardCard
-          title="Jumlah Mahasiswa baru"
+          title="Jumlah Mahasiswa Baru"
           value={data.jumlah_maba}
           prefix="Mahasiswa"
-          icon={<User className="w-12 h-12" />}
+          icon={<User className="w-6 h-6" />}
         />
         <DashboardCard
           title="Sudah Dinilai"
           value={data.dinilai}
           prefix={"/ " + data.belum_dinilai + " Penilaian"}
-          icon={<Star className="w-12 h-12" />}
+          icon={<Star className="w-6 h-6" />}
         />
         <DashboardCard
           title="Presensi Hari Ini"
           value={data.presensi_sekarang}
           prefix={"/ " + data.presensi_total + " Hadir"}
-          icon={<Check className="w-12 h-12" />}
+          icon={<Check className="w-6 h-6" />}
         />
         <DashboardCard
           title="Tugas Terkumpul"
           value={data.tugas_terkumpul}
           prefix={"/ " + data.jumlah_tugas + " Tugas"}
-          icon={<Archive className="w-12 h-12" />}
+          icon={<Archive className="w-6 h-6" />}
         />
         <DashboardCard
           title="Terlewat Dikumpulkan"
           value={data.terlambat}
           prefix="Tugas"
-          icon={<FileWarning className="w-12 h-12" />}
+          icon={<FileWarning className="w-6 h-6" />}
         />
         <DashboardCard
           title="Belum Dikumpulkan"
           value={data.belum_dikumpulkan}
           prefix="Tugas"
-          icon={<Clock className="w-12 h-12" />}
+          icon={<Clock className="w-6 h-6" />}
         />
       </section>
 
-      <div className="mt-10">
+      <div className="mt-8 mb-6">
         <Button
-          variant="primary"
+          variant="outline"
+          className="border-[#161A3D] text-[#161A3D] hover:bg-[#161A3D] hover:text-white rounded-lg px-6 py-2"
           onClick={() => (window.location.href = "/admin/dashboard-download")}
         >
-          <File className="mr-2 mb-1 h-5 w-5" />
-          Export As Excel
+          Ekspor ke Excel
         </Button>
       </div>
 
       {/* Tugas Table */}
-      <section className="mt-10">
+      <section className="mt-6">
         <DataTable<DataTugas>
           hideSearchInput
           table={tugasTable}
           isLoading={isLoading}
           error={error}
           refresh={refresh}
-          title="Ringkasan Penugasan"
+          title="Tugas"
         />
       </section>
 
       {/* Kuis Table */}
-      <section className="mt-10">
+      <section className="mt-6">
         <DataTable<DataKuis>
           hideSearchInput
           table={kuisTable}
           isLoading={isLoading}
           error={error}
           refresh={refresh}
-          title="Ringkasan Kuis"
+          title="Kuis"
         />
       </section>
 
-      <section className="mt-10">
+      {/* Presensi Table */}
+      <section className="mt-6">
         <DataTable<DataPresensi>
           hideSearchInput
           table={presensiTable}
           isLoading={isLoading}
           error={error}
           refresh={refresh}
-          title="Ringkasan Presensi"
+          title="Rekap Presensi per Rangkaian"
         />
       </section>
     </main>
