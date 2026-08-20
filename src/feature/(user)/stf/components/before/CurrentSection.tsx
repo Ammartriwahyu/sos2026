@@ -54,7 +54,7 @@ const CurrentSection = () => {
           <div className="flex flex-col items-start text-left relative z-20 mt-8 lg:mt-0">
             <h1 className="text-5xl md:text-6xl lg:text-[5.5rem] font-bold leading-tight mb-6 relative">
               Shaping The
-              <br /> Future 2026
+              <br /> Future 2025
             </h1>
             <p className="text-lg md:text-xl text-white/80 mb-12 max-w-md">
               Bersama kita membentuk masa depan dengan kepemimpinan yang
@@ -98,7 +98,7 @@ const CurrentSection = () => {
                         repeat: Infinity,
                         ease: "easeInOut",
                       }}
-                      className="absolute left-0 bottom-0 -translate-x-1/2 translate-y-1/7 md:translate-y-1/5 z-40 origin-bottom"
+                      className="absolute left-0 bottom-0 -translate-x-1/2 translate-y-1/5 z-40 origin-bottom"
                     >
                       <Image
                         src={Bintang}
@@ -123,7 +123,7 @@ const CurrentSection = () => {
                         repeat: Infinity,
                         ease: "easeInOut",
                       }}
-                      className="absolute right-0 bottom-0 translate-x-1/2 translate-y-1/7 md:translate-y-1/5 z-40 origin-bottom"
+                      className="absolute right-0 bottom-0 translate-x-1/2 translate-y-1/5 z-40 origin-bottom"
                     >
                       <div className="scale-x-[-1]">
                         <Image
@@ -139,7 +139,7 @@ const CurrentSection = () => {
                         Ketua dan Wakil Ketua
                       </p>
                       <h2 className="text-2xl md:text-4xl font-bold text-white mt-2 drop-shadow-md">
-                        {activeProdiData.shortName} 2026
+                        {activeProdiData.shortName} 2025
                       </h2>
                     </div>
 
