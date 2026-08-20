@@ -32,11 +32,13 @@ const StfContainer = () => {
 
   if (isLoading) {
     return (
-      <GradientBackground>
-        <div className="mx-auto flex h-screen items-center justify-center text-default-white">
-          <p className="text-xl">Tunggu Bentar...</p>
+      <SpaceBackground className="w-full flex flex-col h-screen overflow-hidden relative">
+        <div className="mx-auto flex h-full items-center justify-center text-white relative z-10">
+          <p className="text-xl font-semibold animate-pulse">
+            Tunggu Bentar...
+          </p>
         </div>
-      </GradientBackground>
+      </SpaceBackground>
     );
   }
 

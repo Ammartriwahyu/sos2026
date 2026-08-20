@@ -52,18 +52,25 @@ const PemilihanSection = ({
           <h4 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white tracking-wide drop-shadow-lg">
             Saatnya memilih!
           </h4>
-          <div className="flex flex-row justify-center items-end w-full px-4 sm:px-0 -space-x-16 md:-space-x-24 lg:-space-x-32 pt-8">
-            {caketangList?.map((caketang: Caketang) => (
-              <PemilihanCard
-                key={caketang.id_caketang}
-                data={caketang}
-                isActive={caketang.id_caketang === activeCardId}
-                onClick={() => setActiveCardId(caketang.id_caketang)}
-              />
-            ))}
+          <div className="flex flex-row justify-center items-center w-full px-4 sm:px-0 -space-x-16 md:-space-x-24 lg:-space-x-32 pt-8 pb-12">
+            {caketangList?.map((caketang: Caketang, index: number) => {
+              const activeIndex = caketangList.findIndex(
+                (c) => c.id_caketang === activeCardId,
+              );
+              return (
+                <PemilihanCard
+                  key={caketang.id_caketang}
+                  data={caketang}
+                  isActive={caketang.id_caketang === activeCardId}
+                  onClick={() => setActiveCardId(caketang.id_caketang)}
+                  index={index}
+                  activeIndex={activeIndex}
+                />
+              );
+            })}
           </div>
           <Button
-            className="w-full max-w-md md:max-w-xl mx-auto py-6 rounded-2xl font-bold text-xl md:text-2xl bg-[#6543A7] hover:bg-[#4E3285] text-white transition-all shadow-lg border border-white/20"
+            className="w-full max-w-3xl lg:max-w-4xl mx-auto py-6 rounded-2xl font-bold text-xl md:text-2xl bg-[#6543A7] hover:bg-[#4E3285] text-white transition-all shadow-lg border border-white/20"
             disabled={!kesempatan || user?.tipe_mahasiswa === "pemutihan"}
             onClick={() => setIsConfirmationModalOpen(true)}
           >
@@ -81,11 +88,16 @@ const PemilihanSection = ({
         <div className="mt-4 flex justify-center space-x-4">
           <Button
             variant="outline"
+            className="border-[#6543A7] text-[#6543A7] hover:bg-[#F8F7FC] hover:text-[#4E3285] hover:border-[#4E3285]"
             onClick={() => setIsConfirmationModalOpen(false)}
           >
             Batal
           </Button>
-          <Button onClick={handleVote} disabled={isVoting}>
+          <Button
+            className="bg-[#6543A7] hover:bg-[#4E3285] text-white"
+            onClick={handleVote}
+            disabled={isVoting}
+          >
             {isVoting ? "Memilih..." : "Ya, Yakin"}
           </Button>
         </div>
@@ -115,7 +127,7 @@ const PemilihanSection = ({
                 </p>
               </div>
               <Button
-                className="px-8 md:px-14"
+                className="px-8 md:px-14 bg-[#6543A7] hover:bg-[#4E3285] text-white"
                 onClick={() => setIsResultModalOpen(false)}
               >
                 Selesai
@@ -142,7 +154,7 @@ const PemilihanSection = ({
                 </p>
               </div>
               <Button
-                className="px-8 md:px-14"
+                className="px-8 md:px-14 bg-[#6543A7] hover:bg-[#4E3285] text-white"
                 onClick={() => setIsResultModalOpen(false)}
               >
                 Baiklah

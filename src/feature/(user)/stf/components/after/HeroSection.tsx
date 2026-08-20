@@ -25,7 +25,7 @@ const HeroSection = () => {
       </div>
 
       <div className="mycontainer relative z-10 text-center text-white flex flex-col justify-center items-center gap-8 min-h-[50vh]">
-        <h2 className="w-11/12 md:w-3/4 text-4xl font-bold text-center leading-tight md:leading-snug md:text-5xl lg:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-300 drop-shadow-lg">
+        <h2 className="w-11/12 md:w-3/4 text-3xl sm:text-4xl font-bold text-center leading-tight md:leading-snug md:text-5xl lg:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-300 drop-shadow-lg">
           Halo, Kenalan Yuk Sama
           <br className="hidden md:block" /> Calon Ketua Angkatan!
         </h2>
