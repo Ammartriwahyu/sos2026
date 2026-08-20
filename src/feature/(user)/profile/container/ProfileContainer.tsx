@@ -66,7 +66,7 @@ const ProfileContainer: React.FC = () => {
             {isEditing ? (
               <div className="flex gap-3 md:gap-4 items-center w-full md:w-auto">
                 <Button
-                  className="flex-1 md:flex-none h-10 md:h-12 px-4 md:px-8 bg-[#4CAF50] hover:bg-[#45a049] text-white rounded-lg md:rounded-xl font-semibold shadow-md transition-all"
+                  className="flex-1 md:flex-none h-10 md:h-12 px-4 md:px-8 bg-[#4CAF50] hover:bg-[#45a049] active:bg-[#3d8c40] focus:bg-[#4CAF50] text-white rounded-lg md:rounded-xl font-semibold shadow-md transition-all"
                   onClick={handleSubmit}
                   disabled={loading}
                 >
@@ -79,7 +79,7 @@ const ProfileContainer: React.FC = () => {
                 </Button>
 
                 <Button
-                  className="flex-1 md:flex-none h-10 md:h-12 px-4 md:px-8 bg-[#DE3B59] hover:bg-[#c9304a] text-white rounded-lg md:rounded-xl font-semibold shadow-md transition-all"
+                  className="flex-1 md:flex-none h-10 md:h-12 px-4 md:px-8 bg-[#DE3B59] hover:bg-[#c9304a] active:bg-[#b02940] focus:bg-[#DE3B59] text-white rounded-lg md:rounded-xl font-semibold shadow-md transition-all"
                   onClick={handleCancel}
                 >
                   <span className="inline-flex items-center gap-2 text-sm md:text-base">
@@ -90,7 +90,7 @@ const ProfileContainer: React.FC = () => {
             ) : (
               <Button
                 onClick={handleEditToggle}
-                className="w-full md:w-auto bg-[#6B5A9E] hover:bg-[#5b4a8c] text-white rounded-xl px-6 md:px-8 h-10 md:h-12 font-semibold shadow-md transition-all text-sm md:text-base"
+                className="w-full md:w-auto bg-[#6B5A9E] hover:bg-[#5b4a8c] active:bg-[#4c3e75] focus:bg-[#6B5A9E] text-white rounded-xl px-6 md:px-8 h-10 md:h-12 font-semibold shadow-md transition-all text-sm md:text-base"
               >
                 <PencilLine className="h-4 w-4 mr-2" />
                 <span>Edit Profil</span>
