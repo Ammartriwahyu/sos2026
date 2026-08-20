@@ -144,12 +144,14 @@ const CurrentSection = () => {
                     </div>
 
                     {/* Candidate Image */}
-                    <div className="absolute bottom-0 w-[95%] h-[75%] flex justify-center items-end overflow-hidden rounded-t-[220px] z-10">
-                      <Image
-                        src={activeProdiData.image}
-                        alt="Kandidat"
-                        className="w-[90%] h-auto object-contain object-bottom drop-shadow-2xl"
-                      />
+                    <div className="absolute bottom-0 w-full h-[85%] flex justify-center items-end overflow-hidden rounded-t-[220px] z-10">
+                      {activeProdiData.image && (
+                        <Image
+                          src={activeProdiData.image}
+                          alt="Kandidat"
+                          className={`w-[155%] max-w-none md:w-[175%] h-auto object-contain object-bottom drop-shadow-2xl ${activeProdiData.imageClassName || ""}`}
+                        />
+                      )}
                     </div>
                   </div>
 
