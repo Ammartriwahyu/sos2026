@@ -1,15 +1,15 @@
 import { StaticImageData } from "next/image";
 
-import SI from "@/assets/stf/caketang-2024/si.png";
-import TI from "@/assets/stf/caketang-2024/ti.png";
-import PTI from "@/assets/stf/caketang-2024/pti.png";
+import SI from "@/assets/assetsos26/stf/caketang-2025/si.webp";
+import PTI from "@/assets/assetsos26/stf/caketang-2025/pti.webp";
 
 export interface Prodi {
   id: string;
   nama: string;
-  image: StaticImageData;
+  image: StaticImageData | null;
   shortName: string;
   ketangWaketang: string;
+  imageClassName?: string;
 }
 
 export const stfData2024: Prodi[] = [
@@ -18,20 +18,21 @@ export const stfData2024: Prodi[] = [
     nama: "Sistem Informasi",
     image: SI,
     shortName: "SI",
-    ketangWaketang: "Afham & Pras",
+    ketangWaketang: "Ildza & Claudio",
   },
   {
     id: "teknologi_informasi",
     nama: "Teknologi Informasi",
     shortName: "TI",
-    image: TI,
-    ketangWaketang: "Luthfi & Daffa",
+    image: null,
+    ketangWaketang: "Ryan & ",
   },
   {
     id: "pendidikan_teknologi_informasi",
     nama: "Pendidikan Teknologi Informasi",
     shortName: "PTI",
     image: PTI,
-    ketangWaketang: "Steven & Kalingga",
+    ketangWaketang: "Wafi & Shereen",
+    imageClassName: "-translate-x-4 md:-translate-x-6",
   },
 ];
