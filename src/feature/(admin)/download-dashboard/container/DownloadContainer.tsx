@@ -49,24 +49,24 @@ const DownloadContainer = () => {
       title: "Penugasan",
       description: "Download data penugasan siswa",
       icon: FileText,
-      color: "from-primary-500 to-primary-700",
-      hoverColor: "hover:from-primary-600 hover:to-primary-800",
+      color: "from-violet-normal to-violet-dark",
+      hoverColor: "hover:from-violet-normal-hover hover:to-violet-dark-hover",
     },
     {
       id: "penilaian",
       title: "Penilaian",
       description: "Download laporan penilaian",
       icon: BarChart3,
-      color: "from-primary-500 to-primary-700",
-      hoverColor: "hover:from-secondary-700 hover:to-secondary-900",
+      color: "from-violet-normal to-violet-dark",
+      hoverColor: "hover:from-violet-normal-hover hover:to-violet-dark-hover",
     },
     {
       id: "mahasiswa",
       title: "Mahasiswa",
       description: "Download data mahasiswa",
       icon: Users,
-      color: "from-primary-400 to-primary-600",
-      hoverColor: "hover:from-primary-500 hover:to-primary-700",
+      color: "from-violet-normal to-violet-dark",
+      hoverColor: "hover:from-violet-normal-hover hover:to-violet-dark-hover",
     },
   ];
 
@@ -208,7 +208,7 @@ const DownloadContainer = () => {
                   ? "text-red-600"
                   : success
                     ? "text-green-600"
-                    : "text-default-dark group-hover:text-primary-600"
+                    : "text-default-dark group-hover:text-violet-dark"
               }`}
             >
               {card.title}
@@ -224,7 +224,7 @@ const DownloadContainer = () => {
                   ? "text-red-500"
                   : success
                     ? "text-green-500"
-                    : "text-primary-500 group-hover:text-primary-600"
+                    : "text-violet-normal group-hover:text-violet-dark"
               }`}
             >
               {isLoading ? (
@@ -273,7 +273,7 @@ const DownloadContainer = () => {
                 ? "group-hover:border-red-200"
                 : success
                   ? "group-hover:border-green-200"
-                  : "group-hover:border-primary-200"
+                  : "group-hover:border-violet-light-active"
             }`}
           />
         </div>
@@ -290,19 +290,20 @@ const DownloadContainer = () => {
   };
 
   return (
-    <div className="mycontainer py-8">
+    <main className="font-poppins p-6 md:p-10 bg-[#F3F2F7] min-h-screen w-full">
       <Link
         href="/admin/dashboard"
-        className="flex items-center gap-1/2 text-primary-500 hover:text-primary-600 transition-colors w-fit"
+        className="flex items-center gap-2 text-[#2A1F5C] hover:text-[#1b124a] transition-colors w-fit font-semibold mb-6"
       >
         <ChevronLeft size={24} />
         <span className="text-xl">Kembali</span>
       </Link>
-      <div className="my-8">
-        <h2 className="text-3xl font-bold text-default-dark mb-2 font-poppins">
+
+      <div className="pb-4 border-b-2 border-[#161A3D] mb-8">
+        <h2 className="text-[#161A3D] font-bold text-3xl mb-2">
           Download Data
         </h2>
-        <p className="text-default-dark-50 font-poppins">
+        <p className="text-gray-600 font-poppins">
           Pilih jenis data yang ingin Anda download
         </p>
       </div>
@@ -414,7 +415,7 @@ const DownloadContainer = () => {
       {/* Additional info section */}
       <div className="mt-12 bg-secondary-100 rounded-xl p-6 border border-secondary-300">
         <div className="flex items-start space-x-4">
-          <div className="w-8 h-8 rounded-full bg-primary-500 flex items-center justify-center flex-shrink-0 mt-1">
+          <div className="w-8 h-8 rounded-full bg-violet-normal flex items-center justify-center flex-shrink-0 mt-1">
             <FileText className="w-4 h-4 text-white" />
           </div>
           <div>
@@ -430,7 +431,7 @@ const DownloadContainer = () => {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 
