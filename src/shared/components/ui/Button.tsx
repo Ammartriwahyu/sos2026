@@ -19,6 +19,7 @@ const buttonVariants = cva(
         transparent:
           "bg-transparent text-primary-500 hover:bg-primary-100 focus:bg-white focus:shadow-[0px_0px_0px_3px_rgba(235,204,211,1.00)] active:bg-primary-300 " +
           "disabled:text-secondary-900 disabled:bg-transparent",
+        none: "",
       },
       size: {
         default: "px-5 py-3 text-base ",
@@ -36,7 +37,8 @@ const buttonVariants = cva(
 );
 
 interface ButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement>,
+  extends
+    ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   arrow?: "both" | "top" | "bottom" | "left" | "right";
   children?: ReactNode;
