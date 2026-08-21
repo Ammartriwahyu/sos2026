@@ -94,7 +94,7 @@ const PresensiForm = ({ initialData, onSuccess }: PresensiFormProps) => {
     }
   };
 
-  const labelClasses = "text-lg text-primary-500 font-semibold";
+  const labelClasses = "text-lg text-primary-normal font-semibold";
 
   return (
     <form onSubmit={handleFormSubmit} className="w-full flex flex-col gap-y-10">
@@ -173,13 +173,17 @@ const PresensiForm = ({ initialData, onSuccess }: PresensiFormProps) => {
               setStatus(e.target.checked ? "aktif" : "non-aktif")
             }
             disabled={isSubmitting}
-            className="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500"
+            className="w-4 h-4 text-primary-normal-hover bg-gray-100 rounded border-gray-300 focus:ring-primary-normal"
           />
           <label htmlFor="active">Aktifkan Kode Ini</label>
         </div>
       </div>
 
-      <Button type="submit" disabled={isSubmitting || !isFormValid}>
+      <Button
+        variant="admin"
+        type="submit"
+        disabled={isSubmitting || !isFormValid}
+      >
         {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
         {isSubmitting
           ? "Menyimpan..."

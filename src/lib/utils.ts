@@ -6,5 +6,5 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const formatText = (text: string): string[] => {
-  return text.split("\r\n");
+  return text.split(/\r?\n/);
 };

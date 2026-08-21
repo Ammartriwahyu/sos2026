@@ -68,11 +68,18 @@ const FileNameModal: React.FC<FileNameModalProps> = ({
             </span>
           </div>
           <div className="flex justify-end space-x-3 mt-6">
-            <Button type="button" onClick={onClose} disabled={isLoading}>
+            <Button
+              type="button"
+              variant="none"
+              onClick={onClose}
+              disabled={isLoading}
+              className="px-6 py-2 border border-primary-normal text-primary-normal rounded-lg hover:bg-primary-light transition-colors font-semibold"
+            >
               Batal
             </Button>
             <Button
-              className="space-x-2 flex items-center"
+              variant="none"
+              className="space-x-2 flex items-center px-6 py-2 bg-primary-normal text-white rounded-lg hover:bg-primary-dark transition-colors font-semibold"
               type="submit"
               disabled={isLoading || !filename.trim()}
             >

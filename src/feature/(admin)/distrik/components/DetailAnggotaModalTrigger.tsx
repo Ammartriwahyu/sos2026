@@ -24,10 +24,10 @@ export const DetailAnggotaModalTrigger = ({
   return (
     <>
       <Button
-        variant="transparent"
+        variant="admin-transparent"
         size="small"
         onClick={handleOpenModal}
-        className="pb-0 font-semibold h-auto text-primary-500 underline underline-offset-4"
+        className="pb-0 font-semibold h-auto text-primary-normal underline underline-offset-4"
       >
         Detail
       </Button>

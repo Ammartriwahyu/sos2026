@@ -45,7 +45,7 @@ export const DataTable = <TData extends object>({
   if (isLoading) {
     return (
       <div className="flex h-60 items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary-500" />
+        <Loader2 className="h-8 w-8 animate-spin text-primary-normal" />
       </div>
     );
   }
@@ -79,26 +79,28 @@ export const DataTable = <TData extends object>({
             </div>
           )}
         </div>
-        <div className="bg-white w-full rounded-2xl shadow-xl overflow-hidden">
-          <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b px-4 lg:px-6 py-3 lg:py-4 border-b-black">
-            <h4 className="text-lg lg:text-xl font-bold text-primary-500">
+        <div className="bg-white w-full rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+          <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b-2 px-4 lg:px-6 py-3 lg:py-4 border-gray-400">
+            <h4 className="text-lg lg:text-xl font-bold text-[#161A3D]">
               {title}
             </h4>
             {!hideMeta && (
-              <span className="text-sm font-medium text-primary-500">
+              <span className="text-sm font-medium text-gray-500">
                 {firstRowIndex} - {lastRowIndex} of {totalRows}
               </span>
             )}
           </div>
           <div className="w-full overflow-x-auto">
-            <table className="min-w-[800px] w-full text-sm text-left text-black table-auto">
-              <thead className={cn("text-black text-base", headerClassName)}>
+            <table className="min-w-[800px] w-full text-sm text-left text-[#161A3D] table-auto">
+              <thead
+                className={cn("text-[#161A3D] text-base", headerClassName)}
+              >
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id}>
                     {headerGroup.headers.map((header) => (
                       <th
                         key={header.id}
-                        className="py-2 px-4 lg:py-3 lg:px-6"
+                        className="py-2 px-4 lg:py-3 lg:px-6 font-semibold"
                         style={{ width: header.getSize() }}
                       >
                         {header.isPlaceholder ? null : (
@@ -126,14 +128,14 @@ export const DataTable = <TData extends object>({
                             )}
                             {{
                               asc: (
-                                <ChevronUp className="h-4 w-4 text-primary-500" />
+                                <ChevronUp className="h-4 w-4 text-[#161A3D]" />
                               ),
                               desc: (
-                                <ChevronDown className="h-4 w-4 text-primary-500" />
+                                <ChevronDown className="h-4 w-4 text-[#161A3D]" />
                               ),
                             }[header.column.getIsSorted() as string] ??
                               (header.column.getCanSort() ? (
-                                <ChevronsUpDown className="h-4 w-4  text-primary-500" />
+                                <ChevronsUpDown className="h-4 w-4 text-[#161A3D]" />
                               ) : null)}
                           </div>
                         )}
@@ -150,10 +152,10 @@ export const DataTable = <TData extends object>({
                       "h-14 lg:h-16 transition-colors",
                       whenOnClick && "cursor-pointer",
                       row.getIsSelected()
-                        ? "bg-primary-500 text-white"
+                        ? "bg-[#161A3D]/20 text-[#161A3D]"
                         : index % 2 === 1
                           ? "bg-white"
-                          : "bg-primary-500/10",
+                          : "bg-[#161A3D]/5",
                     )}
                     onClick={
                       whenOnClick

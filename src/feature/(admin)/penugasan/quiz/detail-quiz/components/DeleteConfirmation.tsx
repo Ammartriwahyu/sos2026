@@ -27,10 +27,10 @@ export const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={title} desc={message}>
       <div className="flex justify-center gap-4 mt-6">
-        <Button variant="outline" onClick={onClose} disabled={isLoading}>
+        <Button variant="admin-outline" onClick={onClose} disabled={isLoading}>
           Batal
         </Button>
-        <Button variant="primary" onClick={onConfirm} disabled={isLoading}>
+        <Button variant="admin" onClick={onConfirm} disabled={isLoading}>
           {isLoading ? (
             <Loader2 className="animate-spin mr-2" size={16} />
           ) : (

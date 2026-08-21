@@ -38,7 +38,7 @@ const SelectTrigger = forwardRef<
     >
       {children}
       <SelectPrimitive.Icon asChild>
-        <ChevronDown className="h-5 w-5 transition-transform duration-200 group-data-[state=open]:rotate-180 text-default-dark/50" />
+        <ChevronDown className="h-5 w-5 transition-transform duration-200 group-data-[state=open]:rotate-180 opacity-50" />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   );
@@ -96,29 +96,43 @@ const SelectItem = forwardRef<
   React.ElementRef<typeof SelectPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item> & {
     size?: "default" | "small" | "large";
+    variant?: "primary" | "admin";
   }
->(({ className, children, size = "default", ...props }, ref) => {
-  const sizeStyles = {
-    default: "p-3 text-base",
-    small: "p-2 text-sm",
-    large: "p-4 text-lg",
-  };
+>(
+  (
+    { className, children, size = "default", variant = "admin", ...props },
+    ref,
+  ) => {
+    const sizeStyles = {
+      default: "p-3 text-base",
+      small: "p-2 text-sm",
+      large: "p-4 text-lg",
+    };
 
-  return (
-    <SelectPrimitive.Item
-      ref={ref}
-      className={cn(
-        "relative flex w-full cursor-default select-none items-center outline-none text-default-dark",
-        sizeStyles[size],
-        "focus:bg-primary-500/20 data-[highlighted]:bg-primary-500/20 data-[highlighted]:text-primary-500 data-[highlighted]:outline-none",
-        className,
-      )}
-      {...props}
-    >
-      <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
-    </SelectPrimitive.Item>
-  );
-});
+    const variantStyles = {
+      primary:
+        "focus:bg-primary-500/20 data-[highlighted]:bg-primary-500/20 data-[highlighted]:text-primary-500",
+      admin:
+        "focus:bg-[#2A1F5C]/10 data-[highlighted]:bg-[#2A1F5C]/10 data-[highlighted]:text-[#2A1F5C]",
+    };
+
+    return (
+      <SelectPrimitive.Item
+        ref={ref}
+        className={cn(
+          "relative flex w-full cursor-default select-none items-center outline-none text-default-dark",
+          sizeStyles[size],
+          variantStyles[variant],
+          "data-[highlighted]:outline-none",
+          className,
+        )}
+        {...props}
+      >
+        <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+      </SelectPrimitive.Item>
+    );
+  },
+);
 SelectItem.displayName = SelectPrimitive.Item.displayName;
 
 export {
