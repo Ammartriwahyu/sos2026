@@ -13,6 +13,9 @@ const buttonVariants = cva(
         primary:
           "bg-primary-500 text-white hover:bg-primary-700 focus:bg-primary-500 focus:border border-primary-200 active:bg-primary-800 " +
           "disabled:bg-neutral-500/50 disabled:text-secondary-900",
+        admin:
+          "bg-[#2A1F5C] text-white hover:bg-[#3D2F75] focus:bg-[#2A1F5C] focus:border border-[#3D2F75] active:bg-[#3D2F75] " +
+          "disabled:bg-neutral-500/50 disabled:text-secondary-900",
         outline:
           "border-[1.5px] text-primary-500 border-primary-500 hover:bg-primary-200 active:bg-primary-300 focus:border " +
           "disabled:border-neutral-500/50  disabled:text-secondary-900 hover:bg-primary-200 disabled:bg-transparent",
