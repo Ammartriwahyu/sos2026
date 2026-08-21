@@ -51,7 +51,7 @@ const RIBBONS: Ribbon[] = [
 const AuroraWaves = () => {
   return (
     <div
-      className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+      className="peta-aurora-wrap pointer-events-none absolute inset-0 z-0 overflow-hidden"
       aria-hidden
     >
       {RIBBONS.map((r, i) => (
