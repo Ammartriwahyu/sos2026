@@ -99,7 +99,7 @@ const PresensiMahasiswaForm = ({
     }
   };
 
-  const labelClasses = "text-lg text-[#2A1F5C] font-semibold";
+  const labelClasses = "text-lg text-admin-500 font-semibold";
 
   return (
     <form onSubmit={handleFormSubmit} className="w-full flex flex-col gap-y-10">

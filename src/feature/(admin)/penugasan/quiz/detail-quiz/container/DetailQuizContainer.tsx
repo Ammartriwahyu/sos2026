@@ -140,7 +140,7 @@ const DetailQuizContainer: React.FC<DetailQuizContainerProps> = ({
     <section>
       <Link
         href="/admin/penugasan"
-        className="flex items-center mb-6 gap-1/2 text-primary-500 hover:text-primary-600 transition-colors w-fit"
+        className="flex items-center mb-6 gap-1/2 text-admin-500 hover:text-admin-600 transition-colors w-fit"
       >
         <ChevronLeft size={24} />
         <span className="text-xl">Kembali</span>

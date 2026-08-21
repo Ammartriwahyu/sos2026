@@ -293,7 +293,7 @@ const DownloadContainer = () => {
     <main className="font-poppins p-6 md:p-10 bg-[#F3F2F7] min-h-screen w-full">
       <Link
         href="/admin/dashboard"
-        className="flex items-center gap-2 text-[#2A1F5C] hover:text-[#1b124a] transition-colors w-fit font-semibold mb-6"
+        className="flex items-center gap-2 text-admin-500 hover:text-admin-800 transition-colors w-fit font-semibold mb-6"
       >
         <ChevronLeft size={24} />
         <span className="text-xl">Kembali</span>

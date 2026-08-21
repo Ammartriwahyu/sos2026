@@ -90,7 +90,7 @@ const StfForm = ({
           <div>
             <label
               htmlFor="prodi"
-              className="block text-lg font-semibold text-primary-500 mb-2"
+              className="block text-lg font-semibold text-admin-500 mb-2"
             >
               Prodi
             </label>
@@ -111,7 +111,7 @@ const StfForm = ({
           <div>
             <label
               htmlFor="foto"
-              className="block text-lg font-semibold text-primary-500 mb-2"
+              className="block text-lg font-semibold text-admin-500 mb-2"
             >
               Foto Diri Calon Ketua Angkatan
             </label>
@@ -144,7 +144,7 @@ const StfForm = ({
         <div>
           <label
             htmlFor="visi"
-            className="block text-lg font-semibold text-primary-500 mb-2"
+            className="block text-lg font-semibold text-admin-500 mb-2"
           >
             Visi
           </label>
@@ -161,7 +161,7 @@ const StfForm = ({
         <div>
           <label
             htmlFor="misi"
-            className="block text-lg font-semibold text-primary-500 mb-2"
+            className="block text-lg font-semibold text-admin-500 mb-2"
           >
             Misi
           </label>

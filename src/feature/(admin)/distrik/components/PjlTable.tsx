@@ -10,9 +10,7 @@ const PjlTable = ({ pjlList, distrikName }: PjlTableProps) => {
   return (
     <div className="bg-white w-full rounded-2xl shadow-lg">
       <div className="border-b p-6 border-b-black">
-        <h4 className="text-2xl font-bold text-primary-500">
-          PJL {distrikName}
-        </h4>
+        <h4 className="text-2xl font-bold text-admin-500">PJL {distrikName}</h4>
       </div>
 
       <div className="w-full overflow-x-auto">
@@ -30,7 +28,7 @@ const PjlTable = ({ pjlList, distrikName }: PjlTableProps) => {
               <tr
                 key={pjl.nim}
                 className={
-                  index % 2 === 0 ? "bg-primary-500/10" : "bg-white-default"
+                  index % 2 === 0 ? "bg-admin-500/10" : "bg-white-default"
                 }
               >
                 <td className="py-5 px-6 text-default-dark">{pjl.nama}</td>

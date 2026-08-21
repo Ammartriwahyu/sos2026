@@ -94,7 +94,7 @@ const PresensiForm = ({ initialData, onSuccess }: PresensiFormProps) => {
     }
   };
 
-  const labelClasses = "text-lg text-[#2A1F5C] font-semibold";
+  const labelClasses = "text-lg text-admin-500 font-semibold";
 
   return (
     <form onSubmit={handleFormSubmit} className="w-full flex flex-col gap-y-10">
@@ -173,7 +173,7 @@ const PresensiForm = ({ initialData, onSuccess }: PresensiFormProps) => {
               setStatus(e.target.checked ? "aktif" : "non-aktif")
             }
             disabled={isSubmitting}
-            className="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500"
+            className="w-4 h-4 text-admin-600 bg-gray-100 rounded border-gray-300 focus:ring-admin-500"
           />
           <label htmlFor="active">Aktifkan Kode Ini</label>
         </div>

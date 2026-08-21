@@ -73,13 +73,13 @@ const FileNameModal: React.FC<FileNameModalProps> = ({
               variant="none"
               onClick={onClose}
               disabled={isLoading}
-              className="px-6 py-2 border border-[#2A1F5C] text-[#2A1F5C] rounded-lg hover:bg-[#D8D3F0] transition-colors font-semibold"
+              className="px-6 py-2 border border-admin-500 text-admin-500 rounded-lg hover:bg-admin-100 transition-colors font-semibold"
             >
               Batal
             </Button>
             <Button
               variant="none"
-              className="space-x-2 flex items-center px-6 py-2 bg-[#2A1F5C] text-white rounded-lg hover:bg-[#1b124a] transition-colors font-semibold"
+              className="space-x-2 flex items-center px-6 py-2 bg-admin-500 text-white rounded-lg hover:bg-admin-800 transition-colors font-semibold"
               type="submit"
               disabled={isLoading || !filename.trim()}
             >

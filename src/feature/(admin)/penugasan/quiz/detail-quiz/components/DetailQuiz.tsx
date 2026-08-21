@@ -54,7 +54,7 @@ const DetailQuiz = ({ quiz, onEdit, onDelete, isSQC }: DetailQuizProps) => {
       <div className="mt-12 md:mt-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
           <div className="flex flex-col space-y-2 text-gray-700">
-            <span className="text-primary-500 font-medium">Deadline:</span>
+            <span className="text-admin-500 font-medium">Deadline:</span>
             <div className="flex items-center space-x-3">
               <div className="flex items-center space-x-2">
                 <Calendar />
@@ -69,7 +69,7 @@ const DetailQuiz = ({ quiz, onEdit, onDelete, isSQC }: DetailQuizProps) => {
           </div>
 
           <div className="flex flex-col space-y-2 text-gray-700">
-            <span className="text-primary-500 font-medium">Rangkaian:</span>
+            <span className="text-admin-500 font-medium">Rangkaian:</span>
             <span className="w-fit">{quiz?.data_rangkaian.Name}</span>
           </div>
         </div>

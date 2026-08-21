@@ -15,9 +15,9 @@ const PenugasanContainer = () => {
       </h4>
       {/* Margin atas diubah menjadi responsif */}
       <section className="w-full flex justify-center mt-6 sm:mt-9">
-        <div className="relative w-64 h-10 bg-white rounded-full border-2 border-primary-500 mb-6">
+        <div className="relative w-64 h-10 bg-white rounded-full border-2 border-admin-500 mb-6">
           <div
-            className={`absolute w-1/2 h-full rounded-full bg-primary-600 transition-transform duration-300 ease-in-out`}
+            className={`absolute w-1/2 h-full rounded-full bg-admin-600 transition-transform duration-300 ease-in-out`}
             style={{
               transform:
                 activeTab === "tugas" ? "translateX(0%)" : "translateX(100%)",

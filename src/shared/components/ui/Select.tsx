@@ -111,9 +111,9 @@ const SelectItem = forwardRef<
 
     const variantStyles = {
       primary:
-        "focus:bg-primary-500/20 data-[highlighted]:bg-primary-500/20 data-[highlighted]:text-primary-500",
+        "focus:bg-admin-500/20 data-[highlighted]:bg-admin-500/20 data-[highlighted]:text-admin-500",
       admin:
-        "focus:bg-[#2A1F5C]/10 data-[highlighted]:bg-[#2A1F5C]/10 data-[highlighted]:text-[#2A1F5C]",
+        "focus:bg-admin-500/10 data-[highlighted]:bg-admin-500/10 data-[highlighted]:text-admin-500",
     };
 
     return (
