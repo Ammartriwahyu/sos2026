@@ -11,21 +11,13 @@ interface SectionTitleProps {
 }
 
 const SectionTitle = ({ children, className }: SectionTitleProps) => {
-  const rootRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
-    const root = rootRef.current;
-    if (!root) return;
+    const el = ref.current;
+    if (!el) return;
 
     gsap.registerPlugin(ScrollTrigger);
-
-    const band = root.querySelector<HTMLElement>(".section-title-band");
-    const topLine = root.querySelector<HTMLElement>(".section-title-line-top");
-    const bottomLine = root.querySelector<HTMLElement>(
-      ".section-title-line-bottom",
-    );
-    const text = root.querySelector<HTMLElement>(".section-title-text");
-    const glow = root.querySelector<HTMLElement>(".section-title-glow");
 
     const ctx = gsap.context(() => {
       const reduce = window.matchMedia(
@@ -33,55 +25,33 @@ const SectionTitle = ({ children, className }: SectionTitleProps) => {
       ).matches;
 
       if (reduce) {
-        gsap.set([band, text, glow], { opacity: 1, scale: 1 });
-        gsap.set([topLine, bottomLine], { scaleX: 1 });
+        gsap.set(el, { opacity: 1, y: 0 });
         return;
       }
 
-      gsap.set(band, { opacity: 0 });
-      gsap.set([topLine, bottomLine], {
-        scaleX: 0,
-        transformOrigin: "center center",
+      gsap.set(el, { opacity: 0, y: 16 });
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out",
+        scrollTrigger: { trigger: el, start: "top 85%", once: true },
       });
-      gsap.set(text, { opacity: 0, y: 8 });
-      gsap.set(glow, { opacity: 0, scale: 0.6 });
-
-      const tl = gsap.timeline({
-        scrollTrigger: { trigger: root, start: "top 82%", once: true },
-      });
-
-      tl.to(band, { opacity: 1, duration: 0.5, ease: "power2.out" })
-        .to(
-          [topLine, bottomLine],
-          { scaleX: 1, duration: 0.7, ease: "power3.out" },
-          "<",
-        )
-        .to(
-          glow,
-          { opacity: 1, scale: 1, duration: 0.7, ease: "power2.out" },
-          "<0.1",
-        )
-        .to(
-          text,
-          { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
-          "<0.1",
-        );
-    }, root);
+    }, el);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <div ref={rootRef} className={cn("w-full", className)}>
-      <div className="section-title-band peta-reveal relative w-full overflow-hidden py-4 md:py-6">
-        <span className="section-title-glow" aria-hidden />
-        <span className="section-title-line-top absolute inset-x-0 top-0 h-px bg-putih/12" />
-        <span className="section-title-line-bottom absolute inset-x-0 bottom-0 h-px bg-putih/12" />
-        <h2 className="section-title-text relative text-center text-3xl font-semibold whitespace-nowrap text-putih md:text-5xl">
-          {children}
-        </h2>
-      </div>
-    </div>
+    <h2
+      ref={ref}
+      className={cn(
+        "peta-reveal z-30 mx-auto w-full max-w-5xl border border-y border-[#4A3488]/15 bg-linear-to-r from-[#4A3488]/0 via-[#4A3488]/15 to-[#4A3488]/0 py-2.5 text-center text-4xl font-bold text-putih backdrop-blur-sm",
+        className,
+      )}
+    >
+      {children}
+    </h2>
   );
 };
 
