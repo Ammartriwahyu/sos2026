@@ -63,7 +63,7 @@ const DepartemenSection = () => {
 
       <div
         ref={rootRef}
-        className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-16 pb-12 md:px-10 md:pt-24 md:pb-0"
+        className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-28 pb-12 md:px-10 md:pt-32 md:pb-0 lg:pt-36"
       >
         <div className="flex flex-col gap-8 md:flex-row md:items-stretch md:gap-8 lg:gap-14">
           <div className="flex flex-col md:w-[210px] md:shrink-0 lg:w-[240px]">
@@ -74,7 +74,7 @@ const DepartemenSection = () => {
               <Image
                 src={ManAkademik}
                 alt="Ilustrasi mahasiswa"
-                className="w-full select-none"
+                className="akademik-sway w-full select-none"
               />
             </div>
           </div>
@@ -89,7 +89,7 @@ const DepartemenSection = () => {
                   src={QuestionMark}
                   alt=""
                   aria-hidden
-                  className="relative left-1 w-14 select-none lg:w-20"
+                  className="akademik-wiggle relative left-1 w-14 select-none lg:w-20"
                 />
               </div>
 

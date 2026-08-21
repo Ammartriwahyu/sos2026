@@ -1060,13 +1060,43 @@ body[data-scroll-locked] {
   }
 }
 
+.akademik-wiggle {
+  transform-origin: center bottom;
+  animation: akademik-wiggle 2.6s ease-in-out infinite;
+}
+@keyframes akademik-wiggle {
+  0%,
+  100% {
+    transform: rotate(-8deg);
+  }
+  50% {
+    transform: rotate(8deg);
+  }
+}
+
+.akademik-sway {
+  transform-origin: center bottom;
+  animation: akademik-sway 4.5s ease-in-out infinite;
+}
+@keyframes akademik-sway {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .peta-spin,
   .peta-glow,
   .peta-star,
   .peta-aurora,
   .peta-aurora-svg,
-  .akademik-float {
+  .akademik-float,
+  .akademik-wiggle,
+  .akademik-sway {
     animation: none !important;
   }
   .peta-reveal {
