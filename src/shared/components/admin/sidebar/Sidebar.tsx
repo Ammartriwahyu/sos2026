@@ -28,7 +28,7 @@ export const Sidebar = () => {
 
   return (
     <Tooltip.Provider delayDuration={0}>
-      <aside className="hidden sm:flex sm:overflow-y-scroll lg:overflow-hidden fixed top-0 left-0 z-40 flex-col bg-admin-500 shadow-xl pt-8 pb-0 w-20 xl:w-72 h-screen transition-all duration-300">
+      <aside className="hidden sm:flex sm:overflow-y-scroll lg:overflow-hidden fixed top-0 left-0 z-40 flex-col bg-primary-normal shadow-xl pt-8 pb-0 w-20 xl:w-72 h-screen transition-all duration-300">
         <div className="flex items-center justify-center xl:justify-start gap-4 px-6">
           <div className="w-12 h-12 rounded-xl flex-shrink-0">
             <Image
@@ -55,8 +55,8 @@ export const Sidebar = () => {
                     <li
                       className={`flex items-center justify-center xl:justify-start gap-x-4 py-4 px-6 transition-all duration-300 w-full ${
                         isActive
-                          ? "bg-admin-100 text-admin-500"
-                          : "text-white hover:bg-admin-600"
+                          ? "bg-primary-light text-primary-normal"
+                          : "text-white hover:bg-primary-normal-hover"
                       }`}
                     >
                       {React.createElement(item.icon, {
@@ -73,10 +73,10 @@ export const Sidebar = () => {
                 <Tooltip.Portal>
                   <Tooltip.Content
                     side="right"
-                    className="z-50 xl:hidden px-3 py-1.5 text-sm font-medium text-admin-500 bg-admin-100 rounded-md shadow-sm"
+                    className="z-50 xl:hidden px-3 py-1.5 text-sm font-medium text-primary-normal bg-primary-light rounded-md shadow-sm"
                   >
                     {item.label}
-                    <Tooltip.Arrow className="fill-admin-100" />
+                    <Tooltip.Arrow className="fill-primary-light" />
                   </Tooltip.Content>
                 </Tooltip.Portal>
               </Tooltip.Root>
@@ -88,7 +88,7 @@ export const Sidebar = () => {
           <button
             onClick={handleLogout}
             title="Logout"
-            className="w-full flex gap-x-4 items-center justify-center xl:justify-start py-5 px-6 bg-admin-100 text-admin-500 hover:bg-admin-200 transition-colors"
+            className="w-full flex gap-x-4 items-center justify-center xl:justify-start py-5 px-6 bg-primary-light text-primary-normal hover:bg-primary-light-hover transition-colors"
           >
             <LogOut size={24} className="flex-shrink-0" />
             <span className="hidden xl:inline font-bold text-lg">Logout</span>
@@ -101,7 +101,7 @@ export const Sidebar = () => {
         <button
           onClick={() => setIsMobileSidebarOpen(true)}
           title="Buka Menu"
-          className="fixed top-5 right-5 z-40 h-12 w-12 bg-admin-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-admin-600 transition-all"
+          className="fixed top-5 right-5 z-40 h-12 w-12 bg-primary-normal text-white rounded-full flex items-center justify-center shadow-lg hover:bg-primary-normal-hover transition-all"
         >
           <Menu size={24} />
         </button>
@@ -114,7 +114,7 @@ export const Sidebar = () => {
             onClick={() => setIsMobileSidebarOpen(false)}
             className="absolute inset-0 bg-black bg-opacity-50"
           />
-          <aside className="fixed top-0 right-0 h-full w-72 bg-admin-500 shadow-xl flex flex-col pt-6">
+          <aside className="fixed top-0 right-0 h-full w-72 bg-primary-normal shadow-xl flex flex-col pt-6">
             <div className="flex items-center justify-between pb-4 px-6 border-b border-white/20">
               <span className="font-bold text-lg text-white">Menu</span>
               <button
@@ -138,8 +138,8 @@ export const Sidebar = () => {
                     onClick={() => setIsMobileSidebarOpen(false)}
                     className={`flex items-center gap-4 py-4 px-6 transition-colors w-full ${
                       isActive
-                        ? "bg-admin-100 text-admin-500"
-                        : "text-white hover:bg-admin-600"
+                        ? "bg-primary-light text-primary-normal"
+                        : "text-white hover:bg-primary-normal-hover"
                     }`}
                   >
                     <item.icon className="h-[22px] w-[22px] flex-shrink-0" />
@@ -155,7 +155,7 @@ export const Sidebar = () => {
             <div className="mt-auto w-full">
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center gap-4 py-5 px-6 bg-admin-100 text-admin-500 hover:bg-admin-200 transition-colors"
+                className="w-full flex items-center gap-4 py-5 px-6 bg-primary-light text-primary-normal hover:bg-primary-light-hover transition-colors"
               >
                 <LogOut className="h-6 w-6" />
                 <span className="font-bold text-lg">Logout</span>

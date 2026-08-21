@@ -285,7 +285,7 @@ const DetailPresensiContainer: React.FC<DetailPresensiContainerProps> = ({
     <main className="flex flex-col gap-y-16 p-8 md:p-16 lg:p-20 bg-white rounded-xl shadow-lg min-h-screen">
       <div className="flex flex-col gap-y-11">
         <button
-          className="flex items-center gap-2 text-admin-500 hover:text-admin-600 transition-colors"
+          className="flex items-center gap-2 text-primary-normal hover:text-primary-normal-hover transition-colors"
           onClick={() => router.back()}
           type="button"
         >

@@ -13,7 +13,7 @@ const DistrikContainer = () => {
       <div className="flex items-center gap-1/2">
         <Link
           href="/admin/dashboard"
-          className="flex items-center gap-1/2 text-admin-500 hover:text-admin-600 transition-colors w-fit"
+          className="flex items-center gap-1/2 text-primary-normal hover:text-primary-normal-hover transition-colors w-fit"
         >
           <ChevronLeft size={24} />
           <span className="text-xl">Kembali</span>
@@ -23,7 +23,7 @@ const DistrikContainer = () => {
 
       {isLoading && (
         <div className="flex justify-center items-center h-40">
-          <Loader2 className="h-8 w-8 animate-spin text-admin-500" />
+          <Loader2 className="h-8 w-8 animate-spin text-primary-normal" />
         </div>
       )}
       {error && !isLoading && (

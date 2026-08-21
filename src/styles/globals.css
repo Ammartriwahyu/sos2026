@@ -19,24 +19,17 @@
   --color-primary-800: #5e0114;
   --color-primary-900: #4e0111;
 
-  /* == ADMIN COLORS == */
-  --color-admin-100: #d8d3f0;
-  --color-admin-200: #c4bceb;
-  --color-admin-500: #2a1f5c;
-  --color-admin-600: #3d2f75;
-  --color-admin-800: #1b124a;
-
   /* == PRIMARY SYSTEM COLORS == */
-  --color-primary-light: #ede8f0;
-  --color-primary-light-hover: #e4dde9;
-  --color-primary-light-active: #c7b9d2;
-  --color-primary-normal: #491d6d;
-  --color-primary-normal-hover: #421a62;
-  --color-primary-normal-active: #3a1757;
-  --color-primary-dark: #371652;
-  --color-primary-dark-hover: #2c1141;
-  --color-primary-dark-active: #210d31;
-  --color-primary-darker: #1a0a26;
+  --color-primary-light: #d8d3f0;
+  --color-primary-light-hover: #c4bceb;
+  --color-primary-light-active: #a094d6;
+  --color-primary-normal: #2a1f5c;
+  --color-primary-normal-hover: #3d2f75;
+  --color-primary-normal-active: #322660;
+  --color-primary-dark: #1b124a;
+  --color-primary-dark-hover: #140d36;
+  --color-primary-dark-active: #0d0822;
+  --color-primary-darker: #080515;
 
   /* == Secondary Colors == */
   --color-secondary-100: #faf9f6;

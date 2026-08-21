@@ -47,15 +47,17 @@ const FormEditNilai: React.FC<FormEditTugasProps> = ({
     <form className="px-20" onSubmit={handleFormSubmit}>
       <div className=" space-y-2">
         <div className="space-x-6 flex">
-          <p className="text-admin-600 min-w-42">Nama Mahasiswa</p>
+          <p className="text-primary-normal-hover min-w-42">Nama Mahasiswa</p>
           <span className="">: {submissionData.student_name}</span>
         </div>
         <div className="space-x-6 flex">
-          <p className="text-admin-600 min-w-42">NIM</p>
+          <p className="text-primary-normal-hover min-w-42">NIM</p>
           <span className="">: {submissionData.nim}</span>
         </div>
         <div className="space-x-6 flex">
-          <p className="text-admin-600 min-w-42">Status Pengumpulan </p>
+          <p className="text-primary-normal-hover min-w-42">
+            Status Pengumpulan{" "}
+          </p>
           <span className="">: {submissionData.status}</span>
         </div>
       </div>
@@ -63,7 +65,7 @@ const FormEditNilai: React.FC<FormEditTugasProps> = ({
         {submissionData.drive_link ? (
           <Button
             type="button"
-            variant={"outline"}
+            variant={"admin-outline"}
             size={"small"}
             className="font-semibold space-x-1"
             onClick={() => window.open(submissionData.drive_link, "_blank")}
@@ -78,7 +80,7 @@ const FormEditNilai: React.FC<FormEditTugasProps> = ({
         )}
       </div>
       <div className="my-10 ">
-        <label className="text-admin-500 font-semibold" htmlFor="nilai">
+        <label className="text-primary-normal font-semibold" htmlFor="nilai">
           Nilai (0-100)
         </label>
         <Input

@@ -89,7 +89,7 @@ const StfContainer = () => {
       <div className="flex flex-col gap-7">
         <Link
           href="/admin/dashboard"
-          className="flex items-center gap-1/2 text-admin-500 hover:text-admin-600 transition-colors w-fit"
+          className="flex items-center gap-1/2 text-primary-normal hover:text-primary-normal-hover transition-colors w-fit"
         >
           <ChevronLeft size={24} />
           <span className="text-xl">Kembali</span>

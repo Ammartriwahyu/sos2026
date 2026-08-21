@@ -67,7 +67,7 @@ const DetailTugas = ({ tugas, onEdit, isSQC }: DetailTugasProps) => {
 
         <div className="grid grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8 mt-12">
           <div className="flex flex-col space-y-2 text-gray-700">
-            <span className="text-admin-500 font-medium">Deadline:</span>
+            <span className="text-primary-normal font-medium">Deadline:</span>
             <div className="flex items-center space-x-3">
               <div className="flex items-center space-x-2">
                 <Calendar />
@@ -82,12 +82,14 @@ const DetailTugas = ({ tugas, onEdit, isSQC }: DetailTugasProps) => {
           </div>
 
           <div className="flex flex-col space-y-2 text-gray-700">
-            <span className="text-admin-500 font-medium">Rangkaian:</span>
+            <span className="text-primary-normal font-medium">Rangkaian:</span>
             <span className="w-fit">{tugas?.rangkaian?.Name}</span>
           </div>
 
           <div className="flex flex-col space-y-2 text-gray-700">
-            <span className="text-admin-500 font-medium">Visibilitas:</span>
+            <span className="text-primary-normal font-medium">
+              Visibilitas:
+            </span>
             <div className="flex items-center space-x-2">
               {tugas?.is_visible !== "false" ? (
                 <>
@@ -104,7 +106,7 @@ const DetailTugas = ({ tugas, onEdit, isSQC }: DetailTugasProps) => {
           </div>
 
           <div className="flex flex-col space-y-2 text-gray-700">
-            <span className="text-admin-500 font-medium">Target:</span>
+            <span className="text-primary-normal font-medium">Target:</span>
             <div className="flex items-center space-x-2">
               <Target className="w-4 h-4" />
               <span>{tugas?.target || "Tidak ada target"}</span>
@@ -114,7 +116,7 @@ const DetailTugas = ({ tugas, onEdit, isSQC }: DetailTugasProps) => {
 
         <div className="mt-12">
           {isSQC && (
-            <Button onClick={onEdit} variant={"primary"}>
+            <Button onClick={onEdit} variant={"admin"}>
               Edit Tugas
             </Button>
           )}

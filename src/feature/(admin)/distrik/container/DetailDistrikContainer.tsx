@@ -33,7 +33,7 @@ const DetailDistrikContainer = ({ distrikId }: { distrikId: string }) => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <Loader2 className="h-12 w-12 animate-spin text-admin-500" />
+        <Loader2 className="h-12 w-12 animate-spin text-primary-normal" />
       </div>
     );
   }
@@ -52,7 +52,7 @@ const DetailDistrikContainer = ({ distrikId }: { distrikId: string }) => {
         <div className="flex items-center gap-1/2">
           <Link
             href="/admin/distrik"
-            className="flex items-center gap-1/2 text-admin-500 hover:text-admin-600 transition-colors w-fit"
+            className="flex items-center gap-1/2 text-primary-normal hover:text-primary-normal-hover transition-colors w-fit"
           >
             <ChevronLeft size={24} />
             <span className="text-xl">Kembali</span>

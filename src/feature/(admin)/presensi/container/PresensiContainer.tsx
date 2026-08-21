@@ -54,14 +54,16 @@ const PresensiContainer = () => {
     <main className="bg-white p-10 lg:p-20 min-h-screen h-fit rounded-xl shadow-lg">
       <button
         type="button"
-        className="flex items-center gap-2 text-admin-500 hover:text-admin-600 transition-colors mb-6"
+        className="flex items-center gap-2 text-primary-normal hover:text-primary-normal-hover transition-colors mb-6"
         onClick={() => router.back()}
       >
         <ChevronLeft /> Kembali
       </button>
 
       <div className="flex flex-col md:flex-row items-center justify-between mb-10">
-        <h4 className="text-4xl font-semibold text-admin-500">Kode Presensi</h4>
+        <h4 className="text-4xl font-semibold text-primary-normal">
+          Kode Presensi
+        </h4>
         {isSqc && (
           <Button
             variant="admin"

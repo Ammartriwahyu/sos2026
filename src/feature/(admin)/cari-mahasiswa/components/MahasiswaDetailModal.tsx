@@ -17,7 +17,7 @@ export const MahasiswaDetailView = ({
   if (isLoading) {
     return (
       <div className="flex h-60 items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-admin-500" />
+        <Loader2 className="h-8 w-8 animate-spin text-primary-normal" />
       </div>
     );
   }
@@ -62,7 +62,7 @@ export const MahasiswaDetailView = ({
       <div className="grid grid-cols-1 gap-x-12 px-10 gap-y-4 md:grid-cols-2">
         {identitasFields.map((field) => (
           <div key={field.label}>
-            <p className="text-sm text-admin-500">{field.label}</p>
+            <p className="text-sm text-primary-normal">{field.label}</p>
             <p className="font-medium">{field.value || "-"}</p>
           </div>
         ))}
@@ -74,7 +74,7 @@ export const MahasiswaDetailView = ({
       <div className="grid grid-cols-1 gap-x-12 px-10 gap-y-4 pb-10 md:grid-cols-2">
         {kesehatanFields.map((field) => (
           <div key={field.label}>
-            <p className="text-sm text-admin-500">{field.label}</p>
+            <p className="text-sm text-primary-normal">{field.label}</p>
             <p className="font-medium">{field.value || "-"}</p>
           </div>
         ))}

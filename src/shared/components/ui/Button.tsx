@@ -11,16 +11,22 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "bg-admin-500 text-white hover:bg-primary-700 focus:bg-admin-500 focus:border border-admin-200 active:bg-primary-800 " +
+          "bg-primary-500 text-white hover:bg-primary-700 focus:bg-primary-500 focus:border border-primary-200 active:bg-primary-800 " +
           "disabled:bg-neutral-500/50 disabled:text-secondary-900",
         admin:
-          "bg-admin-500 text-white hover:bg-admin-600 focus:bg-admin-500 focus:border border-admin-600 active:bg-admin-600 " +
+          "bg-primary-normal text-white hover:bg-primary-normal-hover focus:bg-primary-normal focus:border border-primary-normal-hover active:bg-primary-normal-hover " +
           "disabled:bg-neutral-500/50 disabled:text-secondary-900",
+        "admin-outline":
+          "border-[1.5px] text-primary-normal border-primary-normal hover:bg-primary-light-hover active:bg-primary-light-hover focus:border " +
+          "disabled:border-neutral-500/50 disabled:text-secondary-900 disabled:bg-transparent",
+        "admin-transparent":
+          "bg-transparent text-primary-normal hover:bg-primary-light focus:bg-white focus:shadow-[0px_0px_0px_3px_rgba(237,232,240,1.00)] active:bg-primary-light-hover " +
+          "disabled:text-secondary-900 disabled:bg-transparent",
         outline:
-          "border-[1.5px] text-admin-500 border-admin-500 hover:bg-admin-200 active:bg-primary-300 focus:border " +
-          "disabled:border-neutral-500/50  disabled:text-secondary-900 hover:bg-admin-200 disabled:bg-transparent",
+          "border-[1.5px] text-primary-500 border-primary-500 hover:bg-primary-200 active:bg-primary-300 focus:border " +
+          "disabled:border-neutral-500/50  disabled:text-secondary-900 hover:bg-primary-200 disabled:bg-transparent",
         transparent:
-          "bg-transparent text-admin-500 hover:bg-admin-100 focus:bg-white focus:shadow-[0px_0px_0px_3px_rgba(235,204,211,1.00)] active:bg-primary-300 " +
+          "bg-transparent text-primary-500 hover:bg-primary-100 focus:bg-white focus:shadow-[0px_0px_0px_3px_rgba(235,204,211,1.00)] active:bg-primary-300 " +
           "disabled:text-secondary-900 disabled:bg-transparent",
         none: "",
       },

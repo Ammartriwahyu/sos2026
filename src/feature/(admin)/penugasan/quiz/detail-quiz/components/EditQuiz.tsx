@@ -103,7 +103,7 @@ const EditQuizForm: React.FC<EditQuizFormProps> = ({
       <div className="flex justify-between items-center">
         <Button
           onClick={onBack}
-          variant={"transparent"}
+          variant={"admin-transparent"}
           className="space-x-2"
           disabled={isSubmitting}
         >
@@ -123,7 +123,7 @@ const EditQuizForm: React.FC<EditQuizFormProps> = ({
           <div>
             <label
               htmlFor="kuis_nama"
-              className="block text-sm font-bold text-admin-500 mb-1"
+              className="block text-sm font-bold text-primary-normal mb-1"
             >
               Nama Kuis
             </label>
@@ -142,7 +142,7 @@ const EditQuizForm: React.FC<EditQuizFormProps> = ({
           <div>
             <label
               htmlFor="kuis_deskripsi"
-              className="block text-sm font-bold text-admin-500 mb-1"
+              className="block text-sm font-bold text-primary-normal mb-1"
             >
               Deskripsi
             </label>
@@ -164,7 +164,7 @@ const EditQuizForm: React.FC<EditQuizFormProps> = ({
             <div>
               <label
                 htmlFor="tenggat"
-                className="block text-sm font-bold text-admin-500 mb-1"
+                className="block text-sm font-bold text-primary-normal mb-1"
               >
                 Tenggat
               </label>
@@ -184,7 +184,7 @@ const EditQuizForm: React.FC<EditQuizFormProps> = ({
             <div>
               <label
                 htmlFor="durasi_kuis"
-                className="block text-sm font-bold text-admin-500 mb-1"
+                className="block text-sm font-bold text-primary-normal mb-1"
               >
                 Durasi Kuis (menit)
               </label>
@@ -206,7 +206,7 @@ const EditQuizForm: React.FC<EditQuizFormProps> = ({
             <div>
               <label
                 htmlFor="kesempatan"
-                className="block text-sm font-bold text-admin-500 mb-1"
+                className="block text-sm font-bold text-primary-normal mb-1"
               >
                 Kesempatan
               </label>
@@ -227,7 +227,7 @@ const EditQuizForm: React.FC<EditQuizFormProps> = ({
           <div>
             <label
               htmlFor="id_rangkaian"
-              className="block text-sm font-bold text-admin-500 mb-1"
+              className="block text-sm font-bold text-primary-normal mb-1"
             >
               Rangkaian
             </label>
@@ -266,7 +266,7 @@ const EditQuizForm: React.FC<EditQuizFormProps> = ({
         {/* Section Header dengan Hint Jumlah Soal */}
         <div className="flex flex-col items-center space-y-2">
           <h4 className="font-bold text-2xl">Soal Kuis</h4>
-          <div className="flex items-center space-x-2  text-admin-500 px-4 py-2 rounded-lg border border-admin-200">
+          <div className="flex items-center space-x-2  text-primary-normal px-4 py-2 rounded-lg border border-primary-light-hover">
             <FileText size={16} />
             <span className="text-sm font-medium">
               {questionCount === 0
@@ -290,7 +290,9 @@ const EditQuizForm: React.FC<EditQuizFormProps> = ({
               key={item.id_pertanyaan}
               className="bg rounded-lg p-4 space-y-3 relative "
             >
-              <h3 className="font-bold text-admin-500">Soal {index + 1}</h3>
+              <h3 className="font-bold text-primary-normal">
+                Soal {index + 1}
+              </h3>
               <div>
                 <Textarea
                   placeholder="Tulis judul pertanyaan di sini..."
@@ -441,7 +443,7 @@ const EditQuizForm: React.FC<EditQuizFormProps> = ({
               </div>
               <div className="flex items-center mb-10 gap-4 pt-2">
                 <div className="w-1/2">
-                  <label className="text-sm font-bold text-admin-500">
+                  <label className="text-sm font-bold text-primary-normal">
                     Jawaban Benar
                   </label>
                   <Select
@@ -466,7 +468,7 @@ const EditQuizForm: React.FC<EditQuizFormProps> = ({
               </div>
               <Button
                 type="button"
-                variant="outline"
+                variant="admin-outline"
                 size="small"
                 className="absolute -top-2 right-4"
                 onClick={() => removeQuestion(index)}
@@ -480,7 +482,7 @@ const EditQuizForm: React.FC<EditQuizFormProps> = ({
         <div className="flex justify-between w-full pt-4">
           <Button
             type="button"
-            variant="primary"
+            variant="admin"
             className="space-x-2"
             onClick={addQuestion}
             disabled={isSubmitting}
