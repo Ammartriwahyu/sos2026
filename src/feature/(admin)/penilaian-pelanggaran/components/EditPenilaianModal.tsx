@@ -111,7 +111,7 @@ export const EditPenilaianModal = ({
     <Modal isOpen={isOpen} onClose={onClose} containerClassName="max-w-4xl">
       {isLoading || !detailMaba ? (
         <div className="flex h-96 items-center justify-center">
-          <Loader2 className="h-10 w-10 animate-spin text-primary-500" />
+          <Loader2 className="h-10 w-10 animate-spin text-primary-normal" />
         </div>
       ) : (
         <div className="flex flex-col h-full max-h-[80vh]">
@@ -149,7 +149,7 @@ export const EditPenilaianModal = ({
                       disabled={!isSqc}
                     />
                     <div className="flex flex-col">
-                      <label className="block text-lg font-semibold mb-2 text-primary-500">
+                      <label className="block text-lg font-semibold mb-2 text-primary-normal">
                         Keterangan
                       </label>
                       <Select
@@ -174,7 +174,7 @@ export const EditPenilaianModal = ({
               ))}
             </div>
             <Button
-              variant="outline"
+              variant="admin-outline"
               disabled={!isSqc}
               onClick={handleAddPelanggaran}
               className="mt-4 font-medium"

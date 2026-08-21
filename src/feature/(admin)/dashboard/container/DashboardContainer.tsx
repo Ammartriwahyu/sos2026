@@ -112,7 +112,7 @@ const DashboardContainer = () => {
   if (isLoading) {
     return (
       <div className="flex h-screen items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary-500" />
+        <Loader2 className="h-8 w-8 animate-spin text-primary-normal" />
       </div>
     );
   }
@@ -172,7 +172,7 @@ const DashboardContainer = () => {
 
       <div className="mt-8 mb-6">
         <Button
-          variant="outline"
+          variant="admin-outline"
           className="border-[#161A3D] text-[#161A3D] hover:bg-[#161A3D] hover:text-white rounded-lg px-6 py-2"
           onClick={() => (window.location.href = "/admin/dashboard-download")}
         >

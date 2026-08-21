@@ -41,7 +41,7 @@ const PenilaianContainer = () => {
       <div className="flex flex-col gap-7 mb-6">
         <Link
           href="/admin/dashboard"
-          className="flex items-center gap-1 text-primary-500 hover:text-primary-600 transition-colors w-fit"
+          className="flex items-center gap-1 text-primary-normal hover:text-primary-normal-hover transition-colors w-fit"
         >
           <ChevronLeft size={24} />
           <span className="text-xl font-medium">Kembali</span>
@@ -72,7 +72,7 @@ const PenilaianContainer = () => {
       <div className="mt-8">
         {isLoading ? (
           <div className="flex h-60 items-center justify-center">
-            <Loader2 className="h-8 w-8 animate-spin text-primary-500" />
+            <Loader2 className="h-8 w-8 animate-spin text-primary-normal" />
           </div>
         ) : (
           <PenilaianTable

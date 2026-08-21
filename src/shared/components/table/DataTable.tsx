@@ -45,7 +45,7 @@ export const DataTable = <TData extends object>({
   if (isLoading) {
     return (
       <div className="flex h-60 items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-[#2A1F5C]" />
+        <Loader2 className="h-8 w-8 animate-spin text-primary-normal" />
       </div>
     );
   }

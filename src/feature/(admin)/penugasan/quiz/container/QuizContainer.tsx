@@ -69,7 +69,10 @@ const QuizContainer = () => {
     <section className="">
       <div className="flex justify-end">
         {isSqc && (
-          <Button variant={"outline"} onClick={() => setIsModalOpen(true)}>
+          <Button
+            variant={"admin-outline"}
+            onClick={() => setIsModalOpen(true)}
+          >
             <Plus size={16} className="mr-2" />
             Tambah Kuis
           </Button>

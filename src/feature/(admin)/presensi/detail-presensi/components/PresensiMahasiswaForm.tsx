@@ -99,7 +99,7 @@ const PresensiMahasiswaForm = ({
     }
   };
 
-  const labelClasses = "text-lg text-primary-500 font-semibold";
+  const labelClasses = "text-lg text-primary-normal font-semibold";
 
   return (
     <form onSubmit={handleFormSubmit} className="w-full flex flex-col gap-y-10">
@@ -129,7 +129,11 @@ const PresensiMahasiswaForm = ({
         </Select>
       </div>
 
-      <Button type="submit" disabled={isSubmitting || !isFormValid}>
+      <Button
+        variant="admin"
+        type="submit"
+        disabled={isSubmitting || !isFormValid}
+      >
         {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
         {isSubmitting ? "Menyimpan..." : "Simpan"}
       </Button>

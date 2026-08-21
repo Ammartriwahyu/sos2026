@@ -27,7 +27,7 @@ export const DetailModalTrigger = ({ nim }: DetailModalTriggerProps) => {
     <>
       <button
         onClick={handleOpenModal}
-        className="detail-link font-semibold text-primary-500 border-b border-primary-500"
+        className="detail-link font-semibold text-primary-normal border-b border-primary-normal"
       >
         Detail
       </button>
