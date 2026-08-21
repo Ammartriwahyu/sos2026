@@ -98,7 +98,7 @@ const CurrentSection = () => {
                         repeat: Infinity,
                         ease: "easeInOut",
                       }}
-                      className="absolute left-0 bottom-0 -translate-x-1/2 translate-y-1/7 z-40 origin-bottom"
+                      className="absolute left-0 bottom-0 -translate-x-1/2 translate-y-1/7 md:translate-y-1/5 z-40 origin-bottom"
                     >
                       <Image
                         src={Bintang}
@@ -123,7 +123,7 @@ const CurrentSection = () => {
                         repeat: Infinity,
                         ease: "easeInOut",
                       }}
-                      className="absolute right-0 bottom-0 translate-x-1/2 translate-y-1/7 z-40 origin-bottom"
+                      className="absolute right-0 bottom-0 translate-x-1/2 translate-y-1/7 md:translate-y-1/5 z-40 origin-bottom"
                     >
                       <div className="scale-x-[-1]">
                         <Image
