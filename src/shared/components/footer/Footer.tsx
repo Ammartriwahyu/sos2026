@@ -1,13 +1,25 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { FooterLinks } from "./FooterItems";
 import { iconSosmedData } from "@/shared/data/iconSosmedData";
+import { cn } from "@/shared/utils/cn";
 
 import LogoSoS from "@/assets/assetsos26/logo-sos26.svg";
 
 export const Footer = () => {
+  const pathname = usePathname();
+  const isHome = pathname === "/" || pathname === "/home";
+
   return (
-    <footer className="relative z-50 bg-footer-gradient text-white -mt-[1px]">
+    <footer
+      className={cn(
+        "relative z-50 text-white -mt-[1px]",
+        isHome ? "bg-footer-to" : "bg-footer-gradient",
+      )}
+    >
       <div className="mycontainer py-[12px] md:py-[56px]">
         <div className="flex flex-col items-center md:flex-row md:justify-around gap-[12px] md:gap-[22px]">
           <div className="flex flex-col md:flex-row items-center gap-[4px] md:gap-[22px] text-center md:text-left">

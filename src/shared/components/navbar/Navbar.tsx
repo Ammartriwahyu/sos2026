@@ -100,7 +100,7 @@ const Navbar = () => {
                 <NavbarDropdown onLogout={handleLogout} user={user} />
               ) : (
                 <Link href="/login">
-                  <Button className="bg-violet-light-active hover:bg-violet-light-hover active:bg-[#a9a3cc] focus:bg-violet-light-active focus:border-none px-5 text-black font-bold py-3 whitespace-nowrap">
+                  <Button className="bg-primary-light hover:bg-primary-light-hover active:bg-primary-light-active focus:bg-primary-light focus:border-none px-5 text-black font-bold py-3 whitespace-nowrap">
                     Masuk
                   </Button>
                 </Link>
@@ -109,7 +109,7 @@ const Navbar = () => {
 
             {/* Mobile Menu Button */}
             <div className="lg:hidden">
-              <div className="rounded-xl bg-violet-light-active m-1">
+              <div className="rounded-xl bg-primary-light m-1">
                 <Hamburger
                   toggled={isMenuOpen}
                   toggle={setIsMenuOpen}
@@ -143,7 +143,7 @@ const Navbar = () => {
                 <NavbarDropdown onLogout={handleLogout} user={user} />
               ) : (
                 <Link href="/login">
-                  <Button className="bg-violet-light-active hover:bg-violet-light-hover active:bg-[#a9a3cc] focus:bg-violet-light-active focus:border-none px-8 text-black font-bold py-3">
+                  <Button className="bg-primary-light hover:bg-primary-light-hover active:bg-primary-light-active focus:bg-primary-light focus:border-none px-8 text-black font-bold py-3">
                     Masuk
                   </Button>
                 </Link>
