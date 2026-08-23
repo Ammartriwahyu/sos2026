@@ -9,6 +9,8 @@ const inputVariants = cva(
       variant: {
         default:
           "border-black-50 text-black focus:border-black focus:ring-[0.5px] focus:ring-black",
+        admin:
+          "border-black-50 text-black focus:border-primary-normal focus:ring-[0.5px] focus:ring-primary-normal",
         error:
           "border-danger text-black hover:border-danger focus:border-danger focus:ring-[0.5px] focus:ring-danger",
         success:
@@ -39,8 +41,9 @@ const labelVariants = cva("block text-lg font-semibold mb-2", {
   variants: {
     variant: {
       default: "text-primary-500",
-      error: "text-primary-500",
-      success: "text-primary-500",
+      admin: "text-primary-normal",
+      error: "text-danger",
+      success: "text-success",
     },
     disabled: {
       true: "text-primary-500",
@@ -57,8 +60,9 @@ const statusVariants = cva("text-base mt-2", {
   variants: {
     variant: {
       default: "text-black",
-      error: "text-black",
-      success: "text-black",
+      admin: "text-black",
+      error: "text-danger",
+      success: "text-success",
     },
     disabled: {
       true: "text-secondary-700",
@@ -72,7 +76,8 @@ const statusVariants = cva("text-base mt-2", {
 });
 
 interface InputProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, "size">,
+  extends
+    Omit<InputHTMLAttributes<HTMLInputElement>, "size">,
     VariantProps<typeof inputVariants> {
   label?: string;
   status?: string;

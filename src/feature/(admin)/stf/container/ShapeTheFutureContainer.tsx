@@ -134,7 +134,7 @@ const StfContainer = () => {
 
         <div className="flex">
           <Link href="/admin/stf/create">
-            <Button>Tambah Calon</Button>
+            <Button variant="admin">Tambah Calon</Button>
           </Link>
         </div>
       </div>
