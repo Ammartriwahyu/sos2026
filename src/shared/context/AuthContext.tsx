@@ -116,9 +116,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         while (attempts < MAX_RETRY_ATTEMPTS) {
           try {
             const response = await authService.getMe();
-            // Mendukung respons dari axios yang dibungkus { data: ... } atau response langsung
-            const userData: AuthProfile =
-              response?.data ?? (response as unknown as AuthProfile);
+            const userData: AuthProfile = response?.data;
             stateRef.current.authCache = {
               data: userData,
               timestamp: Date.now(),
