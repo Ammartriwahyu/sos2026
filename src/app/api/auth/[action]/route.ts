@@ -125,3 +125,37 @@ export async function POST(
 
   return NextResponse.json({ message: "Aksi tidak valid" }, { status: 400 });
 }
+
+export async function GET(
+  request: NextRequest,
+  context: { params: Promise<{ action: string }> },
+) {
+  const { action } = await context.params;
+
+  if (action === "me") {
+    const token = (await cookies()).get("auth_session")?.value;
+    if (!token) {
+      return NextResponse.json(
+        { success: false, message: "Unauthorized", data: null },
+        { status: 401 },
+      );
+    }
+
+    const payload = await verifyToken(token);
+    if (!payload) {
+      return NextResponse.json(
+        { success: false, message: "Invalid token", data: null },
+        { status: 401 },
+      );
+    }
+
+    // Return the profile object directly in the data property
+    return NextResponse.json({
+      success: true,
+      message: "Berhasil mengambil profil",
+      data: payload,
+    });
+  }
+
+  return NextResponse.json({ message: "Aksi tidak valid" }, { status: 400 });
+}

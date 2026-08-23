@@ -87,8 +87,9 @@ class AuthService {
 
   async getMe(): Promise<ApiResponse<AuthProfile>> {
     try {
-      const response = await apiClient.get<AuthProfile>("/api/mahasiswa/");
-      return response;
+      const response =
+        await axios.get<ApiResponse<AuthProfile>>("/api/auth/me");
+      return response.data;
     } catch (error: unknown) {
       if (error instanceof Error) {
         throw new Error(error.message);
