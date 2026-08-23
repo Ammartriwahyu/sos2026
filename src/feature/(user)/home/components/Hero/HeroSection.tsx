@@ -202,13 +202,13 @@ const Hero = () => {
             {...imgProps}
             src={BatuLebar}
             alt="BatuLebar"
-            className="absolute left-1/2 -translate-x-1/2 bottom-0 max-lg:w-[160%] max-lg:max-w-none select-none"
+            className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[110vw] max-w-none h-auto select-none"
           />
           <Image
             {...imgProps}
             src={PortalNether}
             alt="portal"
-            className="absolute left-1/2 -translate-x-1/2 bottom-[5%] lg:bottom-[10%] w-[70%] lg:w-[34.5%] aspect-square select-none"
+            className="absolute left-1/2 -translate-x-1/2 bottom-[5%] lg:bottom-[10%] w-[70%] lg:w-[26.5%] aspect-square select-none"
           />
         </div>
         <Image
@@ -218,7 +218,7 @@ const Hero = () => {
           className="asap-item absolute left-[45%] not-lg:-rotate-45 lg:right-[17%] bottom-[21%] w-[70%] lg:w-[35%] aspect-square select-none"
         />
       </div>
-      <HeroTextSVG className="hero-text-item parallax-text absolute left-1/2 top-[15%] -translate-x-1/2 w-[70%] lg:w-[35%] h-auto select-none" />
+      <HeroTextSVG className="hero-text-item parallax-text absolute left-1/2 top-[15%] -translate-x-1/2 w-[70%] lg:w-[25%] h-auto select-none" />
     </section>
   );
 };
