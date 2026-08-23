@@ -12,6 +12,7 @@ const QuizStatusSection = ({ Quiz }: { Quiz: Quiz | null }) => {
       case "belum mulai":
         return "border-transparent bg-default-dark/20 text-white px-3 py-2 rounded-full";
       case "terlewat":
+      case "terlambat":
         return "border-transparent bg-badgeOverdue text-white px-3 py-2 rounded-full";
       default:
         return "border-transparent bg-default-dark/20 text-white px-3 py-2 rounded-full";
@@ -51,6 +52,15 @@ const QuizStatusSection = ({ Quiz }: { Quiz: Quiz | null }) => {
       <div className="mt-20">
         {Quiz?.status_kuis === "Selesai" ? (
           <QuizResultView quiz={Quiz} />
+        ) : Quiz?.status_kuis === "Terlewat" ||
+          Quiz?.status_kuis === "Terlambat" ? (
+          <div className="w-full space-y-4 px-8 py-6 rounded-2xl mt-20 min-h-[15rem] bg-[#F5E6E9]">
+            <h4 className="font-bold text-black">Kuis Sudah Berakhir</h4>
+            <p className="text-justify">
+              Maaf, kuis ini sudah melewati batas waktu pengerjaan. Kamu tidak
+              bisa mengerjakan kuis ini lagi.
+            </p>
+          </div>
         ) : (
           <QuizBefore quiz={Quiz} />
         )}

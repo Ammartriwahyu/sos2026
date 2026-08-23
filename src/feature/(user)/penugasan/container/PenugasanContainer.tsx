@@ -34,54 +34,66 @@ export const PenugasanContainer = () => {
       <div className="relative z-10 mycontainer py-8 md:py-12 flex flex-col items-center gap-10 md:gap-14 pb-[300px]">
         <AnimatedDiv className="w-full flex justify-start">
           <div className="w-full px-4 md:px-10 mt-5">
-            <Link
-              href="/aktivitas"
-              className="inline-flex items-center gap-1 text-white font-semibold text-lg md:text-xl hover:text-white/80 transition-colors"
-            >
-              <ChevronLeft className="w-8 h-8 md:w-10 md:h-10 text-white shrink-0" />
-              <span>Kembali</span>
-            </Link>
+            {activeTab === "kuis" ? (
+              <button
+                onClick={() => setActiveTab("tugas")}
+                className="inline-flex items-center gap-1 text-white font-semibold text-lg md:text-xl hover:text-white/80 transition-colors cursor-pointer bg-transparent border-none outline-none"
+              >
+                <ChevronLeft className="w-8 h-8 md:w-10 md:h-10 text-white shrink-0" />
+                <span>Kembali</span>
+              </button>
+            ) : (
+              <Link
+                href="/aktivitas"
+                className="inline-flex items-center gap-1 text-white font-semibold text-lg md:text-xl hover:text-white/80 transition-colors"
+              >
+                <ChevronLeft className="w-8 h-8 md:w-10 md:h-10 text-white shrink-0" />
+                <span>Kembali</span>
+              </Link>
+            )}
           </div>
         </AnimatedDiv>
 
-        <AnimatedDiv className="w-full flex flex-col items-center" delay={0.1}>
-          {/* Garis Gradien Atas */}
-          <div
-            className="w-full max-w-[1103px] h-[2px]"
-            style={{
-              background:
-                "linear-gradient(90deg, rgba(74, 52, 136, 0) 0%, rgba(74, 52, 136, 0.7) 50%, rgba(74, 52, 136, 0) 100%)",
-            }}
-          />
-
-          {/* Container Gradien Tengah */}
-          <div
-            className="w-full max-w-[1103px] h-[80px] flex items-center justify-center px-4"
-            style={{
-              background:
-                "linear-gradient(90deg, rgba(74, 52, 136, 0) 0%, rgba(74, 52, 136, 0.4) 50%, rgba(74, 52, 136, 0) 100%)",
-            }}
+        {activeTab !== "kuis" && (
+          <AnimatedDiv
+            className="w-full flex flex-col items-center"
+            delay={0.1}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white text-center">
-              Penugasan
-            </h2>
-          </div>
+            <div
+              className="w-full max-w-[1103px] h-[2px]"
+              style={{
+                background:
+                  "linear-gradient(90deg, rgba(74, 52, 136, 0) 0%, rgba(74, 52, 136, 0.7) 50%, rgba(74, 52, 136, 0) 100%)",
+              }}
+            />
 
-          {/* Garis Gradien Bawah */}
-          <div
-            className="w-full max-w-[1103px] h-[2px] mb-[40px]"
-            style={{
-              background:
-                "linear-gradient(90deg, rgba(74, 52, 136, 0) 0%, rgba(74, 52, 136, 0.7) 50%, rgba(74, 52, 136, 0) 100%)",
-            }}
-          />
-
-          <div className="w-full px-3 md:px-6 flex flex-col items-center gap-8">
-            <div className="w-full max-w-[714px]">
-              <LevelSection level={level} />
+            <div
+              className="w-full max-w-[1103px] h-[80px] flex items-center justify-center px-4"
+              style={{
+                background:
+                  "linear-gradient(90deg, rgba(74, 52, 136, 0) 0%, rgba(74, 52, 136, 0.4) 50%, rgba(74, 52, 136, 0) 100%)",
+              }}
+            >
+              <h2 className="text-3xl md:text-4xl font-bold text-white text-center">
+                Penugasan
+              </h2>
             </div>
-          </div>
-        </AnimatedDiv>
+
+            <div
+              className="w-full max-w-[1103px] h-[2px] mb-[40px]"
+              style={{
+                background:
+                  "linear-gradient(90deg, rgba(74, 52, 136, 0) 0%, rgba(74, 52, 136, 0.7) 50%, rgba(74, 52, 136, 0) 100%)",
+              }}
+            />
+
+            <div className="w-full px-3 md:px-6 flex flex-col items-center gap-8">
+              <div className="w-full max-w-[714px]">
+                <LevelSection level={level} />
+              </div>
+            </div>
+          </AnimatedDiv>
+        )}
 
         <AnimatedDiv className="w-full" delay={0.2}>
           <AktivitasSection
