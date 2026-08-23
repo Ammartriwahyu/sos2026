@@ -84,6 +84,7 @@ const StfForm = ({
           value={nama}
           onChange={(e) => setNama(e.target.value)}
           required
+          variant="admin"
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -123,6 +124,7 @@ const StfForm = ({
                   onChange={handleFileChange}
                   required={mode === "create"}
                   placeholder={hasPhoto ? "Ganti Foto" : "Pilih Foto"}
+                  variant="admin"
                 />
               </div>
 
@@ -176,7 +178,12 @@ const StfForm = ({
         </div>
 
         <div className="flex mt-4">
-          <Button type="submit" disabled={isLoading} className="w-full">
+          <Button
+            variant="admin"
+            type="submit"
+            disabled={isLoading}
+            className="w-full"
+          >
             {isLoading ? loadingText : buttonText}
           </Button>
         </div>
