@@ -55,12 +55,10 @@ const handleLogout = async () => {
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user } = useAuthContext();
+  const { user, isLoading } = useAuthContext();
   const pathname = usePathname();
   useEffect(() => {
-    if (isMenuOpen) {
-      setIsMenuOpen(false);
-    }
+    setIsMenuOpen(false);
   }, [pathname, user]);
   return (
     <>
@@ -96,7 +94,9 @@ const Navbar = () => {
 
           <div className="flex-1 flex items-center justify-end">
             <div className="hidden lg:flex">
-              {user ? (
+              {isLoading ? (
+                <div className="w-24 h-10 bg-white/20 animate-pulse rounded-xl"></div>
+              ) : user ? (
                 <NavbarDropdown onLogout={handleLogout} user={user} />
               ) : (
                 <Link href="/login">
@@ -139,7 +139,9 @@ const Navbar = () => {
               ))}
             </ul>
             <motion.div variants={itemVariants} className="mt-8">
-              {user ? (
+              {isLoading ? (
+                <div className="w-32 h-12 bg-white/20 animate-pulse rounded-xl"></div>
+              ) : user ? (
                 <NavbarDropdown onLogout={handleLogout} user={user} />
               ) : (
                 <Link href="/login">
