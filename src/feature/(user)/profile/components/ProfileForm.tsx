@@ -201,7 +201,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
       </div>
 
       {/* BOTTOM CARDS ROW */}
-      <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-6">
         {/* INFORMASI KESEHATAN CARD */}
         <div className={cardClassName}>
           <h2 className="text-white text-xl md:text-2xl font-bold mb-8">
@@ -263,54 +263,112 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
           <h2 className="text-white text-xl md:text-2xl font-bold mb-8">
             Detail
           </h2>
-          <div className="flex flex-col gap-6">
-            <div>
-              <label className={labelClassName}>Distrik</label>
-              {isEditing ? (
-                <Input
-                  type="text"
-                  disabled
-                  value={user?.kelompok?.distrik?.id_distrik?.toString() || ""}
-                  placeholder="Masukkan distrik"
-                  className={inputClassName}
-                />
-              ) : (
-                <p className={valueClassName}>
-                  {user?.kelompok?.distrik?.id_distrik || "-"}
-                </p>
-              )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+            <div className="flex flex-col gap-6">
+              <div>
+                <label className={labelClassName}>Distrik</label>
+                {isEditing ? (
+                  <Input
+                    type="text"
+                    disabled
+                    value={
+                      user?.kelompok?.distrik?.id_distrik?.toString() || ""
+                    }
+                    placeholder="Masukkan distrik"
+                    className={inputClassName}
+                  />
+                ) : (
+                  <p className={valueClassName}>
+                    {user?.kelompok?.distrik?.id_distrik || "-"}
+                  </p>
+                )}
+              </div>
+              <div>
+                <label className={labelClassName}>Nama Distrik</label>
+                {isEditing ? (
+                  <Input
+                    type="text"
+                    disabled
+                    value={user?.kelompok?.distrik?.nama_distrik || ""}
+                    placeholder="Masukkan nama kelompok"
+                    className={inputClassName}
+                  />
+                ) : (
+                  <p className={valueClassName}>
+                    {user?.kelompok?.distrik?.nama_distrik || "-"}
+                  </p>
+                )}
+              </div>
+              <div>
+                <label className={labelClassName}>Kelompok</label>
+                {isEditing ? (
+                  <Input
+                    type="text"
+                    disabled
+                    value={user?.kelompok?.id_kelompok?.toString() || ""}
+                    placeholder="Masukkan kelompok"
+                    className={inputClassName}
+                  />
+                ) : (
+                  <p className={valueClassName}>
+                    {user?.kelompok?.id_kelompok || "-"}
+                  </p>
+                )}
+              </div>
             </div>
-            <div>
-              <label className={labelClassName}>Nama Distrik</label>
-              {isEditing ? (
-                <Input
-                  type="text"
-                  disabled
-                  value={user?.kelompok?.distrik?.nama_distrik || ""}
-                  placeholder="Masukkan nama kelompok"
-                  className={inputClassName}
-                />
-              ) : (
-                <p className={valueClassName}>
-                  {user?.kelompok?.distrik?.nama_distrik || "-"}
-                </p>
-              )}
-            </div>
-            <div>
-              <label className={labelClassName}>Kelompok</label>
-              {isEditing ? (
-                <Input
-                  type="text"
-                  disabled
-                  value={user?.kelompok?.id_kelompok?.toString() || ""}
-                  placeholder="Masukkan kelompok"
-                  className={inputClassName}
-                />
-              ) : (
-                <p className={valueClassName}>
-                  {user?.kelompok?.id_kelompok || "-"}
-                </p>
-              )}
+
+            <div className="flex flex-col gap-6">
+              <div>
+                <label className={labelClassName}>Nama PJL</label>
+                {isEditing ? (
+                  <Input
+                    type="text"
+                    disabled
+                    value={
+                      user?.kelompok?.distrik?.list_pjl
+                        ?.map((pjl) => pjl.nama)
+                        .join(" & ") || ""
+                    }
+                    placeholder="Masukkan nama PJL"
+                    className={inputClassName}
+                  />
+                ) : (
+                  <p className={valueClassName}>
+                    {user?.kelompok?.distrik?.list_pjl
+                      ?.map((pjl) => pjl.nama)
+                      .join(" & ") || "-"}
+                  </p>
+                )}
+              </div>
+              <div>
+                <label className={labelClassName}>Id Line PJL</label>
+                {isEditing ? (
+                  <Input
+                    type="text"
+                    disabled
+                    value={
+                      user?.kelompok?.distrik?.list_pjl
+                        ?.map((pjl) => pjl.line)
+                        .join(" & ") || ""
+                    }
+                    placeholder="Masukkan ID Line PJL"
+                    className={inputClassName}
+                  />
+                ) : (
+                  <div className="flex flex-col pt-2 gap-1">
+                    {user?.kelompok?.distrik?.list_pjl &&
+                    user.kelompok.distrik.list_pjl.length > 0 ? (
+                      user.kelompok.distrik.list_pjl.map((pjl, idx) => (
+                        <p key={idx} className="text-white text-sm font-medium">
+                          {pjl.line || "-"}
+                        </p>
+                      ))
+                    ) : (
+                      <p className="text-white text-sm font-medium">-</p>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
