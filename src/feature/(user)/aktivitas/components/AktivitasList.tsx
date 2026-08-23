@@ -12,12 +12,23 @@ const AktivitasList = ({ aktivitas }: AktivitasListProps) => {
   return (
     <Link
       href={aktivitas.href}
-      className="w-full z-20 block transition-transform duration-300 hover:scale-105 cursor-pointer"
+      className="w-[210px] h-[200px] rounded-[12px] z-20 flex flex-col items-center justify-center transition-all duration-300 hover:scale-102 hover:bg-[#4A3488] cursor-pointer group"
+      style={{
+        backgroundImage:
+          "linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 100%)",
+        backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
+        border: "1px solid rgba(255, 255, 255, 0.25)",
+        boxShadow:
+          "0 12px 40px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.3)",
+      }}
     >
-      <div className="h-auto aspect-square flex items-center justify-center rounded-t-[120px] bg-white hover:shadow-lg transition-shadow duration-300">
-        <Icon className="text-primary-500 w-1/2 h-fit transition-colors duration-300 hover:text-primary-600" />
-      </div>
-      <p className="text-2xl lg:text-4xl text-white mt-6 text-center font-semibold transition-opacity duration-300 hover:opacity-90">
+      <Icon
+        className="text-white w-[60px] h-[62px] mb-[12px] transition-colors duration-300 group-hover:text-white/90 object-contain drop-shadow-md"
+        strokeWidth={1.5}
+      />
+
+      <p className="text-4xl font-medium text-white text-center transition-opacity duration-300 group-hover:opacity-95 drop-shadow-md">
         {aktivitas.nama}
       </p>
     </Link>

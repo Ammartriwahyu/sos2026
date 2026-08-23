@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import { useGetSoalKuis } from "./useGetSoalQuiz";
 import { useSubmitKuis } from "./useSubmitJawaban";
 import { useRouter } from "next/navigation";
+import { QuizResult } from "@/api/services/user/quiz";
 
 type ModalContent = {
   isOpen: boolean;
@@ -13,10 +14,6 @@ type ModalContent = {
   confirmText: string;
   hideCancelButton?: boolean;
 };
-
-interface QuizResult {
-  score?: number;
-}
 
 const formatTime = (seconds: number): string => {
   const h = Math.floor(seconds / 3600);
@@ -51,6 +48,7 @@ export const useQuiz = ({
   const [isFinished, setIsFinished] = useState(false);
   const [modalContent, setModalContent] = useState<ModalContent | null>(null);
   const [isSubmissionInProgress, setIsSubmissionInProgress] = useState(false);
+  const [quizResult, setQuizResult] = useState<QuizResult | null>(null);
 
   const totalDuration = useMemo(() => {
     return kuisData ? parseDurationToSeconds(kuisData.durasi_kuis) : 0;
@@ -292,6 +290,8 @@ export const useQuiz = ({
     isFinished,
     modalContent,
     closeModal,
+    quizResult,
+    setQuizResult,
     onSelectAnswer: handleSelectAnswer,
     onSubmit: handleSubmit,
     onNext: handleNext,

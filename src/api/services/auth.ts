@@ -86,6 +86,39 @@ class AuthService {
   }
 
   async getMe(): Promise<ApiResponse<AuthProfile>> {
+    // BYPASS LOGIC UNTUK LOCAL DEMO / DEVELOPMENT
+    if (
+      typeof window !== "undefined" &&
+      document.cookie.includes("auth_session=mock_demo_token")
+    ) {
+      return {
+        data: {
+          nim: "265150201111001",
+          nama: "Adik Maba Demo",
+          full_name: "Adik Maba Demo Lengkap",
+          siakad_photo_url: "/logo-sos.png",
+          file_filkom_photo_url: "/logo-sos.png",
+          role: "user",
+          prodi: "Teknologi Informasi",
+          kelompok: {
+            id_kelompok: "1",
+            nama_kelompok: "Symphony 01",
+            distrik: {
+              id_distrik: "1",
+              nama_distrik: "District A",
+              list_pjl: [
+                { nim: "111", nama: "Kakak PJL 1", line: "@kakakpjl1" },
+                { nim: "222", nama: "Kakak PJL 2", line: "@kakakpjl2" },
+              ],
+            },
+          },
+        },
+        success: true,
+        message: "Berhasil mengambil data profile mock",
+      };
+    }
+
+    // Logic pemanggilan API asli (tetap dipertahankan)
     try {
       const response =
         await axios.get<ApiResponse<AuthProfile>>("/api/auth/me");
@@ -97,6 +130,7 @@ class AuthService {
       throw new Error("Gagal mengambil data pengguna.");
     }
   }
+
   async editProfile(
     profileData: EditProfileRequest,
   ): Promise<ApiResponse<AuthProfile>> {

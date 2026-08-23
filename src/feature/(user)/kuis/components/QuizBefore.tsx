@@ -1,6 +1,4 @@
-"use client";
-
-import { Quiz } from "@/api/services/admin/quiz";
+import { Quiz } from "@/api/services/user/quiz";
 import { Button } from "@/shared/components/ui/Button";
 import React, { useState } from "react";
 import { ConfirmationModal } from "./ConfirmationModal";
@@ -20,9 +18,13 @@ const convertDurationToMinutes = (duration: string | undefined): number => {
 
 const QuizBefore = ({ quiz }: { quiz: Quiz | null }) => {
   const totalMinutes = convertDurationToMinutes(quiz?.durasi_kuis);
-  const isdeadline = quiz?.tenggat_kuis
-    ? new Date(quiz.tenggat_kuis).getTime() < Date.now()
-    : false;
+
+  const isOverdue =
+    quiz?.status_kuis === "Terlewat" ||
+    quiz?.status_kuis === "Terlambat" ||
+    (quiz?.tenggat_kuis
+      ? new Date(quiz.tenggat_kuis).getTime() < Date.now()
+      : false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleStartQuiz = () => {
@@ -45,9 +47,9 @@ const QuizBefore = ({ quiz }: { quiz: Quiz | null }) => {
         <Button
           onClick={() => setIsModalOpen(true)}
           className="mx-auto cursor-pointer text-sm mt-10"
-          disabled={isdeadline}
+          disabled={isOverdue}
         >
-          {isdeadline ? "Kuis Sudah Berakhir" : "Mulai Kuis Sekarang"}
+          {isOverdue ? "Kuis Sudah Berakhir" : "Mulai Kuis Sekarang"}
         </Button>
       </div>
 

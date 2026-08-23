@@ -24,7 +24,7 @@ export const PenilaianContainer = () => {
   if (isLoading && rangkaianList.length === 0) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-login">
-        <Loader2 className="w-12 h-12 animate-spin text-primary-500" />
+        <Loader2 className="w-16 h-16 animate-spin text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />
       </div>
     );
   }

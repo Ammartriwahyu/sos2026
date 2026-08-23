@@ -82,6 +82,10 @@ export interface Kuis {
   nama_kuis: string;
   tenggat_kuis: string;
   status_kuis?: "Terlambat" | "Terlewat" | "Selesai" | "Belum Mulai" | string;
+  deskripsi_kuis?: string;
+  durasi_kuis?: string;
+  jumlah_soal?: number;
+  skor?: number;
 }
 
 export interface KuisDetail {
@@ -93,6 +97,8 @@ export interface KuisDetail {
   data_rangkaian: Rangkaian;
   durasi_kuis: string;
   status_kuis: "Terlambat" | "Terlewat" | "Selesai" | "Belum Mulai";
+  jumlah_soal?: number;
+  skor?: number;
 }
 
 export interface Tugas {

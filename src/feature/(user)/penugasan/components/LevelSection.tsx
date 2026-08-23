@@ -2,9 +2,7 @@
 
 import * as ProgressPrimitive from "@radix-ui/react-progress";
 import * as React from "react";
-import Image from "next/image";
 import { MahasiswaLevel } from "../types";
-import Maskot from "@/assets/user/maskot-sos-basic.svg";
 import { cn } from "@/shared/utils/cn";
 
 interface LevelSectionProps {
@@ -32,55 +30,58 @@ export const LevelSection = ({ level }: LevelSectionProps) => {
   const progressMessage =
     level.level === 0
       ? "Kerjakan penugasan untuk membuka level"
-      : `Kamu telah menyelesaikan ${level.level} dari ${level.max_level} penugasan.`;
+      : `Selamat! kamu telah mengumpulkan ${level.level} dari ${level.max_level} penugasan.`;
 
   return (
     <div
       className={cn(
-        "bg-secondary-200 border border-secondary-700 backdrop-blur-sm rounded-3xl py-4 px-2 flex flex-col w-full shadow-md gap-2",
-        "md:p-8 md:gap-3",
+        "w-full max-w-[714px] min-h-[166px] mx-auto flex flex-col justify-center items-center",
+        "p-6 md:p-[32px]",
+        "rounded-[12px] backdrop-blur-[20px] border border-white/20",
+        "bg-gradient-to-b from-white/[0.22] to-white/[0.08]",
+        "shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]",
       )}
     >
-      <div className="flex flex-row items-center gap-4">
-        <Image
-          src={Maskot}
-          alt="Maskot"
-          className="w-14 h-14 md:w-20 md:h-20"
-          priority
-        />
-        <div className="flex flex-col gap-2 w-full">
-          <p className="text-default-dark font-semibold text-lg md:text-2xl">
+      <div className="w-full flex flex-col items-center justify-center gap-4">
+        {/* Header & Deskripsi */}
+        <div className="flex flex-col items-center text-center w-full">
+          <p className="text-white font-semibold text-2xl drop-shadow-sm mb-4">
             Level {level.level}
           </p>
-          <p className="text-xs text-default-dark md:text-lg">
+          <p className="text-white/90 font-medium text-base mb-4">
             {progressMessage}
           </p>
         </div>
-      </div>
 
-      <ProgressPrimitive.Root
-        className={cn(
-          "relative mt-1 h-3 w-full overflow-hidden rounded-full bg-primary-500/10",
-          "md:h-4",
-        )}
-      >
-        <ProgressPrimitive.Indicator
+        {/* Level Bar */}
+        <ProgressPrimitive.Root
           className={cn(
-            "relative h-full w-full flex-1 bg-gradient-to-b from-primary-500 via-primary-500/90 to-primary-400",
-            "transition-transform duration-1000 ease-out",
-            "overflow-hidden",
+            "relative w-full max-w-[650px] h-[24px] overflow-hidden rounded-[20px]",
+            "bg-white/20",
           )}
-          style={{ transform: `translateX(-${100 - progressValue}%)` }}
         >
-          <div
+          <ProgressPrimitive.Indicator
             className={cn(
-              "absolute inset-0",
-              "bg-gradient-to-r from-transparent via-white/30 to-transparent",
-              "animate-shimmer-bar",
+              "relative h-full w-full flex-1 transition-transform duration-1000 ease-out",
+              "overflow-hidden rounded-[20px]",
             )}
-          />
-        </ProgressPrimitive.Indicator>
-      </ProgressPrimitive.Root>
+            style={{
+              transform: `translateX(-${100 - progressValue}%)`,
+              background: "linear-gradient(180deg, #0A0B26 0%, #1C1D4A 100%)",
+            }}
+          >
+            <div
+              className={cn(
+                "absolute inset-0",
+                "bg-gradient-to-r from-transparent via-white/20 to-transparent",
+                "animate-shimmer-bar",
+              )}
+            />
+          </ProgressPrimitive.Indicator>
+        </ProgressPrimitive.Root>
+      </div>
     </div>
   );
 };
+
+export default LevelSection;

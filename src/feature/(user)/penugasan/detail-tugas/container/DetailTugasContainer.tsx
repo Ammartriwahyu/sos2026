@@ -9,6 +9,9 @@ import { TaskStepper } from "../components/TaskStepper";
 import { DetailHeader } from "../components/DetailHeader";
 import { DetailContent } from "../components/DetailContent";
 import { AnimatedDiv } from "@/shared/components/ui/AnimatedDiv";
+import SpaceBackground from "@/shared/components/background/SpaceBackground";
+import CircleGLow from "@/shared/components/background/CircleGlow";
+import BgBawah from "@/shared/components/background/BgBawah";
 
 export const DetailTugasContainer = ({
   id_penugasan,
@@ -28,29 +31,35 @@ export const DetailTugasContainer = ({
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-login">
-        <Loader2 className="w-12 h-12 animate-spin text-primary-500" />
-      </div>
+      <SpaceBackground className="min-h-screen">
+        <CircleGLow />
+        <div className="flex h-[80vh] items-center justify-center relative z-10">
+          <Loader2 className="w-16 h-16 animate-spin text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />
+        </div>
+      </SpaceBackground>
     );
   }
 
   if (error || !tugas) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-login text-center px-4">
-        <p className="text-xl text-red-500 mb-4">
+      <SpaceBackground className="min-h-screen flex flex-col items-center justify-center text-center px-4 relative">
+        <CircleGLow />
+        <p className="text-xl text-red-500 mb-4 relative z-10">
           {error || "Tugas tidak ditemukan."}
         </p>
-        <Link href="/aktivitas/penugasan">
+        <Link href="/aktivitas/penugasan" className="relative z-10">
           <Button variant="outline">Kembali ke Daftar Tugas</Button>
         </Link>
-      </div>
+      </SpaceBackground>
     );
   }
 
-  const isSubmitted = tugas.status === "Selesai";
+  const statusLower = tugas.status?.toLowerCase().trim() || "";
+  const isSubmitted = statusLower === "selesai";
 
-  const isDeadlinePassed = new Date() > new Date(tugas.tenggat);
-  // const isOverdue = isDeadlinePassed && !isSubmitted;
+  const deadlineDate = new Date(tugas.tenggat);
+  const isDeadlinePassed =
+    !isNaN(deadlineDate.getTime()) && new Date() > deadlineDate;
 
   let statusText: string;
   let statusVariant: "not_started" | "completed" | "overdue";
@@ -62,19 +71,20 @@ export const DetailTugasContainer = ({
     statusText = "Terlewat";
     statusVariant = "overdue";
   } else {
-    statusText = "Belum Dikerjakan";
+    statusText = "Belum Selesai";
     statusVariant = "not_started";
   }
 
-  const deadlineDate = new Date(tugas.tenggat);
-  const formattedDeadline = `${deadlineDate.toLocaleDateString("id-ID", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  })} • ${deadlineDate.toLocaleTimeString("id-ID", {
-    hour: "2-digit",
-    minute: "2-digit",
-  })}`;
+  const formattedDeadline = isNaN(deadlineDate.getTime())
+    ? tugas.tenggat
+    : `${deadlineDate.toLocaleDateString("id-ID", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })} • ${deadlineDate.toLocaleTimeString("id-ID", {
+        hour: "2-digit",
+        minute: "2-digit",
+      })} WIB`;
 
   const handleFormSubmit = () => {
     if (!driveLink.trim()) {
@@ -85,23 +95,28 @@ export const DetailTugasContainer = ({
   };
 
   return (
-    <div className="relative min-h-screen">
-      <div className="fixed inset-0 -z-10 bg-login bg-cover bg-no-repeat" />
-      <div className="relative z-10 content-container py-8 md:py-12 flex flex-col items-center gap-6 md:gap-8">
-        <AnimatedDiv className="w-full">
-          <div className="w-full">
-            <Link
-              href="/aktivitas/penugasan"
-              className="self-start flex items-center gap-1 text-default-dark font-semibold text-lg md:text-xl"
-            >
-              <ChevronLeft className="w-8 h-8 md:w-10 md:h-10" />
-              Kembali
-            </Link>
-          </div>
-        </AnimatedDiv>
+    <div className="relative min-h-screen w-full overflow-x-hidden flex flex-col bg-background">
+      {/*BAGIAN 1: WRAPPER KONTEN UTAMA*/}
+      <SpaceBackground className="relative w-full flex flex-col items-center flex-grow pb-[350px]">
+        <CircleGLow />
 
-        <AnimatedDiv className="w-full flex justify-center" delay={0.1}>
-          <div className="w-full bg-white rounded-2xl shadow-lg px-6 py-12 md:px-20 md:py-20 flex flex-col gap-6 md:gap-10">
+        <div className="relative z-10 mycontainer py-8 md:py-12 flex flex-col items-center gap-6 md:gap-8 w-full">
+          <AnimatedDiv className="w-full">
+            <div className="w-full px-4 md:px-10 mt-5">
+              <Link
+                href="/aktivitas/penugasan"
+                className="self-start flex items-center gap-1 text-white font-semibold text-lg md:text-xl hover:text-white/80 transition-colors"
+              >
+                <ChevronLeft className="w-8 h-8 md:w-10 md:h-10 text-white shrink-0" />
+                Kembali
+              </Link>
+            </div>
+          </AnimatedDiv>
+
+          <AnimatedDiv
+            className="w-full flex flex-col items-center px-4 md:px-10 gap-8 md:gap-10 max-w-[1103px]"
+            delay={0.1}
+          >
             <DetailHeader
               judul={tugas.judul}
               deadline={formattedDeadline}
@@ -125,8 +140,13 @@ export const DetailTugasContainer = ({
               isSubmitting={isSubmitting}
               handleFormSubmit={handleFormSubmit}
             />
-          </div>
-        </AnimatedDiv>
+          </AnimatedDiv>
+        </div>
+      </SpaceBackground>
+
+      {/* BAGIAN 2: FOOTER / BG BAWAH*/}
+      <div className="relative z-0 w-full shrink-0 block mt-auto">
+        <BgBawah gradientHeight="h-[250px]" />
       </div>
     </div>
   );

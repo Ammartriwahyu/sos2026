@@ -1,13 +1,22 @@
-"use client";
-
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { mahasiswaService } from "@/api/services/user/maba";
 import { penugasanService } from "@/api/services/user/penugasan";
 import { useQuery } from "@tanstack/react-query";
 import { Tugas, Rangkaian } from "../types";
 
 export const usePenugasan = () => {
-  const [activeTab, setActiveTab] = useState<"tugas" | "kuis">("tugas");
+  const searchParams = useSearchParams();
+  const tabParam = searchParams.get("tab");
+  const [activeTab, setActiveTab] = useState<"tugas" | "kuis">(
+    tabParam === "kuis" ? "kuis" : "tugas",
+  );
+
+  useEffect(() => {
+    if (tabParam === "kuis" || tabParam === "tugas") {
+      setActiveTab(tabParam);
+    }
+  }, [tabParam]);
 
   const { data: level } = useQuery({
     queryKey: ["mahasiswaLevel"],
@@ -85,13 +94,38 @@ export const usePenugasan = () => {
           const detailRes = await penugasanService.getKuisDetailWithStatus(
             kuisItem.id_kuis,
           );
-          return { ...kuisItem, status_kuis: detailRes.data.status_kuis };
+          const savedStatus =
+            typeof window !== "undefined"
+              ? localStorage.getItem(`mock_kuis_status_${kuisItem.id_kuis}`)
+              : null;
+          const resolvedStatus = savedStatus || detailRes.data.status_kuis;
+          const savedScore =
+            typeof window !== "undefined"
+              ? localStorage.getItem(`mock_kuis_score_${kuisItem.id_kuis}`)
+              : null;
+          const resolvedScore = savedScore
+            ? Number(savedScore)
+            : (detailRes.data.skor ??
+              (resolvedStatus === "Selesai" ? 85 : undefined));
+
+          return {
+            ...kuisItem,
+            status_kuis: resolvedStatus,
+            deskripsi_kuis: detailRes.data.deskripsi_kuis,
+            durasi_kuis: detailRes.data.durasi_kuis,
+            jumlah_soal: detailRes.data.jumlah_soal ?? 5,
+            skor: resolvedStatus === "Selesai" ? resolvedScore : undefined,
+          };
         } catch (e) {
           console.error(
             `Gagal fetch status untuk kuis ${kuisItem.id_kuis}:`,
             e,
           );
-          return { ...kuisItem, status_kuis: "Belum Mulai" };
+          const savedStatus =
+            typeof window !== "undefined"
+              ? localStorage.getItem(`mock_kuis_status_${kuisItem.id_kuis}`)
+              : null;
+          return { ...kuisItem, status_kuis: savedStatus || "Belum Mulai" };
         }
       });
       return Promise.all(promises);
