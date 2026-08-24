@@ -105,7 +105,7 @@ const DepartemenSection = () => {
               </div>
             </div>
 
-            <div className="akd-fade-up peta-reveal lg:mt-6 xl:mt-12 text-justify text-lg leading-8 text-putih/90 md:text-xl lg:text-xl xl:text-2xl xl:leading-9">
+            <div className="akd-fade-up peta-reveal lg:mt-6 xl:mt-12 text-justify text-lg leading-8 text-putih/90 md:text-xl lg:text-xl xl:leading-9">
               <p>
                 Departemen Sistem Informasi (DSI) adalah salah satu departemen
                 di Fakultas Ilmu Komputer (FILKOM) Universitas Brawijaya (UB).
