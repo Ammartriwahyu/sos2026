@@ -1,7 +1,8 @@
 import { Quiz } from "@/api/services/user/quiz";
-import { Button } from "@/shared/components/ui/Button";
 import React, { useState } from "react";
 import { ConfirmationModal } from "./ConfirmationModal";
+import AktivitasButton from "@/shared/components/ui/ButtonSos26";
+import { Clock, PlayCircle } from "lucide-react";
 
 const convertDurationToMinutes = (duration: string | undefined): number => {
   if (!duration) return 0;
@@ -34,23 +35,47 @@ const QuizBefore = ({ quiz }: { quiz: Quiz | null }) => {
 
   return (
     <>
-      <div className="w-full space-y-4 px-8 py-6 rounded-2xl mt-20 min-h-[15rem] bg-[#F5E6E9]">
-        <h4 className="font-bold text-black">Siap Taklukan Quiz?</h4>
-        <p className="text-justify ">
-          <span className="whitespace-pre-line">{quiz?.deskripsi_kuis}</span>
-          <p>
-            Kamu punya <span className="font-bold">{totalMinutes}</span>
-            Menit penuh untuk fokus. Ingat, timer akan terus berjalan.
-            Percayalah pada persiapan yang sudah kamu lakukan!
-          </p>
+      <div
+        className="w-full px-6 py-6 rounded-xl flex flex-col gap-4"
+        style={{
+          background: "rgba(255,255,255,0.05)",
+          border: "1px solid rgba(255,255,255,0.1)",
+        }}
+      >
+        <div className="flex items-center gap-2">
+          <PlayCircle className="w-5 h-5 text-white/70 shrink-0" />
+          <h4 className="font-bold text-white text-lg">Siap Taklukan Kuis?</h4>
+        </div>
+
+        <p className="text-white/70 text-sm leading-relaxed">
+          {quiz?.deskripsi_kuis}
         </p>
-        <Button
+
+        {totalMinutes > 0 && (
+          <div
+            className="inline-flex items-center gap-2 px-3 py-2 rounded-lg self-start"
+            style={{
+              background: "rgba(96,89,146,0.25)",
+              border: "1px solid rgba(96,89,146,0.4)",
+            }}
+          >
+            <Clock className="w-4 h-4 text-white/70 shrink-0" />
+            <p className="text-white/80 text-sm">
+              Durasi:{" "}
+              <span className="font-bold text-white">{totalMinutes} menit</span>
+              . Timer akan terus berjalan setelah kuis dimulai.
+            </p>
+          </div>
+        )}
+
+        <AktivitasButton
           onClick={() => setIsModalOpen(true)}
-          className="mx-auto cursor-pointer text-sm mt-10"
+          className="mt-2 py-3 cursor-pointer"
           disabled={isOverdue}
+          variant="primary"
         >
           {isOverdue ? "Kuis Sudah Berakhir" : "Mulai Kuis Sekarang"}
-        </Button>
+        </AktivitasButton>
       </div>
 
       <ConfirmationModal
