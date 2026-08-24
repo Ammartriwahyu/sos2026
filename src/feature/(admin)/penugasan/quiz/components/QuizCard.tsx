@@ -11,8 +11,8 @@ interface QuizCardProps {
 
 export const QuizCard: React.FC<QuizCardProps> = ({ quiz, idx }) => {
   return (
-    <div className="bg-gray-200/50 hover:cursor-pointer  flex justify-between rounded-lg p-4">
-      <div className="text-2xl  items-center text-black flex gap-2">
+    <div className="bg-admin-card hover:cursor-pointer  flex justify-between rounded-lg p-4">
+      <div className="text-2xl  items-center text-default-dark flex gap-2">
         <span className="font-medium">Kuis {idx}</span>
         <span>:</span>
         <span className="text-xl">({quiz.nama_kuis})</span>

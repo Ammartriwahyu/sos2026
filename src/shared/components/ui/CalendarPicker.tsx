@@ -317,9 +317,9 @@ export const CalendarPicker: React.FC<CalendarPickerProps> = ({
           disabled={isPast}
           className={`w-8 h-8 text-sm rounded transition-all flex items-center justify-center ${
             isSelected
-              ? "bg-indigo-600 text-white"
+              ? "bg-primary-normal text-white"
               : isToday
-                ? "bg-indigo-100 text-indigo-600 hover:bg-indigo-200"
+                ? "bg-primary-light text-primary-normal hover:bg-primary-light-hover"
                 : isPast
                   ? "text-gray-400 cursor-not-allowed"
                   : "hover:bg-gray-100 text-gray-700"
@@ -387,7 +387,7 @@ export const CalendarPicker: React.FC<CalendarPickerProps> = ({
                 handleTimeChange(e.target.value, currentMinutes);
               }}
               onMouseDown={(e) => e.stopPropagation()}
-              className="flex-1 text-sm border border-gray-300 rounded px-2 py-1 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-200"
+              className="flex-1 text-sm border border-gray-300 rounded px-2 py-1 focus:border-primary-normal focus:ring-1 focus:ring-primary-light"
             >
               {Array.from({ length: 24 }, (_, i) => {
                 const hour = i.toString().padStart(2, "0");
@@ -426,7 +426,7 @@ export const CalendarPicker: React.FC<CalendarPickerProps> = ({
                 }
               }}
               onMouseDown={(e) => e.stopPropagation()}
-              className="flex-1 text-sm border border-gray-300 rounded px-2 py-1 text-center focus:border-indigo-500 focus:ring-1 focus:ring-indigo-200"
+              className="flex-1 text-sm border border-gray-300 rounded px-2 py-1 text-center focus:border-primary-normal focus:ring-1 focus:ring-primary-light"
             />
           </div>
         </div>
@@ -454,7 +454,7 @@ export const CalendarPicker: React.FC<CalendarPickerProps> = ({
         className={`w-full flex items-center justify-between p-2 text-left rounded border border-gray-300 bg-white transition text-sm ${
           disabled
             ? "cursor-not-allowed opacity-50"
-            : "hover:border-indigo-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-200"
+            : "hover:border-primary-normal focus:border-primary-normal focus:ring-1 focus:ring-primary-light"
         }`}
       >
         <span
