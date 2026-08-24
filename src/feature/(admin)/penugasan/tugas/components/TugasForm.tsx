@@ -224,6 +224,7 @@ export const TugasForm: React.FC<TugasFormProps> = ({
         <div className="w-full mt-10">
           <Button
             type="submit"
+            variant="admin"
             disabled={isSubmitting || !isFormValid}
             className="w-full"
           >

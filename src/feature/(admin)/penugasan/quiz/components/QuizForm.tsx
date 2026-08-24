@@ -171,6 +171,7 @@ export const QuizForm: React.FC<QuizFormProps> = ({
         <div className="w-full pt-4">
           <Button
             type="submit"
+            variant="admin"
             disabled={isSubmitting || !isFormValid}
             className="w-full"
           >

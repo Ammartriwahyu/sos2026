@@ -41,7 +41,7 @@ const baseSidebarItems: SidebarMenuItem[] = [
   },
   {
     id: 3,
-    label: "Rekap ",
+    label: "Penilaian ",
     icon: Star,
     path: "penilaian-pelanggaran",
   },

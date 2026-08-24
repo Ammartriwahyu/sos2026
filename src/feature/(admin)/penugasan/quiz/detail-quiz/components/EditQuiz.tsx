@@ -493,7 +493,7 @@ const EditQuizForm: React.FC<EditQuizFormProps> = ({
           {errors.pertanyaan_list && (
             <p className="text-red-500 text-sm">{errors.pertanyaan_list}</p>
           )}
-          <Button className="" type="submit" disabled={isSubmitting}>
+          <Button variant="admin" type="submit" disabled={isSubmitting}>
             {isSubmitting && <Loader2 size={16} className="animate-spin" />}
             {!isSubmitting && <Save size={16} className="mr-2" />}
             {isSubmitting ? "Menyimpan..." : "Simpan Perubahan"}

@@ -70,6 +70,10 @@
   --color-space-top: #161a3d;
   --color-putih: #eaeaea;
 
+  /* == ADMIN SURFACE 2026 (Figma) == */
+  --color-admin-bg: #ebedf8;
+  --color-admin-card: #e4e8f7;
+
   --color-badgeOverdue: #cf2a4a;
   --color-badgeSuccess: #4caf50;
 

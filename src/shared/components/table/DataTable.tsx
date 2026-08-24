@@ -51,7 +51,7 @@ export const DataTable = <TData extends object>({
   }
 
   if (error) {
-    return <div style={{ color: "red" }}>Error: {error}</div>;
+    return <div className="text-danger">Error: {error}</div>;
   }
 
   const { pageIndex, pageSize } = table.getState().pagination;
@@ -190,12 +190,14 @@ export const DataTable = <TData extends object>({
         <div className="pagination-controls mt-6 flex justify-end gap-4">
           <Button
             arrow="left"
+            variant="admin-outline"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
             className="pagination-arrow"
           ></Button>
           <Button
             arrow="right"
+            variant="admin"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
             className="pagination-arrow"
