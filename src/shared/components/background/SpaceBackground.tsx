@@ -1,15 +1,26 @@
 import { cn } from "@/shared/utils/cn";
 import Starfield from "./Starfield";
-import BgBawah from "./BgBawah";
-import CircleGLow from "./CircleGlow";
-import GradientBG from "./GradientBackground";
 
 interface SpaceBackgroundProps {
   children: React.ReactNode;
   className?: string;
+  fullPage?: boolean;
 }
 
-const SpaceBackground = ({ children, className }: SpaceBackgroundProps) => {
+const SpaceBackground = ({
+  children,
+  className,
+  fullPage = true,
+}: SpaceBackgroundProps) => {
+  if (!fullPage) {
+    return (
+      <div className={cn("space-bg relative overflow-hidden", className)}>
+        <Starfield />
+        {children}
+      </div>
+    );
+  }
+
   return (
     <div
       className={cn(
