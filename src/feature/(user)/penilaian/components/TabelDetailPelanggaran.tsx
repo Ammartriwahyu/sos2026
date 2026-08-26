@@ -12,84 +12,109 @@ export const TabelDetailPelanggaran = ({
     return pelanggaran.reduce((sum, item) => sum + item.nilai, 0);
   }, [pelanggaran]);
 
+  // Styling baris data menggunakan warna FAFAFA dengan transparansi 20%
+  const rowGlassStyle = {
+    background: "linear-gradient(135deg, rgba(250, 250, 250, 0.2) 0%, rgba(250, 250, 250, 0.1) 100%)",
+    backdropFilter: "blur(20px)",
+    WebkitBackdropFilter: "blur(20px)",
+    border: "1px solid rgba(255, 255, 255, 0.2)",
+    boxShadow: "0 12px 40px 0 rgba(0, 0, 0, 0.3), inset 0 1px 0 0 rgba(255, 255, 255, 0.25)",
+  };
+
+  const headerGlassStyle = {
+    background: "linear-gradient(135deg, rgba(42, 31, 92, 0.5) 0%, rgba(42, 31, 92, 0.25) 100%)",
+    backdropFilter: "blur(20px)",
+    WebkitBackdropFilter: "blur(20px)",
+    border: "1px solid rgba(255, 255, 255, 0.2)",
+    boxShadow: "0 12px 40px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25)",
+  };
+
   return (
-    <div>
-      {/* UKURAN FONT JUDUL DIKECILKAN DI MOBILE */}
-      <h2 className="text-lg md:text-2xl font-bold text-default-dark mb-4">
+    <div className="w-full">
+      <h2 className="text-3xl font-semibold text-white mb-6 text-center md:text-left">
         Detail Pelanggaran
       </h2>
-      <div className="w-full">
-        <table
-          // Menghapus `whitespace-nowrap` agar teks bisa turun baris
-          className="w-full border-separate"
-          // Mengurangi spasi antar baris
-          style={{ borderSpacing: "0 0.5rem" }}
-        >
-          <thead>
-            {/* UKURAN FONT HEADER DIKECILKAN DI MOBILE */}
-            <tr className="text-base md:text-lg">
-              <th className="py-3 px-3 md:px-4 w-12 text-center font-semibold bg-primary-600 text-white rounded-tl-lg">
-                No
-              </th>
-              <th className="py-3 px-3 md:px-4 text-left font-semibold bg-primary-600 text-white border-l-2 md:border-l-4 border-secondary-500">
-                Nama Pelanggaran
-              </th>
-              <th className="py-3 px-3 md:px-4 w-20 text-left font-semibold bg-primary-600 text-white border-l-2 md:border-l-4 border-secondary-500">
-                Poin
-              </th>
-              <th className="py-3 px-3 md:px-4 text-left font-semibold bg-primary-600 text-white border-l-2 md:border-l-4 border-secondary-500 rounded-tr-lg">
-                Keterangan
-              </th>
-            </tr>
-          </thead>
-          {/* UKURAN FONT BODY DIKECILKAN DI MOBILE */}
-          <tbody className="text-base md:text-lg">
-            {pelanggaran.length === 0 ? (
-              // Tampilan yang lebih baik saat tidak ada data
-              <tr className="bg-white shadow-sm">
-                <td
-                  colSpan={4}
-                  className="py-4 px-4 md:px-6 text-center text-gray-500 italic rounded-lg"
+
+      <div className="w-full overflow-x-auto pb-4">
+        <div className="min-w-[700px] w-full">
+          <table
+            className="w-full border-separate"
+            style={{ borderSpacing: "0.75rem 0.75rem" }}
+          >
+            <thead>
+              <tr className="text-base md:text-lg">
+                <th
+                  className="px-4 w-16 h-[48px] text-center font-bold text-white rounded-tl-xl"
+                  style={headerGlassStyle}
                 >
-                  Tidak ada data pelanggaran
-                </td>
+                  No
+                </th>
+                <th
+                  className="px-6 h-[48px] text-left font-bold text-white"
+                  style={headerGlassStyle}
+                >
+                  Nama Pelanggaran
+                </th>
+                <th
+                  className="px-6 w-28 h-[48px] text-left font-bold text-white"
+                  style={headerGlassStyle}
+                >
+                  Poin
+                </th>
+                <th
+                  className="px-6 h-[48px] text-left font-bold text-white rounded-tr-xl"
+                  style={headerGlassStyle}
+                >
+                  Keterangan
+                </th>
               </tr>
-            ) : (
-              // Mapping data jika ada
-              pelanggaran.map((item, index) => (
-                <tr key={item.nama} className="bg-white shadow-sm">
-                  <td className="py-3 px-3 md:px-4 text-center font-medium">
-                    {index + 1}
-                  </td>
-                  <td className="py-3 px-3 md:px-4 font-medium border-l-2 md:border-l-4 border-secondary-500">
-                    {item.nama}
-                  </td>
-                  <td className="py-3 px-3 md:px-4 text-left font-bold border-l-2 md:border-l-4 border-secondary-500">
-                    {item.nilai}
-                  </td>
-                  <td className="py-3 px-3 md:px-4 font-medium capitalize border-l-2 md:border-l-4 border-secondary-500">
-                    {item.kategori}
+            </thead>
+            <tbody className="text-base md:text-lg text-white">
+              {pelanggaran.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan={4}
+                    className="px-4 h-[48px] text-center text-white/70 italic rounded-2xl font-normal"
+                    style={rowGlassStyle}
+                  >
+                    Tidak ada data pelanggaran
                   </td>
                 </tr>
-              ))
-            )}
+              ) : (
+                pelanggaran.map((item, index) => (
+                  <tr key={item.nama}>
+                    <td className="px-4 h-[48px] text-center font-normal" style={rowGlassStyle}>
+                      {index + 1}
+                    </td>
+                    <td className="px-6 h-[48px] font-normal" style={rowGlassStyle}>
+                      {item.nama}
+                    </td>
+                    <td className="px-6 h-[48px] font-normal" style={rowGlassStyle}>
+                      {item.nilai}
+                    </td>
+                    <td className="px-6 h-[48px] font-normal capitalize" style={rowGlassStyle}>
+                      {item.kategori}
+                    </td>
+                  </tr>
+                ))
+              )}
 
-            {/* Baris total, hanya ditampilkan jika ada pelanggaran */}
-            {/* Strukturnya sama seperti permintaan Anda sebelumnya untuk menjaga style sudut */}
-            {pelanggaran.length > 0 && (
-              <tr className="bg-white font-bold rounded-lg">
-                <td className="py-3 px-3 md:px-4 rounded-bl-lg"></td>
-                <td className="py-3 px-3 md:px-4 text-left border-l-2 md:border-l-4 border-secondary-500">
-                  Total Poin Pelanggaran
-                </td>
-                <td className="py-3 px-3 md:px-4 text-left border-l-2 md:border-l-4 border-secondary-500">
-                  {totalPoin > 0 ? totalPoin : "-"}
-                </td>
-                <td className="rounded-r-lg border-l-2 md:border-l-4 border-secondary-500"></td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              {/* Baris Total Poin Pelanggaran (Paling Bawah) */}
+              {pelanggaran.length > 0 && (
+                <tr>
+                  <td className="px-4 h-[48px] rounded-bl-xl font-bold" style={rowGlassStyle}></td>
+                  <td className="px-6 h-[48px] text-left font-bold" style={rowGlassStyle}>
+                    Total Poin Pelanggaran
+                  </td>
+                  <td className="px-6 h-[48px] text-left font-bold" style={rowGlassStyle}>
+                    {totalPoin > 0 ? totalPoin : "-"}
+                  </td>
+                  <td className="px-6 h-[48px] text-left font-bold rounded-br-xl" style={rowGlassStyle}></td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

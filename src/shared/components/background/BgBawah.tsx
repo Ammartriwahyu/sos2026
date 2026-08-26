@@ -31,7 +31,7 @@ const BgBawah: React.FC<BgBawahProps> = ({
       <div
         className={`w-full ${gradientHeight}`}
         style={{
-          background: "linear-gradient(180deg, #161A3D 0%, #07132D 100%)",
+          background: "linear-gradient(180deg, #161A3D 0%, #001126 100%)",
         }}
       />
     </div>

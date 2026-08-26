@@ -21,7 +21,8 @@ const AktivitasBeforeLogin = () => {
             <Image
               src={Maskot}
               alt="Maskot"
-              className="hidden lg:block w-[110px] h-[236px] md:w-[130px] md:h-[280px] lg:w-[152px] lg:h-[327px] z-20 relative object-contain"
+              className="hidden lg:block w-[110px] h-[236px] md:w-[130px] md:h-[280px] lg:w-[152px] lg:h-[327px] z-20 relative object-contain animate-bounce-idle"
+              draggable={false}
             />
           </AnimatedDiv>
 

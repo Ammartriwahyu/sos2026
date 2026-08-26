@@ -8,6 +8,7 @@ import { useSubmitPresensi } from "../hooks/useSubmitPresensi";
 import AktivitasButton from "@/shared/components/ui/ButtonSos26";
 import Image from "next/image";
 import Maskot from "@/assets/assetsos26/illustrasions/maskot_cewe.svg";
+import { AnimatedDiv } from "@/shared/components/ui/AnimatedDiv";
 
 interface PresensiFormSectionProps {
   refreshPresensi: () => void;
@@ -87,11 +88,14 @@ const PresensiFormSection = ({ refreshPresensi }: PresensiFormSectionProps) => {
             </div>
           </div>
 
-          <Image
-            src={Maskot}
-            alt="Maskot"
-            className="hidden lg:block absolute -bottom-65 -right-38 w-[161px] h-[310px] z-30 pointer-events-none object-contain scale-x-100"
-          />
+          <AnimatedDiv delay={0.3}>
+            <Image
+              src={Maskot}
+              alt="Maskot"
+              className="hidden lg:block absolute -bottom-65 -right-38 w-[161px] h-[310px] z-30 pointer-events-none object-contain scale-x-100 animate-bounce-idle"
+              draggable={false}
+            />
+          </AnimatedDiv>
         </div>
       </div>
 

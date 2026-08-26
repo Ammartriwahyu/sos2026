@@ -128,6 +128,7 @@ export const useQuiz = ({
     localStorage.removeItem(`quizCurrentIndex-${id_kuis}`);
   }, [id_kuis]);
 
+  // Di dalam useQuiz, ubah bagian executeSubmit:
   const executeSubmit = useCallback(async () => {
     if (!kuisData || isFinished || isSubmissionInProgress) return;
 
@@ -147,24 +148,23 @@ export const useQuiz = ({
       setIsFinished(true);
       cleanupLocalStorage();
 
-      // Panggil callback untuk update status quiz di parent component
+      // Simpan hasil kuis ke state agar modal dapat membacanya
+      if (result) {
+        setQuizResult(result);
+      }
+
+      setIsSubmissionInProgress(false);
+
+      // Panggil callback jika ada
       if (onQuizComplete && result) {
         await onQuizComplete(result);
       }
 
-      // Trigger status refresh in parent component dengan delay
       if (onStatusChange) {
-        // Berikan sedikit delay untuk memastikan backend sudah update
         setTimeout(() => {
           onStatusChange();
         }, 500);
       }
-
-      // Navigate dengan force refresh untuk memastikan data terbaru
-      setTimeout(() => {
-        // Force refresh halaman untuk memastikan data terbaru
-        window.location.href = `/aktivitas/kuis/${id_kuis}`;
-      }, 1000);
     } catch (submitError) {
       console.error("Submit error:", submitError);
       setIsSubmissionInProgress(false);
@@ -182,7 +182,6 @@ export const useQuiz = ({
     kuisData,
     id_kuis,
     submitJawaban,
-    router,
     isFinished,
     isSubmissionInProgress,
     cleanupLocalStorage,
@@ -287,7 +286,7 @@ export const useQuiz = ({
     answers,
     timeLeft: formatTime(timeLeft),
     isLastQuestion,
-    isFinished,
+    isFinished, // <--- Pastikan ini ada di sini!
     modalContent,
     closeModal,
     quizResult,

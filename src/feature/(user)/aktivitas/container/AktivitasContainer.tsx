@@ -6,7 +6,7 @@ import AktivitasAfterLogin from "../components/AktivitasAfterLogin";
 const AktivitasContainer = () => {
   const { user } = useAuthContext();
   return (
-    <main className="bg-login lg:min-h-screen overflow-x-hidden">
+    <main className="bg-login lg:min-h-screen overflow-x-hidden mt-5 ">
       {!user ? <AktivitasBeforeLogin /> : <AktivitasAfterLogin user={user} />}
     </main>
   );

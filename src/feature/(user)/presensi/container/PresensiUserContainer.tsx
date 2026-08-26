@@ -23,7 +23,7 @@ const PresensiUserContainer = () => {
       <CircleGLow />
       <BgBawah gradientHeight="h-[770px]" />
 
-      <div className="w-full flex flex-col min-h-[1227px] relative mt-5 px-6 pt-8 md:px-8 lg:px-32 pb-36 lg:pb-48 z-10 gap-[350px]">
+      <div className="w-full flex flex-col min-h-[1227px] relative mt-20 px-6 pt-8 md:px-8 lg:px-32 pb-36 lg:pb-48 z-10 gap-[350px]">
         <div className="w-full flex flex-col gap-6">
           <AnimatedDiv className="w-full flex justify-start">
             <div className="w-full">

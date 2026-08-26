@@ -1,17 +1,18 @@
 import React from "react";
-import { QuizSoal, Pertanyaan, Pilihan } from "@/api/services/user/quiz";
-import { Button } from "@/shared/components/ui/Button";
+import { QuizSoal, Pilihan } from "@/api/services/user/quiz";
+import AktivitasButton from "@/shared/components/ui/ButtonSos26";
 
-export interface QuizViewSos26Props {
+interface QuizViewSos26Props {
   isLoading: boolean;
   isSubmitting: boolean;
   error: string | null;
   kuisData?: QuizSoal | null;
-  currentQuestion?: Pertanyaan;
+  currentQuestion?: any;
   currentQuestionIndex: number;
   answers: Record<string, string>;
   timeLeft: string;
   isLastQuestion: boolean;
+  isFinished?: boolean; // <--- Tambahkan baris ini agar TypeScript mengenalinya
   onSelectAnswer: (questionId: string, answerLabel: string) => void;
   onSubmit: () => void;
   onNext: () => void;
@@ -33,12 +34,11 @@ export const QuizViewSos26 = ({
   onSubmit,
   onNext,
   onPrev,
-  onJumpToQuestion,
 }: QuizViewSos26Props) => {
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center h-screen space-y-4">
-        <div className="w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-12 h-12 border-4 border-white/50 border-t-transparent rounded-full animate-spin" />
         <p className="text-white font-medium">Loading quiz...</p>
       </div>
     );
@@ -47,7 +47,7 @@ export const QuizViewSos26 = ({
   if (error) {
     return (
       <div className="flex items-center justify-center min-h-[200px] p-4">
-        <div className="bg-red-100 text-red-700 px-6 py-4 rounded-lg max-w-md text-center">
+        <div className="bg-red-500/20 border border-red-500/50 text-white px-6 py-4 rounded-xl max-w-md text-center backdrop-blur-md">
           <p className="font-medium">Error occurred</p>
           <p className="text-sm mt-1">{error}</p>
         </div>
@@ -58,7 +58,7 @@ export const QuizViewSos26 = ({
   if (!kuisData || !currentQuestion) {
     return (
       <div className="flex items-center justify-center min-h-[200px]">
-        <div className="bg-yellow-100 text-yellow-700 px-6 py-4 rounded-lg">
+        <div className="bg-yellow-500/20 border border-yellow-500/50 text-white px-6 py-4 rounded-xl backdrop-blur-md">
           <p className="font-medium">Quiz data not found</p>
         </div>
       </div>
@@ -70,110 +70,108 @@ export const QuizViewSos26 = ({
   );
 
   return (
-    <main className="mycontainer py-10 ">
-      <div className="max-w-4xl bg-white space-y-6 px-8 sm:px-16 py-12 rounded-2xl mx-auto">
-        <div className="flex flex-col lg:flex-row justify-center gap-4 lg:justify-between items-center">
-          <div className="space-y-2">
-            <h1 className="text-xl  sm:text-xl text-primary-500 font-bold">
-              {kuisData.nama_kuis}
-            </h1>
-            <p className="text-black text-center lg:text-left">
-              Soal {currentQuestionIndex + 1} dari{" "}
-              {kuisData.list_pertanyaan.length}
-            </p>
-          </div>
-          <Button
-            variant={"outline"}
-            disabled={true}
-            size={"small"}
-            className="border-primary-500"
-          >
-            Sisa Waktu: {timeLeft}
-          </Button>
+    <main className="mycontainer py-6 flex flex-col items-center">
+      {/* COMMENT: [Countdown Timer] Gaya Liquid Glass terbaru dengan rounded-12, semi-bold, text-white */}
+      <div className="w-full max-w-[1080px] flex justify-end mb-[20px] px-2">
+        <div
+          className="px-4 py-2 rounded-[12px] text-base font-semibold text-white transition-all"
+          style={{
+            background: "linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.04) 100%)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+            border: "1px solid rgba(255, 255, 255, 0.2)",
+            boxShadow: "inset 0 1px 2px 0 rgba(0,0,0,0.2), 0 4px 16px 0 rgba(0,0,0,0.15)",
+          }}
+        >
+          Sisa Waktu: {timeLeft}
+        </div>
+      </div>
+
+      {/* COMMENT: [Main Card Container] Liquid Glass max-w-[1080px] dengan padding xy 40 */}
+      <div
+        className="w-full max-w-[1080px] h-auto p-[40px] rounded-[24px] flex flex-col transition-all duration-300"
+        style={{
+          background: "linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.04) 100%)",
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
+          border: "1px solid rgba(255, 255, 255, 0.2)",
+          boxShadow: "inset 0 2px 4px 0 rgba(0,0,0,0.25), 0 8px 32px 0 rgba(0,0,0,0.2)",
+        }}
+      >
+        {/* SUB-FRAME 1: Informasi Soal Ke Berapa */}
+        <div className="w-full">
+          <h2 className="text-xl font-semibold text-white tracking-wide">
+            Soal {currentQuestionIndex + 1} dari {kuisData.list_pertanyaan.length}
+          </h2>
         </div>
 
-        <div className="border-t border-b border-gray-200 py-4">
-          <h3 className="font-semibold mb-3">Navigasi Soal</h3>
-          <div className="grid grid-cols-5 sm:grid-cols-10 md:grid-cols-12 lg:grid-cols-15 gap-4 lg:gap-2">
-            {kuisData.list_pertanyaan.map((soal, index) => {
-              const isAnswered = !!answers[soal.id_pertanyaan];
-              const isCurrent = index === currentQuestionIndex;
-
-              let buttonClass = "bg-gray-200 hover:bg-gray-300 text-black";
-              if (isAnswered) {
-                buttonClass =
-                  "bg-primary-500 text-white ring-2 ring-primary-300";
-              }
-              if (isCurrent) {
-                buttonClass =
-                  "bg-primary-500 text-white ring-2 ring-primary-300";
-              }
-
-              return (
-                <button
-                  key={soal.id_pertanyaan}
-                  onClick={() => onJumpToQuestion(index)}
-                  className={`w-9 h-9 flex items-center justify-center rounded-md font-medium text-sm transition-all ${buttonClass}`}
-                >
-                  {index + 1}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="p-6 rounded-lg bg-[#F5E6E9]">
-          <h5 className="font-semibold text-lg sm:text-xl">Pertanyaan</h5>
-          <p className="text-base sm:text-lg mb-6 whitespace-pre-line break-words">
+        {/* SUB-FRAME 2: Frame Soal (Gap vertikal 26px) */}
+        <div className="w-full mt-[26px]">
+          <p className="text-base font-medium text-white whitespace-pre-line break-words leading-relaxed">
             {currentQuestion.pertanyaan}
           </p>
+        </div>
 
-          <div className="grid grid-cols-1 gap-4">
-            {sortedPilihan.map((pilihan: Pilihan) => (
+        {/* SUB-FRAME 3: Frame Opsi Pilihan Soal (Gap vertikal 26px, antar opsi 18px) */}
+        <div className="w-full mt-[26px] flex flex-col gap-[18px]">
+          {sortedPilihan.map((pilihan: Pilihan) => {
+            const isSelected = answers[currentQuestion.id_pertanyaan] === pilihan.label;
+            return (
               <button
                 key={pilihan.label}
+                type="button"
                 onClick={() =>
                   onSelectAnswer(currentQuestion.id_pertanyaan, pilihan.label)
                 }
-                className={`w-full flex items-center gap-2  py-4 md:py-3 px-3 md:px-4 rounded-xl md:rounded-2xl border text-left text-sm md:text-base transition-colors ${
-                  answers[currentQuestion.id_pertanyaan] === pilihan.label
-                    ? "border-primary-500 text-primary-500 bg-primary-100 hover:bg-primary-200"
-                    : "bg-white border-black/50 hover:bg-gray-100"
-                }`}
+                className="w-full h-[48px] px-4 rounded-[24px] flex items-center text-left transition-all duration-200 border cursor-pointer group"
+                style={{
+                  background: isSelected
+                    ? "rgba(136, 129, 188, 0.5)"
+                    : "rgba(255, 255, 255, 0.08)",
+                  backdropFilter: "blur(12px)",
+                  WebkitBackdropFilter: "blur(12px)",
+                  borderColor: isSelected ? "rgba(255, 255, 255, 0.5)" : "rgba(255, 255, 255, 0.2)",
+                }}
+                onMouseEnter={(e) => {
+                  if (!isSelected) {
+                    e.currentTarget.style.background = "rgba(255, 255, 255, 0.15)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isSelected) {
+                    e.currentTarget.style.background = "rgba(255, 255, 255, 0.08)";
+                  }
+                }}
               >
-                <p className="font-bold mr-2 md:mr-3">{pilihan.label}.</p>
-                <p>{pilihan.value}</p>
+                <span className="font-bold text-base mr-3 text-white">
+                  {pilihan.label}.
+                </span>
+                <span className="text-base font-normal text-white">
+                  {pilihan.value}
+                </span>
               </button>
-            ))}
-          </div>
+            );
+          })}
+        </div>
 
-          <div className="lg:flex grid grid-cols-2 gap-4 lg:gap-0  lg:justify-between mt-8">
-            <Button
-              className="text-xs md:text-base"
-              onClick={onPrev}
-              variant={"outline"}
-              disabled={currentQuestionIndex === 0}
+        {/* SUB-FRAME 4: Frame Button Navigasi Bawah (Gap vertikal 26px, tanpa line pemisah) */}
+        <div className="w-full mt-[26px] flex items-center justify-end">
+          {isLastQuestion ? (
+            <AktivitasButton
+              onClick={onSubmit}
+              disabled={isSubmitting}
+              className="bg-[#8881BC] hover:bg-[#776fa8] text-white border-none shadow-md"
             >
-              Sebelumnya
-            </Button>
-            {isLastQuestion ? (
-              <Button
-                className="text-xs md:text-base"
-                onClick={onSubmit}
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? "Mengumpulkan..." : "Selesai"}
-              </Button>
-            ) : (
-              <Button
-                className="text-xs md:text-base"
-                onClick={onNext}
-                size="small"
-              >
-                Selanjutnya
-              </Button>
-            )}
-          </div>
+              {isSubmitting ? "Mengumpulkan..." : "Selesai"}
+            </AktivitasButton>
+          ) : (
+            <AktivitasButton
+              onClick={onNext}
+              className="bg-[#8881BC] hover:bg-[#776fa8] text-white border-none shadow-md"
+            >
+              Soal Berikutnya
+            </AktivitasButton>
+          )}
         </div>
       </div>
     </main>

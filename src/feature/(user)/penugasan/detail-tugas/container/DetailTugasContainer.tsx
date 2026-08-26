@@ -42,7 +42,7 @@ export const DetailTugasContainer = ({
 
   if (error || !tugas) {
     return (
-      <SpaceBackground className="min-h-screen flex flex-col items-center justify-center text-center px-4 relative">
+      <SpaceBackground className="min-h-screen flex flex-col items-center justify-center text-center px-4 relative ">
         <CircleGLow />
         <p className="text-xl text-red-500 mb-4 relative z-10">
           {error || "Tugas tidak ditemukan."}
@@ -78,13 +78,13 @@ export const DetailTugasContainer = ({
   const formattedDeadline = isNaN(deadlineDate.getTime())
     ? tugas.tenggat
     : `${deadlineDate.toLocaleDateString("id-ID", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      })} • ${deadlineDate.toLocaleTimeString("id-ID", {
-        hour: "2-digit",
-        minute: "2-digit",
-      })} WIB`;
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    })} • ${deadlineDate.toLocaleTimeString("id-ID", {
+      hour: "2-digit",
+      minute: "2-digit",
+    })} WIB`;
 
   const handleFormSubmit = () => {
     if (!driveLink.trim()) {
@@ -95,7 +95,7 @@ export const DetailTugasContainer = ({
   };
 
   return (
-    <div className="relative min-h-screen w-full overflow-x-hidden flex flex-col bg-background">
+    <div className="relative min-h-screen w-full overflow-x-hidden flex flex-col bg-background mt-15">
       {/*BAGIAN 1: WRAPPER KONTEN UTAMA*/}
       <SpaceBackground className="relative w-full flex flex-col items-center flex-grow pb-[350px]">
         <CircleGLow />

@@ -31,7 +31,8 @@ export const PenilaianActiveView = ({
         onRangkaianChange={onRangkaianChange}
       />
 
-      <div className="mt-12 space-y-10 md:space-y-12">
+      {/* Mengubah jarak vertikal antar section menjadi 40px (space-y-[40px]) */}
+      <div className="mt-12 space-y-[40px]">
         {isLoading ? (
           <div className="flex justify-center items-center h-96">
             <Loader2 className="w-16 h-16 animate-spin text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />

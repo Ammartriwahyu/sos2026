@@ -111,7 +111,8 @@ const AktivitasAfterLogin = ({ user }: AktivitasAfterLoginProps) => {
                 <Image
                   src={Maskot}
                   alt="Maskot"
-                  className="w-[152px] h-[327px] object-contain -scale-x-100"
+                  className="w-[152px] h-[327px] object-contain -scale-x-100 animate-bounce-idle"
+                  draggable={false}
                 />
               </AnimatedDiv>
             </div>
