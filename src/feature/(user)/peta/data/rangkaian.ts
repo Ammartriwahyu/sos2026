@@ -29,7 +29,7 @@ export const rangkaianItems: RangkaianItem[] = [
   },
   {
     id: "initiating-the-odyssey-2",
-    title: "Initiating the Odyssey",
+    title: "Navigating the Currents",
     description:
       "Membahas pengembangan diri dan personal branding, dengan berdiskusi mahasiswa baru saling bertukar pendapat sekaligus menentukan calon pemimpin angkatan dari tiap prodi.",
     photos: [Rangkaian2A, Rangkaian2B],

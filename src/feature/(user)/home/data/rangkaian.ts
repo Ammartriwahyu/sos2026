@@ -17,7 +17,7 @@ export const rangkaianData = [
   },
   {
     id: 2,
-    title: "Orchestrating The Voyage",
+    title: "Navigating the Currents",
     description:
       "Pengenalan Departemen Sistem Informasi, prospek karier di bidang IT, serta cara menyusun surat lamaran kerja yang dikemas secara interaktif.",
     img: Rangkaian2,

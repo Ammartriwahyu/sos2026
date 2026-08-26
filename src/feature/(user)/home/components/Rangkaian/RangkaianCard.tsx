@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { Rangkaian } from "../../data/rangkaian";
 
 export default function RangkaianCard({
@@ -30,13 +31,14 @@ export default function RangkaianCard({
             {item.description}
           </p>
         </div>
-        <button
-          type="button"
+        <Link
+          href="/peta"
+          aria-label={`Selengkapnya tentang ${item.title}`}
           className="w-full py-2.5 mt-3 bg-[#61598B] hover:bg-[#7269A0] transition-colors rounded-xl text-putih font-bold text-sm flex items-center justify-center gap-1"
         >
           Selengkapnya
           <span className="text-lg leading-none">&rsaquo;</span>
-        </button>
+        </Link>
       </div>
     </article>
   );
