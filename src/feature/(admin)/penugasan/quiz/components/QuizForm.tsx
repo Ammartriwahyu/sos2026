@@ -84,16 +84,26 @@ export const QuizForm: React.FC<QuizFormProps> = ({
             <SelectTrigger>
               <SelectValue
                 placeholder={
-                  isLoadingRangkaian ? "Memuat..." : "-- Pilih Rangkaian --"
+                  isLoadingRangkaian
+                    ? "Memuat..."
+                    : rangkaianOptions.length === 0
+                      ? "Belum ada rangkaian"
+                      : "-- Pilih Rangkaian --"
                 }
               />
             </SelectTrigger>
             <SelectContent>
-              {rangkaianOptions?.map((r) => (
-                <SelectItem key={r.value} value={r.value}>
-                  {r.label}
-                </SelectItem>
-              ))}
+              {rangkaianOptions.length === 0 ? (
+                <div className="p-3 text-sm text-default-dark/60">
+                  Belum ada rangkaian
+                </div>
+              ) : (
+                rangkaianOptions.map((r) => (
+                  <SelectItem key={r.value} value={r.value}>
+                    {r.label}
+                  </SelectItem>
+                ))
+              )}
             </SelectContent>
           </Select>
         </div>
@@ -171,6 +181,7 @@ export const QuizForm: React.FC<QuizFormProps> = ({
         <div className="w-full pt-4">
           <Button
             type="submit"
+            variant="admin"
             disabled={isSubmitting || !isFormValid}
             className="w-full"
           >

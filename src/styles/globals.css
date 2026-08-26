@@ -70,6 +70,10 @@
   --color-space-top: #161a3d;
   --color-putih: #eaeaea;
 
+  /* == ADMIN SURFACE 2026 (Figma) == */
+  --color-admin-bg: #ebedf8;
+  --color-admin-card: #e4e8f7;
+
   --color-badgeOverdue: #cf2a4a;
   --color-badgeSuccess: #4caf50;
 
@@ -1049,9 +1053,8 @@ body[data-scroll-locked] {
   will-change: transform;
   border-radius: 18px;
   overflow: hidden;
-  border: 5px solid var(--color-neutral-normal);
   box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.65);
-  background: var(--color-neutral-normal);
+  background-color: var(--color-neutral-normal);
 }
 
 .akademik-prodi-bg {

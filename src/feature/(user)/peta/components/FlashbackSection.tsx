@@ -1,4 +1,5 @@
 import React from "react";
+import SectionTitle from "@/shared/components/SectionTitle";
 import AuroraWaves from "./AuroraWaves";
 import FlashbackCarousel from "./FlashbackCarousel";
 import { flashbackPhotos } from "../data/rangkaian";
@@ -9,9 +10,9 @@ const FlashbackSection = () => {
       <AuroraWaves />
 
       <div className="content-container relative z-10">
-        <h2 className="mb-12 text-center text-3xl font-semibold text-putih md:mb-16 md:text-5xl">
+        <SectionTitle className="mb-12 md:mb-16">
           Kilas Dibalik SOS
-        </h2>
+        </SectionTitle>
 
         <FlashbackCarousel photos={flashbackPhotos} />
       </div>

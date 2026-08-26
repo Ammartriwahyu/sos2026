@@ -111,16 +111,26 @@ export const TugasForm: React.FC<TugasFormProps> = ({
               <SelectTrigger disabled={isLoadingRangkaian || isSubmitting}>
                 <SelectValue
                   placeholder={
-                    isLoadingRangkaian ? "Memuat..." : "-- Pilih Rangkaian --"
+                    isLoadingRangkaian
+                      ? "Memuat..."
+                      : rangkaian.length === 0
+                        ? "Belum ada rangkaian"
+                        : "-- Pilih Rangkaian --"
                   }
                 />
               </SelectTrigger>
               <SelectContent>
-                {rangkaian?.map((r) => (
-                  <SelectItem key={r.value} value={r.value}>
-                    {r.label}
-                  </SelectItem>
-                ))}
+                {rangkaian.length === 0 ? (
+                  <div className="p-3 text-sm text-default-dark/60">
+                    Belum ada rangkaian
+                  </div>
+                ) : (
+                  rangkaian.map((r) => (
+                    <SelectItem key={r.value} value={r.value}>
+                      {r.label}
+                    </SelectItem>
+                  ))
+                )}
               </SelectContent>
             </Select>
           </div>
@@ -224,6 +234,7 @@ export const TugasForm: React.FC<TugasFormProps> = ({
         <div className="w-full mt-10">
           <Button
             type="submit"
+            variant="admin"
             disabled={isSubmitting || !isFormValid}
             className="w-full"
           >

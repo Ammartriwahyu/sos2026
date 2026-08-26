@@ -49,7 +49,7 @@ export const tugasStatusColumns = [
             href={link}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 hover:underline"
+            className="text-primary-normal underline hover:text-primary-normal-hover"
           >
             Lihat Pengumpulan
           </Link>
@@ -74,11 +74,11 @@ export const tugasStatusColumns = [
       <button
         type="button"
         onClick={() => table.options.meta?.openEditModal?.(row.original)}
-        className="p-2 rounded-full hover:bg-orange-100 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 transition-colors"
+        className="p-2 rounded-full hover:bg-primary-light focus:outline-none focus:ring-2 focus:ring-primary-light-active focus:ring-offset-2 transition-colors"
         aria-label="Edit Data"
         title="Edit Data"
       >
-        <Edit3Icon className="text-orange-500 h-5 w-5" />
+        <Edit3Icon className="text-primary-normal h-5 w-5" />
       </button>
     ),
     size: 120,

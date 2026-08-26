@@ -120,9 +120,8 @@ class AuthService {
 
     // Logic pemanggilan API asli (tetap dipertahankan)
     try {
-      const response =
-        await axios.get<ApiResponse<AuthProfile>>("/api/auth/me");
-      return response.data;
+      const response = await apiClient.get<AuthProfile>("/api/mahasiswa/");
+      return response;
     } catch (error: unknown) {
       if (error instanceof Error) {
         throw new Error(error.message);

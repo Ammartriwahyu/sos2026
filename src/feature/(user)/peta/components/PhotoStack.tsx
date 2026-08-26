@@ -104,7 +104,7 @@ const PhotoStack = ({ photos, alt = "Dokumentasi" }: PhotoStackProps) => {
           }}
           onClick={() => shuffle(i)}
           aria-label={`${alt} ${i + 1} — klik untuk menukar tumpukan foto`}
-          className="peta-card absolute top-0 left-0 aspect-[3/2] w-[80%] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-putih/70"
+          className="peta-card absolute top-0 left-0 aspect-[3/2] w-[80%] cursor-pointer border-[14px] border-putih/15 bg-clip-padding focus:outline-none focus-visible:ring-2 focus-visible:ring-putih/70"
         >
           <Image
             src={photo}

@@ -245,16 +245,24 @@ const EditQuizForm: React.FC<EditQuizFormProps> = ({
                   placeholder={
                     isLoadingRangkaian
                       ? "Memuat rangkaian..."
-                      : "Pilih Rangkaian"
+                      : rangkaianOptions.length === 0
+                        ? "Belum ada rangkaian"
+                        : "Pilih Rangkaian"
                   }
                 />
               </SelectTrigger>
               <SelectContent>
-                {rangkaianOptions.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
-                    {option.label}
-                  </SelectItem>
-                ))}
+                {rangkaianOptions.length === 0 ? (
+                  <div className="p-3 text-sm text-default-dark/60">
+                    Belum ada rangkaian
+                  </div>
+                ) : (
+                  rangkaianOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))
+                )}
               </SelectContent>
             </Select>
             {errors.id_rangkaian && (
@@ -493,7 +501,7 @@ const EditQuizForm: React.FC<EditQuizFormProps> = ({
           {errors.pertanyaan_list && (
             <p className="text-red-500 text-sm">{errors.pertanyaan_list}</p>
           )}
-          <Button className="" type="submit" disabled={isSubmitting}>
+          <Button variant="admin" type="submit" disabled={isSubmitting}>
             {isSubmitting && <Loader2 size={16} className="animate-spin" />}
             {!isSubmitting && <Save size={16} className="mr-2" />}
             {isSubmitting ? "Menyimpan..." : "Simpan Perubahan"}

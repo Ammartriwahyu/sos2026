@@ -103,7 +103,12 @@ const FormEditNilai: React.FC<FormEditTugasProps> = ({
         />
       </div>
       <div className="flex justify-center">
-        <Button size={"large"} type="submit" disabled={isSubmitting}>
+        <Button
+          size={"large"}
+          variant="admin"
+          type="submit"
+          disabled={isSubmitting}
+        >
           {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           {isSubmitting ? "Menyimpan..." : "Simpan"}
         </Button>
