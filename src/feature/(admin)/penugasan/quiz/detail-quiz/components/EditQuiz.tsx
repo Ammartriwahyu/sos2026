@@ -245,16 +245,24 @@ const EditQuizForm: React.FC<EditQuizFormProps> = ({
                   placeholder={
                     isLoadingRangkaian
                       ? "Memuat rangkaian..."
-                      : "Pilih Rangkaian"
+                      : rangkaianOptions.length === 0
+                        ? "Belum ada rangkaian"
+                        : "Pilih Rangkaian"
                   }
                 />
               </SelectTrigger>
               <SelectContent>
-                {rangkaianOptions.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
-                    {option.label}
-                  </SelectItem>
-                ))}
+                {rangkaianOptions.length === 0 ? (
+                  <div className="p-3 text-sm text-default-dark/60">
+                    Belum ada rangkaian
+                  </div>
+                ) : (
+                  rangkaianOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))
+                )}
               </SelectContent>
             </Select>
             {errors.id_rangkaian && (
