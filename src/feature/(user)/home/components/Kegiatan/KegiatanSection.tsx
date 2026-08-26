@@ -21,7 +21,10 @@ export default function Kegiatan() {
       <h2 id="activity-heading" className="sr-only">
         Activities
       </h2>
-      <SpaceBackground className="relative z-10 pt-56 pb-18 w-full flex flex-col justify-center items-center overflow-visible">
+      <SpaceBackground
+        fullPage={false}
+        className="relative z-10 pt-56 pb-18 w-full flex flex-col justify-center items-center overflow-visible"
+      >
         <div className="absolute lg:bottom-[-60%] left-[50%] lg:left-[-50%] -translate-x-1/2 size-100 md:size-150 lg:size-200">
           <div className="peta-glow inset-0 h-full w-full opacity-70" />
           <Image

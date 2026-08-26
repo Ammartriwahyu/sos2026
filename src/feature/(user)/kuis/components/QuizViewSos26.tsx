@@ -1,5 +1,5 @@
 import React from "react";
-import { QuizSoal, Pilihan } from "@/api/services/user/quiz";
+import { QuizSoal, Pilihan, Pertanyaan } from "@/api/services/user/quiz";
 import AktivitasButton from "@/shared/components/ui/ButtonSos26";
 
 interface QuizViewSos26Props {
@@ -7,7 +7,7 @@ interface QuizViewSos26Props {
   isSubmitting: boolean;
   error: string | null;
   kuisData?: QuizSoal | null;
-  currentQuestion?: any;
+  currentQuestion?: Pertanyaan;
   currentQuestionIndex: number;
   answers: Record<string, string>;
   timeLeft: string;
@@ -76,11 +76,13 @@ export const QuizViewSos26 = ({
         <div
           className="px-4 py-2 rounded-[12px] text-base font-semibold text-white transition-all"
           style={{
-            background: "linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.04) 100%)",
+            background:
+              "linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.04) 100%)",
             backdropFilter: "blur(12px)",
             WebkitBackdropFilter: "blur(12px)",
             border: "1px solid rgba(255, 255, 255, 0.2)",
-            boxShadow: "inset 0 1px 2px 0 rgba(0,0,0,0.2), 0 4px 16px 0 rgba(0,0,0,0.15)",
+            boxShadow:
+              "inset 0 1px 2px 0 rgba(0,0,0,0.2), 0 4px 16px 0 rgba(0,0,0,0.15)",
           }}
         >
           Sisa Waktu: {timeLeft}
@@ -91,17 +93,20 @@ export const QuizViewSos26 = ({
       <div
         className="w-full max-w-[1080px] h-auto p-[40px] rounded-[24px] flex flex-col transition-all duration-300"
         style={{
-          background: "linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.04) 100%)",
+          background:
+            "linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.04) 100%)",
           backdropFilter: "blur(16px)",
           WebkitBackdropFilter: "blur(16px)",
           border: "1px solid rgba(255, 255, 255, 0.2)",
-          boxShadow: "inset 0 2px 4px 0 rgba(0,0,0,0.25), 0 8px 32px 0 rgba(0,0,0,0.2)",
+          boxShadow:
+            "inset 0 2px 4px 0 rgba(0,0,0,0.25), 0 8px 32px 0 rgba(0,0,0,0.2)",
         }}
       >
         {/* SUB-FRAME 1: Informasi Soal Ke Berapa */}
         <div className="w-full">
           <h2 className="text-xl font-semibold text-white tracking-wide">
-            Soal {currentQuestionIndex + 1} dari {kuisData.list_pertanyaan.length}
+            Soal {currentQuestionIndex + 1} dari{" "}
+            {kuisData.list_pertanyaan.length}
           </h2>
         </div>
 
@@ -115,7 +120,8 @@ export const QuizViewSos26 = ({
         {/* SUB-FRAME 3: Frame Opsi Pilihan Soal (Gap vertikal 26px, antar opsi 18px) */}
         <div className="w-full mt-[26px] flex flex-col gap-[18px]">
           {sortedPilihan.map((pilihan: Pilihan) => {
-            const isSelected = answers[currentQuestion.id_pertanyaan] === pilihan.label;
+            const isSelected =
+              answers[currentQuestion.id_pertanyaan] === pilihan.label;
             return (
               <button
                 key={pilihan.label}
@@ -130,16 +136,20 @@ export const QuizViewSos26 = ({
                     : "rgba(255, 255, 255, 0.08)",
                   backdropFilter: "blur(12px)",
                   WebkitBackdropFilter: "blur(12px)",
-                  borderColor: isSelected ? "rgba(255, 255, 255, 0.5)" : "rgba(255, 255, 255, 0.2)",
+                  borderColor: isSelected
+                    ? "rgba(255, 255, 255, 0.5)"
+                    : "rgba(255, 255, 255, 0.2)",
                 }}
                 onMouseEnter={(e) => {
                   if (!isSelected) {
-                    e.currentTarget.style.background = "rgba(255, 255, 255, 0.15)";
+                    e.currentTarget.style.background =
+                      "rgba(255, 255, 255, 0.15)";
                   }
                 }}
                 onMouseLeave={(e) => {
                   if (!isSelected) {
-                    e.currentTarget.style.background = "rgba(255, 255, 255, 0.08)";
+                    e.currentTarget.style.background =
+                      "rgba(255, 255, 255, 0.08)";
                   }
                 }}
               >

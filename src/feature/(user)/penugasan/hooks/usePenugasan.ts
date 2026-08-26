@@ -94,38 +94,21 @@ export const usePenugasan = () => {
           const detailRes = await penugasanService.getKuisDetailWithStatus(
             kuisItem.id_kuis,
           );
-          const savedStatus =
-            typeof window !== "undefined"
-              ? localStorage.getItem(`mock_kuis_status_${kuisItem.id_kuis}`)
-              : null;
-          const resolvedStatus = savedStatus || detailRes.data.status_kuis;
-          const savedScore =
-            typeof window !== "undefined"
-              ? localStorage.getItem(`mock_kuis_score_${kuisItem.id_kuis}`)
-              : null;
-          const resolvedScore = savedScore
-            ? Number(savedScore)
-            : (detailRes.data.skor ??
-              (resolvedStatus === "Selesai" ? 85 : undefined));
 
           return {
             ...kuisItem,
-            status_kuis: resolvedStatus,
+            status_kuis: detailRes.data.status_kuis,
             deskripsi_kuis: detailRes.data.deskripsi_kuis,
             durasi_kuis: detailRes.data.durasi_kuis,
-            jumlah_soal: detailRes.data.jumlah_soal ?? 5,
-            skor: resolvedStatus === "Selesai" ? resolvedScore : undefined,
+            jumlah_soal: detailRes.data.jumlah_soal,
+            skor: detailRes.data.skor,
           };
         } catch (e) {
           console.error(
             `Gagal fetch status untuk kuis ${kuisItem.id_kuis}:`,
             e,
           );
-          const savedStatus =
-            typeof window !== "undefined"
-              ? localStorage.getItem(`mock_kuis_status_${kuisItem.id_kuis}`)
-              : null;
-          return { ...kuisItem, status_kuis: savedStatus || "Belum Mulai" };
+          return { ...kuisItem, status_kuis: "Belum Mulai" };
         }
       });
       return Promise.all(promises);

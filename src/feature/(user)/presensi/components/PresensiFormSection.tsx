@@ -9,6 +9,7 @@ import AktivitasButton from "@/shared/components/ui/ButtonSos26";
 import Image from "next/image";
 import Maskot from "@/assets/assetsos26/illustrasions/maskot_cewe.svg";
 import { AnimatedDiv } from "@/shared/components/ui/AnimatedDiv";
+import KameraPresensiModal from "./KameraPresensiModal";
 
 interface PresensiFormSectionProps {
   refreshPresensi: () => void;
@@ -17,18 +18,24 @@ interface PresensiFormSectionProps {
 const PresensiFormSection = ({ refreshPresensi }: PresensiFormSectionProps) => {
   const [kode, setKode] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isKameraOpen, setIsKameraOpen] = useState(false);
   const { submit, isSubmitting, submitError, submitSuccess } =
     useSubmitPresensi();
 
-  const handleSubmit = () => {
-    if (kode) {
-      submit(kode);
+  const handleNext = () => {
+    if (kode.trim()) {
+      setIsKameraOpen(true);
     }
+  };
+
+  const handleSubmit = (photo: Blob) => {
+    submit(kode.trim(), photo);
   };
 
   React.useEffect(() => {
     if (submitSuccess) {
       refreshPresensi();
+      setIsKameraOpen(false);
       setIsModalOpen(true);
       setKode("");
     }
@@ -36,6 +43,7 @@ const PresensiFormSection = ({ refreshPresensi }: PresensiFormSectionProps) => {
 
   React.useEffect(() => {
     if (submitError) {
+      setIsKameraOpen(false);
       setIsModalOpen(true);
     }
   }, [submitError]);
@@ -78,11 +86,11 @@ const PresensiFormSection = ({ refreshPresensi }: PresensiFormSectionProps) => {
 
               <div className="w-[179px] h-[48px]">
                 <AktivitasButton
-                  onClick={handleSubmit}
-                  disabled={isSubmitting}
+                  onClick={handleNext}
+                  disabled={isSubmitting || !kode.trim()}
                   className="w-full h-full flex items-center justify-center"
                 >
-                  {isSubmitting ? "Mengirim..." : "Kirim"}
+                  Selanjutnya
                 </AktivitasButton>
               </div>
             </div>
@@ -98,6 +106,13 @@ const PresensiFormSection = ({ refreshPresensi }: PresensiFormSectionProps) => {
           </AnimatedDiv>
         </div>
       </div>
+
+      <KameraPresensiModal
+        isOpen={isKameraOpen}
+        onClose={() => setIsKameraOpen(false)}
+        onSubmit={handleSubmit}
+        isSubmitting={isSubmitting}
+      />
 
       <Modal
         isOpen={isModalOpen}

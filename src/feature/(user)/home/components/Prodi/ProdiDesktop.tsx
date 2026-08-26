@@ -85,7 +85,10 @@ export default function ProdiDesktop({ className }: { className?: string }) {
         id="prodi-section-desktop"
         className="sticky top-0 z-0 w-full h-screen overflow-hidden"
       >
-        <SpaceBackground className="w-full h-full flex flex-col items-center justify-end  relative overflow-hidden gap-8">
+        <SpaceBackground
+          fullPage={false}
+          className="w-full h-full flex flex-col items-center justify-end  relative overflow-hidden gap-8"
+        >
           <div className="absolute bottom-0 right-[-5%] pointer-events-none flex justify-center items-center z-0">
             <div className="size-100 rounded-full bg-radial from-[#7C3AED]/35 to-transparent blur-[70px] animate-pulse-glow"></div>
             <div className="size-72 absolute bottom-[-20%] right-[-30%] opacity-20 rounded-full border border-[#06B6D4] animate-spin-float" />

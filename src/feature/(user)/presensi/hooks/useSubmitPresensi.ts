@@ -7,12 +7,12 @@ export const useSubmitPresensi = () => {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState<boolean>(false);
 
-  const submit = useCallback(async (kode: string) => {
+  const submit = useCallback(async (kode: string, photo: Blob) => {
     setIsSubmitting(true);
     setSubmitError(null);
     setSubmitSuccess(false);
     try {
-      const response = await presensiService.submitPresensi(kode);
+      const response = await presensiService.submitPresensi(kode, photo);
       if (response.status_code === 200) {
         setSubmitSuccess(true);
       } else {
