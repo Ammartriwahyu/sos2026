@@ -55,7 +55,7 @@ const ProdiSection = () => {
 
       <div
         ref={rootRef}
-        className="relative z-10 mx-auto w-full max-w-6xl px-6 md:px-10"
+        className="relative z-10 mx-auto w-full max-w-5xl px-6 md:px-10"
       >
         <SectionTitle>Kenalin Prodi DSI</SectionTitle>
 

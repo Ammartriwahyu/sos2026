@@ -15,6 +15,8 @@ import ProdiCard from "./ProdiCard";
 
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger, useGSAP);
 
+const SWIPE_THRESHOLD = 40;
+
 export default function ProdiMobile({ className }: { className?: string }) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -24,6 +26,7 @@ export default function ProdiMobile({ className }: { className?: string }) {
   const [cardOrder, setCardOrder] = useState([0, 1, 2]);
   const [dragX, setDragX] = useState(0);
   const startX = useRef<number | null>(null);
+  const dragXRef = useRef(0);
 
   useLenis(() => ScrollTrigger.update());
 
@@ -81,27 +84,48 @@ export default function ProdiMobile({ className }: { className?: string }) {
     { scope: wrapperRef },
   );
 
+  const releaseCapture = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    }
+  };
+
+  const resetDrag = () => {
+    startX.current = null;
+    dragXRef.current = 0;
+    setDragX(0);
+  };
+
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     startX.current = e.clientX;
+    dragXRef.current = 0;
     e.currentTarget.setPointerCapture(e.pointerId);
   };
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (startX.current === null) return;
-    setDragX(e.clientX - startX.current);
+    const delta = e.clientX - startX.current;
+    dragXRef.current = delta;
+    setDragX(delta);
   };
 
   const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
     if (startX.current === null) return;
-    if (dragX > 50) {
+    const delta = dragXRef.current;
+
+    if (delta > SWIPE_THRESHOLD) {
       setCardOrder((p) => [p[2], p[0], p[1]]);
-    } else if (dragX < -50) {
+    } else if (delta < -SWIPE_THRESHOLD) {
       setCardOrder((p) => [p[1], p[2], p[0]]);
     }
 
-    startX.current = null;
-    setDragX(0);
-    e.currentTarget.releasePointerCapture(e.pointerId);
+    releaseCapture(e);
+    resetDrag();
+  };
+
+  const handlePointerCancel = (e: React.PointerEvent<HTMLDivElement>) => {
+    releaseCapture(e);
+    resetDrag();
   };
 
   return (
@@ -149,7 +173,7 @@ export default function ProdiMobile({ className }: { className?: string }) {
                   style={{ zIndex: 30 - stackIdx * 10 }}
                 >
                   <div
-                    className={`origin-bottom ${isFront ? "cursor-grab active:cursor-grabbing" : ""}`}
+                    className={`origin-bottom ${isFront ? "cursor-grab touch-pan-y select-none active:cursor-grabbing" : ""}`}
                     style={{
                       transform: `translate(${isFront ? dragX : 0}px, ${stackIdx * -50}px) scale(${1 - stackIdx * 0.08})`,
                       opacity: 1 - stackIdx * 0.2,
@@ -157,11 +181,12 @@ export default function ProdiMobile({ className }: { className?: string }) {
                         startX.current !== null && isFront
                           ? "none"
                           : "transform 0.4s ease, opacity 0.4s ease",
+                      WebkitTapHighlightColor: "transparent",
                     }}
                     onPointerDown={isFront ? handlePointerDown : undefined}
                     onPointerMove={isFront ? handlePointerMove : undefined}
                     onPointerUp={isFront ? handlePointerUp : undefined}
-                    onPointerCancel={isFront ? handlePointerUp : undefined}
+                    onPointerCancel={isFront ? handlePointerCancel : undefined}
                   >
                     <ProdiCard item={item} index={i} />
                   </div>

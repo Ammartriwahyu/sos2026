@@ -33,15 +33,15 @@ const ProdiContent = ({ prodi }: ProdiContentProps) => {
 
   return (
     <div ref={rootRef} className="text-putih">
-      <p className="mb-8 text-justify text-lg leading-relaxed text-putih/90 md:text-xl md:leading-8">
+      <p className="mb-8 text-justify text-md leading-relaxed text-putih/90 md:text-lg md:leading-8">
         {prodi.deskripsi}
       </p>
-      <h4 className="mb-5 text-xl font-bold md:text-2xl">
+      <h4 className="mb-5 text-lg font-bold md:text-xl">
         Adapun prospek kerja dari prodi ini sebagai berikut!
       </h4>
       <ul className="list-disc space-y-3 pl-6 text-putih/90">
         {prodi.prospek.map((item, index) => (
-          <li key={index} className="text-lg md:text-xl">
+          <li key={index} className="text-md md:text-lg">
             {item}
           </li>
         ))}

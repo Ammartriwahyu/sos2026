@@ -23,8 +23,8 @@ export const ProdiTabs = ({ activeProdiId, onSelectProdi }: ProdiTabsProps) => {
             className={cn(
               "w-full rounded-2xl border text-center transition-all duration-500 ease-in-out",
               active
-                ? "border-white/15 bg-primary-normal/60 px-6 py-7 shadow-lg shadow-black/40"
-                : "border-white/10 bg-primary-normal/30 px-6 py-5 hover:bg-primary-normal/50",
+                ? "border-white/15 bg-accent-purple/50 px-6 py-7 shadow-lg shadow-black/40"
+                : "border-white/10 bg-accent-violet/50 px-6 py-5 hover:bg-accent-violet/65",
             )}
           >
             {active ? (

@@ -74,6 +74,10 @@
   --color-admin-bg: #ebedf8;
   --color-admin-card: #e4e8f7;
 
+  /* == ACCENT 2026 (Figma) == */
+  --color-accent-violet: #9b7ede;
+  --color-accent-purple: #4a3488;
+
   --color-badgeOverdue: #cf2a4a;
   --color-badgeSuccess: #4caf50;
 

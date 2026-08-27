@@ -21,10 +21,11 @@ const PresensiUserContainer = () => {
   return (
     <SpaceBackground className="w-full min-h-screen relative overflow-hidden">
       <CircleGLow />
-      <BgBawah gradientHeight="h-[770px]" />
 
-      <div className="w-full flex flex-col min-h-[1227px] relative mt-20 px-6 pt-8 md:px-8 lg:px-32 pb-36 lg:pb-48 z-10 gap-[350px]">
-        <div className="w-full flex flex-col gap-6">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[220px] md:h-[300px] lg:h-[380px] bg-linear-to-b from-transparent via-space-base/70 to-space-base" />
+
+      <div className="w-full flex flex-col relative mt-20 pb-24 lg:pb-48 z-10">
+        <div className="w-full flex flex-col gap-6 px-6 pt-8 md:px-8 lg:px-32">
           <AnimatedDiv className="w-full flex justify-start">
             <div className="w-full">
               <Link
@@ -42,8 +43,11 @@ const PresensiUserContainer = () => {
           </AnimatedDiv>
         </div>
 
-        {/* Bagian Bawah: Rekap Presensi */}
-        <AnimatedDiv className="w-full" delay={0.2}>
+        <div className="relative w-full h-[200px] md:h-[320px] lg:h-[470px]">
+          <BgBawah gradientHeight="h-[80px] md:h-[110px] lg:h-[150px]" />
+        </div>
+
+        <AnimatedDiv className="w-full px-6 md:px-8 lg:px-32" delay={0.2}>
           <RekapPresensiSection
             presensiData={presensiData ?? []}
             error={error}
