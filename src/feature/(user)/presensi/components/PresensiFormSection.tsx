@@ -100,7 +100,7 @@ const PresensiFormSection = ({ refreshPresensi }: PresensiFormSectionProps) => {
             <Image
               src={Maskot}
               alt="Maskot"
-              className="hidden lg:block absolute -bottom-65 -right-38 w-[161px] h-[310px] z-30 pointer-events-none object-contain scale-x-100 animate-bounce-idle"
+              className="hidden lg:block absolute -bottom-14 -right-38 w-[161px] h-[310px] z-30 pointer-events-none object-contain scale-x-100 animate-bounce-idle"
               draggable={false}
             />
           </AnimatedDiv>

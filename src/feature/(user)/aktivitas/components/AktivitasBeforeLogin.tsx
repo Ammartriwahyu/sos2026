@@ -15,20 +15,20 @@ const AktivitasBeforeLogin = () => {
       <Starfield />
       <BgBawah />
 
-      <div className="mycontainer w-full overflow-hidden min-h-screen relative z-10 flex items-start lg:items-center py-24 px-4 sm:px-6 lg:px-8">
-        <div className="flex lg:-mt-35 justify-center flex-col-reverse w-full lg:flex-row items-center gap-10">
-          <AnimatedDiv delay={0.1}>
+      <div className="w-full overflow-hidden min-h-screen relative z-10 flex items-center justify-center py-24 px-6 md:px-12 lg:px-8 xl:px-22">
+        <div className="flex justify-center flex-col-reverse w-full lg:flex-row items-center gap-8 sm:gap-10 lg:gap-16">
+          <AnimatedDiv delay={0.1} className="hidden lg:block">
             <Image
               src={Maskot}
               alt="Maskot"
-              className="hidden lg:block w-[110px] h-[236px] md:w-[130px] md:h-[280px] lg:w-[152px] lg:h-[327px] z-20 relative object-contain animate-bounce-idle"
+              className="w-[212px] h-[456px] z-20 relative object-contain animate-bounce-idle"
               draggable={false}
             />
           </AnimatedDiv>
 
-          <AnimatedDiv delay={0.2} className="w-full max-w-[530px]">
+          <AnimatedDiv delay={0.2} className="w-full max-w-[800px]">
             <div
-              className="z-20 flex w-full flex-col justify-center items-center rounded-[12px] px-6 sm:px-6 py-[32px] gap-[20px] h-fit relative"
+              className="z-20 flex w-full flex-col justify-center items-center rounded-[12px] px-6 sm:px-8 lg:px-12 py-8 lg:py-10 gap-5 h-fit relative"
               style={{
                 background:
                   "linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 100%)",
@@ -39,15 +39,15 @@ const AktivitasBeforeLogin = () => {
                   "0 12px 40px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.3)",
               }}
             >
-              <h4 className="text-3xl sm:text-4xl text-center font-semibold text-white drop-shadow-md">
+              <h4 className="text-2xl sm:text-3xl lg:text-4xl text-center font-semibold text-white drop-shadow-md">
                 Halo, Adik Maba!
               </h4>
-              <span className="text-white text-sm sm:text-base lg:text-xl text-center my-2 leading-relaxed">
+              <span className="text-white text-sm sm:text-base lg:text-xl text-center leading-relaxed">
                 Yuk, masuk dulu biar bisa akses semua hal seru yang udah
                 disiapin buat kamu!
               </span>
 
-              <div className="w-full flex justify-center mt-2">
+              <div className="w-full flex justify-center mt-1">
                 <Link href="/login" className="w-full h-[48px] block">
                   <AktivitasButton className="w-full h-full flex items-center justify-center">
                     Masuk
