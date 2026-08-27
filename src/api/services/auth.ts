@@ -9,6 +9,7 @@ export interface Pjl {
 export interface Distrik {
   id_distrik: string;
   nama_distrik: string;
+  order: number;
   list_pjl: Pjl[];
 }
 

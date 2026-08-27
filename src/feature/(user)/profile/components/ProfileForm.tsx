@@ -271,15 +271,13 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
                   <Input
                     type="text"
                     disabled
-                    value={
-                      user?.kelompok?.distrik?.id_distrik?.toString() || ""
-                    }
+                    value={user?.kelompok?.distrik?.order?.toString() || ""}
                     placeholder="Masukkan distrik"
                     className={inputClassName}
                   />
                 ) : (
                   <p className={valueClassName}>
-                    {user?.kelompok?.distrik?.id_distrik || "-"}
+                    {user?.kelompok?.distrik?.order ?? "-"}
                   </p>
                 )}
               </div>
@@ -305,13 +303,13 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
                   <Input
                     type="text"
                     disabled
-                    value={user?.kelompok?.id_kelompok?.toString() || ""}
+                    value={user?.kelompok?.nama_kelompok || ""}
                     placeholder="Masukkan kelompok"
                     className={inputClassName}
                   />
                 ) : (
                   <p className={valueClassName}>
-                    {user?.kelompok?.id_kelompok || "-"}
+                    {user?.kelompok?.nama_kelompok || "-"}
                   </p>
                 )}
               </div>
