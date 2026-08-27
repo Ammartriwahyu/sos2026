@@ -11,7 +11,7 @@ export default function LoginPageContainer() {
   const formLogic = useLoginForm();
   return (
     <div className="flex flex-col min-h-screen">
-      <SpaceBackground className="flex-1 flex flex-col relative min-h-[120vh] md:min-h-screen pt-32 pb-0 overflow-hidden">
+      <SpaceBackground className="flex-1 flex flex-col relative min-h-[120vh] md:min-h-[130vh] pb-0 overflow-hidden">
         <LoginDecorations />
 
         {/* Bottom gradient glow (Gradasi bawah) */}
@@ -19,11 +19,11 @@ export default function LoginPageContainer() {
           <div className="peta-glow inset-0 h-full w-full" />
         </div>
 
-        <div className="relative z-10 flex-1 flex items-center justify-center mycontainer w-full pt-10 pb-44 lg:pt-16 lg:pb-64">
+        <div className="relative z-10 flex-1 flex items-center justify-center mycontainer w-full pt-80 pb-0 md:pt-40 md:pb-44 lg:pt-48 lg:pb-64">
           <LoginForm {...formLogic} />
         </div>
 
-        <div className="relative z-20 mt-auto w-full">
+        <div className="absolute bottom-0 left-0 w-full z-20">
           <GrassDivider className="translate-y-px" />
           <div className="w-full h-16 md:h-24 peta-flashback-bg" />
         </div>
