@@ -23,6 +23,7 @@ import {
 } from "@tanstack/react-table";
 import { useSelectOptions } from "@/shared/hooks/useSelectOptions";
 import PresensiTable from "../components/PresensiTable";
+import PetaKoordinat from "../components/PetaKoordinat";
 import { Modal } from "@/shared/components/ui/Modal";
 import PresensiForm from "../../components/PresensiForm";
 import PresensiMahasiswaForm from "../components/PresensiMahasiswaForm";
@@ -331,6 +332,10 @@ const DetailPresensiContainer: React.FC<DetailPresensiContainerProps> = ({
         </div>
       </div>
       <div className="w-full h-[1px] bg-surface-divider"></div>
+      <PetaKoordinat
+        mahasiswaList={mahasiswaList || []}
+        isLoading={isLoadingList}
+      />
       <PresensiTable
         table={table}
         isSubmissionLoading={isLoadingList}

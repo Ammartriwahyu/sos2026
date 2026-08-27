@@ -38,6 +38,8 @@ export interface PresensiMahasiswaDetail {
   nama: string;
   presensi_at: string;
   status: string;
+  latitude: number | null;
+  longitude: number | null;
 }
 
 export interface Pagination {
