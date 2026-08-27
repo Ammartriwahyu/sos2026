@@ -63,11 +63,11 @@ const DepartemenSection = () => {
 
       <div
         ref={rootRef}
-        className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-28 pb-12 md:px-10 md:pt-32 md:pb-0 lg:pt-36"
+        className="relative z-10 mx-auto w-full max-w-6xl px-6 pt-28 pb-12 md:px-10 md:pt-32 md:pb-0 lg:pt-36"
       >
         <div className="flex flex-col gap-8 md:flex-row md:items-stretch md:gap-8 lg:gap-14">
           <div className="flex flex-col md:w-[210px] md:shrink-0 lg:w-[240px]">
-            <p className="akd-fade-up peta-reveal text-4xl font-semibold whitespace-nowrap text-putih lg:text-5xl">
+            <p className="akd-fade-up peta-reveal text-3xl font-semibold whitespace-nowrap text-putih lg:text-4xl">
               Apa sih itu
             </p>
             <div className="akd-fade-up peta-reveal mt-6 hidden w-full md:block">
@@ -82,7 +82,7 @@ const DepartemenSection = () => {
           <div className="flex flex-1 flex-col">
             <div className="flex items-start justify-between gap-4">
               <div className="akd-fade-up peta-reveal flex items-start mt-10">
-                <h1 className="text-6xl font-bold text-putih lg:text-8xl">
+                <h1 className="text-5xl font-bold text-putih lg:text-7xl">
                   DSI
                 </h1>
                 <Image
@@ -105,7 +105,7 @@ const DepartemenSection = () => {
               </div>
             </div>
 
-            <div className="akd-fade-up peta-reveal lg:mt-6 xl:mt-12 text-justify text-lg leading-8 text-putih/90 md:text-xl lg:text-xl xl:leading-9">
+            <div className="akd-fade-up peta-reveal lg:mt-6 xl:mt-12 text-justify text-base leading-7 text-putih/90 md:text-lg lg:text-lg xl:leading-8">
               <p>
                 Departemen Sistem Informasi (DSI) adalah salah satu departemen
                 di Fakultas Ilmu Komputer (FILKOM) Universitas Brawijaya (UB).

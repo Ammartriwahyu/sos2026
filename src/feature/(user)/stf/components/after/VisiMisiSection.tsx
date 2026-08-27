@@ -83,7 +83,7 @@ const VisiMisiSection = ({
 
             {/* Right: Details (Prodi, Visi, Misi) */}
             <div className="col-span-1 lg:col-span-8 flex flex-col gap-10">
-              <h4 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold text-center lg:text-left leading-tight">
+              <h4 className="text-white text-2xl md:text-3xl lg:text-4xl font-bold text-center lg:text-left leading-tight">
                 {activeCaketang.prodi}
               </h4>
 

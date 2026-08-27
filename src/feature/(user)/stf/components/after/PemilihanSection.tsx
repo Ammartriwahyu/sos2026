@@ -49,7 +49,7 @@ const PemilihanSection = ({
     <>
       <section className="relative z-10 w-full pt-16 pb-32">
         <div className="mycontainer text-center text-white w-full max-w-5xl mx-auto flex flex-col gap-16 md:gap-24 items-center">
-          <h4 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white tracking-wide drop-shadow-lg">
+          <h4 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white tracking-wide drop-shadow-lg">
             Saatnya memilih!
           </h4>
           <div className="flex flex-row justify-center items-center w-full px-4 sm:px-0 -space-x-16 md:-space-x-24 lg:-space-x-32 pt-8 pb-12">

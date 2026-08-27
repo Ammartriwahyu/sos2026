@@ -48,11 +48,11 @@ const CurrentSection = () => {
         />
       </div>
 
-      <div className="mycontainer pt-16 pb-12 md:pt-24 md:pb-24 relative z-20">
+      <div className="mycontainer mx-auto w-full max-w-6xl pt-16 pb-12 md:pt-24 md:pb-24 relative z-20">
         <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center">
           {/* Left Column */}
           <div className="flex flex-col items-start text-left relative z-20 mt-8 lg:mt-0">
-            <h1 className="text-5xl md:text-6xl lg:text-[5.5rem] font-bold leading-tight mb-6 relative">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 relative">
               Shaping The
               <br /> Future 2025
             </h1>
