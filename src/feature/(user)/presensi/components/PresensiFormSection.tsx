@@ -2,10 +2,11 @@
 
 import React, { useState } from "react";
 import { Input } from "@/shared/components/ui/Input";
-import { Button } from "@/shared/components/ui/Button";
 import { Modal } from "@/shared/components/ui/Modal";
 import { useSubmitPresensi } from "../hooks/useSubmitPresensi";
 import AktivitasButton from "@/shared/components/ui/ButtonSos26";
+import { cn } from "@/shared/utils/cn";
+import { AlertTriangle, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
 import Maskot from "@/assets/assetsos26/illustrasions/maskot_cewe.svg";
 import { AnimatedDiv } from "@/shared/components/ui/AnimatedDiv";
@@ -117,6 +118,25 @@ const PresensiFormSection = ({ refreshPresensi }: PresensiFormSectionProps) => {
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        variant="space"
+        showCloseButton={false}
+        containerClassName="max-w-[340px] sm:max-w-sm lg:max-w-md"
+        icon={
+          <span
+            className={cn(
+              "flex h-16 w-16 items-center justify-center rounded-full border lg:h-[72px] lg:w-[72px]",
+              submitSuccess
+                ? "border-badgeSuccess/45 bg-badgeSuccess/15 text-badgeSuccess"
+                : "border-danger/45 bg-danger/15 text-danger",
+            )}
+          >
+            {submitSuccess ? (
+              <CheckCircle2 className="h-8 w-8 lg:h-9 lg:w-9" />
+            ) : (
+              <AlertTriangle className="h-8 w-8 lg:h-9 lg:w-9" />
+            )}
+          </span>
+        }
         title={submitSuccess ? "Berhasil!" : "Terjadi Kesalahan"}
         desc={
           submitSuccess
@@ -124,8 +144,14 @@ const PresensiFormSection = ({ refreshPresensi }: PresensiFormSectionProps) => {
             : submitError || "Gagal mengirim presensi. Silakan coba lagi."
         }
       >
-        <div className="mt-4 flex justify-center">
-          <Button onClick={() => setIsModalOpen(false)}>Tutup</Button>
+        <div className="mt-6 flex justify-center">
+          <AktivitasButton
+            onClick={() => setIsModalOpen(false)}
+            variant={submitSuccess ? "primary" : "outline"}
+            className="max-w-[180px]"
+          >
+            Tutup
+          </AktivitasButton>
         </div>
       </Modal>
     </>

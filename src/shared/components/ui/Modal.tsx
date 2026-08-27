@@ -1,8 +1,9 @@
 "use client";
 
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import { useLenis } from "lenis/react";
 import { X } from "lucide-react";
 import { cn } from "@/shared/utils/cn";
 
@@ -13,7 +14,14 @@ interface ModalProps {
   desc?: string;
   children: ReactNode;
   containerClassName?: string;
+  variant?: "light" | "space";
+  icon?: ReactNode;
+  showCloseButton?: boolean;
 }
+
+let openModalCount = 0;
+let restoreOverflow = "";
+let restorePaddingRight = "";
 
 const Modal = ({
   isOpen,
@@ -22,7 +30,39 @@ const Modal = ({
   desc,
   children,
   containerClassName,
+  variant = "light",
+  icon,
+  showCloseButton = true,
 }: ModalProps) => {
+  const isSpace = variant === "space";
+  const lenis = useLenis();
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    openModalCount += 1;
+    if (openModalCount === 1) {
+      const { body, documentElement } = document;
+      const scrollbarWidth = window.innerWidth - documentElement.clientWidth;
+      restoreOverflow = body.style.overflow;
+      restorePaddingRight = body.style.paddingRight;
+      body.style.overflow = "hidden";
+      if (scrollbarWidth > 0) {
+        body.style.paddingRight = `${scrollbarWidth}px`;
+      }
+    }
+    lenis?.stop();
+
+    return () => {
+      openModalCount -= 1;
+      if (openModalCount === 0) {
+        document.body.style.overflow = restoreOverflow;
+        document.body.style.paddingRight = restorePaddingRight;
+        lenis?.start();
+      }
+    };
+  }, [isOpen, lenis]);
+
   return (
     <Dialog.Root open={isOpen} onOpenChange={onClose} modal={false}>
       <Dialog.Portal>
@@ -32,22 +72,39 @@ const Modal = ({
           <div className="flex min-h-full items-center justify-center p-4 text-center">
             <Dialog.Content
               className={cn(
-                "relative w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all",
+                "relative w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all",
                 "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
                 "data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
                 "lg:max-w-2xl lg:p-8 ",
+                isSpace
+                  ? "border border-accent-violet/25 bg-gradient-to-br from-space-top/95 to-space-base/95 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.75)] backdrop-blur-2xl"
+                  : "bg-white",
 
                 containerClassName,
               )}
             >
+              {icon && (
+                <div className="mb-5 flex justify-center lg:mb-6">{icon}</div>
+              )}
+
               {title && (
-                <Dialog.Title className="md:text-xl text-lg text-center font-bold leading-6 text-primary-normal lg:text-2xl">
+                <Dialog.Title
+                  className={cn(
+                    "md:text-xl text-lg text-center font-bold leading-6 lg:text-2xl",
+                    isSpace ? "text-white" : "text-primary-normal",
+                  )}
+                >
                   {title}
                 </Dialog.Title>
               )}
 
               {desc && (
-                <p className="mt-2 text-xs md:text-sm text-gray-500 text-center">
+                <p
+                  className={cn(
+                    "mt-2 text-xs md:text-sm text-center",
+                    isSpace ? "text-putih/70" : "text-gray-500",
+                  )}
+                >
                   {desc}
                 </p>
               )}
@@ -58,10 +115,17 @@ const Modal = ({
                 </VisuallyHidden.Root>
               )}
 
-              <Dialog.Close className="absolute top-6 right-6 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 lg:top-8 lg:right-8">
-                <X className="h-6 w-6" />
-                <span className="sr-only">Close</span>
-              </Dialog.Close>
+              {showCloseButton && (
+                <Dialog.Close
+                  className={cn(
+                    "absolute top-6 right-6 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 lg:top-8 lg:right-8",
+                    isSpace && "text-putih hover:text-white",
+                  )}
+                >
+                  <X className="h-6 w-6" />
+                  <span className="sr-only">Close</span>
+                </Dialog.Close>
+              )}
 
               <div className={cn(title && "mt-4")}>{children}</div>
             </Dialog.Content>

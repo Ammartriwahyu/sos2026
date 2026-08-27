@@ -107,11 +107,13 @@ class PresensiService {
     }
 
     const response = await apiClient.get("/api/presensi/");
-    const responseData = response as unknown as BackendResponse<Presensi[]>;
+    const responseData = response as unknown as BackendResponse<
+      Presensi[] | null
+    >;
     const apiResponse: ApiResponse<Presensi[]> = {
       success: responseData.status_code === 200,
       message: responseData.message,
-      data: responseData.data,
+      data: responseData.data ?? [],
     };
     this.cache.set(cacheKey, {
       data: apiResponse,
@@ -195,13 +197,22 @@ class PresensiService {
       const response = await apiClient.get(apiUrl);
       const responseData = response as unknown as BackendResponse<{
         presensi_info: presensiInfo;
-        mahasiswa_list: PresensiMahasiswaDetail[];
-        pagination: Pagination;
-      }>;
+        mahasiswa_list: PresensiMahasiswaDetail[] | null;
+        pagination: Pagination | null;
+      } | null>;
 
       const apiResponseData: MahasiswaListResponse = {
-        mahasiswa_list: responseData.data.mahasiswa_list,
-        pagination: responseData.data.pagination,
+        mahasiswa_list: responseData.data?.mahasiswa_list ?? [],
+        pagination: responseData.data?.pagination ?? {
+          page: filters?.page ?? 1,
+          limit: filters?.pageSize ?? 10,
+          total_record: 0,
+          total_pages: 0,
+          from: 0,
+          to: 0,
+          next: false,
+          previous: false,
+        },
       };
 
       const apiResponse: ApiResponse<MahasiswaListResponse> = {

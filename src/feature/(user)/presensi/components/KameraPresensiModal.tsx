@@ -106,7 +106,8 @@ const KameraPresensiModal = ({
     <Modal
       isOpen={isOpen}
       onClose={handleClose}
-      containerClassName="bg-space-top text-white border border-white/10 lg:max-w-3xl"
+      variant="space"
+      containerClassName="text-white lg:max-w-3xl"
     >
       <h3 className="text-lg md:text-2xl font-bold text-center text-white pr-10">
         Kalo boong ketauan

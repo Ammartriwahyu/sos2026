@@ -7,6 +7,7 @@ import {
   Maba,
   RekapPenilaianItem,
   DetailPenilaianMaba,
+  PenilaianTugas,
   PayloadPelanggaran,
   PayloadKeaktifan,
   PenilaianUpdatePayload,
@@ -23,27 +24,31 @@ class PenilaianService {
   }
 
   async getRangkaian(): Promise<BackendResponse<Rangkaian[]>> {
-    const response = await apiClient.get("/api/rangkaian/");
-    return response as unknown as BackendResponse<Rangkaian[]>;
+    const response = (await apiClient.get(
+      "/api/rangkaian/",
+    )) as unknown as BackendResponse<Rangkaian[] | null>;
+    return { ...response, data: response.data ?? [] };
   }
 
   async getRekapPenilaian(
     id_rangkaian: string,
   ): Promise<BackendResponse<RekapPenilaianItem[]>> {
-    const response = await apiClient.get(
+    const response = (await apiClient.get(
       `/api/penilaian/rekap/${id_rangkaian}`,
-    );
-    return response as unknown as BackendResponse<RekapPenilaianItem[]>;
+    )) as unknown as BackendResponse<RekapPenilaianItem[] | null>;
+    return { ...response, data: response.data ?? [] };
   }
 
   async getDetailPenilaianMaba(
     nim: string,
     id_rangkaian: string,
   ): Promise<DetailPenilaianMaba> {
-    const response = await apiClient.get(
+    const response = (await apiClient.get(
       `/api/penilaian/${nim}/rangkaian/${id_rangkaian}`,
-    );
-    return response as unknown as DetailPenilaianMaba;
+    )) as unknown as DetailPenilaianMaba & {
+      penilaian: PenilaianTugas[] | null;
+    };
+    return { ...response, penilaian: response.penilaian ?? [] };
   }
 
   async postPelanggaran(
@@ -66,8 +71,10 @@ class PenilaianService {
   }
 
   async getDistrik(): Promise<BackendResponse<Distrik[]>> {
-    const response = await apiClient.get("/api/distrik/");
-    return response as unknown as BackendResponse<Distrik[]>;
+    const response = (await apiClient.get(
+      "/api/distrik/",
+    )) as unknown as BackendResponse<Distrik[] | null>;
+    return { ...response, data: response.data ?? [] };
   }
 
   async getMabaByFilter(
@@ -96,8 +103,21 @@ class PenilaianService {
 
     const url = `/api/distrik/${distrikId}/maba?${params.toString()}`;
 
-    const response = await apiClient.get(url);
-    return response as unknown as BackendResponse<PaginatedData<Maba>>;
+    const response = (await apiClient.get(
+      url,
+    )) as unknown as BackendResponse<PaginatedData<Maba> | null>;
+    return {
+      ...response,
+      data: {
+        pagination: response.data?.pagination ?? {
+          page,
+          limit,
+          total_record: 0,
+          total_pages: 0,
+        },
+        records: response.data?.records ?? [],
+      },
+    };
   }
 
   async updatePenilaian(

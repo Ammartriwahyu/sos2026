@@ -50,6 +50,8 @@ export const usePenilaianPage = () => {
         }
       } catch (error) {
         console.error("Gagal memuat data filter:", error);
+        setRangkaian({ data: [], isLoading: false });
+        setDistrik({ data: [], isLoading: false });
       }
     };
     fetchInitialData();

@@ -170,10 +170,10 @@ class TugasService {
     const response = await apiClient.get(apiUrl);
 
     const responseData = response as unknown as BackendResponse<
-      ApiSubmission[]
+      ApiSubmission[] | null
     >;
 
-    const transformedSubmissions: TugasStatus[] = responseData.data.map(
+    const transformedSubmissions: TugasStatus[] = (responseData.data ?? []).map(
       (sub) => ({
         id: sub.id,
         student_name: sub.student_name,
