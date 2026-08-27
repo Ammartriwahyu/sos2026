@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import axios from "axios";
 import { penugasanService } from "@/api/services/user/penugasan";
 import { penilaianService } from "@/api/services/user/penilaian";
 import { Rangkaian } from "@/feature/(user)/penugasan/types";
@@ -40,12 +41,15 @@ export const usePenilaian = () => {
 
   const fetchDetailNilai = useCallback(async (id: string) => {
     setIsLoading(true);
+    setError(null);
     try {
       const response = await penilaianService.getDetailNilaiByRangkaian(id);
       setDetailNilai(response.data);
-    } catch {
-      setError("Gagal memuat detail nilai untuk rangkaian ini.");
+    } catch (err) {
       setDetailNilai(null);
+      if (!(axios.isAxiosError(err) && err.response?.status === 404)) {
+        setError("Gagal memuat detail nilai untuk rangkaian ini.");
+      }
     } finally {
       setIsLoading(false);
     }

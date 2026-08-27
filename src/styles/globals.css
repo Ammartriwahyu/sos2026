@@ -1107,6 +1107,39 @@ body[data-scroll-locked] {
   }
 }
 
+.maskot-bob {
+  will-change: transform;
+  animation: maskot-bob 4.2s ease-in-out infinite;
+}
+.maskot-bob-alt {
+  will-change: transform;
+  animation: maskot-bob 5.1s ease-in-out infinite;
+  animation-delay: 0.8s;
+}
+@keyframes maskot-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+.maskot-callout {
+  will-change: box-shadow;
+  animation: maskot-callout-glow 3.4s ease-in-out infinite;
+}
+@keyframes maskot-callout-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 26px 0 rgba(155, 126, 222, 0.28);
+  }
+  50% {
+    box-shadow: 0 0 52px 6px rgba(155, 126, 222, 0.48);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .peta-spin,
   .peta-glow,
@@ -1115,7 +1148,10 @@ body[data-scroll-locked] {
   .peta-aurora-svg,
   .akademik-float,
   .akademik-wiggle,
-  .akademik-sway {
+  .akademik-sway,
+  .maskot-bob,
+  .maskot-bob-alt,
+  .maskot-callout {
     animation: none !important;
   }
   .peta-reveal {

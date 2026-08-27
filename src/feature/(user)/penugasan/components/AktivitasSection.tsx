@@ -4,11 +4,10 @@ import { Kuis, Tugas } from "../types";
 import { cn } from "@/shared/utils/cn";
 import { Button } from "@/shared/components/ui/Button";
 import { getIconForTask } from "../data/tugasIconData";
-import Image from "next/image";
-import maskot from "@/assets/user/maskot-sabar.svg";
 import Link from "next/link";
 import AktivitasButton from "@/shared/components/ui/ButtonSos26";
 import { AnimatedDiv } from "@/shared/components/ui/AnimatedDiv";
+import MaskotEmptyState from "@/shared/components/ui/MaskotEmptyState";
 
 interface AktivitasSectionProps {
   tugas: Tugas[];
@@ -99,13 +98,13 @@ export const AktivitasSection = ({
               const formattedDeadline = isNaN(deadlineDate.getTime())
                 ? item.tenggat
                 : `${deadlineDate.toLocaleDateString("id-ID", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })} • ${deadlineDate.toLocaleTimeString("id-ID", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })} WIB`;
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })} • ${deadlineDate.toLocaleTimeString("id-ID", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })} WIB`;
 
               const status = getTugasStatus(item);
 
@@ -132,19 +131,8 @@ export const AktivitasSection = ({
               );
             })
           ) : (
-            <AnimatedDiv
-              className="col-span-full md:flex md:flex-col items-center gap-4 px-2"
-              delay={0.1}
-            >
-              <Image
-                src={maskot}
-                alt="Description of the image"
-                width={500}
-                height={300}
-              />
-              <p className="text-center text-default-dark font-bold text-xl md:text-3xl">
-                Sabar yaa tugas nya akan datang, tunggu yaaa!
-              </p>
+            <AnimatedDiv className="col-span-full w-full" delay={0.1}>
+              <MaskotEmptyState message="Sabar yaa, tugasnya akan segera datang!" />
             </AnimatedDiv>
           )}
         </div>
@@ -163,13 +151,13 @@ export const AktivitasSection = ({
               const formattedDeadline = isNaN(deadlineDate.getTime())
                 ? item.tenggat_kuis
                 : `${deadlineDate.toLocaleDateString("id-ID", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })} • ${deadlineDate.toLocaleTimeString("id-ID", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })} WIB`;
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })} • ${deadlineDate.toLocaleTimeString("id-ID", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })} WIB`;
 
               const status = getQuizBadgeStatus(
                 item.status_kuis,
@@ -222,19 +210,8 @@ export const AktivitasSection = ({
               );
             })
           ) : (
-            <AnimatedDiv
-              className="flex flex-col items-center gap-4 px-2"
-              delay={0.1}
-            >
-              <Image
-                src={maskot}
-                alt="Description of the image"
-                width={500}
-                height={300}
-              />
-              <p className="text-center text-default-dark font-bold text-xl md:text-3xl">
-                Sabar yaa kuis nya akan datang, tunggu yaaa!
-              </p>
+            <AnimatedDiv className="w-full" delay={0.1}>
+              <MaskotEmptyState message="Sabar yaa, kuisnya akan segera datang!" />
             </AnimatedDiv>
           )}
         </AnimatedDiv>

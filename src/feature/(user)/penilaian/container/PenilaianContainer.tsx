@@ -38,7 +38,9 @@ export const PenilaianContainer = () => {
   if (error) {
     return (
       <SpaceBackground className="min-h-screen flex items-center justify-center">
-        <div className="text-red-400 text-center py-20 relative z-10">{error}</div>
+        <div className="text-red-400 text-center py-20 relative z-10">
+          {error}
+        </div>
       </SpaceBackground>
     );
   }
@@ -47,9 +49,9 @@ export const PenilaianContainer = () => {
     <SpaceBackground className="relative flex flex-col min-h-screen w-full overflow-x-hidden">
       <CircleGLow />
 
-      <BgBawah gradientHeight="h-[100px]" />
+      <BgBawah gradientHeight="h-[60px] md:h-[100px]" />
 
-      <div className="relative z-10 mycontainer py-8 md:py-12 flex flex-col items-center gap-10 md:gap-14 pb-[240px] mt-15">
+      <div className="relative z-10 mycontainer py-6 md:py-12 flex flex-col items-center gap-8 md:gap-14 pb-[170px] md:pb-[240px] mt-8 md:mt-15">
         <AnimatedDiv className="w-full flex justify-start">
           <div className="w-full px-4 md:px-10 mt-5">
             <Link
@@ -62,10 +64,7 @@ export const PenilaianContainer = () => {
           </div>
         </AnimatedDiv>
 
-        <AnimatedDiv
-          className="w-full flex flex-col items-center"
-          delay={0.1}
-        >
+        <AnimatedDiv className="w-full flex flex-col items-center" delay={0.1}>
           <div
             className="w-full max-w-[1103px] h-[2px]"
             style={{
