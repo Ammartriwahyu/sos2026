@@ -14,7 +14,6 @@ interface AktivitasAfterLoginProps {
 }
 
 const AktivitasAfterLogin = ({ user }: AktivitasAfterLoginProps) => {
-  // Gaya liquid glass konsisten yang disamakan dengan form presensi
   const liquidGlassStyle = {
     background:
       "linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 100%)",
@@ -28,29 +27,25 @@ const AktivitasAfterLogin = ({ user }: AktivitasAfterLoginProps) => {
   return (
     <SpaceBackground className="w-full min-h-screen">
       <CircleGLow />
-      <BgBawah gradientHeight="h-[400px]" />
+      <BgBawah gradientHeight="h-[320px] lg:h-[560px]" />
 
-      <div className="w-full flex flex-col min-h-[1227px] relative pt-24 lg:pt-36 pb-36 lg:pb-48 z-10 justify-between">
-        <div className="mycontainer w-full">
+      <div className="w-full flex flex-col relative pt-24 lg:pt-36 pb-16 lg:pb-24 z-10 gap-[220px] lg:gap-[380px]">
+        <div className="w-full px-6 md:px-12 lg:px-8 xl:px-22">
           <div className="flex flex-col items-center justify-center w-full">
-            <div className="w-full max-w-[805px] h-auto min-h-[458px] flex flex-col gap-[16px] z-20 relative mb-20 lg:mb-28">
+            <div className="w-full max-w-[805px] h-auto flex flex-col gap-4 z-20 relative">
               <AnimatedDiv className="w-full" delay={0.1}>
                 <div
-                  className="w-full min-h-[124px] rounded-[12px] py-4 md:py-[24px] px-6 md:px-[48px] flex flex-col justify-center"
+                  className="w-full rounded-[12px] py-5 md:py-6 px-6 md:px-12 flex flex-col justify-center"
                   style={liquidGlassStyle}
                 >
-                  <h4 className="text-4xl font-semibold text-white mb-1 md:mb-2 drop-shadow-md">
+                  <h4 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-2 drop-shadow-md">
                     Fasilitator
                   </h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-20 gap-y-1">
                     {user.kelompok?.distrik?.list_pjl.map((pjl, idx) => (
                       <div key={idx} className="flex items-center gap-2">
-                        <span className="text-2xl text-white">{pjl.nama}</span>
-                        <span className="text-2xl font-normal text-white/90">
-                          Line:{" "}
-                          <span className="text-white font-normal">
-                            {pjl.line.replace(/@/g, "")}
-                          </span>
+                        <span className="text-base sm:text-lg lg:text-xl text-white">
+                          {pjl.nama} - {pjl.line.replace(/@/g, "")}
                         </span>
                       </div>
                     ))}
@@ -60,43 +55,47 @@ const AktivitasAfterLogin = ({ user }: AktivitasAfterLoginProps) => {
 
               <AnimatedDiv className="w-full" delay={0.2}>
                 <div
-                  className="w-full min-h-[318px] rounded-[12px] py-6 md:py-[24px] px-6 md:px-[48px] flex flex-col justify-center"
+                  className="w-full rounded-[12px] py-6 md:py-8 px-6 md:px-12 flex flex-col justify-center"
                   style={liquidGlassStyle}
                 >
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-y-12 gap-x-8 md:gap-x-20">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 md:gap-y-8 gap-x-8 md:gap-x-20">
                     <div>
-                      <p className="text-white text-2xl font-medium">
+                      <p className="text-white text-lg sm:text-xl lg:text-2xl font-medium">
                         Nama Lengkap
                       </p>
-                      <p className="text-xl text-white mt-0.5 font-normal">
+                      <p className="text-base sm:text-lg lg:text-xl text-white mt-1 font-normal">
                         {user.nama}
                       </p>
                     </div>
                     <div>
-                      <p className="text-white text-2xl font-medium">Distrik</p>
-                      <p className="text-xl text-white mt-4 font-normal">
+                      <p className="text-white text-lg sm:text-xl lg:text-2xl font-medium">
+                        Distrik
+                      </p>
+                      <p className="text-base sm:text-lg lg:text-xl text-white mt-1 font-normal">
                         {user.kelompok?.distrik?.nama_distrik}
                       </p>
                     </div>
                     <div>
-                      <p className="text-white text-2xl font-medium">
-                        Program Studi
+                      <p className="text-white text-lg sm:text-xl lg:text-2xl font-medium">
+                        Prodi
                       </p>
-                      <p className="text-xl text-white mt-4 font-normal">
+                      <p className="text-base sm:text-lg lg:text-xl text-white mt-1 font-normal">
                         {user.prodi}
                       </p>
                     </div>
                     <div>
-                      <p className="text-white text-2xl font-medium">
+                      <p className="text-white text-lg sm:text-xl lg:text-2xl font-medium">
                         Kelompok
                       </p>
-                      <p className="text-xl text-white mt-4 font-normal">
+                      <p className="text-base sm:text-lg lg:text-xl text-white mt-1 font-normal">
                         {user.kelompok?.nama_kelompok}
                       </p>
                     </div>
                     <div className="md:col-span-2">
-                      <p className="text-white text-2xl font-medium">NIM</p>
-                      <p className="text-xl text-white mt-4 font-normal">
+                      <p className="text-white text-lg sm:text-xl lg:text-2xl font-medium">
+                        NIM
+                      </p>
+                      <p className="text-base sm:text-lg lg:text-xl text-white mt-1 font-normal">
                         {user.nim}
                       </p>
                     </div>
@@ -106,12 +105,12 @@ const AktivitasAfterLogin = ({ user }: AktivitasAfterLoginProps) => {
 
               <AnimatedDiv
                 delay={0.3}
-                className="hidden lg:block absolute -bottom-55 -right-25 z-50 pointer-events-none"
+                className="hidden lg:block absolute -bottom-48 -right-24 z-50 pointer-events-none"
               >
                 <Image
                   src={Maskot}
                   alt="Maskot"
-                  className="w-[152px] h-[327px] object-contain -scale-x-100 animate-bounce-idle"
+                  className="w-[178px] h-[383px] object-contain -scale-x-100 animate-bounce-idle"
                   draggable={false}
                 />
               </AnimatedDiv>
@@ -120,7 +119,7 @@ const AktivitasAfterLogin = ({ user }: AktivitasAfterLoginProps) => {
         </div>
 
         <AnimatedDiv
-          className="mycontainer w-full mt-16 lg:mt-24 z-20"
+          className="w-full px-6 md:px-12 lg:px-8 xl:px-22 z-20"
           delay={0.4}
         >
           <AktivitasListSection />
