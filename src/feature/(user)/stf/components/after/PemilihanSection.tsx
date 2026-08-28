@@ -7,8 +7,7 @@ import { useVoteForCaketang } from "../../hooks/useVoteForCaketang";
 import { Modal } from "@/shared/components/ui/Modal";
 import { useGetStfData } from "../../hooks/useGetStfData";
 import Image from "next/image";
-import SuccessIcon from "@/assets/stf/success.png";
-import ErrorIcon from "@/assets/stf/error.png";
+import { CheckCircle, XCircle } from "lucide-react";
 import { useAuthContext } from "@/shared/hooks/useAuthContext";
 
 interface PemilihanSectionProps {
@@ -109,13 +108,7 @@ const PemilihanSection = ({
       >
         {voteSuccess ? (
           <div className="mt-4 flex justify-center items-center flex-col p-4 md:p-8 gap-10">
-            <Image
-              src={SuccessIcon}
-              width={300}
-              height={300}
-              alt="Success Icon"
-              className="w-1/3 mx-auto"
-            />
+            <CheckCircle className="w-24 h-24 md:w-32 md:h-32 text-green-500 mx-auto" />
             <div className="flex flex-col justify-center items-center gap-6">
               <div className="text-default-dark flex flex-col justify-center items-center gap-3">
                 <h5 className="text-xl md:text-3xl font-bold text-center">
@@ -136,13 +129,7 @@ const PemilihanSection = ({
           </div>
         ) : (
           <div className="mt-4 flex justify-center items-center flex-col p-4 md:p-8 gap-10">
-            <Image
-              src={ErrorIcon}
-              width={300}
-              height={300}
-              alt="Error Icon"
-              className="w-1/3 mx-auto"
-            />
+            <XCircle className="w-24 h-24 md:w-32 md:h-32 text-red-500 mx-auto" />
             <div className="flex flex-col justify-center items-center gap-6">
               <div className="text-default-dark flex flex-col justify-center items-center gap-3">
                 <h5 className="text-xl md:text-3xl font-bold text-center">

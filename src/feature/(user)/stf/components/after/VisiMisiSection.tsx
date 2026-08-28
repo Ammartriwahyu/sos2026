@@ -4,6 +4,7 @@
 import React from "react";
 import CaketangCard from "./CaketangCard";
 import { Caketang } from "@/api/services/user/stf";
+import Dummy from "@/assets/assetsos26/shared/picture-template.webp";
 import Image from "next/image";
 import { formatText } from "@/lib/utils";
 import Starfield from "@/shared/components/background/Starfield";
@@ -64,7 +65,7 @@ const VisiMisiSection = ({
               <div className="flex flex-col w-full max-w-sm md:max-w-md rounded-t-[4rem] md:rounded-t-[5rem] rounded-b-xl overflow-hidden shadow-2xl bg-[#C4BCEB]">
                 <div className="w-full pt-1.5 md:pt-2 px-1.5 md:px-2 pb-1.5 md:pb-2">
                   <Image
-                    src={activeCaketang.foto}
+                    src={Dummy}
                     width={400}
                     height={400}
                     alt="Foto Caketang"
