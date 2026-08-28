@@ -48,8 +48,8 @@ const CurrentSection = () => {
         />
       </div>
 
-      <div className="mycontainer mx-auto w-full max-w-6xl pt-16 pb-12 md:pt-24 md:pb-24 relative z-20">
-        <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center">
+      <div className="mycontainer mx-auto w-full max-w-7xl pt-16 pb-12 md:pt-24 md:pb-24 relative z-20">
+        <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-16 items-center">
           {/* Left Column */}
           <div className="flex flex-col items-start text-left relative z-20 mt-8 lg:mt-0">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 relative">
@@ -68,7 +68,7 @@ const CurrentSection = () => {
           </div>
 
           {/* Right Column (Candidate Card) */}
-          <div className="relative z-20 flex justify-center lg:justify-end mt-12 lg:mt-0 lg:pr-12">
+          <div className="relative z-20 flex justify-center lg:justify-end mt-12 lg:mt-0">
             <AnimatePresence mode="wait">
               {activeProdiData && (
                 <motion.div
