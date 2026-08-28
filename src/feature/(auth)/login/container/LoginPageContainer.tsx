@@ -19,7 +19,7 @@ export default function LoginPageContainer() {
           <div className="peta-glow inset-0 h-full w-full" />
         </div>
 
-        <div className="relative z-10 flex-1 flex items-center justify-center mycontainer w-full pt-80 pb-0 md:pt-40 md:pb-44 lg:pt-48 lg:pb-64">
+        <div className="relative z-10 flex-1 flex items-center justify-center mycontainer w-full pt-64 pb-12 md:pt-40 md:pb-44 lg:pt-48 lg:pb-64">
           <LoginForm {...formLogic} />
         </div>
 
