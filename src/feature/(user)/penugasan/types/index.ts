@@ -86,6 +86,9 @@ export interface Kuis {
   durasi_kuis?: string;
   jumlah_soal?: number;
   skor?: number;
+  score?: number;
+  total_soal?: number;
+  total_pertanyaan?: number;
 }
 
 export interface KuisDetail {
@@ -99,6 +102,9 @@ export interface KuisDetail {
   status_kuis: "Terlambat" | "Terlewat" | "Selesai" | "Belum Mulai";
   jumlah_soal?: number;
   skor?: number;
+  score?: number;
+  total_soal?: number;
+  total_pertanyaan?: number;
 }
 
 export interface Tugas {

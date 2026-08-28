@@ -70,7 +70,7 @@ export const Footer = () => {
       </div>
 
       <div className="border-t border-white/20 text-center py-[11px] text-white/80 text-[10px] hover:underline hover:underline-offset-4 font-bold">
-        <Link href="https://linktr.ee/pitsos25">
+        <Link href="https://www.instagram.com/lifeatpit/">
           Made with ❤️ by PIT SOS 2026
         </Link>
       </div>

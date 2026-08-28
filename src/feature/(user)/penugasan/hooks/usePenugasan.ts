@@ -95,13 +95,24 @@ export const usePenugasan = () => {
             kuisItem.id_kuis,
           );
 
+          const detailData = detailRes.data as typeof detailRes.data & {
+            score?: number;
+            total_soal?: number;
+            total_pertanyaan?: number;
+          };
+
           return {
             ...kuisItem,
-            status_kuis: detailRes.data.status_kuis,
-            deskripsi_kuis: detailRes.data.deskripsi_kuis,
-            durasi_kuis: detailRes.data.durasi_kuis,
-            jumlah_soal: detailRes.data.jumlah_soal,
-            skor: detailRes.data.skor,
+            status_kuis: detailData.status_kuis,
+            deskripsi_kuis: detailData.deskripsi_kuis,
+            durasi_kuis: detailData.durasi_kuis,
+            jumlah_soal:
+              detailData.total_soal ??
+              detailData.total_pertanyaan ??
+              detailData.jumlah_soal ??
+              0,
+            skor: detailData.score ?? detailData.skor ?? 0,
+            score: detailData.score ?? detailData.skor ?? 0,
           };
         } catch (e) {
           console.error(
