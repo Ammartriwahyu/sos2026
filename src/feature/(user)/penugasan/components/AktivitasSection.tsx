@@ -191,9 +191,9 @@ export const AktivitasSection = ({
                         }
                         deadline={formattedDeadline}
                         duration={item.durasi_kuis || "30 Menit"}
-                        totalQuestions={`${item.jumlah_soal || 10} Soal`}
+                        totalQuestions={`${item.jumlah_soal ?? item.total_soal ?? item.total_pertanyaan ?? 0} Soal`}
                         status={status}
-                        score={item.skor}
+                        score={item.skor ?? item.score}
                       />
                     </Link>
                   ) : (
@@ -206,9 +206,9 @@ export const AktivitasSection = ({
                         }
                         deadline={formattedDeadline}
                         duration={item.durasi_kuis || "30 Menit"}
-                        totalQuestions={`${item.jumlah_soal || 10} Soal`}
+                        totalQuestions={`${item.jumlah_soal ?? item.total_soal ?? item.total_pertanyaan ?? 0} Soal`}
                         status={status}
-                        score={item.skor}
+                        score={item.skor ?? item.score}
                       />
                     </div>
                   )}
