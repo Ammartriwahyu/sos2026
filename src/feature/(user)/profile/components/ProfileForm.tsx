@@ -102,7 +102,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
                 <Input
                   type="tel"
                   name="Phone"
-                  value={formData.Phone}
+                  value={formData.Phone || ""}
                   onChange={handleInputChange}
                   placeholder="Contoh: 08X-XXX-XXX-XXX"
                   className={inputClassName}
@@ -121,7 +121,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
                 <Input
                   type="text"
                   name="Line"
-                  value={formData.Line}
+                  value={formData.Line || ""}
                   onChange={handleInputChange}
                   placeholder="Masukkan username ID Line"
                   className={inputClassName}
@@ -135,6 +135,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
               <label className={labelClassName}>Jenis Kelamin</label>
               {isEditing ? (
                 <Select
+                  disabled
                   value={formData.Kelamin || ""}
                   onValueChange={(val) => onFormChange("Kelamin", val)}
                 >
@@ -214,7 +215,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
                 <Input
                   type="text"
                   name="RiwayatPenyakit"
-                  value={formData.RiwayatPenyakit}
+                  value={formData.RiwayatPenyakit || ""}
                   onChange={handleInputChange}
                   placeholder="Masukkan riwayat penyakit"
                   className={inputClassName}
@@ -231,7 +232,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
                 <Input
                   type="text"
                   name="AlergiMakanan"
-                  value={formData.AlergiMakanan}
+                  value={formData.AlergiMakanan || ""}
                   onChange={handleInputChange}
                   placeholder="Masukkan alergi makanan"
                   className={inputClassName}
@@ -246,7 +247,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
                 <Input
                   type="text"
                   name="AlergiObat"
-                  value={formData.AlergiObat}
+                  value={formData.AlergiObat || ""}
                   onChange={handleInputChange}
                   placeholder="Masukkan alergi obat"
                   className={inputClassName}
