@@ -19,7 +19,7 @@ export const rangkaianData = [
     id: 2,
     title: "Navigating the Currents",
     description:
-      "Pengenalan Departemen Sistem Informasi, prospek karier di bidang IT, serta cara menyusun surat lamaran kerja yang dikemas secara interaktif.",
+      "Membahas pengembangan diri dan personal branding, dengan berdiskusi mahasiswa baru saling bertukar pendapat sekaligus menentukan calon pemimpin angkatan dari tiap prodi.",
     img: Rangkaian2,
   },
 ];

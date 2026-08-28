@@ -6,6 +6,7 @@ import { AktivitasSection } from "../components/AktivitasSection";
 import Link from "next/link";
 import { ChevronLeft, Loader2 } from "lucide-react";
 import { AnimatedDiv } from "@/shared/components/ui/AnimatedDiv";
+import { cn } from "@/shared/utils/cn";
 import SpaceBackground from "@/shared/components/background/SpaceBackground";
 import CircleGLow from "@/shared/components/background/CircleGlow";
 import BgBawah from "@/shared/components/background/BgBawah";
@@ -13,6 +14,8 @@ import BgBawah from "@/shared/components/background/BgBawah";
 export const PenugasanContainer = () => {
   const { level, tugas, kuis, isLoading, activeTab, setActiveTab } =
     usePenugasan();
+
+  const isEmpty = activeTab === "kuis" ? kuis.length === 0 : tugas.length === 0;
 
   if (isLoading) {
     return (
@@ -29,9 +32,18 @@ export const PenugasanContainer = () => {
     <SpaceBackground className="relative min-h-screen w-full overflow-x-hidden">
       <CircleGLow />
 
-      <BgBawah gradientHeight="h-[60px] md:h-[200px]" />
+      <BgBawah
+        gradientHeight={
+          isEmpty ? "h-[60px] md:h-[100px]" : "h-[60px] md:h-[200px]"
+        }
+      />
 
-      <div className="relative z-10 mycontainer py-6 md:py-12 flex flex-col items-center gap-8 md:gap-14 pb-[170px] md:pb-[300px] mt-8 md:mt-15">
+      <div
+        className={cn(
+          "relative z-10 mycontainer py-6 md:py-12 flex flex-col items-center gap-8 md:gap-14 mt-8 md:mt-15",
+          isEmpty ? "pb-[170px] md:pb-[240px]" : "pb-[170px] md:pb-[300px]",
+        )}
+      >
         <AnimatedDiv className="w-full flex justify-start">
           <div className="w-full px-4 md:px-10 mt-5">
             {activeTab === "kuis" ? (

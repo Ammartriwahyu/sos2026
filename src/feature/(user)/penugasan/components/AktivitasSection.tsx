@@ -2,7 +2,6 @@ import { TaskCard26, TaskStatus } from "@/shared/components/ui/TaskCardSos26";
 import { QuizCard26 } from "@/shared/components/ui/QuizCardSos26";
 import { Kuis, Tugas } from "../types";
 import { cn } from "@/shared/utils/cn";
-import { Button } from "@/shared/components/ui/Button";
 import { getIconForTask } from "../data/tugasIconData";
 import Link from "next/link";
 import AktivitasButton from "@/shared/components/ui/ButtonSos26";
@@ -48,15 +47,24 @@ export const AktivitasSection = ({
     if (statusLower === "terlewat" || statusLower === "terlambat") {
       return "Kuis sudah terlewat";
     }
-    // Fallback: cek tenggat waktu secara lokal jika status backend belum sinkron
     if (tenggat && new Date() > new Date(tenggat)) {
       return "Kuis sudah terlewat";
     }
     return "Mulai";
   };
 
+  const isEmpty =
+    activeTab === "kuis"
+      ? (kuis || []).length === 0
+      : (tugas || []).length === 0;
+
   return (
-    <div className="w-full flex flex-col gap-8 md:gap-10 mb-[300px]">
+    <div
+      className={cn(
+        "w-full flex flex-col gap-8 md:gap-10",
+        isEmpty ? "mb-10 md:mb-16" : "mb-[300px]",
+      )}
+    >
       {activeTab !== "kuis" && (
         <div className="flex flex-wrap justify-center gap-4">
           <AktivitasButton
@@ -81,7 +89,6 @@ export const AktivitasSection = ({
         </div>
       )}
 
-      {/* Tab Tugas */}
       {activeTab === "tugas" && (
         <div
           className={cn(
@@ -138,7 +145,6 @@ export const AktivitasSection = ({
         </div>
       )}
 
-      {/* COMMENT: [Tab Kuis Wrapper] Mengubah layout menjadi flex vertikal dengan animasi AnimatedDiv untuk transisi smooth saat tab kuis dibuka */}
       {activeTab === "kuis" && (
         <AnimatedDiv
           key="subpage-kuis-container"
