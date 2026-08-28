@@ -30,7 +30,7 @@ const AnggotaKelompokTable = ({
   const [sorting, setSorting] = useState<SortingState>([]);
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 15,
+    pageSize: 6,
   });
 
   const table = useReactTable({
