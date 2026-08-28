@@ -56,9 +56,9 @@ class DistrikService {
 
   async getAnggotaByDistrictId(
     id: string,
-    params: { page: number; limit: number },
+    params: { page: number; limit: number; id_kelompok?: string },
   ): Promise<BackendResponse<PaginatedData>> {
-    const cacheKey = `anggota_distrik_${id}_page_${params.page}`;
+    const cacheKey = `anggota_distrik_${id}_kelompok_${params.id_kelompok || "all"}_page_${params.page}`;
     const cachedItem = this.cache.get(cacheKey);
     if (cachedItem && cachedItem.expiry > Date.now()) {
       return cachedItem.data as BackendResponse<PaginatedData>;

@@ -15,28 +15,36 @@ export const useDetailDistrikData = (distrikId: string) => {
     setIsLoading(true);
     setError(null);
     try {
-      const [distrikResponse, anggotaResponse] = await Promise.all([
-        distrikService.getDistrictById(distrikId),
-        distrikService.getAnggotaByDistrictId(distrikId, {
-          page: 1,
-          limit: 1000,
-        }),
-      ]);
-
-      if (distrikResponse && distrikResponse.data) {
-        setDistrik(distrikResponse.data);
-      } else {
+      // 1. Fetch distrik first
+      const distrikResponse = await distrikService.getDistrictById(distrikId);
+      const distrikData = distrikResponse?.data;
+      if (!distrikData) {
         throw new Error("Gagal memuat data detail distrik.");
       }
+      setDistrik(distrikData);
 
-      if (
-        anggotaResponse &&
-        anggotaResponse.data &&
-        anggotaResponse.data.records
-      ) {
-        setAnggota(anggotaResponse.data.records);
+      // 2. Fetch mabas per kelompok so we can inject the kelompok name (since backend omit it)
+      if (distrikData.list_kelompok && distrikData.list_kelompok.length > 0) {
+        const mabaPromises = distrikData.list_kelompok.map(async (k) => {
+          const res = await distrikService.getAnggotaByDistrictId(distrikId, {
+            page: 1,
+            limit: 1000,
+            id_kelompok: k.id_kelompok,
+          });
+          const records =
+            res?.data?.records || (Array.isArray(res?.data) ? res.data : []);
+          // Inject kelompok manually
+          return records.map((maba: AnggotaMaba) => ({
+            ...maba,
+            kelompok: k.nama_kelompok,
+          }));
+        });
+
+        const mabasArrays = await Promise.all(mabaPromises);
+        const allMabas = mabasArrays.flat();
+        setAnggota(allMabas);
       } else {
-        throw new Error("Gagal memuat data anggota kelompok.");
+        setAnggota([]);
       }
     } catch (err: unknown) {
       const errorMessage =
