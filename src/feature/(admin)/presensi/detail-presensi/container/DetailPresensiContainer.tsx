@@ -122,7 +122,7 @@ const DetailPresensiContainer: React.FC<DetailPresensiContainerProps> = ({
       {
         accessorKey: "index",
         header: "No.",
-        cell: ({ row }) => row.index + 1 + (mahasiswaPagination?.from || 0),
+        cell: ({ row }) => row.index + (mahasiswaPagination?.from || 1),
         enableSorting: false,
         enableColumnFilter: false,
       },
