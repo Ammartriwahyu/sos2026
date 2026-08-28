@@ -25,7 +25,7 @@ export const stfData2024: Prodi[] = [
     nama: "Teknologi Informasi",
     shortName: "TI",
     image: null,
-    ketangWaketang: "Ryan & ",
+    ketangWaketang: "-- ",
   },
   {
     id: "pendidikan_teknologi_informasi",

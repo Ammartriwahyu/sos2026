@@ -87,11 +87,13 @@ const Navbar = () => {
           </div>
 
           <ul className="gap-8 hidden lg:flex lg:gap-12 justify-center items-center">
-            {navListData.map((item, idx) => (
-              <li key={idx}>
-                <NavbarItem {...item} isActive={pathname === item.href} />
-              </li>
-            ))}
+            {navListData
+              .filter((item) => !item.isHidden)
+              .map((item, idx) => (
+                <li key={idx}>
+                  <NavbarItem {...item} isActive={pathname === item.href} />
+                </li>
+              ))}
           </ul>
 
           <div className="flex-1 flex items-center justify-end">
@@ -132,11 +134,13 @@ const Navbar = () => {
             exit="exit"
           >
             <ul className="flex flex-col gap-8 text-center text-xl">
-              {navListData.map((item, idx) => (
-                <motion.li key={idx} variants={itemVariants}>
-                  <NavbarItem isActive={pathname === item.href} {...item} />
-                </motion.li>
-              ))}
+              {navListData
+                .filter((item) => !item.isHidden)
+                .map((item, idx) => (
+                  <motion.li key={idx} variants={itemVariants}>
+                    <NavbarItem isActive={pathname === item.href} {...item} />
+                  </motion.li>
+                ))}
             </ul>
             <motion.div variants={itemVariants} className="mt-8">
               {user ? (

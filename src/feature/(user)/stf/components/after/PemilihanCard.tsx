@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import Dummy from "@/assets/stf/dummy.png";
+import Dummy from "@/assets/assetsos26/shared/picture-template.webp";
 import { Caketang } from "@/api/services/user/stf";
 import { motion } from "framer-motion";
 
@@ -51,7 +51,7 @@ const PemilihanCard = ({
       <div className="w-full pt-1.5 md:pt-2 px-1.5 md:px-2 pb-4 md:pb-6">
         <div className="w-full relative">
           <Image
-            src={data.foto || Dummy}
+            src={Dummy}
             width={400}
             height={400}
             alt="Foto Caketang"

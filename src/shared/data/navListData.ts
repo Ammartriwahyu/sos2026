@@ -1,6 +1,7 @@
 export interface NavItem {
   title: string;
   href: string;
+  isHidden?: boolean;
 }
 
 export const navListData: NavItem[] = [
@@ -23,5 +24,6 @@ export const navListData: NavItem[] = [
   {
     title: "STF",
     href: "/stf",
+    isHidden: true, // Ubah menjadi false nanti jika STF sudah siap dipublish
   },
 ];

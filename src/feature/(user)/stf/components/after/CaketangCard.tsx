@@ -3,6 +3,7 @@
 import Image from "next/image";
 import React from "react";
 import { Caketang } from "@/api/services/user/stf";
+import Dummy from "@/assets/assetsos26/shared/picture-template.webp";
 import { motion } from "framer-motion";
 
 interface CaketangCardProps {
@@ -26,7 +27,7 @@ const CaketangCard = ({ data, isActive, onClick }: CaketangCardProps) => {
       >
         <div className="w-full pt-2 px-2 pb-6">
           <Image
-            src={data.foto}
+            src={Dummy}
             width={300}
             height={300}
             alt="Caketang Photo"
@@ -52,7 +53,7 @@ const CaketangCard = ({ data, isActive, onClick }: CaketangCardProps) => {
       >
         <div className="w-full pt-1.5 px-1.5 pb-4">
           <Image
-            src={data.foto}
+            src={Dummy}
             width={200}
             height={200}
             alt="Caketang Photo"
