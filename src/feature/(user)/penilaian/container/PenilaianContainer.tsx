@@ -6,6 +6,7 @@ import { PenilaianActiveView } from "../components/PenilaianActiveView";
 import Link from "next/link";
 import { ChevronLeft, Loader2 } from "lucide-react";
 import { AnimatedDiv } from "@/shared/components/ui/AnimatedDiv";
+import SectionTitle from "@/shared/components/SectionTitle";
 import SpaceBackground from "@/shared/components/background/SpaceBackground";
 import CircleGLow from "@/shared/components/background/CircleGlow";
 import BgBawah from "@/shared/components/background/BgBawah";
@@ -65,33 +66,9 @@ export const PenilaianContainer = () => {
         </AnimatedDiv>
 
         <AnimatedDiv className="w-full flex flex-col items-center" delay={0.1}>
-          <div
-            className="w-full max-w-[1103px] h-[2px]"
-            style={{
-              background:
-                "linear-gradient(90deg, rgba(74, 52, 136, 0) 0%, rgba(74, 52, 136, 0.7) 50%, rgba(74, 52, 136, 0) 100%)",
-            }}
-          />
-
-          <div
-            className="w-full max-w-[1103px] h-[80px] flex items-center justify-center px-4"
-            style={{
-              background:
-                "linear-gradient(90deg, rgba(74, 52, 136, 0) 0%, rgba(74, 52, 136, 0.4) 50%, rgba(74, 52, 136, 0) 100%)",
-            }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-white text-center">
-              Penilaian
-            </h2>
-          </div>
-
-          <div
-            className="w-full max-w-[1103px] h-[2px] mb-[40px]"
-            style={{
-              background:
-                "linear-gradient(90deg, rgba(74, 52, 136, 0) 0%, rgba(74, 52, 136, 0.7) 50%, rgba(74, 52, 136, 0) 100%)",
-            }}
-          />
+          <SectionTitle animated={false} className="max-w-[1103px] mb-[40px]">
+            Penilaian
+          </SectionTitle>
 
           <div className="w-full px-3 md:px-6 flex flex-col items-center gap-8">
             <div className="w-full max-w-[1103px]">

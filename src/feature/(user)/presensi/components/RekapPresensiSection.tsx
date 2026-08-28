@@ -2,6 +2,7 @@
 import React from "react";
 import PresensiCard from "./PresensiCard";
 import HeaderPresensiCard from "./HeaderPresensiCard";
+import SectionTitle from "@/shared/components/SectionTitle";
 import { RekapPresensi } from "@/api/services/user/presensi";
 
 interface RekapPresensiSectionProps {
@@ -33,33 +34,9 @@ const RekapPresensiSection = ({
 
   return (
     <div className="w-full max-w-[1103px] mx-auto px-4 md:px-0 flex flex-col items-center">
-      <div
-        className="w-full max-w-[1103px] h-[2px]"
-        style={{
-          background:
-            "linear-gradient(90deg, rgba(74, 52, 136, 0) 0%, rgba(74, 52, 136, 0.7) 50%, rgba(74, 52, 136, 0) 100%)",
-        }}
-      />
-
-      <div
-        className="w-full max-w-[1103px] h-[80px] flex items-center justify-center px-4"
-        style={{
-          background:
-            "linear-gradient(90deg, rgba(74, 52, 136, 0) 0%, rgba(74, 52, 136, 0.4) 50%, rgba(74, 52, 136, 0) 100%)",
-        }}
-      >
-        <h2 className="text-3xl md:text-4xl font-bold text-white text-center">
-          Presensi
-        </h2>
-      </div>
-
-      <div
-        className="w-full max-w-[1103px] h-[2px] mb-[40px]"
-        style={{
-          background:
-            "linear-gradient(90deg, rgba(74, 52, 136, 0) 0%, rgba(74, 52, 136, 0.7) 50%, rgba(74, 52, 136, 0) 100%)",
-        }}
-      />
+      <SectionTitle animated={false} className="max-w-[1103px] mb-[40px]">
+        Presensi
+      </SectionTitle>
 
       <div className="w-full overflow-x-auto pb-4 custom-scrollbar">
         <div className="w-full max-w-[1103px] min-w-[1050px] flex flex-col gap-[12px] bg-transparent shadow-none border-none mx-auto">

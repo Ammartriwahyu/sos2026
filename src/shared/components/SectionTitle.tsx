@@ -4,18 +4,27 @@ import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/shared/utils/cn";
+import { sectionTitleClass } from "@/shared/components/sectionTitleClass";
 
 interface SectionTitleProps {
   children: React.ReactNode;
   className?: string;
+  as?: "h1" | "h2";
+  animated?: boolean;
 }
 
-const SectionTitle = ({ children, className }: SectionTitleProps) => {
+const SectionTitle = ({
+  children,
+  className,
+  as = "h2",
+  animated = true,
+}: SectionTitleProps) => {
   const ref = useRef<HTMLHeadingElement>(null);
+  const Heading = as;
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || !animated) return;
 
     gsap.registerPlugin(ScrollTrigger);
 
@@ -40,18 +49,20 @@ const SectionTitle = ({ children, className }: SectionTitleProps) => {
     }, el);
 
     return () => ctx.revert();
-  }, []);
+  }, [animated]);
 
   return (
-    <h2
+    <Heading
       ref={ref}
       className={cn(
-        "peta-reveal z-30 mx-auto w-full max-w-5xl border border-y border-[#4A3488]/15 bg-linear-to-r from-[#4A3488]/0 via-[#4A3488]/15 to-[#4A3488]/0 py-2.5 text-center text-4xl font-bold text-putih backdrop-blur-sm",
+        "z-30",
+        animated && "peta-reveal",
+        sectionTitleClass,
         className,
       )}
     >
       {children}
-    </h2>
+    </Heading>
   );
 };
 
