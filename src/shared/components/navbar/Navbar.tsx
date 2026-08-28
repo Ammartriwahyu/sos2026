@@ -127,7 +127,7 @@ const Navbar = () => {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="fixed inset-0 z-50 bg-navbar-bg text-white flex flex-col items-center pt-32  lg:hidden"
+            className="fixed inset-0 z-[998] bg-navbar-bg text-white flex flex-col items-center pt-32  lg:hidden"
             variants={menuVariants}
             initial="hidden"
             animate="visible"
