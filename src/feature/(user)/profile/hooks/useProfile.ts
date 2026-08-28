@@ -19,6 +19,7 @@ export const useProfile = () => {
     AlergiObat: "",
     AlergiMakanan: "",
     Kelamin: "",
+    JenisKelamin: "",
   });
 
   const resetFormData = useCallback(() => {
@@ -32,6 +33,7 @@ export const useProfile = () => {
         AlergiObat: user.alergi_obat || "",
         AlergiMakanan: user.alergi_makanan || "",
         Kelamin: user.kelamin || "",
+        JenisKelamin: user.kelamin || "",
       });
     }
   }, [user]);
@@ -48,19 +50,22 @@ export const useProfile = () => {
     setFormData((prev) => ({
       ...prev,
       [name]: value,
+      ...(name === "Kelamin" ? { JenisKelamin: value } : {}),
+      ...(name === "JenisKelamin" ? { Kelamin: value } : {}),
     }));
   };
 
   const validateForm = () => {
     const errors: string[] = [];
+    const phone = formData.Phone;
 
-    if (formData.Phone) {
-      const phoneLength = formData.Phone.length;
-      if (phoneLength < 12 || phoneLength > 15) {
-        errors.push("Nomor telepon harus memiliki panjang 12-15 digit");
+    if (phone) {
+      const phoneLength = phone.length;
+      if (phoneLength < 10 || phoneLength > 15) {
+        errors.push("Nomor telepon harus memiliki panjang 10-15 digit");
       }
 
-      if (!/^\d+$/.test(formData.Phone)) {
+      if (!/^\d+$/.test(phone)) {
         errors.push("Nomor telepon hanya boleh berisi angka");
       }
     }
@@ -90,13 +95,21 @@ export const useProfile = () => {
         message: "Profil Anda berhasil diperbarui.",
       });
     } catch (error) {
+      console.error("Edit profile error details:", error);
       let errorMessage = "Terjadi kesalahan yang tidak diketahui";
 
       if (error instanceof AxiosError) {
-        if (error.response?.data?.message) {
-          errorMessage = error.response.data.message;
-        } else if (error.response?.data?.error) {
-          errorMessage = error.response.data.error;
+        console.error("Backend error response body:", error.response?.data);
+        const data = error.response?.data;
+        if (typeof data === "string") {
+          errorMessage = data;
+        } else if (data?.message) {
+          errorMessage = data.message;
+        } else if (data?.error) {
+          errorMessage =
+            typeof data.error === "string"
+              ? data.error
+              : JSON.stringify(data.error);
         } else if (error.message) {
           errorMessage = error.message;
         }

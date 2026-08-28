@@ -42,14 +42,24 @@ export interface AuthProfile {
 }
 
 export interface EditProfileRequest {
-  Phone?: string;
-  Line?: string;
-  Agama?: string;
-  GolonganDarah?: string;
-  RiwayatPenyakit?: string;
-  AlergiObat?: string;
-  AlergiMakanan?: string;
-  Kelamin?: string;
+  Phone: string;
+  Line: string;
+  Agama: string;
+  GolonganDarah: string;
+  RiwayatPenyakit: string;
+  AlergiObat: string;
+  AlergiMakanan: string;
+  Kelamin: string;
+  JenisKelamin?: string;
+  kelamin?: string;
+  jenis_kelamin?: string;
+  telp?: string;
+  line?: string;
+  agama?: string;
+  golongan_darah?: string;
+  riwayat_penyakit?: string;
+  alergi_obat?: string;
+  alergi_makanan?: string;
 }
 
 interface LoginResponse {
@@ -101,18 +111,11 @@ class AuthService {
   async editProfile(
     profileData: EditProfileRequest,
   ): Promise<ApiResponse<AuthProfile>> {
-    try {
-      const response = await apiClient.patch<AuthProfile>(
-        "/api/mahasiswa/",
-        profileData,
-      );
-      return response;
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-      throw new Error("Gagal memperbarui profil pengguna.");
-    }
+    const response = await apiClient.patch<AuthProfile>(
+      "/api/mahasiswa/",
+      profileData,
+    );
+    return response;
   }
 }
 
