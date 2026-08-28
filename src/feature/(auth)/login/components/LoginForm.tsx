@@ -89,7 +89,7 @@ export default function LoginForm({
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full text-sm bg-[#675C8E] hover:bg-[#544A76] active:bg-[#433B5F] focus:bg-[#544A76] border-none text-white"
+              className="w-full text-sm font-bold bg-[#675C8E] hover:bg-[#544A76] active:bg-[#433B5F] focus:bg-[#544A76] border-none text-white"
             >
               {isLoading ? "Memproses..." : "Masuk"}
             </Button>
