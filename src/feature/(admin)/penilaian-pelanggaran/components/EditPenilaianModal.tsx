@@ -72,6 +72,8 @@ export const EditPenilaianModal = ({
         <Input
           key={`tugas-${tugas.nama_penilaian}-${index}`}
           label={tugas.nama_penilaian}
+          labelClassName="text-primary-normal"
+          placeholder="xx"
           value={tugas.nilai}
           disabled
         />
@@ -86,6 +88,8 @@ export const EditPenilaianModal = ({
         <Input
           key="keaktifan"
           label="Keaktifan"
+          labelClassName="text-primary-normal"
+          placeholder="xx"
           type="number"
           value={keaktifan}
           onChange={(e) => setKeaktifan(Number(e.target.value))}
@@ -116,10 +120,10 @@ export const EditPenilaianModal = ({
       ) : (
         <div className="flex flex-col h-full max-h-[80vh]">
           <div className="flex-shrink-0 px-4 pt-4 text-center">
-            <h2 className="text-3xl font-bold text-default-dark">
+            <h2 className="text-3xl font-bold text-primary-normal">
               Penilaian {detailMaba.nama_mahasiswa}
             </h2>
-            <p className="text-default-dark/50 text-lg mt-1">
+            <p className="text-default-dark/70 text-lg mt-1">
               Isi form di bawah ini untuk memberikan penilaian mahasiswa
             </p>
           </div>
@@ -128,7 +132,7 @@ export const EditPenilaianModal = ({
               {pelanggaranList.map((p, index) => (
                 <div
                   key={p.id || `pelanggaran-${index}`}
-                  className="p-4 border rounded-lg border-default-dark/50 relative"
+                  className="p-5 border rounded-xl border-default-dark/20 relative"
                 >
                   {isSqc && (
                     <button
@@ -141,6 +145,7 @@ export const EditPenilaianModal = ({
                   <div className="flex-grow grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Input
                       label="Nama Pelanggaran"
+                      labelClassName="text-primary-normal"
                       placeholder="Masukkan nama pelanggaran"
                       value={p.nama}
                       onChange={(e) =>
@@ -184,7 +189,9 @@ export const EditPenilaianModal = ({
             </Button>
 
             <div className="mt-6 flex items-center gap-4 p-4 bg-infoNotif text-blue-800 border border-borderNotif rounded-xl">
-              <Info className="h-6 w-6 flex-shrink-0" />
+              <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-borderNotif text-white">
+                <Info className="h-5 w-5" />
+              </span>
               <p className="text-base text-default-dark">
                 Input dan edit nilai tugas hanya dapat dilakukan di menu
                 Penugasan.
