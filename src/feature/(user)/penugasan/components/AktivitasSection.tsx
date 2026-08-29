@@ -152,7 +152,7 @@ export const AktivitasSection = ({
         <AnimatedDiv
           key="subpage-kuis-container"
           className={cn(
-            "flex flex-col items-center w-full gap-[30px]",
+            "flex flex-col items-center w-full px-3 md:px-6 gap-[30px]",
             (kuis || []).length === 0 && "flex-1",
           )}
           delay={0.1}

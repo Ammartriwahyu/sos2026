@@ -61,7 +61,7 @@ const QuestionMarkSVG = ({
 export const FaqDecorations = () => {
   return (
     <>
-      <div className="absolute bottom-full left-0 z-0 mb-8 rotate-60 pointer-events-none select-none text-white/30">
+      <div className="absolute bottom-full left-0 z-0 mb-14 rotate-60 pointer-events-none select-none text-white/30">
         <QuestionMarkSVG
           className="w-[30vw] lg:w-[8vw] aspect-square animate-rotate-idle"
           style={{ animationDelay: "0s" }}
@@ -79,7 +79,7 @@ export const FaqDecorations = () => {
           style={{ animationDelay: "2.4s" }}
         />
       </div>
-      <div className="absolute bottom-full right-10 z-0 mb-8 rotate-12 pointer-events-none select-none text-white/30">
+      <div className="absolute bottom-full right-10 z-0 mb-14 rotate-12 pointer-events-none select-none text-white/30">
         <QuestionMarkSVG
           className="w-[35vw] lg:w-[18vw] aspect-square animate-rotate-idle"
           style={{ animationDelay: "3.6s" }}
