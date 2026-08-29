@@ -6,6 +6,7 @@ import { PenilaianActiveView } from "../components/PenilaianActiveView";
 import Link from "next/link";
 import { ChevronLeft, Loader2 } from "lucide-react";
 import { AnimatedDiv } from "@/shared/components/ui/AnimatedDiv";
+import { cn } from "@/shared/utils/cn";
 import SectionTitle from "@/shared/components/SectionTitle";
 import SpaceBackground from "@/shared/components/background/SpaceBackground";
 import CircleGLow from "@/shared/components/background/CircleGlow";
@@ -47,14 +48,24 @@ export const PenilaianContainer = () => {
   }
 
   return (
-    <SpaceBackground className="relative flex flex-col min-h-screen w-full overflow-x-hidden">
+    <SpaceBackground
+      className="relative flex flex-col min-h-screen w-full overflow-x-hidden"
+      contentClassName={cn(!isPenilaianAktif && "flex flex-col")}
+    >
       <CircleGLow />
 
       <BgBawah gradientHeight="h-[60px] md:h-[100px]" />
 
-      <div className="relative z-10 mycontainer py-6 md:py-12 flex flex-col items-center gap-8 md:gap-14 pb-[170px] md:pb-[240px] mt-8 md:mt-15">
+      <div
+        className={cn(
+          "relative z-10 mycontainer w-full py-6 md:py-12 flex flex-col items-center gap-8 md:gap-14 mt-8 md:mt-15",
+          isPenilaianAktif
+            ? "pb-[170px] md:pb-[240px]"
+            : "flex-1 pb-[120px] md:pb-[155px] 2xl:pb-[200px]",
+        )}
+      >
         <AnimatedDiv className="w-full flex justify-start">
-          <div className="w-full px-4 md:px-10 mt-5">
+          <div className="w-fit mt-5 ml-2 md:-ml-4 lg:ml-24 xl:ml-10 2xl:ml-8">
             <Link
               href="/aktivitas"
               className="inline-flex items-center gap-1 text-white font-semibold text-lg md:text-xl hover:text-white/80 transition-colors"
@@ -65,13 +76,29 @@ export const PenilaianContainer = () => {
           </div>
         </AnimatedDiv>
 
-        <AnimatedDiv className="w-full flex flex-col items-center" delay={0.1}>
+        <AnimatedDiv
+          className={cn(
+            "w-full flex flex-col items-center",
+            !isPenilaianAktif && "flex-1",
+          )}
+          delay={0.1}
+        >
           <SectionTitle animated={false} className="max-w-[1103px] mb-[40px]">
             Penilaian
           </SectionTitle>
 
-          <div className="w-full px-3 md:px-6 flex flex-col items-center gap-8">
-            <div className="w-full max-w-[1103px]">
+          <div
+            className={cn(
+              "w-full px-3 md:px-6 flex flex-col items-center gap-8",
+              !isPenilaianAktif && "flex-1",
+            )}
+          >
+            <div
+              className={cn(
+                "w-full max-w-[1103px]",
+                !isPenilaianAktif && "flex flex-1 flex-col",
+              )}
+            >
               {isPenilaianAktif ? (
                 <PenilaianActiveView
                   rangkaianList={rangkaianList}

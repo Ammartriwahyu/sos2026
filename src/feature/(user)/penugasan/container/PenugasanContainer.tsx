@@ -30,7 +30,10 @@ export const PenugasanContainer = () => {
   }
 
   return (
-    <SpaceBackground className="relative min-h-screen w-full overflow-x-hidden">
+    <SpaceBackground
+      className="relative min-h-screen w-full overflow-x-hidden"
+      contentClassName={cn(isEmpty && "flex flex-col")}
+    >
       <CircleGLow />
 
       <BgBawah
@@ -41,12 +44,14 @@ export const PenugasanContainer = () => {
 
       <div
         className={cn(
-          "relative z-10 mycontainer py-6 md:py-12 flex flex-col items-center gap-8 md:gap-14 mt-8 md:mt-15",
-          isEmpty ? "pb-[170px] md:pb-[240px]" : "pb-[170px] md:pb-[300px]",
+          "relative z-10 mycontainer w-full py-6 md:py-12 flex flex-col items-center gap-8 md:gap-14 mt-8 md:mt-15",
+          isEmpty
+            ? "flex-1 pb-[120px] md:pb-[155px] 2xl:pb-[200px]"
+            : "pb-[170px] md:pb-[300px]",
         )}
       >
         <AnimatedDiv className="w-full flex justify-start">
-          <div className="w-full px-4 md:px-10 mt-5">
+          <div className="w-fit mt-5 ml-2 md:-ml-4 lg:ml-24 xl:ml-10 2xl:ml-8">
             {activeTab === "kuis" ? (
               <button
                 onClick={() => setActiveTab("tugas")}
@@ -84,7 +89,10 @@ export const PenugasanContainer = () => {
           </AnimatedDiv>
         )}
 
-        <AnimatedDiv className="w-full" delay={0.2}>
+        <AnimatedDiv
+          className={cn("w-full", isEmpty && "flex flex-1 flex-col")}
+          delay={0.2}
+        >
           <AktivitasSection
             tugas={tugas}
             kuis={kuis}

@@ -4,12 +4,14 @@ import Starfield from "./Starfield";
 interface SpaceBackgroundProps {
   children: React.ReactNode;
   className?: string;
+  contentClassName?: string;
   fullPage?: boolean;
 }
 
 const SpaceBackground = ({
   children,
   className,
+  contentClassName,
   fullPage = true,
 }: SpaceBackgroundProps) => {
   if (!fullPage) {
@@ -30,7 +32,9 @@ const SpaceBackground = ({
     >
       <Starfield />
 
-      <div className="relative z-10 w-full flex-1">{children}</div>
+      <div className={cn("relative z-10 w-full flex-1", contentClassName)}>
+        {children}
+      </div>
     </div>
   );
 };

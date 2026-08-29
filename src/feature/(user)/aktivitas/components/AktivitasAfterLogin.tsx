@@ -14,15 +14,7 @@ interface AktivitasAfterLoginProps {
 }
 
 const AktivitasAfterLogin = ({ user }: AktivitasAfterLoginProps) => {
-  const liquidGlassStyle = {
-    background:
-      "linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 100%)",
-    backdropFilter: "blur(20px)",
-    WebkitBackdropFilter: "blur(20px)",
-    border: "1px solid rgba(255, 255, 255, 0.25)",
-    boxShadow:
-      "0 12px 40px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.3)",
-  };
+  const listPjl = user.kelompok?.distrik?.list_pjl ?? [];
 
   return (
     <SpaceBackground className="w-full min-h-screen">
@@ -34,30 +26,26 @@ const AktivitasAfterLogin = ({ user }: AktivitasAfterLoginProps) => {
           <div className="flex flex-col items-center justify-center w-full">
             <div className="w-full max-w-[805px] h-auto flex flex-col gap-4 z-20 relative">
               <AnimatedDiv className="w-full" delay={0.1}>
-                <div
-                  className="w-full rounded-[12px] py-5 md:py-6 px-6 md:px-12 flex flex-col justify-center"
-                  style={liquidGlassStyle}
-                >
-                  <h4 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-2 drop-shadow-md">
+                <div className="liquid-glass w-full rounded-[12px] py-5 md:py-6 px-6 md:px-12 flex flex-col justify-center gap-2">
+                  <h4 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white drop-shadow-md">
                     Fasilitator
                   </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-20 gap-y-1">
-                    {user.kelompok?.distrik?.list_pjl.map((pjl, idx) => (
-                      <div key={idx} className="flex items-center gap-2">
-                        <span className="text-base sm:text-lg lg:text-xl text-white">
-                          {pjl.nama} - {pjl.line.replace(/@/g, "")}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+                  {listPjl.length > 0 && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-20 gap-y-1">
+                      {listPjl.map((pjl, idx) => (
+                        <div key={idx} className="flex items-center gap-2">
+                          <span className="text-base sm:text-lg lg:text-xl text-white">
+                            {pjl.nama} - {pjl.line.replace(/@/g, "")}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </AnimatedDiv>
 
               <AnimatedDiv className="w-full" delay={0.2}>
-                <div
-                  className="w-full rounded-[12px] py-6 md:py-8 px-6 md:px-12 flex flex-col justify-center"
-                  style={liquidGlassStyle}
-                >
+                <div className="liquid-glass w-full rounded-[12px] py-6 md:py-8 px-6 md:px-12 flex flex-col justify-center">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 md:gap-y-8 gap-x-8 md:gap-x-20">
                     <div>
                       <p className="text-white text-lg sm:text-xl lg:text-2xl font-medium">

@@ -53,18 +53,7 @@ const PresensiFormSection = ({ refreshPresensi }: PresensiFormSectionProps) => {
     <>
       <div className="flex flex-col items-center justify-center w-full px-4 sm:px-6">
         <div className="relative w-full max-w-[714px] flex flex-col items-center justify-center z-20">
-          <div
-            className="w-full min-h-[246px] rounded-[12px] px-6 sm:px-[92px] py-[32px] flex flex-col items-center justify-center z-20 relative"
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 100%)",
-              backdropFilter: "blur(20px)",
-              WebkitBackdropFilter: "blur(20px)",
-              border: "1px solid rgba(255, 255, 255, 0.25)",
-              boxShadow:
-                "0 12px 40px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.3)",
-            }}
-          >
+          <div className="liquid-glass w-full min-h-[246px] rounded-[12px] px-6 sm:px-[92px] py-[32px] flex flex-col items-center justify-center z-20 relative">
             <h3 className="text-xl sm:text-2xl font-semibold text-white text-center mb-[28px] drop-shadow-md whitespace-nowrap">
               Masukan Kode Presensi
             </h3>

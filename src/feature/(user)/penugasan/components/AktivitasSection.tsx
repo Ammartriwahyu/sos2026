@@ -62,7 +62,7 @@ export const AktivitasSection = ({
     <div
       className={cn(
         "w-full flex flex-col gap-8 md:gap-10",
-        isEmpty ? "mb-10 md:mb-16" : "mb-[300px]",
+        isEmpty ? "flex-1" : "mb-[300px]",
       )}
     >
       {activeTab !== "kuis" && (
@@ -95,7 +95,7 @@ export const AktivitasSection = ({
             "w-full",
             (tugas || []).length > 0
               ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center max-w-5xl mx-auto"
-              : "flex justify-center",
+              : "flex flex-1 justify-center",
           )}
         >
           {(tugas || []).length > 0 ? (
@@ -138,7 +138,10 @@ export const AktivitasSection = ({
               );
             })
           ) : (
-            <AnimatedDiv className="col-span-full w-full" delay={0.1}>
+            <AnimatedDiv
+              className="col-span-full flex w-full flex-1 flex-col"
+              delay={0.1}
+            >
               <MaskotEmptyState message="Sabar yaa, tugasnya akan segera datang!" />
             </AnimatedDiv>
           )}
@@ -148,7 +151,10 @@ export const AktivitasSection = ({
       {activeTab === "kuis" && (
         <AnimatedDiv
           key="subpage-kuis-container"
-          className="flex flex-col items-center w-full gap-[30px]"
+          className={cn(
+            "flex flex-col items-center w-full gap-[30px]",
+            (kuis || []).length === 0 && "flex-1",
+          )}
           delay={0.1}
         >
           {(kuis || []).length > 0 ? (

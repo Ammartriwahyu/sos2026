@@ -38,8 +38,8 @@ const RekapPresensiSection = ({
         Presensi
       </SectionTitle>
 
-      <div className="w-full overflow-x-auto pb-4 custom-scrollbar">
-        <div className="w-full max-w-[1103px] min-w-[1050px] flex flex-col gap-[12px] bg-transparent shadow-none border-none mx-auto">
+      <div className="w-full pb-4 md:overflow-x-auto custom-scrollbar">
+        <div className="w-full md:min-w-[1050px] md:max-w-[1050px] flex flex-col gap-[12px] bg-transparent shadow-none border-none mx-auto">
           <HeaderPresensiCard />
 
           {presensiData && presensiData.length > 0 ? (

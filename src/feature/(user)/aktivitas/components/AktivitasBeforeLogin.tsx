@@ -27,18 +27,7 @@ const AktivitasBeforeLogin = () => {
           </AnimatedDiv>
 
           <AnimatedDiv delay={0.2} className="w-full max-w-[800px]">
-            <div
-              className="z-20 flex w-full flex-col justify-center items-center rounded-[12px] px-6 sm:px-8 lg:px-12 py-8 lg:py-10 gap-5 h-fit relative"
-              style={{
-                background:
-                  "linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 100%)",
-                backdropFilter: "blur(20px)",
-                WebkitBackdropFilter: "blur(20px)",
-                border: "1px solid rgba(255, 255, 255, 0.25)",
-                boxShadow:
-                  "0 12px 40px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.3)",
-              }}
-            >
+            <div className="liquid-glass z-20 flex w-full flex-col justify-center items-center rounded-[12px] px-6 sm:px-8 lg:px-12 py-8 lg:py-10 gap-5 h-fit relative">
               <h4 className="text-2xl sm:text-3xl lg:text-4xl text-center font-semibold text-white drop-shadow-md">
                 Halo, Adik Maba!
               </h4>

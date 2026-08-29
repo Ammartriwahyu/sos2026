@@ -35,18 +35,15 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
     "w-full bg-transparent border border-gray-500 rounded-full h-10 px-4 text-white placeholder-gray-400 focus:border-[#C1B6FF] focus:border-2 focus:ring-4 focus:ring-[#C1B6FF]/30 outline-none transition-all text-sm";
   const labelClassName = "text-[#B7A9FF] text-sm font-semibold mb-2 block";
   const valueClassName = "text-white text-sm font-medium pt-2";
-  const cardClassName =
-    "bg-[#2A3441] rounded-xl shadow-lg border border-white/10 p-6 md:p-8";
+  const cardClassName = "liquid-glass rounded-xl p-6 md:p-8";
 
   return (
     <div className="flex flex-col gap-6">
-      {/* IDENTITAS CARD */}
       <div className={cardClassName}>
         <h2 className="text-white text-xl md:text-2xl font-bold mb-8">
           Identitas
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-          {/* Left Column */}
           <div className="flex flex-col gap-6">
             <div>
               <label className={labelClassName}>Nama Lengkap</label>
@@ -113,7 +110,6 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
             </div>
           </div>
 
-          {/* Right Column */}
           <div className="flex flex-col gap-6">
             <div>
               <label className={labelClassName}>ID Line</label>
@@ -201,9 +197,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
         </div>
       </div>
 
-      {/* BOTTOM CARDS ROW */}
       <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-6">
-        {/* INFORMASI KESEHATAN CARD */}
         <div className={cardClassName}>
           <h2 className="text-white text-xl md:text-2xl font-bold mb-8">
             Informasi Kesehatan
@@ -259,7 +253,6 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
           </div>
         </div>
 
-        {/* DETAIL CARD */}
         <div className={cardClassName}>
           <h2 className="text-white text-xl md:text-2xl font-bold mb-8">
             Detail
