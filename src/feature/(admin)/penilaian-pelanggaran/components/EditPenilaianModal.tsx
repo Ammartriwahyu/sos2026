@@ -133,7 +133,7 @@ export const EditPenilaianModal = ({
                   {isSqc && (
                     <button
                       onClick={() => handleRemovePelanggaran(p.id)}
-                      className="absolute top-2 right-2 text-default-dark hover:text-red-500"
+                      className="absolute top-2 right-2 text-default-dark hover:text-danger"
                     >
                       <X size={20} />
                     </button>
@@ -195,6 +195,7 @@ export const EditPenilaianModal = ({
           <div className="flex-shrink-0 mt-8 px-4 pb-4">
             <Button
               onClick={() => handleSubmit(onSuccess)}
+              variant="admin"
               className="w-full"
               size="large"
             >
