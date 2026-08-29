@@ -21,7 +21,8 @@ export const usePenilaianModal = (
   );
   const [isLoading, setIsLoading] = useState(false);
 
-  const [keaktifan, setKeaktifan] = useState(0);
+  const [keaktifan, setKeaktifan] = useState<string>("");
+  const [adaKeaktifan, setAdaKeaktifan] = useState(false);
   const [pelanggaranList, setPelanggaranList] = useState<PelanggaranUI[]>([]);
 
   useEffect(() => {
@@ -34,7 +35,11 @@ export const usePenilaianModal = (
             rangkaianId,
           );
           setDetailMaba(response);
-          setKeaktifan(response.keaktifan || 0);
+          const nilaiKeaktifan = response.keaktifan;
+          const punyaKeaktifan =
+            typeof nilaiKeaktifan === "number" && nilaiKeaktifan > 0;
+          setAdaKeaktifan(punyaKeaktifan);
+          setKeaktifan(punyaKeaktifan ? String(nilaiKeaktifan) : "");
           const pelanggaranFromAPI =
             response.pelanggaran?.map(
               (p: PelanggaranFromAPI, index: number) => ({
@@ -61,7 +66,8 @@ export const usePenilaianModal = (
 
       try {
         const promises = [];
-        const keaktifanChanged = detailMaba.keaktifan !== keaktifan;
+        const angkaKeaktifan = adaKeaktifan ? Number(keaktifan || 0) : 0;
+        const keaktifanChanged = detailMaba.keaktifan !== angkaKeaktifan;
 
         const originalPelanggaran =
           detailMaba.pelanggaran?.map(({ nama, kategori }) => ({
@@ -77,7 +83,9 @@ export const usePenilaianModal = (
 
         if (keaktifanChanged) {
           promises.push(
-            penilaianService.postKeaktifan(nim, rangkaianId, { keaktifan }),
+            penilaianService.postKeaktifan(nim, rangkaianId, {
+              keaktifan: angkaKeaktifan,
+            }),
           );
         }
 
@@ -121,7 +129,15 @@ export const usePenilaianModal = (
         });
       }
     },
-    [nim, rangkaianId, keaktifan, pelanggaranList, toastContext, detailMaba],
+    [
+      nim,
+      rangkaianId,
+      keaktifan,
+      adaKeaktifan,
+      pelanggaranList,
+      toastContext,
+      detailMaba,
+    ],
   );
 
   return {
@@ -129,6 +145,8 @@ export const usePenilaianModal = (
     detailMaba,
     keaktifan,
     setKeaktifan,
+    adaKeaktifan,
+    setAdaKeaktifan,
     pelanggaranList,
     setPelanggaranList,
     handleSubmit,

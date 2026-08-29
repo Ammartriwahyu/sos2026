@@ -56,10 +56,14 @@ export const usePenugasan = () => {
     ) {
       activeRangkaianNames.push("Pra-Rangkaian");
     }
-    return allTugas.filter(
-      (tugas) =>
-        tugas.rangkaian && activeRangkaianNames.includes(tugas.rangkaian.Name),
-    );
+    return allTugas.filter((tugas) => {
+      if (tugas.rangkaian) {
+        return activeRangkaianNames.includes(tugas.rangkaian.Name);
+      }
+      if (!tugas.tanggal_mulai) return false;
+      const mulai = new Date(tugas.tanggal_mulai);
+      return !isNaN(mulai.getTime()) && mulai <= now;
+    });
   }, [allTugas]);
 
   const { data: tugasWithStatus, isLoading: isStatusLoading } = useQuery({

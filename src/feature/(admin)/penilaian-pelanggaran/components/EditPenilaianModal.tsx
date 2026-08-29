@@ -22,7 +22,6 @@ interface EditPenilaianModalProps {
   onSuccess: () => void;
   nim: string | null;
   rangkaianId: string;
-  rangkaianName: string;
 }
 
 export const EditPenilaianModal = ({
@@ -31,13 +30,14 @@ export const EditPenilaianModal = ({
   onSuccess,
   nim,
   rangkaianId,
-  rangkaianName,
 }: EditPenilaianModalProps) => {
   const {
     isLoading,
     detailMaba,
     keaktifan,
     setKeaktifan,
+    adaKeaktifan,
+    setAdaKeaktifan,
     pelanggaranList,
     setPelanggaranList,
     handleSubmit,
@@ -79,23 +79,6 @@ export const EditPenilaianModal = ({
         />
       ),
     );
-
-    if (
-      rangkaianName.includes("Rangkaian 1") ||
-      rangkaianName.includes("Rangkaian 2")
-    ) {
-      fields.unshift(
-        <Input
-          key="keaktifan"
-          label="Keaktifan"
-          labelClassName="text-primary-normal"
-          placeholder="xx"
-          type="number"
-          value={keaktifan}
-          onChange={(e) => setKeaktifan(Number(e.target.value))}
-        />,
-      );
-    }
 
     return (
       <div className="mt-6">
@@ -178,15 +161,66 @@ export const EditPenilaianModal = ({
                 </div>
               ))}
             </div>
-            <Button
-              variant="admin-outline"
-              disabled={!isSqc}
-              onClick={handleAddPelanggaran}
-              className="mt-4 font-medium"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Tambah Pelanggaran
-            </Button>
+            {adaKeaktifan && (
+              <div className="mt-4 p-5 border rounded-xl border-default-dark/20 relative">
+                {isSqc && (
+                  <button
+                    onClick={() => {
+                      setAdaKeaktifan(false);
+                      setKeaktifan("");
+                    }}
+                    className="absolute top-2 right-2 text-default-dark hover:text-danger"
+                  >
+                    <X size={20} />
+                  </button>
+                )}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Input
+                    label="Keaktifan"
+                    labelClassName="text-primary-normal"
+                    id="keaktifan"
+                    type="number"
+                    min={0}
+                    placeholder="xx"
+                    value={keaktifan}
+                    disabled={!isSqc}
+                    onChange={(e) => {
+                      const masukan = e.target.value;
+                      if (masukan === "") {
+                        setKeaktifan("");
+                        return;
+                      }
+                      if (!/^\d+$/.test(masukan)) return;
+                      setKeaktifan(masukan.replace(/^0+(?=\d)/, ""));
+                    }}
+                  />
+                </div>
+              </div>
+            )}
+
+            <div className="mt-4 flex flex-wrap gap-3">
+              <Button
+                variant="admin-outline"
+                disabled={!isSqc}
+                onClick={handleAddPelanggaran}
+                className="font-medium"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Tambah Pelanggaran
+              </Button>
+              <Button
+                variant="admin-outline"
+                disabled={!isSqc || adaKeaktifan}
+                onClick={() => {
+                  setAdaKeaktifan(true);
+                  setKeaktifan("");
+                }}
+                className="font-medium"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Tambah Keaktifan
+              </Button>
+            </div>
 
             <div className="mt-6 flex items-center gap-4 p-4 bg-infoNotif text-blue-800 border border-borderNotif rounded-xl">
               <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-borderNotif text-white">

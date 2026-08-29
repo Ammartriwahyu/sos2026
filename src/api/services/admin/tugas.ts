@@ -102,7 +102,7 @@ class TugasService {
     this.cache.delete("all_tugas");
 
     const response = await apiClient.post(
-      `/api/penugasan/${id_rangkaian}`,
+      `/api/penugasan/${encodeURIComponent(id_rangkaian)}`,
       data,
       {
         headers: { "Content-Type": "multipart/form-data" },

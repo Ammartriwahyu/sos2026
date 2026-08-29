@@ -88,9 +88,6 @@ const PenilaianContainer = () => {
         onClose={handleCloseModal}
         nim={selectedNim}
         rangkaianId={selectedRangkaian}
-        rangkaianName={
-          rangkaian.data?.find((r) => r.ID === selectedRangkaian)?.Name || ""
-        }
       />
     </div>
   );

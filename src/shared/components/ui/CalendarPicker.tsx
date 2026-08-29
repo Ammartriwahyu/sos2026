@@ -7,6 +7,8 @@ import React, {
 } from "react";
 import { Calendar, Clock, ChevronLeft, ChevronRight } from "lucide-react";
 
+const TINGGI_KALENDER = 340;
+
 interface CalendarPickerProps {
   value: string;
   onChange: (e: { target: { value: string } }) => void;
@@ -22,6 +24,7 @@ export const CalendarPicker: React.FC<CalendarPickerProps> = ({
   const [viewMonth, setViewMonth] = useState<number>(new Date().getMonth());
   const [viewYear, setViewYear] = useState<number>(new Date().getFullYear());
   const [tempMinutes, setTempMinutes] = useState<string>("");
+  const [bukaKeBawah, setBukaKeBawah] = useState<boolean>(false);
 
   const calendarRef = useRef<HTMLDivElement>(null);
   const preventCloseRef = useRef<boolean>(false);
@@ -332,7 +335,9 @@ export const CalendarPicker: React.FC<CalendarPickerProps> = ({
 
     return (
       <div
-        className="absolute bottom-full left-0 mb-1 p-3 bg-white border border-gray-200 rounded-lg shadow-lg w-72 z-50"
+        className={`absolute left-0 p-3 bg-white border border-gray-200 rounded-lg shadow-lg w-72 z-50 ${
+          bukaKeBawah ? "top-full mt-1" : "bottom-full mb-1"
+        }`}
         onMouseDown={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-3">
@@ -443,13 +448,24 @@ export const CalendarPicker: React.FC<CalendarPickerProps> = ({
     handleTimeChange,
     handleMinutesChange,
     navigateMonth,
+    bukaKeBawah,
   ]);
 
   return (
     <div className="relative" ref={calendarRef}>
       <button
         type="button"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          if (!isOpen && calendarRef.current) {
+            const rect = calendarRef.current.getBoundingClientRect();
+            const ruangAtas = rect.top;
+            const ruangBawah = window.innerHeight - rect.bottom;
+            setBukaKeBawah(
+              ruangAtas < TINGGI_KALENDER && ruangBawah > ruangAtas,
+            );
+          }
+          setIsOpen(!isOpen);
+        }}
         disabled={disabled}
         className={`w-full flex items-center justify-between p-2 text-left rounded border border-gray-300 bg-white transition text-sm ${
           disabled

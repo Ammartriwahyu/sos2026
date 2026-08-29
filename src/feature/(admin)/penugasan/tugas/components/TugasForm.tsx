@@ -2,7 +2,7 @@ import { TugasSummary } from "@/api/services/admin/tugas";
 import { useSelectOptions } from "@/shared/hooks/useSelectOptions";
 import { useToast } from "@/shared/hooks/useToast";
 import React from "react";
-import { useTugasForm } from "../hooks/useTugasForm";
+import { RANGKAIAN_TANGGAL_CUSTOM, useTugasForm } from "../hooks/useTugasForm";
 import {
   Select,
   SelectContent,
@@ -55,6 +55,9 @@ export const TugasForm: React.FC<TugasFormProps> = ({
     setFileLink,
     idRangkaian,
     setIdRangkaian,
+    tanggalMulai,
+    setTanggalMulai,
+    isTanggalCustom,
     isSubmitting,
     isFormValid,
     isEditMode,
@@ -66,6 +69,9 @@ export const TugasForm: React.FC<TugasFormProps> = ({
 
   const handleRangkaianChange = (value: string) => {
     setIdRangkaian(value);
+    if (value !== RANGKAIAN_TANGGAL_CUSTOM) {
+      setTanggalMulai("");
+    }
   };
 
   const handleFormSubmit = async (e: React.FormEvent) => {
@@ -73,7 +79,14 @@ export const TugasForm: React.FC<TugasFormProps> = ({
 
     const requiredFields = isEditMode
       ? [judul, deskripsi, tenggat, fileLink]
-      : [judul, deskripsi, tenggat, fileLink, idRangkaian];
+      : [
+          judul,
+          deskripsi,
+          tenggat,
+          fileLink,
+          idRangkaian,
+          ...(isTanggalCustom ? [tanggalMulai] : []),
+        ];
 
     if (requiredFields.some((field) => !field)) {
       showToast({
@@ -111,28 +124,33 @@ export const TugasForm: React.FC<TugasFormProps> = ({
               <SelectTrigger disabled={isLoadingRangkaian || isSubmitting}>
                 <SelectValue
                   placeholder={
-                    isLoadingRangkaian
-                      ? "Memuat..."
-                      : rangkaian.length === 0
-                        ? "Belum ada rangkaian"
-                        : "-- Pilih Rangkaian --"
+                    isLoadingRangkaian ? "Memuat..." : "-- Pilih Rangkaian --"
                   }
                 />
               </SelectTrigger>
               <SelectContent>
-                {rangkaian.length === 0 ? (
-                  <div className="p-3 text-sm text-default-dark/60">
-                    Belum ada rangkaian
-                  </div>
-                ) : (
-                  rangkaian.map((r) => (
-                    <SelectItem key={r.value} value={r.value}>
-                      {r.label}
-                    </SelectItem>
-                  ))
-                )}
+                {rangkaian.map((r) => (
+                  <SelectItem key={r.value} value={r.value}>
+                    {r.label}
+                  </SelectItem>
+                ))}
+                <SelectItem value={RANGKAIAN_TANGGAL_CUSTOM}>
+                  Tanggal Custom
+                </SelectItem>
               </SelectContent>
             </Select>
+          </div>
+        )}
+        {!isEditMode && isTanggalCustom && (
+          <div className="space-y-1">
+            <label htmlFor="tanggal-mulai" className={labelClasses}>
+              Tanggal Mulai <span className="text-red-500">*</span>
+            </label>
+            <CalendarPicker
+              value={tanggalMulai}
+              onChange={(e) => setTanggalMulai(e.target.value)}
+              disabled={isSubmitting}
+            />
           </div>
         )}
         <div className="space-y-1">

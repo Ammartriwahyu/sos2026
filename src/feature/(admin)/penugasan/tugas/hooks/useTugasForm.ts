@@ -1,6 +1,8 @@
 import { useState, useMemo, useEffect } from "react";
 import { tugasService, TugasSummary } from "@/api/services/admin/tugas";
 
+export const RANGKAIAN_TANGGAL_CUSTOM = "__tanggal_custom__";
+
 interface UseTugasFormProps {
   initialData?: TugasSummary;
   onSuccess: () => void;
@@ -23,8 +25,11 @@ export const useTugasForm = ({ initialData, onSuccess }: UseTugasFormProps) => {
   const [idRangkaian, setIdRangkaian] = useState<string>(
     initialData?.id_rangkaian || "",
   );
+  const [tanggalMulai, setTanggalMulai] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [target, setTarget] = useState<string>(initialData?.target || "");
+
+  const isTanggalCustom = idRangkaian === RANGKAIAN_TANGGAL_CUSTOM;
 
   useEffect(() => {
     if (initialData) {
@@ -43,9 +48,19 @@ export const useTugasForm = ({ initialData, onSuccess }: UseTugasFormProps) => {
       deskripsi.trim() !== "" &&
       tenggat.trim() !== "" &&
       fileLink.trim() !== "" &&
-      (isEditMode || idRangkaian.trim() !== "")
+      (isEditMode || idRangkaian.trim() !== "") &&
+      (!isTanggalCustom || tanggalMulai.trim() !== "")
     );
-  }, [judul, deskripsi, tenggat, fileLink, idRangkaian, isEditMode]);
+  }, [
+    judul,
+    deskripsi,
+    tenggat,
+    fileLink,
+    idRangkaian,
+    isEditMode,
+    isTanggalCustom,
+    tanggalMulai,
+  ]);
 
   const formatDateForCreate = (date: Date): string => {
     const pad = (num: number) => num.toString().padStart(2, "0");
@@ -103,7 +118,18 @@ export const useTugasForm = ({ initialData, onSuccess }: UseTugasFormProps) => {
         formData.append("file", fileLink);
         formData.append("target", target);
         formData.append("is_visible", String(is_visible));
-        await tugasService.createTugas(idRangkaian, formData);
+
+        if (isTanggalCustom) {
+          const mulai = new Date(tanggalMulai);
+          if (isNaN(mulai.getTime())) {
+            throw new Error("Format tanggal mulai tidak valid");
+          }
+          formData.append("tanggal_mulai", formatDateForCreate(mulai));
+          await tugasService.createTugas("", formData);
+        } else {
+          formData.append("tanggal_mulai", "");
+          await tugasService.createTugas(idRangkaian, formData);
+        }
       }
       onSuccess();
     } catch (err) {
@@ -130,6 +156,9 @@ export const useTugasForm = ({ initialData, onSuccess }: UseTugasFormProps) => {
     setFileLink,
     idRangkaian,
     setIdRangkaian,
+    tanggalMulai,
+    setTanggalMulai,
+    isTanggalCustom,
     isSubmitting,
     isFormValid,
     isEditMode,

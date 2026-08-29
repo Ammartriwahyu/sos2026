@@ -118,6 +118,7 @@ export interface Tugas {
   is_visible?: string;
   icon?: string;
   created_at?: string;
+  tanggal_mulai?: string;
   rangkaian?: Rangkaian;
   status?: "Selesai" | "Belum Selesai" | string;
 }
