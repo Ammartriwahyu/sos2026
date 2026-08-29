@@ -12,7 +12,7 @@ export const useQuizForm = ({ onSuccess, onError }: UseQuizFormProps) => {
   const [kuisDeskripsi, setKuisDeskripsi] = useState("");
   const [tenggat, setTenggat] = useState("");
   const [durasiKuis, setDurasiKuis] = useState("");
-  const [kesempatan, setKesempatan] = useState<number>(1);
+  const [kesempatan, setKesempatan] = useState<string>("1");
   const [idRangkaian, setIdRangkaian] = useState("");
 
   const { createQuiz, isLoading: isSubmitting } = useCreateQuiz({ onSuccess });
@@ -23,7 +23,7 @@ export const useQuizForm = ({ onSuccess, onError }: UseQuizFormProps) => {
       kuisDeskripsi.trim() !== "" &&
       tenggat !== "" &&
       durasiKuis !== "" &&
-      kesempatan > 0 &&
+      Number(kesempatan) > 0 &&
       idRangkaian !== ""
     );
   }, [kuisNama, kuisDeskripsi, tenggat, durasiKuis, kesempatan, idRangkaian]);
@@ -52,7 +52,7 @@ export const useQuizForm = ({ onSuccess, onError }: UseQuizFormProps) => {
         kuis_deskripsi: kuisDeskripsi,
         tenggat: new Date(tenggat).toISOString(),
         durasi_kuis: convertMinutesToHHMM(durasiKuis),
-        kesempatan: kesempatan,
+        kesempatan: Number(kesempatan),
         id_rangkaian: idRangkaian,
       };
 
@@ -70,7 +70,7 @@ export const useQuizForm = ({ onSuccess, onError }: UseQuizFormProps) => {
     setKuisDeskripsi("");
     setTenggat("");
     setDurasiKuis("");
-    setKesempatan(1);
+    setKesempatan("1");
     setIdRangkaian("");
   };
 

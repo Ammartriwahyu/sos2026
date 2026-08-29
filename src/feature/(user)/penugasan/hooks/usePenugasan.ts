@@ -111,8 +111,8 @@ export const usePenugasan = () => {
               detailData.total_pertanyaan ??
               detailData.jumlah_soal ??
               0,
-            skor: detailData.score ?? detailData.skor ?? 0,
-            score: detailData.score ?? detailData.skor ?? 0,
+            skor: detailData.score ?? detailData.skor,
+            score: detailData.score ?? detailData.skor,
           };
         } catch (e) {
           console.error(

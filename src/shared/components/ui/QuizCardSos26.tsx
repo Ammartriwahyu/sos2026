@@ -146,7 +146,9 @@ const QuizCard26 = forwardRef<HTMLDivElement, QuizCard26Props>(
             </span>
             <div className="flex items-baseline sm:flex-col sm:items-center">
               <span className="text-2xl sm:text-4xl font-bold text-white sm:my-1">
-                {status === "Sudah dikerjakan" ? score : "-"}
+                {score === null || score === undefined || score === ""
+                  ? "-"
+                  : score}
               </span>
               <span className="text-xs sm:text-sm font-medium text-purple-200/90 ml-1 sm:ml-0">
                 /100

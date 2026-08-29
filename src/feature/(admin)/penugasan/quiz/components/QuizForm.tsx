@@ -27,7 +27,7 @@ interface QuizFormProps {
   kuisDeskripsi: string;
   tenggat: string;
   durasiKuis: string;
-  kesempatan: number;
+  kesempatan: string;
   idRangkaian: string;
 
   // State setters
@@ -35,7 +35,7 @@ interface QuizFormProps {
   setKuisDeskripsi: (value: string) => void;
   setTenggat: (value: string) => void;
   setDurasiKuis: (value: string) => void;
-  setKesempatan: (value: number) => void;
+  setKesempatan: (value: string) => void;
   setIdRangkaian: (value: string) => void;
 
   // Form handling
@@ -170,7 +170,15 @@ export const QuizForm: React.FC<QuizFormProps> = ({
               id="kesempatan"
               type="number"
               value={kesempatan}
-              onChange={(e) => setKesempatan(Number(e.target.value))}
+              onChange={(e) => {
+                const masukan = e.target.value;
+                if (masukan === "") {
+                  setKesempatan("");
+                  return;
+                }
+                if (!/^\d{1,3}$/.test(masukan)) return;
+                setKesempatan(masukan.replace(/^0+(?=\d)/, ""));
+              }}
               placeholder="Contoh: 3"
               disabled={isSubmitting}
               required
