@@ -49,12 +49,12 @@ export default function RangkaianSection() {
       <SectionTitle className="not-md:mb-20">RANGKAIAN</SectionTitle>
       <div
         ref={ref}
-        className="w-full max-w-5xl flex flex-col md:flex-row justify-center items-center md:items-center gap-5 relative z-30 px-4"
+        className="w-full max-w-5xl flex flex-col md:flex-row md:flex-wrap justify-center items-center md:items-start md:mt-20 gap-5 relative z-30 px-4"
       >
         {rangkaianData.map((item, index) => (
           <div
             key={item.id}
-            className={`w-full max-w-md ${index === 1 ? "md:mt-40" : ""} fade-up-base ${
+            className={`w-full max-w-md fade-up-base ${
               isInView ? "fade-up-visible" : ""
             }`}
             style={{ transitionDelay: `${index * 200}ms` }}

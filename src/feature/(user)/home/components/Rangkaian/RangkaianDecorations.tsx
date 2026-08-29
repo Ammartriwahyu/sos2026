@@ -9,7 +9,7 @@ import AuroraWaves from "@/feature/(user)/peta/components/AuroraWaves";
 export default function RangkaianDecorations() {
   return (
     <>
-      <div className="absolute top-[-5%] w-[200vw] lg:w-screen left-0 pointer-events-none select-none z-20">
+      <div className="absolute top-px -translate-y-full w-[200vw] lg:w-screen left-0 pointer-events-none select-none z-20">
         <Image src={Grass} alt="Grass Divider" className="w-full h-auto" />
       </div>
       <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-10">
