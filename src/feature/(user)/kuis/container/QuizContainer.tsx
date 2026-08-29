@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useEffect } from "react";
-import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { useQuiz } from "../hooks/useQuiz";
@@ -16,6 +14,7 @@ import SpaceBackground from "@/shared/components/background/SpaceBackground";
 import CircleGLow from "@/shared/components/background/CircleGlow";
 import BgBawah from "@/shared/components/background/BgBawah";
 import { AnimatedDiv } from "@/shared/components/ui/AnimatedDiv";
+import BackLink from "@/shared/components/ui/BackLink";
 
 const QuizContainer = ({ id_kuis }: { id_kuis: string }) => {
   const router = useRouter();
@@ -54,20 +53,9 @@ const QuizContainer = ({ id_kuis }: { id_kuis: string }) => {
 
       <BgBawah gradientHeight="h-[200px]" />
 
-      <div className="relative z-10 mycontainer py-8 md:py-12 flex flex-col items-center gap-6 pb-[250px] md:pb-[400px]">
-        {/* Tombol Kembali */}
-        <AnimatedDiv className="w-full flex justify-start">
-          <div className="w-full px-4 md:px-10 mt-2">
-            <Link
-              href="/aktivitas/penugasan?tab=kuis"
-              className="inline-flex items-center gap-1 text-white font-semibold text-lg md:text-xl hover:text-white/80 transition-colors"
-            >
-              <ChevronLeft className="w-8 h-8 md:w-10 md:h-10 text-white shrink-0" />
-              <span>Kembali</span>
-            </Link>
-          </div>
-        </AnimatedDiv>
+      <BackLink href="/aktivitas/penugasan?tab=kuis" />
 
+      <div className="relative z-10 mycontainer pt-8 md:pt-10 flex flex-col items-center gap-6 pb-[250px] md:pb-[400px]">
         {/* Konten utama */}
         <AnimatedDiv delay={0.1} className="w-full">
           {isQuizActive && quizProps.kuisData ? (

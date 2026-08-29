@@ -4,7 +4,7 @@ import SolarSystem from "@/assets/assetsos26/shared/solar-system.png";
 
 const HeroSection = () => {
   return (
-    <section className="relative z-10 w-full pt-32 pb-8 md:pt-48 md:pb-16 overflow-hidden">
+    <section className="pt-navbar relative z-10 w-full pb-8 md:pb-16 overflow-hidden">
       {/* Left Solar System */}
       <div className="absolute top-[55%] left-0 w-[300px] sm:w-[500px] lg:w-[700px] -translate-x-1/2 -translate-y-1/2 opacity-70 pointer-events-none">
         <Image

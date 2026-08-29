@@ -21,7 +21,7 @@ const AktivitasAfterLogin = ({ user }: AktivitasAfterLoginProps) => {
       <CircleGLow />
       <BgBawah gradientHeight="h-[320px] lg:h-[560px]" />
 
-      <div className="w-full flex flex-col relative pt-24 lg:pt-36 pb-16 lg:pb-24 z-10 gap-[220px] lg:gap-[380px]">
+      <div className="pt-navbar w-full flex flex-col relative pb-16 lg:pb-24 z-10 gap-[220px] lg:gap-[380px]">
         <div className="w-full px-6 md:px-12 lg:px-8 xl:px-22">
           <div className="flex flex-col items-center justify-center w-full">
             <div className="w-full max-w-[805px] h-auto flex flex-col gap-4 z-20 relative">

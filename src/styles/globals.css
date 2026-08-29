@@ -1175,6 +1175,16 @@ body[data-scroll-locked] {
   background-repeat: no-repeat;
 }
 
+.pt-navbar {
+  padding-top: 112px;
+}
+
+@media (min-width: 1536px) {
+  .pt-navbar {
+    padding-top: 128px;
+  }
+}
+
 .liquid-glass {
   background-image: linear-gradient(
     135deg,

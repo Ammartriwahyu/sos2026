@@ -3,10 +3,10 @@
 import { usePenilaian } from "../hooks/usePenilaian";
 import { PenilaianNonActiveView } from "../components/PenilaianNonActiveView";
 import { PenilaianActiveView } from "../components/PenilaianActiveView";
-import Link from "next/link";
-import { ChevronLeft, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { AnimatedDiv } from "@/shared/components/ui/AnimatedDiv";
 import { cn } from "@/shared/utils/cn";
+import BackLink from "@/shared/components/ui/BackLink";
 import SectionTitle from "@/shared/components/SectionTitle";
 import SpaceBackground from "@/shared/components/background/SpaceBackground";
 import CircleGLow from "@/shared/components/background/CircleGlow";
@@ -56,26 +56,16 @@ export const PenilaianContainer = () => {
 
       <BgBawah gradientHeight="h-[60px] md:h-[100px]" />
 
+      <BackLink href="/aktivitas" />
+
       <div
         className={cn(
-          "relative z-10 mycontainer w-full py-6 md:py-12 flex flex-col items-center gap-8 md:gap-14 mt-8 md:mt-15",
+          "relative z-10 mycontainer w-full pt-8 pb-6 md:pt-10 md:pb-12 flex flex-col items-center gap-8 md:gap-14",
           isPenilaianAktif
             ? "pb-[170px] md:pb-[240px]"
             : "flex-1 pb-[120px] md:pb-[155px] 2xl:pb-[200px]",
         )}
       >
-        <AnimatedDiv className="w-full flex justify-start">
-          <div className="w-fit mt-14 md:mt-10 ml-2 md:-ml-4 lg:ml-24 xl:ml-10 2xl:ml-8">
-            <Link
-              href="/aktivitas"
-              className="inline-flex items-center gap-1 text-white font-semibold text-lg md:text-xl hover:text-white/80 transition-colors"
-            >
-              <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-white shrink-0" />
-              <span>Kembali</span>
-            </Link>
-          </div>
-        </AnimatedDiv>
-
         <AnimatedDiv
           className={cn(
             "w-full flex flex-col items-center",

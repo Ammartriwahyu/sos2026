@@ -10,7 +10,7 @@ const RangkaianSection = () => {
     <SpaceBackground>
       <SolarDecorations />
 
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 py-20 md:px-10 md:py-28">
+      <div className="pt-navbar relative z-10 mx-auto w-full max-w-6xl px-6 pb-20 md:px-10 md:pb-28">
         <SectionTitle>Rangkaian</SectionTitle>
 
         <div className="mt-16 flex flex-col gap-24 md:mt-24 md:gap-32">

@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ChevronLeft, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useDetailTugas } from "../hooks/useDetailTugas";
 import { Button } from "@/shared/components/ui/Button";
 import { TaskStepper } from "../components/TaskStepper";
 import { DetailHeader } from "../components/DetailHeader";
 import { DetailContent } from "../components/DetailContent";
 import { AnimatedDiv } from "@/shared/components/ui/AnimatedDiv";
+import BackLink from "@/shared/components/ui/BackLink";
 import SpaceBackground from "@/shared/components/background/SpaceBackground";
 import CircleGLow from "@/shared/components/background/CircleGlow";
 import BgBawah from "@/shared/components/background/BgBawah";
@@ -95,24 +96,13 @@ export const DetailTugasContainer = ({
   };
 
   return (
-    <div className="relative min-h-screen w-full overflow-x-hidden flex flex-col bg-background mt-15">
-      {/*BAGIAN 1: WRAPPER KONTEN UTAMA*/}
+    <div className="relative min-h-screen w-full overflow-x-hidden flex flex-col bg-background">
       <SpaceBackground className="relative w-full flex flex-col items-center flex-grow pb-[350px]">
         <CircleGLow />
 
-        <div className="relative z-10 mycontainer py-8 md:py-12 flex flex-col items-center gap-6 md:gap-8 w-full">
-          <AnimatedDiv className="w-full">
-            <div className="w-full px-4 md:px-10 mt-5">
-              <Link
-                href="/aktivitas/penugasan"
-                className="self-start flex items-center gap-1 text-white font-semibold text-lg md:text-xl hover:text-white/80 transition-colors"
-              >
-                <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-white shrink-0" />
-                Kembali
-              </Link>
-            </div>
-          </AnimatedDiv>
+        <BackLink href="/aktivitas/penugasan" />
 
+        <div className="relative z-10 mycontainer pt-8 pb-8 md:pt-10 md:pb-12 flex flex-col items-center gap-6 md:gap-8 w-full">
           <AnimatedDiv
             className="w-full flex flex-col items-center px-4 md:px-10 gap-8 md:gap-10 max-w-[1103px]"
             delay={0.1}

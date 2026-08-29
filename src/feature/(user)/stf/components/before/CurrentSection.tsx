@@ -48,7 +48,7 @@ const CurrentSection = () => {
         />
       </div>
 
-      <div className="mycontainer mx-auto w-full max-w-7xl pt-16 pb-12 md:pt-24 md:pb-24 relative z-20">
+      <div className="pt-navbar mycontainer mx-auto w-full max-w-7xl pb-12 md:pb-24 relative z-20">
         <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-16 items-center">
           {/* Left Column */}
           <div className="flex flex-col items-start text-left relative z-20 mt-8 lg:mt-0">

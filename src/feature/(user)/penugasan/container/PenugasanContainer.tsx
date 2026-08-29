@@ -3,9 +3,9 @@
 import { usePenugasan } from "../hooks/usePenugasan";
 import { LevelSection } from "../components/LevelSection";
 import { AktivitasSection } from "../components/AktivitasSection";
-import Link from "next/link";
-import { ChevronLeft, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { AnimatedDiv } from "@/shared/components/ui/AnimatedDiv";
+import BackLink from "@/shared/components/ui/BackLink";
 import { cn } from "@/shared/utils/cn";
 import SectionTitle from "@/shared/components/SectionTitle";
 import SpaceBackground from "@/shared/components/background/SpaceBackground";
@@ -42,36 +42,20 @@ export const PenugasanContainer = () => {
         }
       />
 
+      {activeTab === "kuis" ? (
+        <BackLink onClick={() => setActiveTab("tugas")} />
+      ) : (
+        <BackLink href="/aktivitas" />
+      )}
+
       <div
         className={cn(
-          "relative z-10 mycontainer w-full py-6 md:py-12 flex flex-col items-center gap-8 md:gap-14 mt-8 md:mt-15",
+          "relative z-10 mycontainer w-full pt-8 md:pt-10 flex flex-col items-center gap-8 md:gap-14",
           isEmpty
             ? "flex-1 pb-[120px] md:pb-[155px] 2xl:pb-[200px]"
             : "pb-[170px] md:pb-[300px]",
         )}
       >
-        <AnimatedDiv className="w-full flex justify-start">
-          <div className="w-fit mt-14 md:mt-10 ml-2 md:-ml-4 lg:ml-24 xl:ml-10 2xl:ml-8">
-            {activeTab === "kuis" ? (
-              <button
-                onClick={() => setActiveTab("tugas")}
-                className="inline-flex items-center gap-1 text-white font-semibold text-lg md:text-xl hover:text-white/80 transition-colors cursor-pointer bg-transparent border-none outline-none"
-              >
-                <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-white shrink-0" />
-                <span>Kembali</span>
-              </button>
-            ) : (
-              <Link
-                href="/aktivitas"
-                className="inline-flex items-center gap-1 text-white font-semibold text-lg md:text-xl hover:text-white/80 transition-colors"
-              >
-                <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-white shrink-0" />
-                <span>Kembali</span>
-              </Link>
-            )}
-          </div>
-        </AnimatedDiv>
-
         {activeTab !== "kuis" && (
           <AnimatedDiv
             className="w-full flex flex-col items-center"

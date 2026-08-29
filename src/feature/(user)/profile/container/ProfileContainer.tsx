@@ -23,7 +23,7 @@ const ProfileContainer: React.FC = () => {
   } = useProfile();
 
   return (
-    <SpaceBackground className="flex flex-col min-h-screen pt-24 pb-0 font-poppins relative overflow-hidden">
+    <SpaceBackground className="pt-navbar flex flex-col min-h-screen pb-0 font-poppins relative overflow-hidden">
       <div className="absolute top-[-300px] right-0 pointer-events-none z-0 flex items-center justify-end h-[600px]">
         <Image
           src={CirclePurple}
