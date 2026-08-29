@@ -34,7 +34,7 @@ const AktivitasAfterLogin = ({ user }: AktivitasAfterLoginProps) => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-20 gap-y-1">
                       {listPjl.map((pjl, idx) => (
                         <div key={idx} className="flex items-center gap-2">
-                          <span className="text-base sm:text-lg lg:text-xl text-white">
+                          <span className="text-sm md:text-base text-white">
                             {pjl.nama} - {pjl.line.replace(/@/g, "")}
                           </span>
                         </div>
@@ -48,42 +48,42 @@ const AktivitasAfterLogin = ({ user }: AktivitasAfterLoginProps) => {
                 <div className="liquid-glass w-full rounded-[12px] py-6 md:py-8 px-6 md:px-12 flex flex-col justify-center">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 md:gap-y-8 gap-x-8 md:gap-x-20">
                     <div>
-                      <p className="text-white text-lg sm:text-xl lg:text-2xl font-medium">
+                      <p className="text-white text-base md:text-lg font-medium">
                         Nama Lengkap
                       </p>
-                      <p className="text-base sm:text-lg lg:text-xl text-white mt-1 font-normal">
+                      <p className="text-sm md:text-base text-white mt-1 font-normal">
                         {user.nama}
                       </p>
                     </div>
                     <div>
-                      <p className="text-white text-lg sm:text-xl lg:text-2xl font-medium">
+                      <p className="text-white text-base md:text-lg font-medium">
                         Distrik
                       </p>
-                      <p className="text-base sm:text-lg lg:text-xl text-white mt-1 font-normal">
+                      <p className="text-sm md:text-base text-white mt-1 font-normal">
                         {user.kelompok?.distrik?.nama_distrik}
                       </p>
                     </div>
                     <div>
-                      <p className="text-white text-lg sm:text-xl lg:text-2xl font-medium">
+                      <p className="text-white text-base md:text-lg font-medium">
                         Prodi
                       </p>
-                      <p className="text-base sm:text-lg lg:text-xl text-white mt-1 font-normal">
+                      <p className="text-sm md:text-base text-white mt-1 font-normal">
                         {user.prodi}
                       </p>
                     </div>
                     <div>
-                      <p className="text-white text-lg sm:text-xl lg:text-2xl font-medium">
+                      <p className="text-white text-base md:text-lg font-medium">
                         Kelompok
                       </p>
-                      <p className="text-base sm:text-lg lg:text-xl text-white mt-1 font-normal">
+                      <p className="text-sm md:text-base text-white mt-1 font-normal">
                         {user.kelompok?.nama_kelompok}
                       </p>
                     </div>
                     <div className="md:col-span-2">
-                      <p className="text-white text-lg sm:text-xl lg:text-2xl font-medium">
+                      <p className="text-white text-base md:text-lg font-medium">
                         NIM
                       </p>
-                      <p className="text-base sm:text-lg lg:text-xl text-white mt-1 font-normal">
+                      <p className="text-sm md:text-base text-white mt-1 font-normal">
                         {user.nim}
                       </p>
                     </div>

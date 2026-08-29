@@ -78,13 +78,13 @@ export const DetailTugasContainer = ({
   const formattedDeadline = isNaN(deadlineDate.getTime())
     ? tugas.tenggat
     : `${deadlineDate.toLocaleDateString("id-ID", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    })} • ${deadlineDate.toLocaleTimeString("id-ID", {
-      hour: "2-digit",
-      minute: "2-digit",
-    })} WIB`;
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })} • ${deadlineDate.toLocaleTimeString("id-ID", {
+        hour: "2-digit",
+        minute: "2-digit",
+      })} WIB`;
 
   const handleFormSubmit = () => {
     if (!driveLink.trim()) {
@@ -107,7 +107,7 @@ export const DetailTugasContainer = ({
                 href="/aktivitas/penugasan"
                 className="self-start flex items-center gap-1 text-white font-semibold text-lg md:text-xl hover:text-white/80 transition-colors"
               >
-                <ChevronLeft className="w-8 h-8 md:w-10 md:h-10 text-white shrink-0" />
+                <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-white shrink-0" />
                 Kembali
               </Link>
             </div>

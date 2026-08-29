@@ -25,7 +25,7 @@ export const DetailHeader = ({
       </SectionTitle>
 
       <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 px-2">
-        <p className="text-white text-base md:text-lg font-normal text-center md:text-left">
+        <p className="text-white text-sm md:text-base font-normal text-center md:text-left">
           Deadline : {deadline}
         </p>
 

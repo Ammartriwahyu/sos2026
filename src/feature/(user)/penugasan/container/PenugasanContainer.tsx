@@ -51,13 +51,13 @@ export const PenugasanContainer = () => {
         )}
       >
         <AnimatedDiv className="w-full flex justify-start">
-          <div className="w-fit mt-5 ml-2 md:-ml-4 lg:ml-24 xl:ml-10 2xl:ml-8">
+          <div className="w-fit mt-14 md:mt-10 ml-2 md:-ml-4 lg:ml-24 xl:ml-10 2xl:ml-8">
             {activeTab === "kuis" ? (
               <button
                 onClick={() => setActiveTab("tugas")}
                 className="inline-flex items-center gap-1 text-white font-semibold text-lg md:text-xl hover:text-white/80 transition-colors cursor-pointer bg-transparent border-none outline-none"
               >
-                <ChevronLeft className="w-8 h-8 md:w-10 md:h-10 text-white shrink-0" />
+                <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-white shrink-0" />
                 <span>Kembali</span>
               </button>
             ) : (
@@ -65,7 +65,7 @@ export const PenugasanContainer = () => {
                 href="/aktivitas"
                 className="inline-flex items-center gap-1 text-white font-semibold text-lg md:text-xl hover:text-white/80 transition-colors"
               >
-                <ChevronLeft className="w-8 h-8 md:w-10 md:h-10 text-white shrink-0" />
+                <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-white shrink-0" />
                 <span>Kembali</span>
               </Link>
             )}

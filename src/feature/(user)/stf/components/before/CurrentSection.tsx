@@ -56,7 +56,7 @@ const CurrentSection = () => {
               Shaping The
               <br /> Future 2025
             </h1>
-            <p className="text-lg md:text-xl text-white/80 mb-12 max-w-md">
+            <p className="text-sm md:text-base text-white/80 mb-12 max-w-md">
               Bersama kita membentuk masa depan dengan kepemimpinan yang
               inspiratif
             </p>

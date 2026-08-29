@@ -142,7 +142,7 @@ export const DetailContent = ({
                         value={driveLink}
                         onChange={(e) => setDriveLink(e.target.value)}
                         disabled={isOverdue || isSubmitting}
-                        className="w-full h-[50px] text-white placeholder:text-white/50 rounded-[12px] px-4 text-base sm:text-lg focus:outline-none focus:border-white/40 transition-all z-10 relative"
+                        className="w-full h-[50px] text-white placeholder:text-white/50 rounded-[12px] px-4 text-sm md:text-base focus:outline-none focus:border-white/40 transition-all z-10 relative"
                         style={{
                           background:
                             "linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.08) 100%)",
@@ -183,7 +183,7 @@ export const DetailContent = ({
                           className="brightness-0 invert"
                         />
                       </div>
-                      <p className="text-sm md:text-lg text-white/90">
+                      <p className="text-sm md:text-base text-white/90">
                         Agar tugas kamu bisa kami periksa, mohon atur akses link
                         ke Siapa saja yang memiliki link{" "}
                         <i>(Anyone with the link)</i> sebagai Pelihat{" "}

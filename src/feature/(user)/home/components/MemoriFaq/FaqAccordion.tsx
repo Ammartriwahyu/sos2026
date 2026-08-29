@@ -15,21 +15,21 @@ export const FaqAccordion = () => {
           <AccordionPrimitive.Item
             key={faq.id}
             value={`item-${faq.id}`}
-            className="group overflow-hidden rounded-xl border border-white/10 transition-all bg-[#24293E]"
+            className="liquid-glass group overflow-hidden rounded-xl transition-all"
           >
             <AccordionPrimitive.Header className="flex">
               <AccordionPrimitive.Trigger
                 className={cn(
-                  "flex w-full flex-1 items-center backdrop-blur-sm justify-between p-4 md:py-6 md:px-8 gap-4 text-left text-base md:text-lg text-white transition-all font-medium",
-                  "bg-white/15 hover:bg-white/5",
-                  "data-[state=open]:bg-white/15",
+                  "flex w-full flex-1 items-center justify-between p-4 md:py-6 md:px-8 gap-4 text-left text-base md:text-lg text-white transition-all font-medium",
+                  "hover:bg-white/10",
+                  "data-[state=open]:bg-white/10",
                 )}
               >
                 {faq.question}
-                <ChevronDown className="size-8 shrink-0 text-white transition-transform duration-300 group-data-[state=open]:rotate-180" />
+                <ChevronDown className="size-6 md:size-7 shrink-0 text-white transition-transform duration-300 group-data-[state=open]:rotate-180" />
               </AccordionPrimitive.Trigger>
             </AccordionPrimitive.Header>
-            <AccordionPrimitive.Content className="overflow-hidden p-4 md:py-6 md:px-8 border-t border-white/5 bg-[#24293E] text-sm md:text-base text-white/90 transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
+            <AccordionPrimitive.Content className="overflow-hidden p-4 md:py-6 md:px-8 border-t border-white/15 text-sm md:text-base text-white/90 transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
               {faq.answer}
             </AccordionPrimitive.Content>
           </AccordionPrimitive.Item>

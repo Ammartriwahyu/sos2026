@@ -96,7 +96,7 @@ const VisiMisiSection = ({
                   formatText(activeCaketang.visi).map((line, index) => (
                     <p
                       key={index}
-                      className="text-lg md:text-xl leading-8 font-normal text-justify text-white/80"
+                      className="text-sm md:text-base leading-7 font-normal text-justify text-white/80"
                     >
                       {line}
                     </p>
@@ -112,7 +112,7 @@ const VisiMisiSection = ({
                     formatText(activeCaketang.misi).map((line, index) => (
                       <p
                         key={index}
-                        className="text-lg md:text-xl leading-8 font-normal text-justify text-white/80"
+                        className="text-sm md:text-base leading-7 font-normal text-justify text-white/80"
                       >
                         {line}
                       </p>

@@ -31,7 +31,7 @@ const AktivitasBeforeLogin = () => {
               <h4 className="text-2xl sm:text-3xl lg:text-4xl text-center font-semibold text-white drop-shadow-md">
                 Halo, Adik Maba!
               </h4>
-              <span className="text-white text-sm sm:text-base lg:text-xl text-center leading-relaxed">
+              <span className="text-white text-sm md:text-base text-center leading-relaxed">
                 Yuk, masuk dulu biar bisa akses semua hal seru yang udah
                 disiapin buat kamu!
               </span>

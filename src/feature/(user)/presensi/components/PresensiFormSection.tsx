@@ -62,7 +62,7 @@ const PresensiFormSection = ({ refreshPresensi }: PresensiFormSectionProps) => {
               <Input
                 value={kode}
                 onChange={(e) => setKode(e.target.value)}
-                className="w-full sm:max-w-[530px] h-[50px] text-white placeholder:text-white/50 rounded-[8px] px-4 text-center text-base sm:text-lg focus:outline-none focus:border-white/40 transition-all"
+                className="w-full sm:max-w-[530px] h-[50px] text-white placeholder:text-white/50 rounded-[8px] px-4 text-center text-sm md:text-base focus:outline-none focus:border-white/40 transition-all"
                 style={{
                   background:
                     "linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%)",

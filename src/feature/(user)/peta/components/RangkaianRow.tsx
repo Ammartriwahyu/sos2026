@@ -71,7 +71,7 @@ const RangkaianRow = ({ item }: { item: RangkaianItem }) => {
       <h3 className="peta-row-heading peta-reveal text-3xl font-semibold text-putih md:text-5xl">
         {item.title}
       </h3>
-      <p className="peta-row-desc peta-reveal text-base leading-relaxed text-putih/85 md:text-lg">
+      <p className="peta-row-desc peta-reveal text-sm leading-relaxed text-putih/85 md:text-base">
         {item.description}
       </p>
     </div>

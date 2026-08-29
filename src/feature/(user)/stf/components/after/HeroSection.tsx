@@ -29,7 +29,7 @@ const HeroSection = () => {
           Halo, Kenalan Yuk Sama
           <br className="hidden md:block" /> Calon Ketua Angkatan!
         </h2>
-        <p className="text-sm md:text-base lg:text-lg text-justify md:text-center w-11/12 md:w-4/5 lg:w-2/3 text-white/90 leading-relaxed drop-shadow-md">
+        <p className="text-sm md:text-base text-justify md:text-center w-11/12 md:w-4/5 lg:w-2/3 text-white/90 leading-relaxed drop-shadow-md">
           Calon Ketua Angkatan 2026 hadir sebagai sosok yang membawa semangat
           perubahan dan komitmen untuk membangun angkatan yang lebih solid,
           aktif, dan berdampak. Yuk kenali mereka lebih dekat dengan cari info

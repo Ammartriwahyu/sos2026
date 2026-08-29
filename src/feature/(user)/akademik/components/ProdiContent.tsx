@@ -33,7 +33,7 @@ const ProdiContent = ({ prodi }: ProdiContentProps) => {
 
   return (
     <div ref={rootRef} className="text-putih">
-      <p className="mb-8 text-justify text-md leading-relaxed text-putih/90 md:text-lg md:leading-8">
+      <p className="mb-8 text-justify text-sm leading-relaxed text-putih/90 md:text-base md:leading-7">
         {prodi.deskripsi}
       </p>
       <h4 className="mb-5 text-lg font-bold md:text-xl">
@@ -41,7 +41,7 @@ const ProdiContent = ({ prodi }: ProdiContentProps) => {
       </h4>
       <ul className="list-disc space-y-3 pl-6 text-putih/90">
         {prodi.prospek.map((item, index) => (
-          <li key={index} className="text-md md:text-lg">
+          <li key={index} className="text-sm md:text-base">
             {item}
           </li>
         ))}

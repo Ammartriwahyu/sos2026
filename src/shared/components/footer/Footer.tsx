@@ -26,7 +26,7 @@ export const Footer = () => {
             <Image
               src={LogoSoS}
               alt="Logo Synergy Of Symphony"
-              className="w-19.5 md:w-28"
+              className="w-[78px] md:w-28"
             />
             <div className="flex flex-col gap-[6px]">
               <h4 className="font-bold text-[17px] text-white">

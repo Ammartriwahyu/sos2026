@@ -124,7 +124,7 @@ export const QuizView = ({
 
         <div className="p-6 rounded-lg bg-[#F5E6E9]">
           <h5 className="font-semibold text-lg sm:text-xl">Pertanyaan</h5>
-          <p className="text-base sm:text-lg mb-6 whitespace-pre-line break-words">
+          <p className="text-sm md:text-base mb-6 whitespace-pre-line break-words">
             {currentQuestion.pertanyaan}
           </p>
 

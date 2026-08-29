@@ -7,7 +7,7 @@ const CtaSection = () => {
         <h2 className="w-11/12 md:w-3/4 lg:w-2/3 text-3xl md:text-4xl lg:text-5xl font-bold text-center leading-tight">
           Are you ready for Shaping The Future 2026?
         </h2>
-        <p className="text-base text-center md:text-xl lg:text-2xl text-white/80 max-w-3xl">
+        <p className="text-sm text-center md:text-base text-white/80 max-w-3xl">
           Yuk tunjukkan suaramu dan dukunganmu untuk menciptakan angkatan yang
           solid.
         </p>
