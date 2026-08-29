@@ -222,7 +222,7 @@ export const AktivitasSection = ({
               );
             })
           ) : (
-            <AnimatedDiv className="w-full" delay={0.1}>
+            <AnimatedDiv className="flex w-full flex-1 flex-col" delay={0.1}>
               <MaskotEmptyState message="Sabar yaa, kuisnya akan segera datang!" />
             </AnimatedDiv>
           )}
