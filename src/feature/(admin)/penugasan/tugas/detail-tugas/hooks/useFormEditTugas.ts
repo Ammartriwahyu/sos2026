@@ -10,11 +10,14 @@ export const useFormEditTugas = ({
   submissionData,
   onSuccess,
 }: UseFormEditTugasProps) => {
-  const [nilai, setNilai] = useState(submissionData.nilai);
+  const keTeks = (value: number | null | undefined) =>
+    value === null || value === undefined ? "" : String(value);
+
+  const [nilai, setNilai] = useState<string>(keTeks(submissionData.nilai));
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    setNilai(submissionData.nilai);
+    setNilai(keTeks(submissionData.nilai));
   }, [submissionData]);
 
   const performSubmit = async () => {

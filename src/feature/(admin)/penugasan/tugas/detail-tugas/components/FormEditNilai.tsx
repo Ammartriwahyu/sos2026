@@ -25,7 +25,11 @@ const FormEditNilai: React.FC<FormEditTugasProps> = ({
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      if (nilai < 0 || nilai > 100) {
+      if (nilai.trim() === "") {
+        throw new Error("Nilai wajib diisi");
+      }
+      const angka = Number(nilai);
+      if (Number.isNaN(angka) || angka < 0 || angka > 100) {
         throw new Error("Nilai harus berada di antara 0 dan 100");
       }
       await performSubmit();
@@ -89,16 +93,20 @@ const FormEditNilai: React.FC<FormEditTugasProps> = ({
           type="number"
           min={0}
           max={100}
-          value={nilai ?? ""}
+          value={nilai}
           onChange={(e) => {
-            const value = Number(e.target.value);
-            if (value <= 100) {
-              setNilai(value);
+            const masukan = e.target.value;
+            if (masukan === "") {
+              setNilai("");
+              return;
             }
+            if (!/^\d{1,3}$/.test(masukan)) return;
+            const bersih = masukan.replace(/^0+(?=\d)/, "");
+            if (Number(bersih) > 100) return;
+            setNilai(bersih);
           }}
           disabled={isSubmitting}
           placeholder="Masukkan nilai 0-100"
-          // Disable spinner arrows on number input
           style={{ WebkitAppearance: "none", MozAppearance: "textfield" }}
         />
       </div>
