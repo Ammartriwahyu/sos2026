@@ -28,10 +28,12 @@ export default function MemoriFaqSection() {
 
       <div className="flex flex-col relative w-full max-w-7xl mx-auto gap-12 mt-72 z-40 mb-20">
         <FaqDecorations />
-        <h2 className="text-3xl md:text-4xl font-bold text-white text-center uppercase justify-start">
+        <h2 className="relative z-10 text-3xl md:text-4xl font-bold text-white text-center uppercase justify-start">
           FAQ
         </h2>
-        <FaqAccordion />
+        <div className="relative z-10">
+          <FaqAccordion />
+        </div>
       </div>
     </section>
   );

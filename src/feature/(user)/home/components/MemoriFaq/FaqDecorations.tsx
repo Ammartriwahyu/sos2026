@@ -61,25 +61,25 @@ const QuestionMarkSVG = ({
 export const FaqDecorations = () => {
   return (
     <>
-      <div className="absolute top-0 left-0 rotate-60 pointer-events-none select-none text-white/30">
+      <div className="absolute bottom-full left-0 z-0 mb-8 rotate-60 pointer-events-none select-none text-white/30">
         <QuestionMarkSVG
           className="w-[30vw] lg:w-[8vw] aspect-square animate-rotate-idle"
           style={{ animationDelay: "0s" }}
         />
       </div>
-      <div className="absolute bottom-[14%] right-[9%] rotate-50 pointer-events-none select-none text-white/30">
+      <div className="absolute top-full right-[9%] z-0 mt-6 rotate-50 pointer-events-none select-none text-white/30">
         <QuestionMarkSVG
           className="w-[8vw] lg:w-[4vw] aspect-square animate-rotate-idle"
           style={{ animationDelay: "1.2s" }}
         />
       </div>
-      <div className="absolute bottom-[-10%] left-[2%] -rotate-12 pointer-events-none select-none text-white/30">
+      <div className="absolute top-full left-[2%] z-0 mt-8 -rotate-12 pointer-events-none select-none text-white/30">
         <QuestionMarkSVG
           className="w-[25vw] lg:w-[12vw] aspect-square animate-rotate-idle"
           style={{ animationDelay: "2.4s" }}
         />
       </div>
-      <div className="absolute -top-10 right-10 rotate-12 pointer-events-none select-none text-white/30">
+      <div className="absolute bottom-full right-10 z-0 mb-8 rotate-12 pointer-events-none select-none text-white/30">
         <QuestionMarkSVG
           className="w-[35vw] lg:w-[18vw] aspect-square animate-rotate-idle"
           style={{ animationDelay: "3.6s" }}
