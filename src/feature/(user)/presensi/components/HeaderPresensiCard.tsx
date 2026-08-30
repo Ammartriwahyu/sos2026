@@ -22,10 +22,7 @@ const HeaderPresensiCard = () => {
       }}
     >
       {kolom.map(({ label, width }) => (
-        <div
-          key={label}
-          className={`${width} min-w-0 text-center md:text-left`}
-        >
+        <div key={label} className={`${width} min-w-0 text-center`}>
           <span>{label}</span>
         </div>
       ))}
