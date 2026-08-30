@@ -10,6 +10,7 @@ import LogoDepartemen from "@/assets/assetsos26/shared/logo-departemen.png";
 import ManAkademik from "@/assets/assetsos26/akademik/man-akademik.svg";
 import QuestionMark from "@/assets/assetsos26/akademik/question-mark.svg";
 import LogoOnBase from "./LogoOnBase";
+import SectionTitle from "@/shared/components/SectionTitle";
 
 const DepartemenSection = () => {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -63,14 +64,19 @@ const DepartemenSection = () => {
 
       <div
         ref={rootRef}
-        className="relative z-10 mx-auto w-full max-w-5xl pt-navbar px-6 pb-12 md:px-10 md:pb-6"
+        className="relative z-10 mx-auto w-full max-w-6xl pt-navbar px-6 pb-12 md:px-10 md:pb-20"
       >
-        <div className="flex flex-col gap-8 md:flex-row md:items-stretch md:gap-8 lg:gap-14">
-          <div className="flex flex-col md:w-[210px] md:shrink-0 lg:w-[240px]">
-            <p className="akd-fade-up peta-reveal text-3xl font-semibold whitespace-nowrap text-putih lg:text-4xl">
-              Apa sih itu
-            </p>
-            <div className="akd-fade-up peta-reveal mt-6 hidden w-full md:block">
+        <SectionTitle as="h1">Apa itu DSI ?</SectionTitle>
+
+        <div className="mt-10 flex flex-col gap-8 md:mt-14 md:flex-row md:items-center md:gap-6 lg:gap-10">
+          <div className="akd-fade-up peta-reveal relative hidden md:top-6 md:block md:w-[112px] md:shrink-0 lg:w-[130px]">
+            <div className="relative">
+              <Image
+                src={QuestionMark}
+                alt=""
+                aria-hidden
+                className="akademik-wiggle absolute -top-[6%] right-[2%] z-10 w-[32%] select-none"
+              />
               <Image
                 src={ManAkademik}
                 alt="Ilustrasi mahasiswa"
@@ -79,43 +85,27 @@ const DepartemenSection = () => {
             </div>
           </div>
 
-          <div className="flex flex-1 flex-col">
-            <div className="flex items-start justify-between gap-4">
-              <div className="akd-fade-up peta-reveal flex items-start mt-10">
-                <h1 className="text-5xl font-bold text-putih lg:text-7xl">
-                  DSI
-                </h1>
-                <Image
-                  src={QuestionMark}
-                  alt=""
-                  aria-hidden
-                  className="akademik-wiggle relative left-1 w-14 select-none lg:w-20"
-                />
-              </div>
+          <div className="akd-fade-up peta-reveal order-2 flex-1 text-justify text-sm leading-6 text-putih/90 md:order-none md:text-base md:leading-7">
+            <p>
+              Departemen Sistem Informasi (DSI) adalah salah satu departemen di
+              Fakultas Ilmu Komputer (FILKOM) Universitas Brawijaya (UB). DSI
+              fokus pada pengembangan sistem informasi yang terintegrasi dengan
+              kebutuhan bisnis dan manajemen, serta menghasilkan lulusan yang
+              kompeten di bidang teknologi informasi. DSI juga membawahi tiga
+              program studi, yaitu Sistem Informasi, Teknologi Informasi, dan
+              Pendidikan Teknologi Informasi.
+            </p>
+          </div>
 
-              <div className="akd-fade peta-reveal w-[220px] shrink-0 md:-mt-6 lg:-mt-2 lg:w-[360px]">
-                <LogoOnBase
-                  logo={LogoDepartemen}
-                  alt="Logo Departemen Sistem Informasi"
-                  float
-                  priority
-                  logoWidth="w-[64%]"
-                  logoBottom="bottom-[45%]"
-                />
-              </div>
-            </div>
-
-            <div className="akd-fade-up peta-reveal lg:mt-6 xl:mt-12 text-justify text-sm leading-6 text-putih/90 md:text-base md:leading-7">
-              <p>
-                Departemen Sistem Informasi (DSI) adalah salah satu departemen
-                di Fakultas Ilmu Komputer (FILKOM) Universitas Brawijaya (UB).
-                DSI fokus pada pengembangan sistem informasi yang terintegrasi
-                dengan kebutuhan bisnis dan manajemen, serta menghasilkan
-                lulusan yang kompeten di bidang teknologi informasi. DSI juga
-                membawahi tiga program studi, yaitu Sistem Informasi, Teknologi
-                Informasi, dan Pendidikan Teknologi Informasi.
-              </p>
-            </div>
+          <div className="akd-fade peta-reveal order-1 mx-auto w-[220px] shrink-0 md:order-none md:mx-0 md:w-[190px] lg:w-[230px]">
+            <LogoOnBase
+              logo={LogoDepartemen}
+              alt="Logo Departemen Sistem Informasi"
+              float
+              priority
+              logoWidth="w-[64%]"
+              logoBottom="bottom-[45%]"
+            />
           </div>
         </div>
       </div>
