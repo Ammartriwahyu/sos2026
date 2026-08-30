@@ -26,6 +26,16 @@ const PjlTable = ({ pjlList, distrikName }: PjlTableProps) => {
             </tr>
           </thead>
           <tbody>
+            {pjlList.length === 0 && (
+              <tr>
+                <td
+                  colSpan={4}
+                  className="py-8 px-6 text-center text-default-dark/60"
+                >
+                  Belum ada PJL di distrik ini.
+                </td>
+              </tr>
+            )}
             {pjlList.map((pjl, index) => (
               <tr
                 key={pjl.nim}

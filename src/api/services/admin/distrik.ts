@@ -39,14 +39,30 @@ class DistrikService {
     return responseData;
   }
 
-  async getDistrictById(id: string): Promise<BackendResponse<Distrik>> {
+  async getDistrictById(id: string): Promise<BackendResponse<Distrik | null>> {
     const cacheKey = `distrik_${id}`;
     const cachedItem = this.cache.get(cacheKey);
     if (cachedItem && cachedItem.expiry > Date.now()) {
-      return cachedItem.data as BackendResponse<Distrik>;
+      return cachedItem.data as BackendResponse<Distrik | null>;
     }
     const response = await apiClient.get(`/api/distrik/${id}`);
-    const responseData = response as unknown as BackendResponse<Distrik>;
+    const mentah = response as unknown as BackendResponse<
+      | (Omit<Distrik, "list_pjl" | "list_kelompok"> & {
+          list_pjl: Distrik["list_pjl"] | null;
+          list_kelompok: Distrik["list_kelompok"] | null;
+        })
+      | null
+    >;
+    const responseData: BackendResponse<Distrik | null> = {
+      ...mentah,
+      data: mentah.data
+        ? {
+            ...mentah.data,
+            list_pjl: mentah.data.list_pjl ?? [],
+            list_kelompok: mentah.data.list_kelompok ?? [],
+          }
+        : null,
+    };
     this.cache.set(cacheKey, {
       data: responseData,
       expiry: Date.now() + this.cacheDuration,
