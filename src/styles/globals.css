@@ -265,20 +265,24 @@ body[data-scroll-locked] {
 /* Custom scrollbar */
 
 /* Enhanced scrollbar styling */
+.overflow-y-auto {
+  scrollbar-color: var(--color-primary-normal) var(--color-primary-light);
+}
+
 .overflow-y-auto::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 
 .overflow-y-auto::-webkit-scrollbar-track {
-  background-color: #f5e6e9;
+  background-color: var(--color-primary-light);
   border-radius: 10px;
   border: 2px solid transparent;
   background-clip: content-box;
 }
 
 .overflow-y-auto::-webkit-scrollbar-thumb {
-  background-color: #9c0221;
+  background-color: var(--color-primary-normal);
   border-radius: 10px;
   border: 2px solid transparent;
   background-clip: content-box;
@@ -305,7 +309,7 @@ body[data-scroll-locked] {
 }
 
 .overflow-y-auto::-webkit-scrollbar-thumb:hover {
-  background-color: #7d021a;
+  background-color: var(--color-primary-normal-hover);
 }
 
 .overflow-y-auto::-webkit-scrollbar-corner {
