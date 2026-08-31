@@ -8,25 +8,27 @@ export const FooterLinks = () => {
         Navigasi
       </h3>
       <ul className="flex flex-row  justify-center gap-y-[6px] md:flex-col md:space-y-[14px] md:items-start">
-        {navListData.map((item, index) => (
-          <li key={item.title} className="flex items-center">
-            <Link
-              href={item.href}
-              className="text-[10px] hover:border-b-2 border-violet-light-active transition-all md:text-[14px] font-normal text-white/80 hover:text-white hover:font-medium"
-            >
-              {item.title}
-            </Link>
-
-            {index < navListData.length - 1 && (
-              <span
-                aria-hidden="true"
-                className="mx-[3px] md:hidden text-white/40"
+        {navListData
+          .filter((item) => !item.isHidden)
+          .map((item, index, filteredArray) => (
+            <li key={item.title} className="flex items-center">
+              <Link
+                href={item.href}
+                className="text-[10px] hover:border-b-2 border-violet-light-active transition-all md:text-[14px] font-normal text-white/80 hover:text-white hover:font-medium"
               >
-                |
-              </span>
-            )}
-          </li>
-        ))}
+                {item.title}
+              </Link>
+
+              {index < filteredArray.length - 1 && (
+                <span
+                  aria-hidden="true"
+                  className="mx-[3px] md:hidden text-white/40"
+                >
+                  |
+                </span>
+              )}
+            </li>
+          ))}
       </ul>
     </div>
   );
