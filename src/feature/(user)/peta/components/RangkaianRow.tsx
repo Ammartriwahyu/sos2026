@@ -68,10 +68,20 @@ const RangkaianRow = ({ item }: { item: RangkaianItem }) => {
         reverse ? "md:items-end md:text-right" : "md:items-start md:text-left",
       )}
     >
-      <h3 className="peta-row-heading peta-reveal text-3xl font-semibold text-putih md:text-5xl">
+      <h3
+        className={cn(
+          "peta-row-heading peta-reveal text-center text-3xl font-semibold text-putih md:text-5xl",
+          reverse ? "md:text-right" : "md:text-left",
+        )}
+      >
         {item.title}
       </h3>
-      <p className="peta-row-desc peta-reveal text-sm leading-relaxed text-putih/85 md:text-base">
+      <p
+        className={cn(
+          "peta-row-desc peta-reveal text-justify text-sm leading-relaxed text-putih/85 md:text-base",
+          reverse ? "md:text-right" : "md:text-left",
+        )}
+      >
         {item.description}
       </p>
     </div>

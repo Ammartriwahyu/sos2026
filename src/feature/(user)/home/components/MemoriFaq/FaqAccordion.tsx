@@ -29,7 +29,7 @@ export const FaqAccordion = () => {
                 <ChevronDown className="size-6 md:size-7 shrink-0 text-white transition-transform duration-300 group-data-[state=open]:rotate-180" />
               </AccordionPrimitive.Trigger>
             </AccordionPrimitive.Header>
-            <AccordionPrimitive.Content className="overflow-hidden p-4 md:py-6 md:px-8 border-t border-white/15 text-sm md:text-base text-white/90 transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
+            <AccordionPrimitive.Content className="overflow-hidden p-4 md:py-6 md:px-8 border-t border-white/15 text-justify text-sm md:text-base text-white/90 transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
               {faq.answer}
             </AccordionPrimitive.Content>
           </AccordionPrimitive.Item>
