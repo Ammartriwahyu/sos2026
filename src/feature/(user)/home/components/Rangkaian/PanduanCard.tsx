@@ -1,6 +1,8 @@
 import { FileDown } from "lucide-react";
 import { cn } from "@/shared/utils/cn";
 
+const LINK_PANDUAN = "https://clips.id/BukuPanduanSOSSTF2026";
+
 export default function PanduanCard({
   className,
   style,
@@ -25,13 +27,15 @@ export default function PanduanCard({
         Berisi Informasi Seputar Ospek, Tata Tertib, Dan Pelanggaran. Yuk,
         Segera Unduh Buku Panduan SOS & STF!
       </p>
-      <button
-        type="button"
+      <a
+        href="https://clips.id/BukuPanduanSOSSTF2026"
+        target="_blank"
+        rel="noopener noreferrer"
         className="w-fit px-6 py-2.5 bg-[#61598B] hover:bg-[#7269A0] transition-colors rounded-xl text-putih font-bold text-sm flex items-center justify-center gap-2 mt-2"
       >
         <FileDown className="w-5 h-5" />
         Unduh Sekarang
-      </button>
+      </a>
     </article>
   );
 }
