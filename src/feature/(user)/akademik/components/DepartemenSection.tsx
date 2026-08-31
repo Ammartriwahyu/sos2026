@@ -64,18 +64,18 @@ const DepartemenSection = () => {
 
       <div
         ref={rootRef}
-        className="relative z-10 mx-auto w-full max-w-6xl pt-navbar px-6 pb-12 md:px-10 md:pb-20"
+        className="relative z-10 mx-auto w-full max-w-6xl pt-navbar px-6 pb-12 md:px-10 md:pb-10"
       >
         <SectionTitle as="h1">Apa itu DSI ?</SectionTitle>
 
-        <div className="mt-10 flex flex-col gap-8 md:mt-14 md:flex-row md:items-center md:gap-6 lg:gap-10">
-          <div className="akd-fade-up peta-reveal relative hidden md:top-6 md:block md:w-[112px] md:shrink-0 lg:w-[130px]">
+        <div className="mt-10 flex flex-col gap-8 md:mt-6 md:flex-row md:items-center md:gap-6 lg:gap-10">
+          <div className="akd-fade-up peta-reveal relative hidden md:block md:w-[112px] md:shrink-0 lg:w-[130px]">
             <div className="relative">
               <Image
                 src={QuestionMark}
                 alt=""
                 aria-hidden
-                className="akademik-wiggle absolute -top-[6%] right-[2%] z-10 w-[32%] select-none"
+                className="akademik-wiggle absolute top-[4%] -right-[16%] z-10 w-[32%] select-none"
               />
               <Image
                 src={ManAkademik}
@@ -85,7 +85,7 @@ const DepartemenSection = () => {
             </div>
           </div>
 
-          <div className="akd-fade-up peta-reveal order-2 flex-1 text-justify text-sm leading-6 text-putih/90 md:order-none md:text-base md:leading-7">
+          <div className="akd-fade-up peta-reveal relative order-2 flex-1 text-justify text-sm leading-6 text-putih/90 md:order-none md:-top-10 md:text-base md:leading-7">
             <p>
               Departemen Sistem Informasi (DSI) adalah salah satu departemen di
               Fakultas Ilmu Komputer (FILKOM) Universitas Brawijaya (UB). DSI
@@ -97,7 +97,7 @@ const DepartemenSection = () => {
             </p>
           </div>
 
-          <div className="akd-fade peta-reveal order-1 mx-auto w-[220px] shrink-0 md:order-none md:mx-0 md:w-[190px] lg:w-[230px]">
+          <div className="akd-fade peta-reveal relative order-1 mx-auto w-[220px] shrink-0 md:order-none md:mx-0 md:-top-10 md:w-[190px] lg:w-[230px]">
             <LogoOnBase
               logo={LogoDepartemen}
               alt="Logo Departemen Sistem Informasi"
