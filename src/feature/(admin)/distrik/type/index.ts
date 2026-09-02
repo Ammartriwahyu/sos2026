@@ -13,6 +13,7 @@ export interface Kelompok {
 export interface Distrik {
   id_distrik: string;
   nama_distrik: string;
+  order?: number;
   list_pjl: Pjl[];
   list_kelompok: Kelompok[];
 }

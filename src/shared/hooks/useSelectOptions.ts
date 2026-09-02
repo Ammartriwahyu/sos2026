@@ -1,4 +1,5 @@
 import { SelectOption, selectService } from "@/api/services/select/select";
+import { distrikService } from "@/api/services/admin/distrik";
 import { useEffect, useState } from "react";
 
 // Hook ini sekarang menerima 'type' sebagai argumen
@@ -18,11 +19,27 @@ export const useSelectOptions = (
     const fetchOptions = async () => {
       setIsLoading(true);
       try {
-        // Gunakan parameter 'type' untuk memanggil service secara dinamis
-        const response = await selectService.getOptions(type);
-        setOptions(response.data);
+        if (type === "distrik") {
+          // Untuk distrik, fetch dari endpoint admin agar dapat field `order`
+          // sehingga label bisa ditampilkan sebagai "NamaDistrik - order"
+          const response = await distrikService.getAllDistricts();
+          if (response?.data) {
+            const sorted = [...response.data].sort(
+              (a, b) => (a.order ?? 0) - (b.order ?? 0),
+            );
+            const transformed: SelectOption[] = sorted.map(
+              (distrik, index) => ({
+                value: distrik.id_distrik,
+                label: `${distrik.nama_distrik} - ${distrik.order ?? index + 1}`,
+              }),
+            );
+            setOptions(transformed);
+          }
+        } else {
+          const response = await selectService.getOptions(type);
+          setOptions(response.data);
+        }
       } catch (error) {
-        // Pesan error juga dibuat dinamis
         console.error(`Gagal mengambil data ${type}:`, error);
       } finally {
         setIsLoading(false);
