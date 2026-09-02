@@ -50,10 +50,12 @@ export const PenilaianHeader = ({
     <div className="mt-6 flex flex-col gap-6">
       <div className="flex gap-4 flex-wrap md:flex-wrap">
         <SearchableSelect
-          options={distrikOptions.map((distrik) => ({
-            value: distrik.id_distrik,
-            label: distrik.nama_distrik,
-          }))}
+          options={[...distrikOptions]
+            .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+            .map((distrik, index) => ({
+              value: distrik.id_distrik,
+              label: `${distrik.nama_distrik} - ${distrik.order ?? index + 1}`,
+            }))}
           value={selectedDistrik}
           onValueChange={(value) => onDistrikChange(value ?? "")}
           placeholder="Filter Distrik"
