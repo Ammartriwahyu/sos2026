@@ -19,8 +19,10 @@ export async function middleware(request: NextRequest) {
   const payload = token ? await verifyToken(token) : null;
   const adminPath = "/admin";
   const loginPath = "/login";
-  const profilePath = "/profile";
   const adminDashboardPath = "/admin/dashboard";
+  const stfPath = "/stf";
+  const protectedUserPaths = ["/profile", "/aktivitas"];
+  const publicUserPaths = ["/aktivitas", "/aktivitas/"];
 
   const adminRoles = ["admin", "superadmin", "sqc", "pjl"];
   const isAdminUser = payload && adminRoles.includes(payload.Role as string);
@@ -47,7 +49,14 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  if (pathname.startsWith(profilePath)) {
+  if (pathname.startsWith(stfPath) && !isAdminUser) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
+  if (
+    !publicUserPaths.includes(pathname) &&
+    protectedUserPaths.some((path) => pathname.startsWith(path))
+  ) {
     if (!payload) {
       const url = new URL(loginPath, request.url);
       url.searchParams.set("error", "unauthorized");
