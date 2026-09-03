@@ -30,7 +30,7 @@ export const useSelectOptions = (
             const transformed: SelectOption[] = sorted.map(
               (distrik, index) => ({
                 value: distrik.id_distrik,
-                label: `${distrik.nama_distrik} - ${distrik.order ?? index + 1}`,
+                label: `${distrik.order ?? index + 1} - ${distrik.nama_distrik}`,
               }),
             );
             setOptions(transformed);

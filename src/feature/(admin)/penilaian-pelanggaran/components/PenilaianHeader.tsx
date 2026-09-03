@@ -54,7 +54,7 @@ export const PenilaianHeader = ({
             .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
             .map((distrik, index) => ({
               value: distrik.id_distrik,
-              label: `${distrik.nama_distrik} - ${distrik.order ?? index + 1}`,
+              label: `${distrik.order ?? index + 1} - ${distrik.nama_distrik}`,
             }))}
           value={selectedDistrik}
           onValueChange={(value) => onDistrikChange(value ?? "")}
