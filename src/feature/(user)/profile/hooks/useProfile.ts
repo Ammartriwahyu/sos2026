@@ -57,26 +57,16 @@ export const useProfile = () => {
 
   const validateForm = () => {
     const errors: string[] = [];
-    const phone = formData.Phone;
+    const phone = formData.Phone?.trim();
 
-    if (!phone || phone.trim() === "") {
-      errors.push("Nomor telepon wajib diisi");
-    } else {
-      const phoneLength = phone.trim().length;
+    if (phone) {
+      const phoneLength = phone.length;
       if (phoneLength < 10 || phoneLength > 15) {
         errors.push("Nomor telepon harus memiliki panjang 10-15 digit");
       }
-      if (!/^\d+$/.test(phone.trim())) {
+      if (!/^\d+$/.test(phone)) {
         errors.push("Nomor telepon hanya boleh berisi angka");
       }
-    }
-
-    if (!formData.Agama || formData.Agama.trim() === "") {
-      errors.push("Agama wajib dipilih");
-    }
-
-    if (!formData.GolonganDarah || formData.GolonganDarah.trim() === "") {
-      errors.push("Golongan darah wajib dipilih");
     }
 
     return errors;
@@ -93,11 +83,10 @@ export const useProfile = () => {
       return;
     }
 
-    // Kirim hanya field yang terisi; hindari mengirim string kosong
-    // untuk field opsional yang tidak diisi user
+    // Kirim field yang terisi; hindari error undefined
     const payload: EditProfileRequest = {
       ...formData,
-      Phone: formData.Phone.trim(),
+      Phone: formData.Phone?.trim() ?? "",
       Line: formData.Line?.trim() ?? "",
       RiwayatPenyakit: formData.RiwayatPenyakit?.trim() ?? "",
       AlergiObat: formData.AlergiObat?.trim() ?? "",
