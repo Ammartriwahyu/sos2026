@@ -49,7 +49,7 @@ export async function POST(
 
       const userRole = payload.Role as string;
 
-      let redirectUrl = "/home";
+      let redirectUrl = "/aktivitas";
       if (["admin", "pjl", "sqc", "superadmin"].includes(userRole)) {
         redirectUrl = `/${userRole}/dashboard`;
       }

@@ -69,7 +69,7 @@ export async function middleware(request: NextRequest) {
       if (isAdminUser) {
         return NextResponse.redirect(new URL(adminDashboardPath, request.url));
       }
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/aktivitas", request.url));
     }
   }
 
