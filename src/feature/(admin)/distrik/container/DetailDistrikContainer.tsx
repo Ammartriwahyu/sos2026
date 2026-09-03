@@ -60,7 +60,7 @@ const DetailDistrikContainer = ({ distrikId }: { distrikId: string }) => {
         </div>
         <h1 className="text-4xl font-semibold text-default-dark">
           {distrik.order != null
-            ? `${distrik.nama_distrik} - ${distrik.order}`
+            ? `${distrik.order} - ${distrik.nama_distrik}`
             : distrik.nama_distrik}
         </h1>
       </div>

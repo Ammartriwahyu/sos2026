@@ -10,9 +10,9 @@ interface DistrikItemProps {
 const DistrikItem = ({ distrik, index }: DistrikItemProps) => {
   const displayName =
     distrik.order != null
-      ? `${distrik.nama_distrik} - ${distrik.order}`
+      ? `${distrik.order} - ${distrik.nama_distrik}`
       : index != null
-        ? `${distrik.nama_distrik} - ${index + 1}`
+        ? `${index + 1} - ${distrik.nama_distrik}`
         : distrik.nama_distrik;
 
   return (
