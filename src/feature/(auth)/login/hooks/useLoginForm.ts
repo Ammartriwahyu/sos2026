@@ -66,9 +66,14 @@ export function useLoginForm() {
         message: "Login berhasil! Selamat datang kembali.",
       });
 
+      const tujuan = searchParams.get("redirect");
+      const tujuanAman =
+        tujuan && tujuan.startsWith("/") && !tujuan.startsWith("//");
       const redirectUrl = response.redirectUrl;
       await refetch();
-      if (redirectUrl) {
+      if (tujuanAman && tujuan) {
+        router.push(tujuan);
+      } else if (redirectUrl) {
         router.push(redirectUrl);
       } else {
         router.push("/");

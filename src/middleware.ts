@@ -60,6 +60,7 @@ export async function middleware(request: NextRequest) {
     if (!payload) {
       const url = new URL(loginPath, request.url);
       url.searchParams.set("error", "unauthorized");
+      url.searchParams.set("redirect", pathname + request.nextUrl.search);
       return NextResponse.redirect(url);
     }
   }
@@ -69,7 +70,12 @@ export async function middleware(request: NextRequest) {
       if (isAdminUser) {
         return NextResponse.redirect(new URL(adminDashboardPath, request.url));
       }
-      return NextResponse.redirect(new URL("/aktivitas", request.url));
+      const tujuan = request.nextUrl.searchParams.get("redirect");
+      const tujuanAman =
+        tujuan && tujuan.startsWith("/") && !tujuan.startsWith("//");
+      return NextResponse.redirect(
+        new URL(tujuanAman ? tujuan : "/aktivitas", request.url),
+      );
     }
   }
 
