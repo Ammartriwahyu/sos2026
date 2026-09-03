@@ -187,6 +187,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
                     <SelectItem value="B">B</SelectItem>
                     <SelectItem value="AB">AB</SelectItem>
                     <SelectItem value="O">O</SelectItem>
+                    <SelectItem value="Tidak Tahu">Tidak Tahu</SelectItem>
                   </SelectContent>
                 </Select>
               ) : (
