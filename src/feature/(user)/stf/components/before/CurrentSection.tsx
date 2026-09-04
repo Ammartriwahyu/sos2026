@@ -4,8 +4,8 @@ import React, { useMemo, useState } from "react";
 import { ProdiTabs } from "./ProdiTabs";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { stfData2024 } from "../../data/stfData2024";
-import Bintang from "@/assets/assetsos26/stf/bintang.svg";
-import SetengahBulan from "@/assets/assetsos26/stf/setengahbulan.svg";
+import Bintang from "@/assets/assetsos26/stf/bintanggerak.webp";
+import SetengahBulan from "@/assets/assetsos26/stf/setengahbulan.webp";
 import CirclePurple from "@/assets/assetsos26/shared/circle-purple.svg";
 
 const CurrentSection = () => {
@@ -98,7 +98,7 @@ const CurrentSection = () => {
                         repeat: Infinity,
                         ease: "easeInOut",
                       }}
-                      className="absolute left-0 bottom-0 -translate-x-1/2 translate-y-1/7 md:translate-y-1/5 z-40 origin-bottom"
+                      className="absolute left-0 bottom-0 -translate-x-1/2 translate-y-1/7 md:translate-y-1/7 z-40 origin-bottom"
                     >
                       <Image
                         src={Bintang}
@@ -123,7 +123,7 @@ const CurrentSection = () => {
                         repeat: Infinity,
                         ease: "easeInOut",
                       }}
-                      className="absolute right-0 bottom-0 translate-x-1/2 translate-y-1/7 md:translate-y-1/5 z-40 origin-bottom"
+                      className="absolute right-0 bottom-0 translate-x-1/2 translate-y-1/7 md:translate-y-1/7 z-40 origin-bottom"
                     >
                       <div className="scale-x-[-1]">
                         <Image
