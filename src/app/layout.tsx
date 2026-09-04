@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import { upanddownNormal, poppins } from "@/shared/utils/font";
 import { defaultMetadata } from "@/shared/utils/metadata";
 import SOSLOGO from "@/assets/logo-sos.png";
+
 export const metadata: Metadata = {
   ...defaultMetadata,
   metadataBase: new URL("https://sos.kbmdsi.com"),
