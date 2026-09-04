@@ -10,7 +10,7 @@ const badgeSosVariants = cva(
       variant: {
         // Varian "Belum Dikerjakan"
         not_started:
-          "rounded-[20px] bg-white/[0.15] backdrop-blur-md border border-white/20 text-white shadow-lg shadow-black/5",
+          "rounded-[20px] bg-white/[0.15] border border-white/20 text-white shadow-lg shadow-black/5",
 
         // Varian "Selesai"
         completed:
@@ -18,7 +18,7 @@ const badgeSosVariants = cva(
 
         // Varian "Terlewat"
         overdue:
-          "rounded-[20px] bg-white/[0.15] backdrop-blur-md border border-white/20 text-white shadow-lg shadow-black/5",
+          "rounded-[20px] bg-white/[0.15] border border-white/20 text-white shadow-lg shadow-black/5",
       },
     },
     defaultVariants: {

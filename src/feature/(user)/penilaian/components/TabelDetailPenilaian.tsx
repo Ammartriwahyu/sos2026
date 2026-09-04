@@ -44,19 +44,19 @@ export const TabelDetailPenilaian = ({
 
   // Styling baris data menggunakan warna FAFAFA dengan transparansi 20%
   const rowGlassStyle = {
-    background: "linear-gradient(135deg, rgba(250, 250, 250, 0.2) 0%, rgba(250, 250, 250, 0.1) 100%)",
-    backdropFilter: "blur(20px)",
-    WebkitBackdropFilter: "blur(20px)",
+    background:
+      "linear-gradient(135deg, rgba(250, 250, 250, 0.2) 0%, rgba(250, 250, 250, 0.1) 100%)",
     border: "1px solid rgba(255, 255, 255, 0.2)",
-    boxShadow: "0 12px 40px 0 rgba(0, 0, 0, 0.3), inset 0 1px 0 0 rgba(255, 255, 255, 0.25)",
+    boxShadow:
+      "0 12px 40px 0 rgba(0, 0, 0, 0.3), inset 0 1px 0 0 rgba(255, 255, 255, 0.25)",
   };
 
   const headerGlassStyle = {
-    background: "linear-gradient(135deg, rgba(42, 31, 92, 0.5) 0%, rgba(42, 31, 92, 0.25) 100%)",
-    backdropFilter: "blur(20px)",
-    WebkitBackdropFilter: "blur(20px)",
+    background:
+      "linear-gradient(135deg, rgba(42, 31, 92, 0.5) 0%, rgba(42, 31, 92, 0.25) 100%)",
     border: "1px solid rgba(255, 255, 255, 0.2)",
-    boxShadow: "0 12px 40px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25)",
+    boxShadow:
+      "0 12px 40px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25)",
   };
 
   return (
@@ -99,13 +99,22 @@ export const TabelDetailPenilaian = ({
             <tbody className="text-base md:text-lg text-white">
               {penilaian.map((item, index) => (
                 <tr key={item.nama_penilaian}>
-                  <td className="px-4 h-[48px] text-center font-normal" style={rowGlassStyle}>
+                  <td
+                    className="px-4 h-[48px] text-center font-normal"
+                    style={rowGlassStyle}
+                  >
                     {index + 1}
                   </td>
-                  <td className="px-6 h-[48px] font-normal" style={rowGlassStyle}>
+                  <td
+                    className="px-6 h-[48px] font-normal"
+                    style={rowGlassStyle}
+                  >
                     {item.nama_penilaian}
                   </td>
-                  <td className="px-6 h-[48px] font-normal" style={rowGlassStyle}>
+                  <td
+                    className="px-6 h-[48px] font-normal"
+                    style={rowGlassStyle}
+                  >
                     {item.nilai !== null ? item.nilai : "-"}
                   </td>
                 </tr>
@@ -115,13 +124,22 @@ export const TabelDetailPenilaian = ({
                 (row, index) =>
                   row.show && (
                     <tr key={row.nama}>
-                      <td className="px-4 h-[48px] text-center font-normal" style={rowGlassStyle}>
+                      <td
+                        className="px-4 h-[48px] text-center font-normal"
+                        style={rowGlassStyle}
+                      >
                         {penilaian.length + index + 1}
                       </td>
-                      <td className="px-6 h-[48px] font-normal" style={rowGlassStyle}>
+                      <td
+                        className="px-6 h-[48px] font-normal"
+                        style={rowGlassStyle}
+                      >
                         {row.nama}
                       </td>
-                      <td className="px-6 h-[48px] font-normal" style={rowGlassStyle}>
+                      <td
+                        className="px-6 h-[48px] font-normal"
+                        style={rowGlassStyle}
+                      >
                         {row.nilai}
                       </td>
                     </tr>
@@ -131,13 +149,22 @@ export const TabelDetailPenilaian = ({
               {/* Baris Rata-rata (Paling Bawah) */}
               <tr>
                 {/* Kolom kosong pertama: Rounded di sisi kiri bawah (rounded-bl-xl) */}
-                <td className="px-4 h-[48px] rounded-bl-xl font-bold" style={rowGlassStyle}></td>
+                <td
+                  className="px-4 h-[48px] rounded-bl-xl font-bold"
+                  style={rowGlassStyle}
+                ></td>
                 {/* Kolom teks "Rata-rata Nilai": Siku-siku */}
-                <td className="px-6 h-[48px] text-left font-bold" style={rowGlassStyle}>
+                <td
+                  className="px-6 h-[48px] text-left font-bold"
+                  style={rowGlassStyle}
+                >
                   Rata-rata Nilai
                 </td>
                 {/* Kolom nilai rata-rata: Rounded di sisi kanan bawah (rounded-br-xl) */}
-                <td className="px-6 h-[48px] text-left font-bold rounded-br-xl" style={rowGlassStyle}>
+                <td
+                  className="px-6 h-[48px] text-left font-bold rounded-br-xl"
+                  style={rowGlassStyle}
+                >
                   {rataRata}
                 </td>
               </tr>

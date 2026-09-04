@@ -25,8 +25,6 @@ const PresensiCard = ({ presensi, isLast = false }: Props) => {
       style={{
         background:
           "linear-gradient(135deg, rgba(250, 250, 250, 0.25) 0%, rgba(250, 250, 250, 0.15) 100%)",
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
         boxShadow:
           "0 12px 40px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.3)",
       }}

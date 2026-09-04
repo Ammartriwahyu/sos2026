@@ -20,7 +20,7 @@ const MaskotEmptyState = ({ message, className }: MaskotEmptyStateProps) => {
       )}
     >
       <div className="order-1 flex w-full flex-1 items-center justify-center sm:contents">
-        <div className="maskot-callout flex w-full max-w-[360px] items-center justify-center rounded-2xl border border-accent-violet/40 bg-accent-purple/40 px-6 py-5 backdrop-blur-sm sm:order-2 sm:max-w-[420px] sm:flex-1 sm:self-center sm:px-8 sm:py-6">
+        <div className="maskot-callout flex w-full max-w-[360px] items-center justify-center rounded-2xl border border-accent-violet/40 bg-accent-purple/40 px-6 py-5 sm:order-2 sm:max-w-[420px] sm:flex-1 sm:self-center sm:px-8 sm:py-6">
           <p className="text-center text-base font-semibold leading-relaxed text-white sm:text-lg lg:text-xl">
             {message}
           </p>

@@ -47,7 +47,7 @@ export const QuizViewSos26 = ({
   if (error) {
     return (
       <div className="flex items-center justify-center min-h-[200px] p-4">
-        <div className="bg-red-500/20 border border-red-500/50 text-white px-6 py-4 rounded-xl max-w-md text-center backdrop-blur-md">
+        <div className="bg-red-500/20 border border-red-500/50 text-white px-6 py-4 rounded-xl max-w-md text-center">
           <p className="font-medium">Error occurred</p>
           <p className="text-sm mt-1">{error}</p>
         </div>
@@ -58,7 +58,7 @@ export const QuizViewSos26 = ({
   if (!kuisData || !currentQuestion) {
     return (
       <div className="flex items-center justify-center min-h-[200px]">
-        <div className="bg-yellow-500/20 border border-yellow-500/50 text-white px-6 py-4 rounded-xl backdrop-blur-md">
+        <div className="bg-yellow-500/20 border border-yellow-500/50 text-white px-6 py-4 rounded-xl">
           <p className="font-medium">Quiz data not found</p>
         </div>
       </div>
@@ -78,8 +78,6 @@ export const QuizViewSos26 = ({
           style={{
             background:
               "linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.04) 100%)",
-            backdropFilter: "blur(12px)",
-            WebkitBackdropFilter: "blur(12px)",
             border: "1px solid rgba(255, 255, 255, 0.2)",
             boxShadow:
               "inset 0 1px 2px 0 rgba(0,0,0,0.2), 0 4px 16px 0 rgba(0,0,0,0.15)",
@@ -95,8 +93,6 @@ export const QuizViewSos26 = ({
         style={{
           background:
             "linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.04) 100%)",
-          backdropFilter: "blur(16px)",
-          WebkitBackdropFilter: "blur(16px)",
           border: "1px solid rgba(255, 255, 255, 0.2)",
           boxShadow:
             "inset 0 2px 4px 0 rgba(0,0,0,0.25), 0 8px 32px 0 rgba(0,0,0,0.2)",
@@ -134,8 +130,6 @@ export const QuizViewSos26 = ({
                   background: isSelected
                     ? "rgba(136, 129, 188, 0.5)"
                     : "rgba(255, 255, 255, 0.08)",
-                  backdropFilter: "blur(12px)",
-                  WebkitBackdropFilter: "blur(12px)",
                   borderColor: isSelected
                     ? "rgba(255, 255, 255, 0.5)"
                     : "rgba(255, 255, 255, 0.2)",

@@ -10,11 +10,11 @@ export const SkorAkhirDisplay = ({ skor, status }: SkorAkhirDisplayProps) => {
 
   // Menggunakan style liquid glass yang sama persis seperti header tabel
   const headerGlassStyle = {
-    background: "linear-gradient(135deg, rgba(42, 31, 92, 0.5) 0%, rgba(42, 31, 92, 0.25) 100%)",
-    backdropFilter: "blur(20px)",
-    WebkitBackdropFilter: "blur(20px)",
+    background:
+      "linear-gradient(135deg, rgba(42, 31, 92, 0.5) 0%, rgba(42, 31, 92, 0.25) 100%)",
     border: "1px solid rgba(255, 255, 255, 0.2)",
-    boxShadow: "0 12px 40px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25)",
+    boxShadow:
+      "0 12px 40px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25)",
   };
 
   return (
@@ -42,7 +42,8 @@ export const SkorAkhirDisplay = ({ skor, status }: SkorAkhirDisplayProps) => {
           style={{
             backgroundColor: isLulus ? "#4CAF50" : "#CF2A4A",
             border: "1px solid rgba(255, 255, 255, 0.2)",
-            boxShadow: "0 12px 40px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25)",
+            boxShadow:
+              "0 12px 40px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25)",
           }}
         >
           {isLulus ? "LULUS" : "TIDAK LULUS"}

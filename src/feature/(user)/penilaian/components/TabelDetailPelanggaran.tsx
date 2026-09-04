@@ -14,19 +14,19 @@ export const TabelDetailPelanggaran = ({
 
   // Styling baris data menggunakan warna FAFAFA dengan transparansi 20%
   const rowGlassStyle = {
-    background: "linear-gradient(135deg, rgba(250, 250, 250, 0.2) 0%, rgba(250, 250, 250, 0.1) 100%)",
-    backdropFilter: "blur(20px)",
-    WebkitBackdropFilter: "blur(20px)",
+    background:
+      "linear-gradient(135deg, rgba(250, 250, 250, 0.2) 0%, rgba(250, 250, 250, 0.1) 100%)",
     border: "1px solid rgba(255, 255, 255, 0.2)",
-    boxShadow: "0 12px 40px 0 rgba(0, 0, 0, 0.3), inset 0 1px 0 0 rgba(255, 255, 255, 0.25)",
+    boxShadow:
+      "0 12px 40px 0 rgba(0, 0, 0, 0.3), inset 0 1px 0 0 rgba(255, 255, 255, 0.25)",
   };
 
   const headerGlassStyle = {
-    background: "linear-gradient(135deg, rgba(42, 31, 92, 0.5) 0%, rgba(42, 31, 92, 0.25) 100%)",
-    backdropFilter: "blur(20px)",
-    WebkitBackdropFilter: "blur(20px)",
+    background:
+      "linear-gradient(135deg, rgba(42, 31, 92, 0.5) 0%, rgba(42, 31, 92, 0.25) 100%)",
     border: "1px solid rgba(255, 255, 255, 0.2)",
-    boxShadow: "0 12px 40px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25)",
+    boxShadow:
+      "0 12px 40px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.25)",
   };
 
   return (
@@ -83,16 +83,28 @@ export const TabelDetailPelanggaran = ({
               ) : (
                 pelanggaran.map((item, index) => (
                   <tr key={item.nama}>
-                    <td className="px-4 h-[48px] text-center font-normal" style={rowGlassStyle}>
+                    <td
+                      className="px-4 h-[48px] text-center font-normal"
+                      style={rowGlassStyle}
+                    >
                       {index + 1}
                     </td>
-                    <td className="px-6 h-[48px] font-normal" style={rowGlassStyle}>
+                    <td
+                      className="px-6 h-[48px] font-normal"
+                      style={rowGlassStyle}
+                    >
                       {item.nama}
                     </td>
-                    <td className="px-6 h-[48px] font-normal" style={rowGlassStyle}>
+                    <td
+                      className="px-6 h-[48px] font-normal"
+                      style={rowGlassStyle}
+                    >
                       {item.nilai}
                     </td>
-                    <td className="px-6 h-[48px] font-normal capitalize" style={rowGlassStyle}>
+                    <td
+                      className="px-6 h-[48px] font-normal capitalize"
+                      style={rowGlassStyle}
+                    >
                       {item.kategori}
                     </td>
                   </tr>
@@ -102,14 +114,26 @@ export const TabelDetailPelanggaran = ({
               {/* Baris Total Poin Pelanggaran (Paling Bawah) */}
               {pelanggaran.length > 0 && (
                 <tr>
-                  <td className="px-4 h-[48px] rounded-bl-xl font-bold" style={rowGlassStyle}></td>
-                  <td className="px-6 h-[48px] text-left font-bold" style={rowGlassStyle}>
+                  <td
+                    className="px-4 h-[48px] rounded-bl-xl font-bold"
+                    style={rowGlassStyle}
+                  ></td>
+                  <td
+                    className="px-6 h-[48px] text-left font-bold"
+                    style={rowGlassStyle}
+                  >
                     Total Poin Pelanggaran
                   </td>
-                  <td className="px-6 h-[48px] text-left font-bold" style={rowGlassStyle}>
+                  <td
+                    className="px-6 h-[48px] text-left font-bold"
+                    style={rowGlassStyle}
+                  >
                     {totalPoin > 0 ? totalPoin : "-"}
                   </td>
-                  <td className="px-6 h-[48px] text-left font-bold rounded-br-xl" style={rowGlassStyle}></td>
+                  <td
+                    className="px-6 h-[48px] text-left font-bold rounded-br-xl"
+                    style={rowGlassStyle}
+                  ></td>
                 </tr>
               )}
             </tbody>

@@ -37,7 +37,7 @@ export const LevelSection = ({ level }: LevelSectionProps) => {
       className={cn(
         "w-full max-w-[714px] min-h-[166px] mx-auto flex flex-col justify-center items-center",
         "p-6 md:p-[32px]",
-        "rounded-[12px] backdrop-blur-[20px] border border-white/20",
+        "rounded-[12px] border border-white/20",
         "bg-gradient-to-b from-white/[0.22] to-white/[0.08]",
         "shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]",
       )}

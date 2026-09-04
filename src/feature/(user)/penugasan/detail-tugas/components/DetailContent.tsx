@@ -146,8 +146,6 @@ export const DetailContent = ({
                         style={{
                           background:
                             "linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.08) 100%)",
-                          backdropFilter: "blur(16px)",
-                          WebkitBackdropFilter: "blur(16px)",
                           border: "1px solid rgba(255, 255, 255, 0.3)",
                           boxShadow:
                             "inset 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 2px 8px 0 rgba(0, 0, 0, 0.15)",
@@ -161,8 +159,6 @@ export const DetailContent = ({
                       style={{
                         background:
                           "linear-gradient(135deg, rgba(70, 127, 189, 0.15) 0%, rgba(70, 127, 189, 0.05) 100%)",
-                        backdropFilter: "blur(16px)",
-                        WebkitBackdropFilter: "blur(16px)",
                         border: "1px solid rgba(70, 127, 189, 0.3)",
                         boxShadow:
                           "inset 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 2px 8px 0 rgba(0, 0, 0, 0.15)",

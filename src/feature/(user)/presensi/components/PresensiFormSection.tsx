@@ -66,8 +66,6 @@ const PresensiFormSection = ({ refreshPresensi }: PresensiFormSectionProps) => {
                 style={{
                   background:
                     "linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%)",
-                  backdropFilter: "blur(16px)",
-                  WebkitBackdropFilter: "blur(16px)",
                   border: "1px solid rgba(255, 255, 255, 0.2)",
                   boxShadow:
                     "inset 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 2px 8px 0 rgba(0, 0, 0, 0.15)",

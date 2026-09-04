@@ -51,7 +51,7 @@ const RekapPresensiSection = ({
               />
             ))
           ) : (
-            <div className="w-full py-6 md:py-8 text-center text-white/70 text-[11px] sm:text-xs md:text-lg bg-white/[0.05] backdrop-blur-[12px] rounded-[12px] border border-white/10">
+            <div className="w-full py-6 md:py-8 text-center text-white/70 text-[11px] sm:text-xs md:text-lg bg-white/[0.05] rounded-[12px] border border-white/10">
               Belum ada data presensi.
             </div>
           )}

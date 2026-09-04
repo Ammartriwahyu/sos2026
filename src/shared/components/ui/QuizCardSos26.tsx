@@ -37,7 +37,7 @@ const QuizCard26 = forwardRef<HTMLDivElement, QuizCard26Props>(
         // Wrapper Utama
         className={cn(
           "group relative flex w-full sm:w-fit h-auto px-5 sm:px-[40px] py-5 sm:py-[20px] rounded-[20px] transition-all duration-300 ease-in-out",
-          "backdrop-blur-[16px] [-webkit-backdrop-filter:blur(16px)]",
+          "",
           "bg-gradient-to-br from-white/[0.18] to-white/[0.06]",
           "border border-white/20",
           "shadow-[inset_0_2px_4px_0_rgba(0,0,0,0.25),0_8px_32px_0_rgba(0,0,0,0.2)]",
@@ -134,8 +134,6 @@ const QuizCard26 = forwardRef<HTMLDivElement, QuizCard26Props>(
             style={{
               background:
                 "linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%)",
-              backdropFilter: "blur(12px)",
-              WebkitBackdropFilter: "blur(12px)",
               border: "1px solid rgba(255, 255, 255, 0.15)",
               boxShadow:
                 "inset 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 4px 16px 0 rgba(0, 0, 0, 0.1)",
