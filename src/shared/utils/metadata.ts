@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import SOSLOGO from "@/assets/logo-sos.svg";
-import favicon from "@/app/favicon.ico";
+import logoPng from "@/assets/logo-sos.png";
 export const siteConfig = {
   name: "Synergy of Symphony 2026",
   shortName: "SOS 2026",
@@ -10,6 +10,7 @@ export const siteConfig = {
   ogImage: SOSLOGO,
   twitterImage: SOSLOGO,
   themeColor: "#1e40af",
+  logoPng: logoPng,
 };
 
 export const defaultMetadata: Metadata = {
@@ -22,20 +23,20 @@ export const defaultMetadata: Metadata = {
   icons: {
     icon: [
       {
-        url: favicon.src,
-        type: "image/x-icon",
+        url: logoPng.src,
+        type: "image/png",
       },
     ],
     shortcut: [
       {
-        url: favicon.src,
-        type: "image/x-icon",
+        url: logoPng.src,
+        type: "image/png",
       },
     ],
     apple: [
       {
-        url: favicon.src,
-        type: "image/x-icon",
+        url: logoPng.src,
+        type: "image/png",
       },
     ],
   },
