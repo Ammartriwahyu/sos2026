@@ -20,8 +20,8 @@ const BgBawah: React.FC<BgBawahProps> = ({
         <Image
           src={CustomAsset}
           alt=""
-          width={2000}
-          height={2000}
+          width={1280}
+          height={134}
 
           className="w-full h-auto min-h-[100px] md:min-h-[150px] object-bottom object-cover"
           priority
