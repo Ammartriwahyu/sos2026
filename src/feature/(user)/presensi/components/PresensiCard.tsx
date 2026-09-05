@@ -32,10 +32,7 @@ const PresensiCard = ({ presensi, isLast = false }: Props) => {
       {kolom.map(({ label, value, width }) => (
         <div
           key={label}
-          className={cn(
-            "min-w-0 leading-snug break-words text-center md:text-left",
-            width,
-          )}
+          className={cn("min-w-0 leading-snug break-words text-center", width)}
         >
           <span>{value}</span>
         </div>
