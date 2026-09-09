@@ -15,6 +15,14 @@ import AuroraWaves from "../../peta/components/AuroraWaves";
 const StfContainer = () => {
   const { stfData, isLoading, error } = useGetStfData();
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+
+  useEffect(() => {
+    // Jika loading selesai (entah sukses atau error), tandai initial load selesai
+    if (!isLoading) {
+      setIsInitialLoad(false);
+    }
+  }, [isLoading]);
 
   useEffect(() => {
     if (stfData?.kandidat && stfData.kandidat.length > 0 && !activeCardId) {
@@ -27,7 +35,7 @@ const StfContainer = () => {
     }
   }, [stfData?.kandidat, activeCardId]);
 
-  if (isLoading && !stfData) {
+  if (isInitialLoad && isLoading) {
     return (
       <SpaceBackground className="w-full flex flex-col h-screen overflow-hidden relative">
         <div className="mx-auto flex h-full items-center justify-center text-white relative z-10">
