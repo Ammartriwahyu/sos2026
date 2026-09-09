@@ -8,29 +8,26 @@ import VisiMisiSection from "../components/after/VisiMisiSection";
 import CurrentSection from "../components/before/CurrentSection";
 import CtaSection from "../components/before/CtaSection";
 import { useGetStfData } from "../hooks/useGetStfData";
-import GradientBackground from "@/shared/components/background/GradientBackground";
-import { useAuthContext } from "@/shared/hooks/useAuthContext";
 import SpaceBackground from "@/shared/components/background/SpaceBackground";
 import GrassDivider from "@/shared/components/background/GrassDivider";
 import AuroraWaves from "../../peta/components/AuroraWaves";
 
 const StfContainer = () => {
-  const { stfData, caketangList, isLoading, error } = useGetStfData();
+  const { stfData, isLoading, error } = useGetStfData();
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
-  const { user } = useAuthContext();
 
   useEffect(() => {
-    if (caketangList && caketangList.length > 0 && !activeCardId) {
+    if (stfData?.kandidat && stfData.kandidat.length > 0 && !activeCardId) {
       // Default pilih kartu tengah (index 1 jika ada)
       const defaultId =
-        caketangList.length > 1
-          ? caketangList[1].id_caketang
-          : caketangList[0].id_caketang;
+        stfData.kandidat.length > 1
+          ? stfData.kandidat[1].id_caketang
+          : stfData.kandidat[0].id_caketang;
       setActiveCardId(defaultId);
     }
-  }, [caketangList, activeCardId]);
+  }, [stfData?.kandidat, activeCardId]);
 
-  if (isLoading) {
+  if (isLoading && !stfData) {
     return (
       <SpaceBackground className="w-full flex flex-col h-screen overflow-hidden relative">
         <div className="mx-auto flex h-full items-center justify-center text-white relative z-10">
@@ -42,68 +39,140 @@ const StfContainer = () => {
     );
   }
 
-  // Tampilkan kondisi 2 jika pemilihan dibuka oleh backend
-  const showPemilihan =
-    stfData?.pemilihan_is_active && user?.tipe_mahasiswa !== "pemutihan";
+  // 1. Jika tidak berhak memilih (pemutihan / prodi tidak valid)
+  if (stfData && !stfData.berhak_memilih) {
+    return (
+      <SpaceBackground className="w-full flex flex-col h-screen overflow-hidden relative">
+        <div className="mx-auto flex h-full flex-col items-center justify-center text-white relative z-10 text-center gap-4 px-4">
+          <h2 className="text-3xl md:text-5xl font-bold">Maaf 😔</h2>
+          <p className="text-lg md:text-xl text-white/80 max-w-lg">
+            Data kamu belum lengkap atau kamu adalah mahasiswa pemutihan,
+            sehingga tidak memiliki hak suara. Hubungi panitia jika ini adalah
+            kesalahan.
+          </p>
+        </div>
+      </SpaceBackground>
+    );
+  }
+
+  // 2. Jika sesi belum ada
+  if (stfData && !stfData.sesi) {
+    return (
+      <SpaceBackground className="w-full flex flex-col overflow-hidden">
+        <CurrentSection />
+
+        <div className="relative z-20 w-full mt-24">
+          <GrassDivider className="translate-y-px" />
+          <div className="w-full h-16 md:h-24 peta-flashback-bg" />
+        </div>
+
+        <CtaSection />
+      </SpaceBackground>
+    );
+  }
+
+  // 3. Jika sudah memilih (tampilkan pilihan_saya)
+  if (stfData && stfData.sudah_memilih && stfData.pilihan_saya) {
+    return (
+      <SpaceBackground className="w-full flex flex-col overflow-hidden relative">
+        <div className="relative z-10">
+          <HeroSection jenisSesi={stfData.sesi?.jenis} />
+        </div>
+
+        <div className="relative w-full flex-grow flex flex-col z-20">
+          <GrassDivider className="translate-y-px relative z-20" />
+
+          <div className="w-full peta-flashback-bg relative flex-grow min-h-screen pb-32">
+            <div className="absolute top-0 left-0 right-0 h-[800px] z-0 overflow-hidden pointer-events-none">
+              <AuroraWaves />
+            </div>
+
+            <div className="relative z-10 w-full flex flex-col items-center">
+              <div className="bg-green-500/20 border border-green-500/50 text-white px-6 py-4 rounded-xl mt-8 mb-4 max-w-2xl text-center">
+                <h3 className="text-xl font-bold text-green-400">
+                  Kamu Sudah Memilih
+                </h3>
+                <p>
+                  Pilihan kamu telah tersimpan. Terima kasih atas partisipasi
+                  kamu!
+                </p>
+              </div>
+              <VisiMisiSection
+                kandidat={[stfData.pilihan_saya]}
+                isLoading={isLoading}
+                error={error}
+                activeCardId={stfData.pilihan_saya.id_caketang}
+                setActiveCardId={() => {}}
+              />
+            </div>
+          </div>
+        </div>
+      </SpaceBackground>
+    );
+  }
+
+  // 4. Voting Aktif
+  const isPengulangan = stfData?.sesi?.pengulangan;
 
   return (
-    <>
-      {showPemilihan ? (
-        <SpaceBackground className="w-full flex flex-col overflow-hidden relative">
-          <div className="relative z-10">
-            <HeroSection />
+    <SpaceBackground className="w-full flex flex-col overflow-hidden relative">
+      <div className="relative z-10">
+        <HeroSection jenisSesi={stfData?.sesi?.jenis} />
+      </div>
+
+      <div className="relative w-full flex-grow flex flex-col z-20">
+        <GrassDivider className="translate-y-px relative z-20" />
+
+        <div className="w-full peta-flashback-bg relative flex-grow min-h-screen pb-32">
+          {/* Aurora Waves behind the cards */}
+          <div className="absolute top-0 left-0 right-0 h-[800px] z-0 overflow-hidden pointer-events-none">
+            <AuroraWaves />
           </div>
 
-          <div className="relative w-full flex-grow flex flex-col z-20">
-            <GrassDivider className="translate-y-px relative z-20" />
-
-            <div className="w-full peta-flashback-bg relative flex-grow min-h-screen pb-32">
-              {/* Aurora Waves behind the 3 cards */}
-              <div className="absolute top-0 left-0 right-0 h-[800px] z-0 overflow-hidden pointer-events-none">
-                <AuroraWaves />
-              </div>
-
-              {caketangList && caketangList.length > 0 && (
-                <div className="relative z-10 w-full flex flex-col items-center">
-                  <VisiMisiSection
-                    caketangList={caketangList}
-                    isLoading={isLoading}
-                    error={error}
-                    activeCardId={activeCardId}
-                    setActiveCardId={setActiveCardId}
-                  />
-
-                  <div className="w-full relative z-20 mt-16 md:mt-24">
-                    <GrassDivider className="translate-y-px relative z-20" />
-                    <div className="w-full peta-flashback-bg relative pb-16 pt-8">
-                      <PemilihanSection
-                        caketangList={caketangList}
-                        isLoading={isLoading}
-                        error={error}
-                        activeCardId={activeCardId}
-                        setActiveCardId={setActiveCardId}
-                        kesempatan={stfData?.kesempatan ?? false}
-                      />
-                    </div>
-                  </div>
+          <div className="relative z-10 w-full flex flex-col items-center">
+            <div className="mt-12 md:mt-16 text-center px-4 flex flex-col gap-4">
+              {stfData?.sesi?.judul && (
+                <h2 className="text-3xl md:text-5xl font-bold text-white drop-shadow-md">
+                  {stfData.sesi.judul}
+                </h2>
+              )}
+              {isPengulangan && (
+                <div className="bg-yellow-500/20 border border-yellow-500/50 text-yellow-300 px-6 py-3 rounded-xl mx-auto inline-block font-medium max-w-2xl text-center">
+                  ⚠️ Ini adalah pemungutan suara ulang karena terdapat hasil
+                  seri pada putaran sebelumnya.
                 </div>
               )}
             </div>
-          </div>
-        </SpaceBackground>
-      ) : (
-        <SpaceBackground className="w-full flex flex-col overflow-hidden">
-          <CurrentSection />
 
-          <div className="relative z-20 w-full mt-24">
-            <GrassDivider className="translate-y-px" />
-            <div className="w-full h-16 md:h-24 peta-flashback-bg" />
-          </div>
+            {stfData?.kandidat && stfData.kandidat.length > 0 && (
+              <>
+                <VisiMisiSection
+                  kandidat={stfData.kandidat}
+                  isLoading={isLoading}
+                  error={error}
+                  activeCardId={activeCardId}
+                  setActiveCardId={setActiveCardId}
+                />
 
-          <CtaSection />
-        </SpaceBackground>
-      )}
-    </>
+                <div className="w-full relative z-20 mt-16 md:mt-24">
+                  <GrassDivider className="translate-y-px relative z-20" />
+                  <div className="w-full peta-flashback-bg relative pb-16 pt-8">
+                    <PemilihanSection
+                      kandidat={stfData.kandidat}
+                      isLoading={isLoading}
+                      error={error}
+                      activeCardId={activeCardId}
+                      setActiveCardId={setActiveCardId}
+                      kesempatan={true}
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </SpaceBackground>
   );
 };
 

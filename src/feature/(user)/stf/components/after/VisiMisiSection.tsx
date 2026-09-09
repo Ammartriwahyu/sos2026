@@ -10,7 +10,7 @@ import { formatText } from "@/lib/utils";
 import Starfield from "@/shared/components/background/Starfield";
 
 interface VisiMisiSectionProps {
-  caketangList: Caketang[];
+  kandidat: Caketang[];
   isLoading: boolean;
   error: string | null;
   activeCardId: string | null;
@@ -18,11 +18,11 @@ interface VisiMisiSectionProps {
 }
 
 const VisiMisiSection = ({
-  caketangList,
+  kandidat,
   activeCardId,
   setActiveCardId,
 }: VisiMisiSectionProps) => {
-  const activeCaketang = caketangList?.find(
+  const activeCaketang = kandidat?.find(
     (caketang: Caketang) => caketang.id_caketang === activeCardId,
   );
 
@@ -47,7 +47,7 @@ const VisiMisiSection = ({
       <div className="mx-auto flex w-full flex-col relative z-10 items-center justify-center py-16 md:py-24 px-4 gap-20 md:gap-32 text-white lg:px-8 md:px-12 xl:px-24">
         {/* Cards Row */}
         <div className="flex w-full flex-nowrap justify-center gap-4 md:gap-12 lg:gap-20">
-          {caketangList?.map((caketang: Caketang) => (
+          {kandidat?.map((caketang: Caketang) => (
             <CaketangCard
               key={caketang.id_caketang}
               data={caketang}

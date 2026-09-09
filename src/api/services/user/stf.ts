@@ -11,12 +11,25 @@ export interface Caketang {
   foto: string;
 }
 
+export interface Sesi {
+  id_sesi: string;
+  jenis: "caketang" | "kadep";
+  judul: string;
+  prodi: string;
+  nama_prodi: string;
+  urutan: number;
+  pengulangan: boolean;
+  dibuka_at: string | null;
+}
+
 export interface StfData {
-  pemilihan_is_active: boolean;
-  waktu_pemilihan: string;
-  kesempatan: boolean;
-  data_ketang: Caketang[];
-  data_dipilih: Caketang;
+  berhak_memilih: boolean;
+  prodi: string;
+  nama_prodi: string;
+  sesi: Sesi | null;
+  sudah_memilih: boolean;
+  pilihan_saya: Caketang | null;
+  kandidat: Caketang[];
 }
 
 export interface BackendResponse<T> {

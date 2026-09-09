@@ -11,7 +11,7 @@ import { CheckCircle, XCircle } from "lucide-react";
 import { useAuthContext } from "@/shared/hooks/useAuthContext";
 
 interface PemilihanSectionProps {
-  caketangList: Caketang[];
+  kandidat: Caketang[];
   isLoading: boolean;
   error: string | null;
   activeCardId: string | null;
@@ -20,7 +20,7 @@ interface PemilihanSectionProps {
 }
 
 const PemilihanSection = ({
-  caketangList,
+  kandidat,
   activeCardId,
   setActiveCardId,
   kesempatan = false,
@@ -31,7 +31,7 @@ const PemilihanSection = ({
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [isResultModalOpen, setIsResultModalOpen] = useState(false);
 
-  const activeCaketang = caketangList?.find(
+  const activeCaketang = kandidat?.find(
     (caketang: Caketang) => caketang.id_caketang === activeCardId,
   );
 
@@ -52,8 +52,8 @@ const PemilihanSection = ({
             Saatnya memilih!
           </h4>
           <div className="flex flex-row justify-center items-center w-full px-4 sm:px-0 -space-x-16 md:-space-x-24 lg:-space-x-32 pt-8 pb-12">
-            {caketangList?.map((caketang: Caketang, index: number) => {
-              const activeIndex = caketangList.findIndex(
+            {kandidat?.map((caketang: Caketang, index: number) => {
+              const activeIndex = kandidat.findIndex(
                 (c) => c.id_caketang === activeCardId,
               );
               return (
