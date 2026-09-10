@@ -3,6 +3,7 @@
 import { useState, FormEvent } from "react";
 import { stfService } from "@/api/services/admin/stf";
 import { useRouter } from "next/navigation";
+import { isAxiosError } from "axios";
 
 export const useCreateStf = () => {
   const router = useRouter();
@@ -39,9 +40,16 @@ export const useCreateStf = () => {
       } else {
         throw new Error(response.message || "Gagal membuat caketang.");
       }
-    } catch (error) {
+    } catch (error: unknown) {
       console.error(error);
-      alert("Terjadi kesalahan. Silakan coba lagi.");
+      let backendMessage = "Terjadi kesalahan saat menghubungi server.";
+      if (
+        isAxiosError<{ message?: string }>(error) &&
+        error.response?.data?.message
+      ) {
+        backendMessage = error.response.data.message;
+      }
+      alert(`Gagal: ${backendMessage}`);
     } finally {
       setIsLoading(false);
     }
