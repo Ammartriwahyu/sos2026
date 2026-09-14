@@ -44,7 +44,7 @@ const PetaKoordinat = ({ mahasiswaList, isLoading }: PetaKoordinatProps) => {
     <section className="rounded-2xl bg-white p-6 shadow-sm">
       <h3 className="text-xl font-bold text-primary-normal">Peta Koordinat</h3>
 
-      <div className="mt-4 h-72 overflow-hidden rounded-xl bg-admin-card md:h-96">
+      <div className="isolate mt-4 h-72 overflow-hidden rounded-xl bg-admin-card md:h-96">
         {isLoading ? (
           <div className="flex h-full items-center justify-center gap-2 text-sm text-default-dark/60">
             <Loader2 className="h-4 w-4 animate-spin" />

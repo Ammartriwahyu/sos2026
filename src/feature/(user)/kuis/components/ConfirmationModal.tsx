@@ -37,7 +37,7 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
       <div className="flex justify-center  gap-4 mt-6">
         {!hideCancelButton && (
           <Button
-            variant="outline"
+            variant="admin-outline"
             className="text-xs md:text-lg"
             onClick={onClose}
             disabled={isLoading}
@@ -46,7 +46,7 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
           </Button>
         )}
         <Button
-          variant="primary"
+          variant="admin"
           className="text-xs md:text-lg"
           onClick={onConfirm}
           disabled={isLoading}

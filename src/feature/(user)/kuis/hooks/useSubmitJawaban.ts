@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import {
   kuisService,
   SubmitKuisPayload,
@@ -24,10 +25,14 @@ export const useSubmitKuis = () => {
       setData(resultData);
       return resultData;
     } catch (err) {
+      const pesanBackend = axios.isAxiosError(err)
+        ? (err.response?.data as { message?: string } | undefined)?.message
+        : undefined;
       const errorMessage =
-        err instanceof Error ? err.message : "Gagal mengirim jawaban.";
+        pesanBackend ??
+        (err instanceof Error ? err.message : "Gagal mengirim jawaban.");
       setError(errorMessage);
-      throw new Error(errorMessage);
+      throw err;
     } finally {
       setIsLoading(false);
     }

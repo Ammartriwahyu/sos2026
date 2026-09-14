@@ -20,9 +20,9 @@ export async function middleware(request: NextRequest) {
   const adminPath = "/admin";
   const loginPath = "/login";
   const adminDashboardPath = "/admin/dashboard";
-  const stfPath = "/stf";
-  const protectedUserPaths = ["/profile", "/aktivitas"];
-  const publicUserPaths = ["/aktivitas", "/aktivitas/"];
+
+  const protectedUserPaths = ["/profile", "/aktivitas", "/stf"];
+  const publicUserPaths = ["/aktivitas", "/aktivitas/", "/stf", "/stf/"];
 
   const adminRoles = ["admin", "superadmin", "sqc", "pjl"];
   const isAdminUser = payload && adminRoles.includes(payload.Role as string);
@@ -47,10 +47,6 @@ export async function middleware(request: NextRequest) {
       url.searchParams.set("error", "unauthorized");
       return NextResponse.redirect(url);
     }
-  }
-
-  if (pathname.startsWith(stfPath) && !isAdminUser) {
-    return NextResponse.redirect(new URL("/", request.url));
   }
 
   if (

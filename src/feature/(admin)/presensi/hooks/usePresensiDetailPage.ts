@@ -1,27 +1,12 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   presensiService,
   PresensiDetailData,
   PresensiMahasiswaDetail,
-  Pagination,
-  PresensiMahasiswaListFilters,
 } from "@/api/services/admin/presensi";
 import { ApiResponse } from "@/api/core/AxiosInstance";
 
-export interface ReactTableState {
-  globalFilter: string;
-  pagination: {
-    pageIndex: number;
-    pageSize: number;
-  };
-}
-
-export const usePresensiDetailPage = (
-  kodeId: string,
-  tableState: ReactTableState,
-  selectedDistrik: string | null,
-  selectedKelompok: string | null,
-) => {
+export const usePresensiDetailPage = (kodeId: string) => {
   const [presensiInfo, setPresensiInfo] = useState<
     PresensiDetailData["presensi_info"] | null
   >(null);
@@ -31,26 +16,8 @@ export const usePresensiDetailPage = (
   const [mahasiswaList, setMahasiswaList] = useState<
     PresensiMahasiswaDetail[] | null
   >(null);
-  const [mahasiswaPagination, setMahasiswaPagination] =
-    useState<Pagination | null>(null);
   const [isLoadingList, setIsLoadingList] = useState<boolean>(true);
   const [errorList, setErrorList] = useState<string | null>(null);
-
-  const mahasiswaListFilters: PresensiMahasiswaListFilters = useMemo(() => {
-    return {
-      nama: tableState.globalFilter || undefined,
-      page: tableState.pagination.pageIndex + 1,
-      pageSize: tableState.pagination.pageSize,
-      distrik: selectedDistrik,
-      kelompok: selectedKelompok,
-    };
-  }, [
-    tableState.globalFilter,
-    tableState.pagination.pageIndex,
-    tableState.pagination.pageSize,
-    selectedDistrik,
-    selectedKelompok,
-  ]);
 
   const fetchPresensiInfo = useCallback(async () => {
     if (!kodeId) {
@@ -90,21 +57,16 @@ export const usePresensiDetailPage = (
     setIsLoadingList(true);
     setErrorList(null);
     try {
-      const response: ApiResponse<{
-        mahasiswa_list: PresensiMahasiswaDetail[];
-        pagination: Pagination;
-      }> = await presensiService.getPresensiMahasiswaList(
-        kodeId,
-        mahasiswaListFilters,
-      );
+      const response = await presensiService.getPresensiMahasiswaList(kodeId, {
+        page: 1,
+        pageSize: 10000,
+      });
 
       if (response.success && response.data) {
-        setMahasiswaList(response.data.mahasiswa_list);
-        setMahasiswaPagination(response.data.pagination);
+        setMahasiswaList(response.data.mahasiswa_list ?? []);
       } else {
         setErrorList(response.message || "Failed to load student list.");
         setMahasiswaList(null);
-        setMahasiswaPagination(null);
       }
     } catch (err: unknown) {
       const apiError = err as ApiResponse<null>;
@@ -112,12 +74,11 @@ export const usePresensiDetailPage = (
         apiError?.message || "An unexpected error occurred fetching list.",
       );
       setMahasiswaList(null);
-      setMahasiswaPagination(null);
       console.error("Error in fetchMahasiswaList:", err);
     } finally {
       setIsLoadingList(false);
     }
-  }, [kodeId, mahasiswaListFilters]);
+  }, [kodeId]);
 
   useEffect(() => {
     fetchPresensiInfo();
@@ -130,16 +91,15 @@ export const usePresensiDetailPage = (
   return {
     presensiInfo,
     mahasiswaList,
-    mahasiswaPagination,
     isLoadingInfo,
     isLoadingList,
     errorInfo,
     errorList,
+    refreshInfo: fetchPresensiInfo,
+    refreshList: fetchMahasiswaList,
     refreshAll: useCallback(() => {
       fetchPresensiInfo();
       fetchMahasiswaList();
     }, [fetchPresensiInfo, fetchMahasiswaList]),
-    refreshInfo: fetchPresensiInfo,
-    refreshList: fetchMahasiswaList,
   };
 };

@@ -141,13 +141,13 @@ const DashboardContainer = () => {
         <DashboardCard
           title="Sudah Dinilai"
           value={data.dinilai}
-          prefix={"/ " + data.belum_dinilai + " Penilaian"}
+          prefix={"/ " + data.jumlah_tugas + " Penilaian"}
           icon={<Star className="w-6 h-6" />}
         />
         <DashboardCard
           title="Presensi Hari Ini"
           value={data.presensi_sekarang}
-          prefix={"/ " + data.presensi_total + " Hadir"}
+          prefix={"/ " + data.jumlah_maba + " Hadir"}
           icon={<Check className="w-6 h-6" />}
         />
         <DashboardCard

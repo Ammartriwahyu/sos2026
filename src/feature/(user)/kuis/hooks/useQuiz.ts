@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import { useGetSoalKuis } from "./useGetSoalQuiz";
 import { useSubmitKuis } from "./useSubmitJawaban";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 import { QuizResult } from "@/api/services/user/quiz";
 
 type ModalContent = {
@@ -168,10 +169,35 @@ export const useQuiz = ({
     } catch (submitError) {
       console.error("Submit error:", submitError);
       setIsSubmissionInProgress(false);
+
+      const pesanBackend = axios.isAxiosError(submitError)
+        ? (submitError.response?.data as { message?: string } | undefined)
+            ?.message
+        : undefined;
+
+      if (
+        axios.isAxiosError(submitError) &&
+        submitError.response?.status === 409
+      ) {
+        setModalContent({
+          isOpen: true,
+          title: "Gagal Mengumpulkan",
+          message:
+            pesanBackend ??
+            "Jawabanmu belum bisa dikirim. Muat ulang halaman, lalu kumpulkan lagi.",
+          onConfirm: () => window.location.reload(),
+          confirmText: "Muat Ulang",
+          hideCancelButton: true,
+        });
+        return;
+      }
+
       setModalContent({
         isOpen: true,
         title: "Gagal Mengumpulkan",
-        message: "Terjadi kesalahan saat menyimpan jawaban. Silakan coba lagi.",
+        message:
+          pesanBackend ??
+          "Terjadi kesalahan saat menyimpan jawaban. Silakan coba lagi.",
         onConfirm: closeModal,
         confirmText: "Tutup",
         hideCancelButton: true,

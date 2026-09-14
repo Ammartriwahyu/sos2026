@@ -11,6 +11,7 @@ import { useGetStfData } from "../hooks/useGetStfData";
 import SpaceBackground from "@/shared/components/background/SpaceBackground";
 import GrassDivider from "@/shared/components/background/GrassDivider";
 import AuroraWaves from "../../peta/components/AuroraWaves";
+import AktivitasBeforeLogin from "../../aktivitas/components/AktivitasBeforeLogin";
 
 const StfContainer = () => {
   const { stfData, isLoading, error } = useGetStfData();

@@ -4,10 +4,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { ChevronLeft } from "lucide-react";
 import DateTimeDisplay from "../components/DateTimeDisplay";
 import { Button } from "@/shared/components/ui/Button";
-import {
-  usePresensiDetailPage,
-  ReactTableState,
-} from "../../hooks/usePresensiDetailPage";
+import { usePresensiDetailPage } from "../../hooks/usePresensiDetailPage";
 import {
   PresensiMahasiswaDetail,
   PresensiMahasiswaSummary,
@@ -21,7 +18,8 @@ import {
   PaginationState,
   getSortedRowModel,
 } from "@tanstack/react-table";
-import { useSelectOptions } from "@/shared/hooks/useSelectOptions";
+import { distrikService } from "@/api/services/admin/distrik";
+import { Distrik } from "@/feature/(admin)/distrik/type";
 import PresensiTable from "../components/PresensiTable";
 import PetaKoordinat from "../components/PetaKoordinat";
 import { Modal } from "@/shared/components/ui/Modal";
@@ -43,27 +41,78 @@ const DetailPresensiContainer: React.FC<DetailPresensiContainerProps> = ({
   const [selectedDistrik, setSelectedDistrik] = useState<string | null>(null);
   const [selectedKelompok, setSelectedKelompok] = useState<string | null>(null);
   const [uiSearchText, setUiSearchText] = useState<string>("");
-  const [apiSearchText, setApiSearchText] = useState<string>("");
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setApiSearchText(uiSearchText);
-    }, 500);
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [uiSearchText]);
 
   const [paginationState, setPaginationState] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   });
 
+  const [distrikList, setDistrikList] = useState<Distrik[]>([]);
+  const [filterNimSet, setFilterNimSet] = useState<Set<string> | null>(null);
+
+  useEffect(() => {
+    distrikService
+      .getAllDistricts()
+      .then((res) => setDistrikList(res.data ?? []))
+      .catch((err) => {
+        console.error("Gagal memuat distrik:", err);
+        setDistrikList([]);
+      });
+  }, []);
+
+  const distrikOptions = useMemo(
+    () =>
+      distrikList.map((d) => ({ value: d.id_distrik, label: d.nama_distrik })),
+    [distrikList],
+  );
+
+  const kelompokOptions = useMemo(() => {
+    const distrik = distrikList.find((d) => d.id_distrik === selectedDistrik);
+    return (distrik?.list_kelompok ?? []).map((k) => ({
+      value: k.id_kelompok,
+      label: k.nama_kelompok,
+    }));
+  }, [distrikList, selectedDistrik]);
+
+  useEffect(() => {
+    setSelectedKelompok(null);
+  }, [selectedDistrik]);
+
+  useEffect(() => {
+    if (!selectedDistrik) {
+      setFilterNimSet(null);
+      return;
+    }
+    let aktif = true;
+    distrikService
+      .getAnggotaByDistrictId(selectedDistrik, {
+        page: 1,
+        limit: 9999,
+        id_kelompok: selectedKelompok ?? undefined,
+      })
+      .then((res) => {
+        if (!aktif) return;
+        const records = res.data?.records ?? [];
+        setFilterNimSet(new Set(records.map((maba) => maba.nim)));
+      })
+      .catch((err) => {
+        if (!aktif) return;
+        console.error("Gagal memuat anggota distrik:", err);
+        setFilterNimSet(new Set());
+      });
+    return () => {
+      aktif = false;
+    };
+  }, [selectedDistrik, selectedKelompok]);
+
+  useEffect(() => {
+    setPaginationState((prev) =>
+      prev.pageIndex === 0 ? prev : { ...prev, pageIndex: 0 },
+    );
+  }, [uiSearchText, selectedDistrik, selectedKelompok]);
+
   const [selectedMahasiswa, setSelectedMahasiswa] =
     useState<PresensiMahasiswaSummary>();
-  const { options: distrikOptions } = useSelectOptions("distrik");
-  const { options: kelompokOptions } = useSelectOptions("kelompok");
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isModalMahasiswaOpen, setIsModalMahasiswaOpen] = React.useState(false);
 
@@ -93,36 +142,32 @@ const DetailPresensiContainer: React.FC<DetailPresensiContainerProps> = ({
     setIsModalMahasiswaOpen(!isModalMahasiswaOpen);
   };
 
-  const reactTableCurrentState: ReactTableState = useMemo(() => {
-    return {
-      globalFilter: apiSearchText,
-      pagination: paginationState,
-    };
-  }, [apiSearchText, paginationState]);
-
   const {
     presensiInfo,
     mahasiswaList,
-    mahasiswaPagination,
     isLoadingInfo,
     isLoadingList,
     errorInfo,
     errorList,
     refreshInfo,
     refreshList,
-  } = usePresensiDetailPage(
-    id,
-    reactTableCurrentState,
-    selectedDistrik,
-    selectedKelompok,
-  );
+  } = usePresensiDetailPage(id);
+
+  const filteredList = useMemo(() => {
+    const list = mahasiswaList ?? [];
+    if (!filterNimSet) return list;
+    return list.filter((m) => filterNimSet.has(m.nim));
+  }, [mahasiswaList, filterNimSet]);
 
   const columns: ColumnDef<PresensiMahasiswaDetail>[] = useMemo(() => {
     const baseColumns: ColumnDef<PresensiMahasiswaDetail>[] = [
       {
         accessorKey: "index",
         header: "No.",
-        cell: ({ row }) => row.index + (mahasiswaPagination?.from || 1),
+        cell: ({ row, table }) => {
+          const { pageIndex, pageSize } = table.getState().pagination;
+          return pageIndex * pageSize + row.index + 1;
+        },
         enableSorting: false,
         enableColumnFilter: false,
       },
@@ -189,17 +234,16 @@ const DetailPresensiContainer: React.FC<DetailPresensiContainerProps> = ({
     }
 
     return baseColumns;
-  }, [mahasiswaPagination?.from, isSqc, handleSelectedMahasiswa]);
+  }, [isSqc, handleSelectedMahasiswa]);
 
   const table = useReactTable({
-    data: mahasiswaList || [],
+    data: filteredList,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    manualPagination: true,
-    pageCount: mahasiswaPagination?.total_pages ?? -1,
+    globalFilterFn: "includesString",
     state: {
       pagination: paginationState,
       globalFilter: uiSearchText,
@@ -332,10 +376,7 @@ const DetailPresensiContainer: React.FC<DetailPresensiContainerProps> = ({
         </div>
       </div>
       <div className="w-full h-[1px] bg-surface-divider"></div>
-      <PetaKoordinat
-        mahasiswaList={mahasiswaList || []}
-        isLoading={isLoadingList}
-      />
+      <PetaKoordinat mahasiswaList={filteredList} isLoading={isLoadingList} />
       <PresensiTable
         table={table}
         isSubmissionLoading={isLoadingList}
