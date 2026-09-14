@@ -49,7 +49,16 @@ export const useGetStfData = (): UseStfDataHook => {
   }, []);
 
   useEffect(() => {
-    fetchData();
+    // Kita cek cookie auth_session, jika tidak ada berarti belum login,
+    // jadi jangan panggil API yang butuh auth agar tidak memicu 401 dan dilempar ke login
+    const hasAuthCookie =
+      typeof document !== "undefined" &&
+      document.cookie.includes("auth_session");
+    if (hasAuthCookie) {
+      fetchData();
+    } else {
+      setIsLoading(false);
+    }
   }, [fetchData]);
 
   return {

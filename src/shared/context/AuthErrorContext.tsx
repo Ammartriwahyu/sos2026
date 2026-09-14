@@ -4,7 +4,6 @@ import { apiClient, ApiResponse } from "@/api/core/AxiosInstance";
 import { AxiosError } from "axios";
 import { createContext, ReactNode, useRef, useEffect } from "react";
 import { useToast } from "../hooks/useToast";
-import { usePathname } from "next/navigation";
 
 interface AuthErrorContextType {
   handleAuthError: (error: AuthError | AxiosError) => void;
@@ -117,9 +116,9 @@ export const AuthErrorProvider = ({
     error: AuthError | AxiosError | ApiResponse<unknown>,
   ): boolean => {
     return (
-      ("response" in error && error.response?.status === 401) ||
-      ("status" in error && error.status === 401) ||
-      ("code" in error && error.code === 401) ||
+      ("response" in error && error.response?.status === 403) ||
+      ("status" in error && error.status === 403) ||
+      ("code" in error && error.code === 403) ||
       ("message" in error &&
         error.message &&
         (error.message.includes("403") ||
@@ -240,13 +239,9 @@ export const AuthErrorProvider = ({
       window.location.href = "/login";
     }, 2000);
   };
-  const pathname = usePathname();
 
   const handleRoleError = (): void => {
     const now = Date.now();
-    if (pathname.startsWith("/stf")) {
-      return;
-    }
     if (
       hasShownRoleToastRef.current &&
       now - lastRoleErrorTimeRef.current < ROLE_ERROR_DEBOUNCE
