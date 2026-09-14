@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import HeroSection from "../components/after/HeroSection";
 import PemilihanSection from "../components/after/PemilihanSection";
 import VisiMisiSection from "../components/after/VisiMisiSection";
+import HasilSection from "../components/after/HasilSection";
 import CurrentSection from "../components/before/CurrentSection";
 import CtaSection from "../components/before/CtaSection";
 import { useGetStfData } from "../hooks/useGetStfData";
@@ -12,18 +13,20 @@ import SpaceBackground from "@/shared/components/background/SpaceBackground";
 import GrassDivider from "@/shared/components/background/GrassDivider";
 import AuroraWaves from "../../peta/components/AuroraWaves";
 import AktivitasBeforeLogin from "../../aktivitas/components/AktivitasBeforeLogin";
+import { useAuthContext } from "@/shared/hooks/useAuthContext";
 
 const StfContainer = () => {
   const { stfData, isLoading, error } = useGetStfData();
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const { user, isLoading: isAuthLoading } = useAuthContext();
 
   useEffect(() => {
     // Jika loading selesai (entah sukses atau error), tandai initial load selesai
-    if (!isLoading) {
+    if (!isLoading && !isAuthLoading) {
       setIsInitialLoad(false);
     }
-  }, [isLoading]);
+  }, [isLoading, isAuthLoading]);
 
   useEffect(() => {
     if (stfData?.kandidat && stfData.kandidat.length > 0 && !activeCardId) {
@@ -36,7 +39,7 @@ const StfContainer = () => {
     }
   }, [stfData?.kandidat, activeCardId]);
 
-  if (isInitialLoad && isLoading) {
+  if (isInitialLoad && (isLoading || isAuthLoading)) {
     return (
       <SpaceBackground className="w-full flex flex-col h-screen overflow-hidden relative">
         <div className="mx-auto flex h-full items-center justify-center text-white relative z-10">
@@ -48,24 +51,12 @@ const StfContainer = () => {
     );
   }
 
-  // 1. Jika tidak berhak memilih (pemutihan / prodi tidak valid)
-  if (stfData && !stfData.berhak_memilih) {
-    return (
-      <SpaceBackground className="w-full flex flex-col h-screen overflow-hidden relative">
-        <div className="mx-auto flex h-full flex-col items-center justify-center text-white relative z-10 text-center gap-4 px-4">
-          <h2 className="text-3xl md:text-5xl font-bold">Maaf 😔</h2>
-          <p className="text-lg md:text-xl text-white/80 max-w-lg">
-            Data kamu belum lengkap atau kamu adalah mahasiswa pemutihan,
-            sehingga tidak memiliki hak suara. Hubungi panitia jika ini adalah
-            kesalahan.
-          </p>
-        </div>
-      </SpaceBackground>
-    );
+  if (!user) {
+    return <AktivitasBeforeLogin />;
   }
 
-  // 2. Jika sesi belum ada
-  if (stfData && !stfData.sesi) {
+  // 1. TAHAP TERTUTUP (Belum dibuka sama sekali)
+  if (!stfData || stfData.tahap === "tertutup") {
     return (
       <SpaceBackground className="w-full flex flex-col overflow-hidden">
         <CurrentSection />
@@ -80,8 +71,32 @@ const StfContainer = () => {
     );
   }
 
-  // 3. Jika sudah memilih (tampilkan pilihan_saya)
-  if (stfData && stfData.sudah_memilih && stfData.pilihan_saya) {
+  // 2. TAHAP MENUNGGU (Hasil putaran sedang dihitung)
+  if (stfData.tahap === "menunggu") {
+    return (
+      <SpaceBackground className="w-full flex flex-col h-screen overflow-hidden relative">
+        <div className="mx-auto flex h-full flex-col items-center justify-center text-white relative z-10 text-center gap-4 px-4">
+          <h2 className="text-3xl md:text-5xl font-bold">Harap Tunggu ⏳</h2>
+          <p className="text-lg md:text-xl text-white/80 max-w-lg">
+            Hasil pemungutan suara sedang dihitung oleh panitia. Mohon tunggu
+            sebentar, halaman ini akan otomatis diperbarui.
+          </p>
+        </div>
+      </SpaceBackground>
+    );
+  }
+
+  // 3. TAHAP HASIL (Selesai semua)
+  if (stfData.tahap === "hasil") {
+    return <HasilSection />;
+  }
+
+  // TAHAP PERKENALAN atau VOTING
+  const isVoting = stfData.tahap === "voting";
+  const isPengulangan = stfData.sesi?.pengulangan;
+
+  // Jika sudah memilih (tampilkan pilihan_saya)
+  if (stfData.sudah_memilih && stfData.pilihan_saya) {
     return (
       <SpaceBackground className="w-full flex flex-col overflow-hidden relative">
         <div className="relative z-10">
@@ -120,9 +135,7 @@ const StfContainer = () => {
     );
   }
 
-  // 4. Voting Aktif
-  const isPengulangan = stfData?.sesi?.pengulangan;
-
+  // Tampilkan Kandidat (Perkenalan atau Voting aktif)
   return (
     <SpaceBackground className="w-full flex flex-col overflow-hidden relative">
       <div className="relative z-10">
@@ -151,6 +164,13 @@ const StfContainer = () => {
                   seri pada putaran sebelumnya.
                 </div>
               )}
+              {!stfData.berhak_memilih && (
+                <div className="bg-red-500/20 border border-red-500/50 text-red-300 px-6 py-3 rounded-xl mx-auto inline-block font-medium max-w-2xl text-center">
+                  {user?.tipe_mahasiswa === "pemutihan"
+                    ? "Mahasiswa pemutihan tidak memiliki hak suara."
+                    : "Data prodi kamu belum lengkap, hubungi panitia."}
+                </div>
+              )}
             </div>
 
             {stfData?.kandidat && stfData.kandidat.length > 0 && (
@@ -163,19 +183,21 @@ const StfContainer = () => {
                   setActiveCardId={setActiveCardId}
                 />
 
-                <div className="w-full relative z-20 mt-16 md:mt-24">
-                  <GrassDivider className="translate-y-px relative z-20" />
-                  <div className="w-full peta-flashback-bg relative pb-16 pt-8">
-                    <PemilihanSection
-                      kandidat={stfData.kandidat}
-                      isLoading={isLoading}
-                      error={error}
-                      activeCardId={activeCardId}
-                      setActiveCardId={setActiveCardId}
-                      kesempatan={true}
-                    />
+                {isVoting && stfData.berhak_memilih && (
+                  <div className="w-full relative z-20 mt-16 md:mt-24">
+                    <GrassDivider className="translate-y-px relative z-20" />
+                    <div className="w-full peta-flashback-bg relative pb-16 pt-8">
+                      <PemilihanSection
+                        kandidat={stfData.kandidat}
+                        isLoading={isLoading}
+                        error={error}
+                        activeCardId={activeCardId}
+                        setActiveCardId={setActiveCardId}
+                        kesempatan={true}
+                      />
+                    </div>
                   </div>
-                </div>
+                )}
               </>
             )}
           </div>

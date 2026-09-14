@@ -24,12 +24,30 @@ export const useVoteForCaketang = () => {
           setVoteError(response.message || "Failed to submit vote.");
         }
       } catch (err: unknown) {
-        if (
-          axios.isAxiosError(err) &&
-          err.response &&
-          err.response.data.message
-        ) {
-          setVoteError(err.response.data.message);
+        if (axios.isAxiosError(err) && err.response) {
+          const status = err.response.status;
+
+          if (status === 400) {
+            setVoteError("Kandidat tidak terdaftar atau sudah tidak valid.");
+            queryClient.invalidateQueries({ queryKey: ["stfData"] });
+          } else if (status === 403) {
+            setVoteError("Anda tidak memiliki hak suara.");
+            queryClient.invalidateQueries({ queryKey: ["stfData"] });
+          } else if (status === 409) {
+            // 409 Konflik: Jangan tebak state dari pesan, langsung refetch
+            setVoteError(
+              "Status pemilihan telah berubah, menyinkronkan data...",
+            );
+            queryClient.invalidateQueries({ queryKey: ["stfData"] });
+          } else if (status === 429) {
+            setVoteError(
+              "Terlalu banyak permintaan. Silakan tunggu beberapa saat.",
+            );
+          } else {
+            setVoteError(
+              err.response.data?.message || "Terjadi kesalahan pada server.",
+            );
+          }
         } else {
           const errorMessage =
             err instanceof Error

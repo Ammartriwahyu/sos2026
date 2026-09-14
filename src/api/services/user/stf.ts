@@ -23,6 +23,7 @@ export interface Sesi {
 }
 
 export interface StfData {
+  tahap: "tertutup" | "perkenalan" | "voting" | "menunggu" | "hasil";
   berhak_memilih: boolean;
   prodi: string;
   nama_prodi: string;
@@ -58,6 +59,11 @@ class StfService {
       id_caketang: id,
     });
     return response as unknown as BackendResponse<null>;
+  }
+
+  async getHasilAkhir(): Promise<BackendResponse<unknown>> {
+    const response = await apiClient.get("/api/stf/hasil");
+    return response as unknown as BackendResponse<unknown>;
   }
 }
 

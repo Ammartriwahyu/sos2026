@@ -3,6 +3,7 @@
 import { useState, useEffect, FormEvent } from "react";
 import { stfService } from "@/api/services/admin/stf";
 import { useRouter } from "next/navigation";
+import { isAxiosError } from "axios";
 
 export const useEditStf = (id: string) => {
   const router = useRouter();
@@ -71,9 +72,16 @@ export const useEditStf = (id: string) => {
       } else {
         throw new Error(response.message || "Gagal memperbarui data.");
       }
-    } catch (error) {
+    } catch (error: unknown) {
       console.error(error);
-      alert("Terjadi kesalahan saat memperbarui data.");
+      let backendMessage = "Terjadi kesalahan saat memperbarui data.";
+      if (
+        isAxiosError<{ message?: string }>(error) &&
+        error.response?.data?.message
+      ) {
+        backendMessage = error.response.data.message;
+      }
+      alert(`Gagal: ${backendMessage}`);
     } finally {
       setIsSubmitting(false);
     }

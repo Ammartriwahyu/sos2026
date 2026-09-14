@@ -2,6 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { stfService, StfData, BackendResponse } from "@/api/services/user/stf";
 
 export const useGetStfData = () => {
+  const hasAuthCookie =
+    typeof document !== "undefined" && document.cookie.includes("auth_session");
+
   const {
     data: response,
     isLoading,
@@ -10,7 +13,11 @@ export const useGetStfData = () => {
   } = useQuery<BackendResponse<StfData>, Error>({
     queryKey: ["stfData"],
     queryFn: () => stfService.getStfData(),
-    refetchInterval: 10000,
+    refetchInterval: (query) => {
+      const tahap = query.state.data?.data?.tahap;
+      return tahap === "voting" || tahap === "menunggu" ? 5000 : false;
+    },
+    enabled: hasAuthCookie,
   });
 
   const stfData = response?.status_code === 200 ? response.data : null;

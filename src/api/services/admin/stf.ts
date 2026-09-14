@@ -1,5 +1,10 @@
 import { apiClient } from "@/api/core/AxiosInstance";
-import { StfDetail, StfSummary } from "@/feature/(admin)/stf/type";
+import {
+  StfDetail,
+  StfSummary,
+  SesiPapan,
+  SesiDetail,
+} from "@/feature/(admin)/stf/type";
 
 interface BackendResponse<T> {
   status_code: number;
@@ -58,6 +63,43 @@ class StfService {
     this.cache.delete("all_caketang");
     const response = await apiClient.delete(`/api/stf/${id}`);
     return response as unknown as BackendResponse<null>;
+  }
+
+  // --- Kendali STF Endpoints ---
+
+  async getSesiPapan(): Promise<BackendResponse<SesiPapan>> {
+    const response = await apiClient.get("/api/stf/sesi/papan");
+    return response as unknown as BackendResponse<SesiPapan>;
+  }
+
+  async setTahap(tahap: string): Promise<BackendResponse<{ tahap: string }>> {
+    const response = await apiClient.post("/api/stf/tahap", { tahap });
+    return response as unknown as BackendResponse<{ tahap: string }>;
+  }
+
+  async siapkanPutaranPertama(): Promise<BackendResponse<SesiDetail[]>> {
+    const response = await apiClient.post("/api/stf/sesi/putaran-pertama");
+    return response as unknown as BackendResponse<SesiDetail[]>;
+  }
+
+  async bukaSesi(idSesi: string): Promise<BackendResponse<null>> {
+    const response = await apiClient.post(`/api/stf/sesi/${idSesi}/buka`);
+    return response as unknown as BackendResponse<null>;
+  }
+
+  async tutupSesi(idSesi: string): Promise<BackendResponse<unknown>> {
+    const response = await apiClient.post(`/api/stf/sesi/${idSesi}/tutup`);
+    return response as unknown as BackendResponse<unknown>;
+  }
+
+  async siapkanSesiKadep(): Promise<BackendResponse<unknown>> {
+    const response = await apiClient.post("/api/stf/sesi/kadep");
+    return response as unknown as BackendResponse<unknown>;
+  }
+
+  async finalisasi(): Promise<BackendResponse<unknown>> {
+    const response = await apiClient.post("/api/stf/sesi/finalisasi");
+    return response as unknown as BackendResponse<unknown>;
   }
 }
 
