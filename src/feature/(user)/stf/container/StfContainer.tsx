@@ -8,11 +8,12 @@ import VisiMisiSection from "../components/after/VisiMisiSection";
 import CurrentSection from "../components/before/CurrentSection";
 import CtaSection from "../components/before/CtaSection";
 import { useGetStfData } from "../hooks/useGetStfData";
-import GradientBackground from "@/shared/components/background/GradientBackground";
+
 import { useAuthContext } from "@/shared/hooks/useAuthContext";
 import SpaceBackground from "@/shared/components/background/SpaceBackground";
 import GrassDivider from "@/shared/components/background/GrassDivider";
 import AuroraWaves from "../../peta/components/AuroraWaves";
+import AktivitasBeforeLogin from "../../aktivitas/components/AktivitasBeforeLogin";
 
 const StfContainer = () => {
   const { stfData, caketangList, isLoading, error } = useGetStfData();
@@ -40,6 +41,10 @@ const StfContainer = () => {
         </div>
       </SpaceBackground>
     );
+  }
+
+  if (!user) {
+    return <AktivitasBeforeLogin />;
   }
 
   // Tampilkan kondisi 2 jika pemilihan dibuka oleh backend
