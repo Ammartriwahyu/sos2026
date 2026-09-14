@@ -43,3 +43,6 @@ next-env.d.ts
 # Local AI context file
 AGENTS.md
 RULES.md
+
+# API Docs
+STF_API_DOCS.md
