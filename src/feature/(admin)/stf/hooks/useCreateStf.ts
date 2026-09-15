@@ -41,7 +41,6 @@ export const useCreateStf = () => {
         throw new Error(response.message || "Gagal membuat caketang.");
       }
     } catch (error: unknown) {
-      console.error(error);
       let backendMessage = "Terjadi kesalahan saat menghubungi server.";
       if (
         isAxiosError<{ message?: string }>(error) &&

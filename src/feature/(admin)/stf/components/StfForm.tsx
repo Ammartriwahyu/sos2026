@@ -1,6 +1,7 @@
 "use client";
 
 import React, { FormEvent, useEffect, useState } from "react";
+import Image from "next/image";
 import { Input } from "@/shared/components/ui/Input";
 import {
   Select,
@@ -197,11 +198,13 @@ const StfForm = ({
           containerClassName="max-w-sm"
         >
           <div className="mt-4 flex justify-center">
-            <div className="w-60  overflow-hidden rounded-xl border-2 border-gray-200 shadow-lg">
-              <img
+            <div className="w-60 h-60 overflow-hidden rounded-xl border-2 border-gray-200 shadow-lg relative">
+              <Image
                 src={photoToShow!}
                 alt={preview ? "Preview foto baru" : "Foto saat ini"}
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
+                unoptimized={!!preview}
               />
             </div>
           </div>

@@ -21,8 +21,7 @@ export const useDeleteStf = (onSuccess: () => void) => {
         } else {
           throw new Error(response.message || "Gagal menghapus data.");
         }
-      } catch (error) {
-        console.error(error);
+      } catch (error: unknown) {
         alert("Terjadi kesalahan saat menghapus data.");
       } finally {
         setIsLoading(false);

@@ -36,8 +36,7 @@ export const useEditStf = (id: string) => {
         } else {
           throw new Error("Data caketang tidak ditemukan.");
         }
-      } catch (error) {
-        console.error(error);
+      } catch (error: unknown) {
         alert("Gagal memuat data caketang.");
       } finally {
         setInitialDataLoading(false);
@@ -73,7 +72,6 @@ export const useEditStf = (id: string) => {
         throw new Error(response.message || "Gagal memperbarui data.");
       }
     } catch (error: unknown) {
-      console.error(error);
       let backendMessage = "Terjadi kesalahan saat memperbarui data.";
       if (
         isAxiosError<{ message?: string }>(error) &&
