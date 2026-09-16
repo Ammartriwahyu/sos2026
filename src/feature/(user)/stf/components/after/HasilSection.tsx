@@ -79,14 +79,14 @@ const HasilSection = () => {
               Kepala Departemen Terpilih
             </h3>
             <div className="flex flex-col items-center gap-4 max-w-sm w-full">
-              <div className="flex flex-col w-full max-w-sm rounded-t-[5rem] rounded-b-[3rem] overflow-hidden shadow-2xl bg-[#C4BCEB]">
+              <div className="flex flex-col w-full max-w-sm rounded-t-[5rem] rounded-b-[3rem] overflow-hidden shadow-2xl bg-[var(--color-primary-light)]">
                 <div className="w-full pt-2 px-2 pb-6">
                   <Image
                     src={kadep.foto || "/placeholder-image.jpg"}
                     alt={kadep.nama}
                     width={400}
-                    height={400}
-                    className="w-full h-72 sm:h-80 md:h-96 object-cover rounded-t-[4.5rem] rounded-b-2xl"
+                    height={533}
+                    className="w-full h-auto aspect-[3/4] object-contain object-bottom rounded-t-[4.5rem] rounded-b-2xl"
                   />
                 </div>
                 <div className="w-full -mt-8 relative z-10">
@@ -115,20 +115,20 @@ const HasilSection = () => {
               {ketang.map((k: Caketang) => (
                 <div
                   key={k.id_caketang}
-                  className="flex flex-col w-full max-w-xs sm:max-w-sm rounded-t-[4rem] rounded-b-[2.5rem] overflow-hidden shadow-2xl bg-[#C4BCEB] transition-transform hover:scale-105"
+                  className="flex flex-col w-full max-w-xs sm:max-w-sm rounded-t-[4rem] rounded-b-[2.5rem] overflow-hidden shadow-2xl bg-[var(--color-primary-light)] transition-transform hover:scale-105"
                 >
                   <div className="w-full pt-1.5 px-1.5 pb-4">
                     <Image
                       src={k.foto || "/placeholder-image.jpg"}
                       alt={k.nama}
                       width={300}
-                      height={300}
-                      className="w-full h-56 sm:h-64 md:h-72 object-cover rounded-t-[3.5rem] rounded-b-xl"
+                      height={400}
+                      className="w-full h-auto aspect-[3/4] object-contain object-bottom rounded-t-[3.5rem] rounded-b-xl"
                     />
                   </div>
                   <div className="w-full -mt-6 relative z-10">
-                    <div className="bg-[#F8F7FC] flex flex-col justify-center items-center px-4 pt-4 pb-5 text-center min-h-[4.5rem] rounded-t-[3rem] shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
-                      <p className="text-[#6543A7] text-lg lg:text-xl font-bold uppercase line-clamp-2 leading-tight tracking-wide mb-1">
+                    <div className="bg-white flex flex-col justify-center items-center px-4 pt-4 pb-5 text-center min-h-[4.5rem] rounded-t-[3rem] shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+                      <p className="text-[var(--color-primary-normal)] text-lg lg:text-xl font-bold uppercase line-clamp-2 leading-tight tracking-wide mb-1">
                         {k.nama}
                       </p>
                       <div className="flex items-center gap-1 text-primary-700 bg-primary-100 px-3 py-0.5 rounded-full text-xs font-semibold">

@@ -38,10 +38,9 @@ const KendaliStfContainer = () => {
     const isActive = papanData.tahap === value;
     return (
       <Button
-        variant={isActive ? "admin" : "outline"}
+        variant={isActive ? "admin" : "admin-outline"}
         onClick={() => ubahTahap(value)}
         disabled={isUbahTahapLoading || isActive}
-        className={isActive ? "bg-primary-500 text-white" : ""}
       >
         {name}
       </Button>
@@ -85,14 +84,14 @@ const KendaliStfContainer = () => {
             <Button
               onClick={() => siapkanPutaranPertama()}
               className="w-full justify-start gap-2"
-              variant="outline"
+              variant="admin-outline"
             >
               <RefreshCw size={18} /> Siapkan Sesi Putaran Pertama
             </Button>
             <Button
               onClick={() => siapkanSesiKadep()}
               className="w-full justify-start gap-2"
-              variant={papanData.siap_buka_kadep ? "admin" : "outline"}
+              variant={papanData.siap_buka_kadep ? "admin" : "admin-outline"}
               disabled={!papanData.siap_buka_kadep}
             >
               <Users size={18} /> Siapkan Sesi Kadep
@@ -100,7 +99,7 @@ const KendaliStfContainer = () => {
             <Button
               onClick={() => finalisasi()}
               className="w-full justify-start gap-2"
-              variant={papanData.siap_finalisasi ? "admin" : "outline"}
+              variant={papanData.siap_finalisasi ? "admin" : "admin-outline"}
               disabled={!papanData.siap_finalisasi}
             >
               <Trophy size={18} /> Finalisasi Pemilihan
@@ -209,7 +208,7 @@ const KendaliStfContainer = () => {
                       <span className="font-semibold block mb-1">
                         Finalis (Kadep):
                       </span>
-                      <span className="text-primary-600 font-medium">
+                      <span className="text-primary-normal font-bold">
                         {p.finalis.nama}
                       </span>
                     </div>

@@ -30,13 +30,13 @@ const VisiMisiSection = ({
       {/* Decorative Glow & Circles */}
       {/* Kiri Atas */}
       <div className="absolute top-0 md:top-20 left-0 -translate-x-1/2 w-[20rem] h-[20rem] md:w-[25rem] md:h-[25rem] rounded-full border-[1px] border-dashed border-white/20 z-0 pointer-events-none flex items-center justify-center">
-        <div className="w-32 h-32 md:w-48 md:h-48 bg-[#6543A7]/40 blur-[50px] md:blur-[70px] rounded-full animate-pulse"></div>
+        <div className="w-32 h-32 md:w-48 md:h-48 bg-[var(--color-primary-normal)]/40 blur-[50px] md:blur-[70px] rounded-full animate-pulse"></div>
       </div>
 
       {/* Kanan Bawah */}
       <div className="absolute bottom-0 md:bottom-20 right-0 translate-x-1/2 w-[20rem] h-[20rem] md:w-[25rem] md:h-[25rem] rounded-full border-[1px] border-dashed border-white/20 z-0 pointer-events-none flex items-center justify-center">
         <div
-          className="w-32 h-32 md:w-48 md:h-48 bg-[#6543A7]/40 blur-[50px] md:blur-[70px] rounded-full animate-pulse"
+          className="w-32 h-32 md:w-48 md:h-48 bg-[var(--color-primary-normal)]/40 blur-[50px] md:blur-[70px] rounded-full animate-pulse"
           style={{ animationDelay: "1s" }}
         ></div>
       </div>
@@ -61,20 +61,20 @@ const VisiMisiSection = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 w-full gap-10 md:gap-16 items-start">
             {/* Left: Photo */}
             <div className="col-span-1 lg:col-span-4 flex flex-col justify-center items-center gap-2 md:gap-4 px-4 md:px-0">
-              <div className="flex flex-col w-full max-w-sm md:max-w-md rounded-t-[4rem] md:rounded-t-[5rem] rounded-b-xl overflow-hidden shadow-2xl bg-[#C4BCEB]">
+              <div className="flex flex-col w-full max-w-sm md:max-w-md rounded-t-[4rem] md:rounded-t-[5rem] rounded-b-xl overflow-hidden shadow-2xl bg-[var(--color-primary-light)]">
                 <div className="w-full pt-1.5 md:pt-2 px-1.5 md:px-2 pb-1.5 md:pb-2">
                   <Image
                     src={activeCaketang.foto || "/placeholder-image.jpg"}
                     width={400}
-                    height={400}
+                    height={533}
                     alt="Foto Caketang"
-                    className="w-full h-72 sm:h-80 md:h-96 lg:h-[26rem] object-cover rounded-t-[3.5rem] md:rounded-t-[4.5rem] rounded-b-lg"
+                    className="w-full h-auto aspect-[3/4] object-contain object-bottom rounded-t-[3.5rem] md:rounded-t-[4.5rem] rounded-b-lg"
                   />
                 </div>
               </div>
 
               {/* Separate Name Container */}
-              <div className="flex flex-col w-full max-w-sm md:max-w-md rounded-b-[1.5rem] md:rounded-b-[2rem] rounded-t-none shadow-xl bg-[#B084D1] justify-center items-center px-4 py-4 md:py-6 text-center">
+              <div className="flex flex-col w-full max-w-sm md:max-w-md rounded-b-[1.5rem] md:rounded-b-[2rem] rounded-t-none shadow-xl bg-[var(--color-primary-normal)] justify-center items-center px-4 py-4 md:py-6 text-center">
                 <p className="text-white font-bold text-lg sm:text-xl md:text-2xl uppercase leading-tight">
                   {activeCaketang.nama}
                 </p>

@@ -17,8 +17,8 @@ const CaketangCard = ({ data, isActive, onClick }: CaketangCardProps) => {
       <motion.div
         className={`hidden md:flex flex-col cursor-pointer w-full max-w-72 rounded-t-[5rem] rounded-b-[3rem] overflow-hidden shadow-2xl transition-colors duration-300 ${
           isActive
-            ? "bg-[#C4BCEB] z-10"
-            : "bg-[#C4BCEB]/70 hover:bg-[#C4BCEB]/90"
+            ? "bg-[var(--color-primary-light)] z-10"
+            : "bg-[var(--color-primary-light)]/70 hover:bg-[var(--color-primary-light-hover)]"
         }`}
         onClick={onClick}
         animate={{ scale: isActive ? 1.15 : 1, y: isActive ? -15 : 0 }}
@@ -28,14 +28,14 @@ const CaketangCard = ({ data, isActive, onClick }: CaketangCardProps) => {
           <Image
             src={data.foto || "/placeholder-image.jpg"}
             width={300}
-            height={300}
+            height={400}
             alt="Caketang Photo"
-            className="w-full object-cover rounded-t-[4.5rem] rounded-b-2xl h-64 md:h-72 lg:h-80"
+            className="w-full h-auto aspect-[3/4] object-contain object-bottom rounded-t-[4.5rem] rounded-b-2xl"
           />
         </div>
         <div className="w-full -mt-8 relative z-10">
-          <div className="bg-[#F8F7FC] flex justify-center items-center px-4 pt-5 pb-6 text-center min-h-[4.5rem] rounded-t-[5rem] shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
-            <p className="text-[#6543A7] text-lg lg:text-xl font-bold uppercase line-clamp-2 leading-tight tracking-wide">
+          <div className="bg-white flex justify-center items-center px-4 pt-5 pb-6 text-center min-h-[4.5rem] rounded-t-[5rem] shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+            <p className="text-[var(--color-primary-normal)] text-lg lg:text-xl font-bold uppercase line-clamp-2 leading-tight tracking-wide">
               {data.nama}
             </p>
           </div>
@@ -44,7 +44,9 @@ const CaketangCard = ({ data, isActive, onClick }: CaketangCardProps) => {
 
       <motion.div
         className={`md:hidden flex flex-col cursor-pointer w-full max-w-44 rounded-t-[4rem] rounded-b-[2.5rem] overflow-hidden transition-colors duration-300 ${
-          isActive ? "bg-[#C4BCEB] shadow-xl z-10" : "bg-[#C4BCEB]/70"
+          isActive
+            ? "bg-[var(--color-primary-light)] shadow-xl z-10"
+            : "bg-[var(--color-primary-light)]/70 hover:bg-[var(--color-primary-light-hover)]"
         }`}
         onClick={onClick}
         animate={{ scale: isActive ? 1.08 : 1, y: isActive ? -10 : 0 }}
@@ -54,14 +56,14 @@ const CaketangCard = ({ data, isActive, onClick }: CaketangCardProps) => {
           <Image
             src={data.foto || "/placeholder-image.jpg"}
             width={200}
-            height={200}
+            height={266}
             alt="Caketang Photo"
-            className="w-full object-cover rounded-t-[3.5rem] rounded-b-xl h-44"
+            className="w-full h-auto aspect-[3/4] object-contain object-bottom rounded-t-[3.5rem] rounded-b-xl"
           />
         </div>
         <div className="w-full -mt-6 relative z-10 flex-grow">
-          <div className="bg-[#F8F7FC] flex justify-center items-center px-2 pt-4 pb-5 text-center min-h-[4rem] h-full rounded-t-[2rem] shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
-            <p className="text-[#6543A7] text-sm font-bold uppercase line-clamp-2 leading-tight">
+          <div className="bg-white flex justify-center items-center px-2 pt-4 pb-5 text-center min-h-[4rem] h-full rounded-t-[2rem] shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+            <p className="text-[var(--color-primary-normal)] text-sm font-bold uppercase line-clamp-2 leading-tight">
               {data.nama}
             </p>
           </div>

@@ -69,7 +69,7 @@ const PemilihanSection = ({
             })}
           </div>
           <Button
-            className="w-full max-w-3xl lg:max-w-4xl mx-auto py-6 rounded-2xl font-bold text-xl md:text-2xl bg-[#6543A7] hover:bg-[#4E3285] text-white transition-all shadow-lg border border-white/20"
+            className="w-full max-w-3xl lg:max-w-4xl mx-auto py-6 rounded-2xl font-bold text-xl md:text-2xl bg-[var(--color-primary-normal)] hover:bg-[var(--color-primary-normal-hover)] text-white transition-all shadow-lg border border-white/20"
             disabled={!kesempatan || user?.tipe_mahasiswa === "pemutihan"}
             onClick={() => setIsConfirmationModalOpen(true)}
           >
@@ -87,13 +87,13 @@ const PemilihanSection = ({
         <div className="mt-4 flex justify-center space-x-4">
           <Button
             variant="outline"
-            className="border-[#6543A7] text-[#6543A7] hover:bg-[#F8F7FC] hover:text-[#4E3285] hover:border-[#4E3285]"
+            className="border-[var(--color-primary-normal)] text-[var(--color-primary-normal)] hover:bg-white hover:text-[var(--color-primary-normal-hover)] hover:border-[var(--color-primary-normal-hover)]"
             onClick={() => setIsConfirmationModalOpen(false)}
           >
             Batal
           </Button>
           <Button
-            className="bg-[#6543A7] hover:bg-[#4E3285] text-white"
+            className="bg-[var(--color-primary-normal)] hover:bg-[var(--color-primary-normal-hover)] text-white"
             onClick={handleVote}
             disabled={isVoting}
           >
@@ -120,7 +120,7 @@ const PemilihanSection = ({
                 </p>
               </div>
               <Button
-                className="px-8 md:px-14 bg-[#6543A7] hover:bg-[#4E3285] text-white"
+                className="px-8 md:px-14 bg-[var(--color-primary-normal)] hover:bg-[var(--color-primary-normal-hover)] text-white"
                 onClick={() => setIsResultModalOpen(false)}
               >
                 Selesai
@@ -141,7 +141,7 @@ const PemilihanSection = ({
                 </p>
               </div>
               <Button
-                className="px-8 md:px-14 bg-[#6543A7] hover:bg-[#4E3285] text-white"
+                className="px-8 md:px-14 bg-[var(--color-primary-normal)] hover:bg-[var(--color-primary-normal-hover)] text-white"
                 onClick={() => setIsResultModalOpen(false)}
               >
                 Baiklah

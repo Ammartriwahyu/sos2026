@@ -134,12 +134,7 @@ const StfContainer = () => {
 
         <div className="flex gap-4">
           <Link href="/admin/stf/kendali">
-            <Button
-              variant="outline"
-              className="border-primary-500 text-primary-500 hover:bg-primary-50"
-            >
-              Papan Kendali Pemilihan
-            </Button>
+            <Button variant="admin-outline">Papan Kendali Pemilihan</Button>
           </Link>
           <Link href="/admin/stf/create">
             <Button variant="admin">Tambah Calon</Button>
