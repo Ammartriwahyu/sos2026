@@ -12,7 +12,6 @@ import { useGetStfData } from "../hooks/useGetStfData";
 import SpaceBackground from "@/shared/components/background/SpaceBackground";
 import GrassDivider from "@/shared/components/background/GrassDivider";
 import AuroraWaves from "../../peta/components/AuroraWaves";
-import AktivitasBeforeLogin from "../../aktivitas/components/AktivitasBeforeLogin";
 import { useAuthContext } from "@/shared/hooks/useAuthContext";
 
 const StfContainer = () => {
@@ -49,10 +48,6 @@ const StfContainer = () => {
         </div>
       </SpaceBackground>
     );
-  }
-
-  if (!user) {
-    return <AktivitasBeforeLogin />;
   }
 
   // 1. TAHAP TERTUTUP (Belum dibuka sama sekali)
