@@ -52,15 +52,25 @@ const HasilSection = () => {
   return (
     <SpaceBackground className="w-full flex flex-col min-h-screen overflow-hidden relative">
       <div className="relative z-10 w-full pt-24 pb-16 flex flex-col items-center">
-        <h2 className="text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-[0_0_15px_rgba(255,215,0,0.5)] flex items-center gap-4">
-          <Trophy className="w-10 h-10 md:w-14 md:h-14 text-yellow-400" />
+        <h2 className="text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-[0_0_15px_rgba(255,215,0,0.5)] flex items-center gap-4 text-center">
+          <Trophy className="w-10 h-10 md:w-14 md:h-14 text-yellow-400 hidden sm:block" />
           Hasil Akhir Pemilihan
-          <Trophy className="w-10 h-10 md:w-14 md:h-14 text-yellow-400" />
+          <Trophy className="w-10 h-10 md:w-14 md:h-14 text-yellow-400 hidden sm:block" />
         </h2>
         <p className="text-lg md:text-xl text-white/80 max-w-2xl text-center mb-16 px-4">
           Selamat kepada para kandidat terpilih yang akan mengemban amanah baru
           di Departemen Sistem Informasi!
         </p>
+
+        {!kadep && (!ketang || ketang.length === 0) && (
+          <div className="bg-white/10 border border-white/20 p-8 rounded-3xl backdrop-blur-md max-w-lg text-center mx-4">
+            <h4 className="text-2xl font-bold text-white mb-2">Belum Final</h4>
+            <p className="text-white/80">
+              Hasil pemilihan belum difinalisasi oleh panitia. Pantau terus
+              halaman ini untuk mengetahui siapa pemenangnya!
+            </p>
+          </div>
+        )}
 
         {/* Kadep Section */}
         {kadep && (
@@ -68,29 +78,27 @@ const HasilSection = () => {
             <h3 className="text-2xl md:text-4xl font-bold text-yellow-300 mb-8 border-b-2 border-yellow-300/50 pb-2">
               Kepala Departemen Terpilih
             </h3>
-            <div className="bg-gradient-to-br from-yellow-500/20 to-orange-500/20 border border-yellow-500/50 p-6 md:p-8 rounded-3xl flex flex-col md:flex-row items-center gap-8 backdrop-blur-sm max-w-3xl w-full shadow-[0_0_30px_rgba(234,179,8,0.2)]">
-              <div className="relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-yellow-400 shrink-0">
-                <Image
-                  src={kadep.foto || "/placeholder-avatar.png"}
-                  alt={kadep.nama}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="flex flex-col text-white text-center md:text-left">
-                <h4 className="text-3xl font-bold mb-2 text-yellow-50">
-                  {kadep.nama}
-                </h4>
-                <div className="flex items-center justify-center md:justify-start gap-2 text-yellow-200 bg-yellow-900/30 w-fit px-4 py-1.5 rounded-full mb-4 mx-auto md:mx-0">
-                  <Star className="w-4 h-4" />
-                  <span className="font-semibold text-sm">
-                    Program Studi {kadep.prodi}
-                  </span>
+            <div className="flex flex-col items-center gap-4 max-w-sm w-full">
+              <div className="flex flex-col w-full max-w-sm rounded-t-[5rem] rounded-b-[3rem] overflow-hidden shadow-2xl bg-[#C4BCEB]">
+                <div className="w-full pt-2 px-2 pb-6">
+                  <Image
+                    src={kadep.foto || "/placeholder-image.jpg"}
+                    alt={kadep.nama}
+                    width={400}
+                    height={400}
+                    className="w-full h-72 sm:h-80 md:h-96 object-cover rounded-t-[4.5rem] rounded-b-2xl"
+                  />
                 </div>
-                <div className="bg-black/20 p-4 rounded-xl border border-white/10">
-                  <p className="text-sm md:text-base leading-relaxed text-white/90 italic">
-                    &quot;{kadep.visi}&quot;
-                  </p>
+                <div className="w-full -mt-8 relative z-10">
+                  <div className="bg-gradient-to-r from-yellow-300 to-yellow-500 flex flex-col justify-center items-center px-4 pt-5 pb-6 text-center min-h-[5rem] rounded-t-[5rem] shadow-[0_-4px_10px_rgba(0,0,0,0.1)]">
+                    <p className="text-yellow-950 text-xl lg:text-2xl font-bold uppercase line-clamp-2 leading-tight tracking-wide mb-1">
+                      {kadep.nama}
+                    </p>
+                    <div className="flex items-center gap-1 text-yellow-900 bg-yellow-100/50 px-3 py-0.5 rounded-full text-xs font-semibold">
+                      <Star className="w-3 h-3" /> Kepala Departemen Sistem
+                      Informasi
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -107,23 +115,25 @@ const HasilSection = () => {
               {ketang.map((k: Caketang) => (
                 <div
                   key={k.id_caketang}
-                  className="bg-white/5 border border-white/10 p-6 rounded-3xl flex flex-col items-center gap-6 backdrop-blur-sm w-full max-w-sm hover:bg-white/10 transition-colors"
+                  className="flex flex-col w-full max-w-xs sm:max-w-sm rounded-t-[4rem] rounded-b-[2.5rem] overflow-hidden shadow-2xl bg-[#C4BCEB] transition-transform hover:scale-105"
                 >
-                  <div className="relative w-40 h-40 rounded-full overflow-hidden border-4 border-[#6543A7] shadow-lg shrink-0">
+                  <div className="w-full pt-1.5 px-1.5 pb-4">
                     <Image
-                      src={k.foto || "/placeholder-avatar.png"}
+                      src={k.foto || "/placeholder-image.jpg"}
                       alt={k.nama}
-                      fill
-                      className="object-cover"
+                      width={300}
+                      height={300}
+                      className="w-full h-56 sm:h-64 md:h-72 object-cover rounded-t-[3.5rem] rounded-b-xl"
                     />
                   </div>
-                  <div className="flex flex-col text-white text-center w-full">
-                    <h4 className="text-2xl font-bold mb-3">{k.nama}</h4>
-                    <div className="flex items-center justify-center gap-2 text-primary-200 bg-primary-900/30 w-fit px-4 py-1.5 rounded-full mx-auto mb-4 border border-primary-500/30">
-                      <Medal className="w-4 h-4" />
-                      <span className="font-semibold text-sm">
-                        Prodi {k.prodi}
-                      </span>
+                  <div className="w-full -mt-6 relative z-10">
+                    <div className="bg-[#F8F7FC] flex flex-col justify-center items-center px-4 pt-4 pb-5 text-center min-h-[4.5rem] rounded-t-[3rem] shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+                      <p className="text-[#6543A7] text-lg lg:text-xl font-bold uppercase line-clamp-2 leading-tight tracking-wide mb-1">
+                        {k.nama}
+                      </p>
+                      <div className="flex items-center gap-1 text-primary-700 bg-primary-100 px-3 py-0.5 rounded-full text-xs font-semibold">
+                        <Medal className="w-3 h-3" /> Prodi {k.prodi}
+                      </div>
                     </div>
                   </div>
                 </div>

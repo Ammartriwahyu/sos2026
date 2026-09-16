@@ -135,53 +135,74 @@ const KendaliStfContainer = () => {
                     )}
                   </div>
 
-                  {p.sesi_aktif ? (
-                    <div className="text-sm bg-neutral-50 p-3 rounded border flex flex-col gap-2">
-                      <div className="flex justify-between">
-                        <span className="text-neutral-500">Status:</span>
-                        <span className="font-medium capitalize">
-                          {p.sesi_aktif.status}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-neutral-500">Suara Masuk:</span>
-                        <span className="font-medium">
-                          {p.sesi_aktif.jumlah_suara} /{" "}
-                          {p.sesi_aktif.jumlah_berhak}
-                        </span>
-                      </div>
-                      {p.sesi_aktif.pengulangan && (
-                        <div className="text-red-500 font-semibold mt-1">
-                          Pemungutan Ulang (Seri)
-                        </div>
-                      )}
+                  {(() => {
+                    const sesiRaw = p.sesi_aktif;
+                    const sesi = Array.isArray(sesiRaw) ? sesiRaw[0] : sesiRaw;
+                    const isSesiValid =
+                      sesi &&
+                      typeof sesi === "object" &&
+                      Object.keys(sesi).length > 0 &&
+                      sesi.id_sesi;
 
-                      <div className="flex gap-2 mt-2">
-                        {p.sesi_aktif.status === "tertutup" && (
-                          <Button
-                            size="small"
-                            onClick={() => bukaSesi(p.sesi_aktif!.id_sesi)}
-                            className="flex-1 bg-green-600 hover:bg-green-700"
-                          >
-                            <Play size={14} className="mr-1" /> Buka
-                          </Button>
-                        )}
-                        {p.sesi_aktif.status === "dibuka" && (
-                          <Button
-                            size="small"
-                            onClick={() => tutupSesi(p.sesi_aktif!.id_sesi)}
-                            className="flex-1 bg-red-600 hover:bg-red-700"
-                          >
-                            <Square size={14} className="mr-1" /> Tutup
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="text-sm text-neutral-400 italic">
-                      Tidak ada sesi aktif
-                    </div>
-                  )}
+                    if (isSesiValid) {
+                      // BACKEND FIX: Derive status and defaults if backend omits them
+                      const derivedStatus =
+                        sesi.status || (sesi.dibuka_at ? "dibuka" : "tertutup");
+                      const suaraMasuk = sesi.jumlah_suara ?? 0;
+                      const berhakMemilih = sesi.jumlah_berhak ?? 0;
+
+                      return (
+                        <div className="text-sm bg-neutral-50 p-3 rounded border flex flex-col gap-2">
+                          <div className="flex justify-between">
+                            <span className="text-neutral-500">Status:</span>
+                            <span className="font-medium capitalize">
+                              {derivedStatus}
+                            </span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-neutral-500">
+                              Suara Masuk:
+                            </span>
+                            <span className="font-medium">
+                              {suaraMasuk} / {berhakMemilih}
+                            </span>
+                          </div>
+                          {sesi.pengulangan && (
+                            <div className="text-red-500 font-semibold mt-1">
+                              Pemungutan Ulang (Seri)
+                            </div>
+                          )}
+
+                          <div className="flex gap-2 mt-2">
+                            {derivedStatus === "tertutup" && (
+                              <Button
+                                size="small"
+                                onClick={() => bukaSesi(sesi.id_sesi)}
+                                className="flex-1 bg-green-600 hover:bg-green-700"
+                              >
+                                <Play size={14} className="mr-1" /> Buka
+                              </Button>
+                            )}
+                            {derivedStatus === "dibuka" && (
+                              <Button
+                                size="small"
+                                onClick={() => tutupSesi(sesi.id_sesi)}
+                                className="flex-1 bg-red-600 hover:bg-red-700"
+                              >
+                                <Square size={14} className="mr-1" /> Tutup
+                              </Button>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <div className="text-sm text-neutral-400 italic">
+                          Tidak ada sesi aktif
+                        </div>
+                      );
+                    }
+                  })()}
 
                   {p.finalis && (
                     <div className="text-sm mt-2">
@@ -203,54 +224,73 @@ const KendaliStfContainer = () => {
             <h2 className="text-xl font-bold border-b pb-2">
               Pemilihan Kepala Departemen
             </h2>
-            {papanData.sesi_kadep ? (
-              <div className="border p-4 rounded-lg flex flex-col gap-3 max-w-md">
-                <div className="flex justify-between items-center">
-                  <span className="font-semibold text-lg">
-                    {papanData.sesi_kadep.judul}
-                  </span>
-                  <span className="px-2 py-1 bg-primary-100 text-primary-700 text-xs rounded-full font-bold capitalize">
-                    {papanData.sesi_kadep.status}
-                  </span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-neutral-500">Suara Masuk:</span>
-                  <span className="font-medium">
-                    {papanData.sesi_kadep.jumlah_suara} /{" "}
-                    {papanData.sesi_kadep.jumlah_berhak}
-                  </span>
-                </div>
-                {papanData.sesi_kadep.pengulangan && (
-                  <div className="text-red-500 font-semibold mt-1">
-                    Pemungutan Ulang (Seri)
+            {(() => {
+              const kadepRaw = papanData.sesi_kadep;
+              const kadep = Array.isArray(kadepRaw) ? kadepRaw[0] : kadepRaw;
+              const isKadepValid =
+                kadep &&
+                typeof kadep === "object" &&
+                Object.keys(kadep).length > 0 &&
+                kadep.id_sesi;
+
+              if (isKadepValid) {
+                // BACKEND FIX: Derive status and defaults if backend omits them
+                const derivedStatus =
+                  kadep.status || (kadep.dibuka_at ? "dibuka" : "tertutup");
+                const suaraMasuk = kadep.jumlah_suara ?? 0;
+                const berhakMemilih = kadep.jumlah_berhak ?? 0;
+
+                return (
+                  <div className="border p-4 rounded-lg flex flex-col gap-3 max-w-md">
+                    <div className="flex justify-between items-center">
+                      <span className="font-semibold text-lg">
+                        {kadep.judul}
+                      </span>
+                      <span className="px-2 py-1 bg-primary-100 text-primary-700 text-xs rounded-full font-bold capitalize">
+                        {derivedStatus}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-neutral-500">Suara Masuk:</span>
+                      <span className="font-medium">
+                        {suaraMasuk} / {berhakMemilih}
+                      </span>
+                    </div>
+                    {kadep.pengulangan && (
+                      <div className="text-red-500 font-semibold mt-1">
+                        Pemungutan Ulang (Seri)
+                      </div>
+                    )}
+                    <div className="flex gap-2 mt-2">
+                      {derivedStatus === "tertutup" && (
+                        <Button
+                          size="small"
+                          onClick={() => bukaSesi(kadep.id_sesi)}
+                          className="flex-1 bg-green-600 hover:bg-green-700"
+                        >
+                          <Play size={14} className="mr-1" /> Buka Sesi
+                        </Button>
+                      )}
+                      {derivedStatus === "dibuka" && (
+                        <Button
+                          size="small"
+                          onClick={() => tutupSesi(kadep.id_sesi)}
+                          className="flex-1 bg-red-600 hover:bg-red-700"
+                        >
+                          <Square size={14} className="mr-1" /> Tutup Sesi
+                        </Button>
+                      )}
+                    </div>
                   </div>
-                )}
-                <div className="flex gap-2 mt-2">
-                  {papanData.sesi_kadep.status === "tertutup" && (
-                    <Button
-                      size="small"
-                      onClick={() => bukaSesi(papanData.sesi_kadep!.id_sesi)}
-                      className="flex-1 bg-green-600 hover:bg-green-700"
-                    >
-                      <Play size={14} className="mr-1" /> Buka Sesi
-                    </Button>
-                  )}
-                  {papanData.sesi_kadep.status === "dibuka" && (
-                    <Button
-                      size="small"
-                      onClick={() => tutupSesi(papanData.sesi_kadep!.id_sesi)}
-                      className="flex-1 bg-red-600 hover:bg-red-700"
-                    >
-                      <Square size={14} className="mr-1" /> Tutup Sesi
-                    </Button>
-                  )}
-                </div>
-              </div>
-            ) : (
-              <div className="text-sm text-neutral-500 italic">
-                Sesi Kadep belum disiapkan.
-              </div>
-            )}
+                );
+              } else {
+                return (
+                  <div className="text-sm text-neutral-500 italic">
+                    Sesi Kadep belum disiapkan.
+                  </div>
+                );
+              }
+            })()}
           </div>
         </div>
       </div>

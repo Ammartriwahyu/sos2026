@@ -18,18 +18,13 @@ const PemilihanCard = ({
   index,
   activeIndex,
 }: Props) => {
-  const isLeft = index < activeIndex;
-  const isRight = index > activeIndex;
+  const distance = index - activeIndex;
 
-  let rotate = 0;
-  let x = 0;
-  if (isLeft) {
-    rotate = -15;
-    x = -20;
-  } else if (isRight) {
-    rotate = 15;
-    x = 20;
-  }
+  // Calculate dynamic rotation and shift based on distance from active card
+  // This ensures that even if there are 3, 4, or more candidates, they fan out nicely
+  // instead of stacking perfectly behind each other (which hides them)
+  const rotate = distance * 15;
+  const x = distance * 20;
 
   return (
     <motion.div
