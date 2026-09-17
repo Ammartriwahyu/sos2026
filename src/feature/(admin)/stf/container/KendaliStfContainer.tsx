@@ -9,6 +9,7 @@ import {
   Square,
   Users,
   Trophy,
+  RotateCcw,
 } from "lucide-react";
 import { useKendaliStf } from "../hooks/useKendaliStf";
 import { Button } from "@/shared/components/ui/Button";
@@ -24,6 +25,8 @@ const KendaliStfContainer = () => {
     tutupSesi,
     siapkanSesiKadep,
     finalisasi,
+    resetSesi,
+    isResetLoading,
   } = useKendaliStf();
 
   if (isLoading) {
@@ -104,6 +107,24 @@ const KendaliStfContainer = () => {
             >
               <Trophy size={18} /> Finalisasi Pemilihan
             </Button>
+            <div className="border-t pt-4 mt-2">
+              <Button
+                onClick={() => {
+                  if (
+                    window.confirm(
+                      "Apakah Anda yakin ingin me-reset seluruh sesi pemilihan? Tindakan ini tidak dapat dibatalkan!",
+                    )
+                  ) {
+                    resetSesi("gaffasangpelaut");
+                  }
+                }}
+                className="w-full justify-start gap-2 bg-red-600 hover:bg-red-700 text-white border-none"
+                variant="none"
+                disabled={isResetLoading}
+              >
+                <RotateCcw size={18} /> Reset Seluruh Sesi
+              </Button>
+            </div>
           </div>
         </div>
 

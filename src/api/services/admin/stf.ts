@@ -101,6 +101,11 @@ class StfService {
     const response = await apiClient.post("/api/stf/sesi/finalisasi");
     return response as unknown as BackendResponse<unknown>;
   }
+
+  async resetSesi(kunci: string): Promise<BackendResponse<unknown>> {
+    const response = await apiClient.post("/api/stf/sesi/reset", { kunci });
+    return response as unknown as BackendResponse<unknown>;
+  }
 }
 
 export const stfService = StfService.getInstance();

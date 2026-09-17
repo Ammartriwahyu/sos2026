@@ -88,6 +88,13 @@ export const useKendaliStf = () => {
     onError: (err) => handleError(err, "Gagal melakukan finalisasi"),
   });
 
+  const resetSesiMutation = useMutation({
+    mutationFn: (kunci: string) => stfService.resetSesi(kunci),
+    onSuccess: (res) =>
+      handleSuccess(res.message || "Seluruh sesi berhasil direset"),
+    onError: (err) => handleError(err, "Gagal melakukan reset sesi"),
+  });
+
   return {
     papanData,
     isLoading,
@@ -100,5 +107,7 @@ export const useKendaliStf = () => {
     tutupSesi: (id: string) => tutupSesiMutation.mutate(id),
     siapkanSesiKadep: () => siapkanSesiKadepMutation.mutate(),
     finalisasi: () => finalisasiMutation.mutate(),
+    resetSesi: (kunci: string) => resetSesiMutation.mutate(kunci),
+    isResetLoading: resetSesiMutation.isPending,
   };
 };
