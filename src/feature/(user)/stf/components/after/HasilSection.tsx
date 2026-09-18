@@ -80,13 +80,13 @@ const HasilSection = () => {
             </h3>
             <div className="flex flex-col items-center gap-4 max-w-sm w-full">
               <div className="flex flex-col w-full max-w-sm rounded-t-[5rem] rounded-b-[3rem] overflow-hidden shadow-2xl bg-[var(--color-primary-light)]">
-                <div className="w-full pt-2 px-2 pb-6">
+                <div className="w-full pt-2 px-2 pb-0">
                   <Image
                     src={kadep.foto || "/placeholder-image.jpg"}
                     alt={kadep.nama}
                     width={400}
                     height={533}
-                    className="w-full h-auto aspect-[3/4] object-contain object-bottom rounded-t-[4.5rem] rounded-b-2xl"
+                    className="w-full h-auto aspect-[3/4] object-contain object-bottom rounded-t-[4.5rem] rounded-b-none"
                   />
                 </div>
                 <div className="w-full -mt-8 relative z-10">
@@ -117,13 +117,13 @@ const HasilSection = () => {
                   key={k.id_caketang}
                   className="flex flex-col w-full max-w-xs sm:max-w-sm rounded-t-[4rem] rounded-b-[2.5rem] overflow-hidden shadow-2xl bg-[var(--color-primary-light)] transition-transform hover:scale-105"
                 >
-                  <div className="w-full pt-1.5 px-1.5 pb-4">
+                  <div className="w-full pt-1.5 px-1.5 pb-0">
                     <Image
                       src={k.foto || "/placeholder-image.jpg"}
                       alt={k.nama}
                       width={300}
                       height={400}
-                      className="w-full h-auto aspect-[3/4] object-contain object-bottom rounded-t-[3.5rem] rounded-b-xl"
+                      className="w-full h-auto aspect-[3/4] object-contain object-bottom rounded-t-[3.5rem] rounded-b-none"
                     />
                   </div>
                   <div className="w-full -mt-6 relative z-10">

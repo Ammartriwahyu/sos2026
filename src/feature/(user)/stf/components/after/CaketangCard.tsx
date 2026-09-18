@@ -24,13 +24,13 @@ const CaketangCard = ({ data, isActive, onClick }: CaketangCardProps) => {
         animate={{ scale: isActive ? 1.15 : 1, y: isActive ? -15 : 0 }}
         transition={{ type: "spring", stiffness: 250, damping: 25, mass: 0.8 }}
       >
-        <div className="w-full pt-2 px-2 pb-6">
+        <div className="w-full pt-2 px-2 pb-0">
           <Image
             src={data.foto || "/placeholder-image.jpg"}
             width={300}
             height={400}
             alt="Caketang Photo"
-            className="w-full h-auto aspect-[3/4] object-contain object-bottom rounded-t-[4.5rem] rounded-b-2xl"
+            className="w-full h-auto aspect-[3/4] object-contain object-bottom rounded-t-[4.5rem] rounded-b-none"
           />
         </div>
         <div className="w-full -mt-8 relative z-10">
@@ -52,13 +52,13 @@ const CaketangCard = ({ data, isActive, onClick }: CaketangCardProps) => {
         animate={{ scale: isActive ? 1.08 : 1, y: isActive ? -10 : 0 }}
         transition={{ type: "spring", stiffness: 250, damping: 25, mass: 0.8 }}
       >
-        <div className="w-full pt-1.5 px-1.5 pb-4">
+        <div className="w-full pt-1.5 px-1.5 pb-0">
           <Image
             src={data.foto || "/placeholder-image.jpg"}
             width={200}
             height={266}
             alt="Caketang Photo"
-            className="w-full h-auto aspect-[3/4] object-contain object-bottom rounded-t-[3.5rem] rounded-b-xl"
+            className="w-full h-auto aspect-[3/4] object-contain object-bottom rounded-t-[3.5rem] rounded-b-none"
           />
         </div>
         <div className="w-full -mt-6 relative z-10 flex-grow">

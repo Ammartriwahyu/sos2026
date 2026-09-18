@@ -42,18 +42,18 @@ const PemilihanCard = ({
       }}
       transition={{ type: "spring", stiffness: 250, damping: 25, mass: 0.8 }}
     >
-      <div className="w-full pt-1.5 md:pt-2 px-1.5 md:px-2 pb-4 md:pb-6">
+      <div className="w-full pt-1.5 md:pt-2 px-1.5 md:px-2 pb-0 md:pb-0">
         <div className="w-full relative">
           <Image
             src={data.foto || "/placeholder-image.jpg"}
             width={400}
             height={533}
             alt="Foto Caketang"
-            className="w-full h-auto aspect-[3/4] object-contain object-bottom rounded-t-[2.5rem] md:rounded-t-[4.5rem] rounded-b-xl md:rounded-b-2xl"
+            className="w-full h-auto aspect-[3/4] object-contain object-bottom rounded-t-[2.5rem] md:rounded-t-[4.5rem] rounded-b-none md:rounded-b-none"
           />
           {/* Dimmer overlay for inactive cards */}
           {!isActive && (
-            <div className="absolute inset-0 bg-[var(--color-primary-dark)]/60 rounded-t-[2.5rem] md:rounded-t-[4.5rem] rounded-b-xl md:rounded-b-2xl" />
+            <div className="absolute inset-0 bg-[var(--color-primary-dark)]/60 rounded-t-[2.5rem] md:rounded-t-[4.5rem] rounded-b-none md:rounded-b-none" />
           )}
         </div>
       </div>

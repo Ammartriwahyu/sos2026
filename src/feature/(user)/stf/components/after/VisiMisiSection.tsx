@@ -62,13 +62,13 @@ const VisiMisiSection = ({
             {/* Left: Photo */}
             <div className="col-span-1 lg:col-span-4 flex flex-col justify-center items-center gap-2 md:gap-4 px-4 md:px-0">
               <div className="flex flex-col w-full max-w-sm md:max-w-md rounded-t-[4rem] md:rounded-t-[5rem] rounded-b-xl overflow-hidden shadow-2xl bg-[var(--color-primary-light)]">
-                <div className="w-full pt-1.5 md:pt-2 px-1.5 md:px-2 pb-1.5 md:pb-2">
+                <div className="w-full pt-1.5 md:pt-2 px-1.5 md:px-2 pb-0 md:pb-0">
                   <Image
                     src={activeCaketang.foto || "/placeholder-image.jpg"}
                     width={400}
                     height={533}
                     alt="Foto Caketang"
-                    className="w-full h-auto aspect-[3/4] object-contain object-bottom rounded-t-[3.5rem] md:rounded-t-[4.5rem] rounded-b-lg"
+                    className="w-full h-auto aspect-[3/4] object-contain object-bottom rounded-t-[3.5rem] md:rounded-t-[4.5rem] rounded-b-none"
                   />
                 </div>
               </div>

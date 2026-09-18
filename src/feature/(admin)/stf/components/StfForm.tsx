@@ -15,6 +15,7 @@ import { Button } from "@/shared/components/ui/Button";
 import { FileInput } from "@/shared/components/ui/FileInput";
 import { Modal } from "@/shared/components/ui/Modal";
 import { EyeIcon } from "lucide-react";
+import { ImageCropperModal } from "@/shared/components/ui/ImageCropperModal";
 
 interface StfFormProps {
   mode: "create" | "edit";
@@ -51,17 +52,30 @@ const StfForm = ({
   const loadingText = mode === "create" ? "Menambahkan..." : "Menyimpan...";
   const [preview, setPreview] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [cropModalOpen, setCropModalOpen] = useState<boolean>(false);
 
   const handleFileChange = (file: File | null) => {
-    setFoto(file);
     if (file) {
-      if (preview) {
-        URL.revokeObjectURL(preview);
-      }
-      setPreview(URL.createObjectURL(file));
+      setSelectedFile(file);
+      setCropModalOpen(true);
     } else {
+      setSelectedFile(null);
+      setFoto(null);
       setPreview(null);
     }
+  };
+
+  const handleCropComplete = (croppedBlob: Blob) => {
+    const croppedFile = new File([croppedBlob], "foto_caketang.png", {
+      type: "image/png",
+    });
+    setFoto(croppedFile);
+    if (preview) {
+      URL.revokeObjectURL(preview);
+    }
+    setPreview(URL.createObjectURL(croppedBlob));
+    setCropModalOpen(false);
   };
 
   useEffect(() => {
@@ -189,6 +203,16 @@ const StfForm = ({
           </Button>
         </div>
       </form>
+
+      {selectedFile && cropModalOpen && (
+        <ImageCropperModal
+          isOpen={cropModalOpen}
+          onClose={() => setCropModalOpen(false)}
+          imageSrc={URL.createObjectURL(selectedFile)}
+          onCropComplete={handleCropComplete}
+          aspect={3 / 4}
+        />
+      )}
 
       {hasPhoto && (
         <Modal
