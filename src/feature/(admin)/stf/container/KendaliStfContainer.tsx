@@ -135,107 +135,114 @@ const KendaliStfContainer = () => {
               Status per Prodi
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {papanData.prodi.map((p) => (
-                <div
-                  key={p.prodi}
-                  className="border p-4 rounded-lg flex flex-col gap-3"
-                >
-                  <div className="flex justify-between items-center">
-                    <span className="font-semibold text-lg">
-                      {p.nama_prodi}
-                    </span>
-                    {p.selesai ? (
-                      <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full font-bold">
-                        Selesai
+              {papanData.prodi.map((p) => {
+                const sesiRaw = p.sesi_aktif;
+                const sesi = Array.isArray(sesiRaw) ? sesiRaw[0] : sesiRaw;
+                const isSesiValid =
+                  sesi &&
+                  typeof sesi === "object" &&
+                  Object.keys(sesi).length > 0 &&
+                  sesi.id_sesi;
+
+                return (
+                  <div
+                    key={p.prodi}
+                    className="border p-4 rounded-lg flex flex-col gap-3"
+                  >
+                    <div className="flex justify-between items-center">
+                      <span className="font-semibold text-lg">
+                        {p.nama_prodi}
                       </span>
-                    ) : (
-                      <span className="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full font-bold">
-                        Berlangsung
-                      </span>
+                      {p.selesai ? (
+                        <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full font-bold">
+                          Selesai
+                        </span>
+                      ) : isSesiValid ? (
+                        <span className="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full font-bold">
+                          Berlangsung
+                        </span>
+                      ) : (
+                        <span className="px-2 py-1 bg-neutral-100 text-neutral-600 text-xs rounded-full font-bold">
+                          Belum Dimulai
+                        </span>
+                      )}
+                    </div>
+
+                    {(() => {
+                      if (isSesiValid) {
+                        // BACKEND FIX: Derive status and defaults if backend omits them
+                        const derivedStatus =
+                          sesi.status ||
+                          (sesi.dibuka_at ? "dibuka" : "tertutup");
+                        const suaraMasuk = sesi.jumlah_suara ?? 0;
+                        const berhakMemilih = sesi.jumlah_berhak ?? 0;
+
+                        return (
+                          <div className="text-sm bg-neutral-50 p-3 rounded border flex flex-col gap-2">
+                            <div className="flex justify-between">
+                              <span className="text-neutral-500">Status:</span>
+                              <span className="font-medium capitalize">
+                                {derivedStatus}
+                              </span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-neutral-500">
+                                Suara Masuk:
+                              </span>
+                              <span className="font-medium">
+                                {suaraMasuk} / {berhakMemilih}
+                              </span>
+                            </div>
+                            {sesi.pengulangan && (
+                              <div className="text-red-500 font-semibold mt-1">
+                                Pemungutan Ulang (Seri)
+                              </div>
+                            )}
+
+                            <div className="flex gap-2 mt-2">
+                              {derivedStatus === "tertutup" && (
+                                <Button
+                                  size="small"
+                                  onClick={() => bukaSesi(sesi.id_sesi)}
+                                  className="flex-1 bg-green-600 hover:bg-green-700"
+                                >
+                                  <Play size={14} className="mr-1" /> Buka
+                                </Button>
+                              )}
+                              {derivedStatus === "dibuka" && (
+                                <Button
+                                  size="small"
+                                  onClick={() => tutupSesi(sesi.id_sesi)}
+                                  className="flex-1 bg-red-600 hover:bg-red-700"
+                                >
+                                  <Square size={14} className="mr-1" /> Tutup
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      } else {
+                        return (
+                          <div className="text-sm text-neutral-400 italic">
+                            Tidak ada sesi aktif
+                          </div>
+                        );
+                      }
+                    })()}
+
+                    {p.finalis && (
+                      <div className="text-sm mt-2">
+                        <span className="font-semibold block mb-1">
+                          Finalis (Kadep):
+                        </span>
+                        <span className="text-primary-normal font-bold">
+                          {p.finalis.nama}
+                        </span>
+                      </div>
                     )}
                   </div>
-
-                  {(() => {
-                    const sesiRaw = p.sesi_aktif;
-                    const sesi = Array.isArray(sesiRaw) ? sesiRaw[0] : sesiRaw;
-                    const isSesiValid =
-                      sesi &&
-                      typeof sesi === "object" &&
-                      Object.keys(sesi).length > 0 &&
-                      sesi.id_sesi;
-
-                    if (isSesiValid) {
-                      // BACKEND FIX: Derive status and defaults if backend omits them
-                      const derivedStatus =
-                        sesi.status || (sesi.dibuka_at ? "dibuka" : "tertutup");
-                      const suaraMasuk = sesi.jumlah_suara ?? 0;
-                      const berhakMemilih = sesi.jumlah_berhak ?? 0;
-
-                      return (
-                        <div className="text-sm bg-neutral-50 p-3 rounded border flex flex-col gap-2">
-                          <div className="flex justify-between">
-                            <span className="text-neutral-500">Status:</span>
-                            <span className="font-medium capitalize">
-                              {derivedStatus}
-                            </span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-neutral-500">
-                              Suara Masuk:
-                            </span>
-                            <span className="font-medium">
-                              {suaraMasuk} / {berhakMemilih}
-                            </span>
-                          </div>
-                          {sesi.pengulangan && (
-                            <div className="text-red-500 font-semibold mt-1">
-                              Pemungutan Ulang (Seri)
-                            </div>
-                          )}
-
-                          <div className="flex gap-2 mt-2">
-                            {derivedStatus === "tertutup" && (
-                              <Button
-                                size="small"
-                                onClick={() => bukaSesi(sesi.id_sesi)}
-                                className="flex-1 bg-green-600 hover:bg-green-700"
-                              >
-                                <Play size={14} className="mr-1" /> Buka
-                              </Button>
-                            )}
-                            {derivedStatus === "dibuka" && (
-                              <Button
-                                size="small"
-                                onClick={() => tutupSesi(sesi.id_sesi)}
-                                className="flex-1 bg-red-600 hover:bg-red-700"
-                              >
-                                <Square size={14} className="mr-1" /> Tutup
-                              </Button>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    } else {
-                      return (
-                        <div className="text-sm text-neutral-400 italic">
-                          Tidak ada sesi aktif
-                        </div>
-                      );
-                    }
-                  })()}
-
-                  {p.finalis && (
-                    <div className="text-sm mt-2">
-                      <span className="font-semibold block mb-1">
-                        Finalis (Kadep):
-                      </span>
-                      <span className="text-primary-normal font-bold">
-                        {p.finalis.nama}
-                      </span>
-                    </div>
-                  )}
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
