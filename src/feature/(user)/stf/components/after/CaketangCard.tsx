@@ -34,8 +34,8 @@ const CaketangCard = ({ data, isActive, onClick }: CaketangCardProps) => {
           />
         </div>
         <div className="w-full -mt-8 relative z-10">
-          <div className="bg-[#EAEAEA] flex justify-center items-center px-4 pt-5 pb-6 text-center min-h-[4.5rem] rounded-t-[5rem] shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
-            <p className="text-[#6C4AB6] text-lg lg:text-xl font-bold uppercase line-clamp-2 leading-tight tracking-wide">
+          <div className="bg-[var(--color-stf-text)] flex justify-center items-center px-4 pt-5 pb-6 text-center min-h-[4.5rem] rounded-t-[5rem] shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+            <p className="text-[var(--color-stf-purple)] text-lg lg:text-xl font-bold uppercase line-clamp-2 leading-tight tracking-wide">
               {data.nama}
             </p>
           </div>
@@ -62,8 +62,8 @@ const CaketangCard = ({ data, isActive, onClick }: CaketangCardProps) => {
           />
         </div>
         <div className="w-full -mt-6 relative z-10 flex-grow">
-          <div className="bg-[#EAEAEA] flex justify-center items-center px-2 py-1.5 text-center min-h-[2.5rem] h-full rounded-t-[2.5rem] shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
-            <p className="text-[#6C4AB6] text-sm font-bold uppercase line-clamp-2 leading-tight">
+          <div className="bg-[var(--color-stf-text)] flex justify-center items-center px-2 py-1.5 text-center min-h-[2.5rem] h-full rounded-t-[2.5rem] shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+            <p className="text-[var(--color-stf-purple)] text-sm font-bold uppercase line-clamp-2 leading-tight">
               {data.nama}
             </p>
           </div>

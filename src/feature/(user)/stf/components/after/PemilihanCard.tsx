@@ -31,7 +31,9 @@ const PemilihanCard = ({
       onClick={onClick}
       style={{ zIndex: isActive ? 30 : 20 - Math.abs(staticDistance) }}
       className={`relative cursor-pointer flex flex-col w-full max-w-32 sm:max-w-44 md:max-w-64 lg:max-w-72 rounded-t-[3rem] md:rounded-t-[5rem] rounded-b-3xl md:rounded-b-[3rem] overflow-hidden shadow-2xl transition-colors duration-300 ${
-        isActive ? "bg-[#EAEAEA]" : "bg-[#605992] hover:bg-[#605992]/90"
+        isActive
+          ? "bg-[var(--color-stf-text)]"
+          : "bg-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary-hover)]"
       }`}
       animate={{
         scale: isActive ? 1.15 : 0.85,
@@ -61,8 +63,8 @@ const PemilihanCard = ({
         <div
           className={`flex-grow flex justify-center items-center px-1 sm:px-2 md:px-4 py-3 md:py-4 text-center min-h-[3rem] md:min-h-[4rem] rounded-t-[2.5rem] md:rounded-t-[4rem] shadow-[0_-4px_10px_rgba(0,0,0,0.1)] transition-colors duration-300 ${
             isActive
-              ? "bg-[#EAEAEA] text-[#6C4AB6]"
-              : "bg-[#605992] text-white/90 border-t border-white/10"
+              ? "bg-[var(--color-stf-text)] text-[var(--color-stf-purple)]"
+              : "bg-[var(--color-stf-primary)] text-white/90 border-t border-white/10"
           }`}
         >
           <p className="text-xs sm:text-sm md:text-lg lg:text-xl font-bold uppercase line-clamp-2 leading-tight tracking-wide">

@@ -169,7 +169,7 @@ const HasilSection = () => {
                     />
                   </div>
                   <div className="w-full -mt-6 relative z-10">
-                    <div className="bg-[#EAEAEA] flex flex-col justify-center items-center px-4 pt-4 pb-6 text-center min-h-[4.5rem] rounded-t-[3rem] shadow-[0_-4px_10px_rgba(0,0,0,0.1)] border-t-4 border-[var(--color-stf-title)]">
+                    <div className="bg-[var(--color-stf-text)] flex flex-col justify-center items-center px-4 pt-4 pb-6 text-center min-h-[4.5rem] rounded-t-[3rem] shadow-[0_-4px_10px_rgba(0,0,0,0.1)] border-t-4 border-[var(--color-stf-title)]">
                       <p className="text-[var(--color-stf-title)] text-lg lg:text-2xl font-black uppercase line-clamp-2 leading-tight tracking-wide mb-2">
                         {k.nama}
                       </p>

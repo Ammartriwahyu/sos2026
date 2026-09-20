@@ -87,8 +87,13 @@
 
   /* == STF Custom Colors == */
   --color-stf-primary: #605992;
+  --color-stf-primary-hover: #483d73;
   --color-stf-text: #eaeaea;
   --color-stf-title: #2e2a5c;
+  --color-stf-purple: #6c4ab6;
+  --color-stf-purple-light: #a78bfa;
+  --color-stf-purple-dark: #311a68;
+  --color-stf-purple-border: #816ac5;
 
   /* == Black Colors */
   --color-black: #383838;

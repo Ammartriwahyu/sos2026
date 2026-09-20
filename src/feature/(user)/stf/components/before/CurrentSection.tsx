@@ -81,7 +81,7 @@ const CurrentSection = () => {
                   className="relative flex flex-col items-center"
                 >
                   {/* Arched Window - Saturated purple background */}
-                  <div className="relative w-[320px] sm:w-[380px] md:w-[450px] h-[380px] sm:h-[450px] md:h-[480px] rounded-t-[250px] border-[3px] border-[#a78bfa] shadow-[0_0_25px_rgba(167,139,250,0.5)] bg-[#311a68] flex flex-col items-center overflow-visible">
+                  <div className="relative w-[320px] sm:w-[380px] md:w-[450px] h-[380px] sm:h-[450px] md:h-[480px] rounded-t-[250px] border-[3px] border-[var(--color-stf-purple-light)] shadow-[0_0_25px_rgba(167,139,250,0.5)] bg-[var(--color-stf-purple-dark)] flex flex-col items-center overflow-visible">
                     {/* Decorative Star on the left edge of the arch - Enlarged & Animated */}
                     <motion.div
                       style={{ originX: 0.5, originY: 1 }}
@@ -156,7 +156,7 @@ const CurrentSection = () => {
                   </div>
 
                   {/* Banner at the bottom */}
-                  <div className="relative mt-4 md:mt-6 z-30 bg-[#a78bfa] text-white w-[320px] sm:w-[380px] md:w-[450px] py-2 md:py-3 rounded-t-[5px] rounded-b-[80px] shadow-xl text-center">
+                  <div className="relative mt-4 md:mt-6 z-30 bg-[var(--color-stf-purple-light)] text-white w-[320px] sm:w-[380px] md:w-[450px] py-2 md:py-3 rounded-t-[5px] rounded-b-[80px] shadow-xl text-center">
                     <p className="text-xl md:text-3xl font-bold">
                       {activeProdiData.ketangWaketang}
                     </p>

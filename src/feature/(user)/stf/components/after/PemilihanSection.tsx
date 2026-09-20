@@ -35,11 +35,13 @@ const PemilihanSection = ({
     (caketang: Caketang) => caketang.id_caketang === activeCardId,
   );
 
-  const handleVote = () => {
+  const handleVote = async () => {
     if (activeCaketang) {
-      vote(activeCaketang.id_caketang);
+      const success = await vote(activeCaketang.id_caketang);
       setIsConfirmationModalOpen(false);
-      setIsResultModalOpen(true);
+      if (success) {
+        setIsResultModalOpen(true);
+      }
       refresh();
     }
   };
@@ -111,15 +113,21 @@ const PemilihanSection = ({
             className="w-full max-w-3xl lg:max-w-4xl mx-auto"
           >
             <Button
-              className="w-full py-4 md:py-6 rounded-2xl font-bold text-xl md:text-2xl bg-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary)]/90 text-[var(--color-stf-text)] transition-all shadow-lg border border-white/20 disabled:opacity-50"
+              variant="none"
+              className="w-full py-4 md:py-6 rounded-2xl font-bold text-xl md:text-2xl bg-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary-hover)] text-[var(--color-stf-text)] transition-all shadow-lg border border-white/20 disabled:opacity-50"
               disabled={
                 !kesempatan ||
                 user?.tipe_mahasiswa === "pemutihan" ||
-                sudah_memilih
+                sudah_memilih ||
+                isVoting
               }
               onClick={() => setIsConfirmationModalOpen(true)}
             >
-              {sudah_memilih ? "Anda Sudah Memilih" : "Pilih"}
+              {isVoting
+                ? "Memproses..."
+                : sudah_memilih
+                  ? "Anda Sudah Memilih"
+                  : "Pilih"}
             </Button>
           </motion.div>
         </div>
@@ -138,14 +146,15 @@ const PemilihanSection = ({
         </p>
         <div className="mt-4 flex justify-center space-x-4">
           <Button
-            variant="outline"
-            className="border-[var(--color-stf-primary)] text-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary)]/10"
+            variant="none"
+            className="border border-[var(--color-stf-primary)] text-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary)]/10 px-5 py-3 rounded-2xl"
             onClick={() => setIsConfirmationModalOpen(false)}
           >
             Batal
           </Button>
           <Button
-            className="bg-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary)]/90 text-[var(--color-stf-text)]"
+            variant="none"
+            className="bg-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary-hover)] text-[var(--color-stf-text)] px-5 py-3 rounded-2xl disabled:opacity-50"
             onClick={handleVote}
             disabled={isVoting}
           >
@@ -172,7 +181,8 @@ const PemilihanSection = ({
                 </p>
               </div>
               <Button
-                className="px-8 md:px-14 bg-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary)]/90 text-[var(--color-stf-text)]"
+                variant="none"
+                className="px-8 md:px-14 py-3 rounded-2xl bg-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary-hover)] text-[var(--color-stf-text)]"
                 onClick={() => setIsResultModalOpen(false)}
               >
                 Selesai
@@ -193,7 +203,8 @@ const PemilihanSection = ({
                 </p>
               </div>
               <Button
-                className="px-8 md:px-14 bg-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary)]/90 text-[var(--color-stf-text)]"
+                variant="none"
+                className="px-8 md:px-14 py-3 rounded-2xl bg-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary-hover)] text-[var(--color-stf-text)]"
                 onClick={() => setIsResultModalOpen(false)}
               >
                 Baiklah
