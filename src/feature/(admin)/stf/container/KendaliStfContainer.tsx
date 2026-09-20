@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import {
   ChevronLeft,
@@ -13,8 +13,11 @@ import {
 } from "lucide-react";
 import { useKendaliStf } from "../hooks/useKendaliStf";
 import { Button } from "@/shared/components/ui/Button";
+import { Modal } from "@/shared/components/ui/Modal";
 
 const KendaliStfContainer = () => {
+  const [isResetModalOpen, setIsResetModalOpen] = useState(false);
+  const [resetKey, setResetKey] = useState("");
   const {
     papanData,
     isLoading,
@@ -110,13 +113,8 @@ const KendaliStfContainer = () => {
             <div className="border-t pt-4 mt-2">
               <Button
                 onClick={() => {
-                  if (
-                    window.confirm(
-                      "Apakah Anda yakin ingin me-reset seluruh sesi pemilihan? Tindakan ini tidak dapat dibatalkan!",
-                    )
-                  ) {
-                    resetSesi("gaffasangpelaut");
-                  }
+                  setIsResetModalOpen(true);
+                  setResetKey("");
                 }}
                 className="w-full justify-start gap-2 bg-red-600 hover:bg-red-700 text-white border-none"
                 variant="none"
@@ -321,6 +319,50 @@ const KendaliStfContainer = () => {
           </div>
         </div>
       </div>
+
+      <Modal
+        isOpen={isResetModalOpen}
+        onClose={() => setIsResetModalOpen(false)}
+        title="Reset Seluruh Sesi"
+      >
+        <div className="mt-4 flex flex-col gap-4">
+          <p className="text-sm text-neutral-600">
+            PERINGATAN: Tindakan ini sangat berbahaya dan akan{" "}
+            <b>MENGHAPUS SEMUA HASIL VOTING!</b>
+            <br />
+            <br />
+            Masukkan kunci rahasia untuk melanjutkan:
+          </p>
+          <input
+            type="password"
+            className="w-full px-4 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+            placeholder="Kunci Rahasia"
+            value={resetKey}
+            onChange={(e) => setResetKey(e.target.value)}
+          />
+          <div className="flex justify-end gap-3 mt-4">
+            <Button
+              variant="admin-outline"
+              onClick={() => setIsResetModalOpen(false)}
+            >
+              Batal
+            </Button>
+            <Button
+              variant="admin"
+              className="bg-red-600 hover:bg-red-700 text-white border-none"
+              onClick={() => {
+                if (resetKey) {
+                  resetSesi(resetKey);
+                  setIsResetModalOpen(false);
+                }
+              }}
+              disabled={!resetKey || isResetLoading}
+            >
+              {isResetLoading ? "Meriset..." : "Ya, Reset Sesi"}
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };
