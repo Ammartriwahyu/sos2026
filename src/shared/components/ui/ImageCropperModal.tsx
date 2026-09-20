@@ -1,5 +1,7 @@
 import React, { useState, useCallback } from "react";
+// @ts-expect-error react-easy-crop type definition does not match exports
 import Cropper from "react-easy-crop";
+// @ts-expect-error react-easy-crop type definition does not match exports
 import { Point, Area } from "react-easy-crop";
 import { Modal } from "./Modal";
 import { Button } from "./Button";

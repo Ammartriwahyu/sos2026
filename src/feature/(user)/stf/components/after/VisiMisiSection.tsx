@@ -61,20 +61,20 @@ const VisiMisiSection = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 w-full gap-10 md:gap-16 items-start">
             {/* Left: Photo */}
             <div className="col-span-1 lg:col-span-4 flex flex-col justify-center items-center gap-2 md:gap-4 px-4 md:px-0">
-              <div className="flex flex-col w-full max-w-sm md:max-w-md rounded-t-[4rem] md:rounded-t-[5rem] rounded-b-xl overflow-hidden shadow-2xl bg-[var(--color-primary-light)]">
+              <div className="flex flex-col w-full max-w-[16rem] sm:max-w-xs md:max-w-md rounded-t-[5rem] md:rounded-t-[6rem] rounded-b-none overflow-hidden shadow-2xl bg-[var(--color-primary-light)]">
                 <div className="w-full pt-1.5 md:pt-2 px-1.5 md:px-2 pb-0 md:pb-0">
                   <Image
                     src={activeCaketang.foto || "/placeholder-image.jpg"}
                     width={400}
                     height={533}
                     alt="Foto Caketang"
-                    className="w-full h-auto aspect-[3/4] object-contain object-bottom rounded-t-[3.5rem] md:rounded-t-[4.5rem] rounded-b-none"
+                    className="w-full h-auto aspect-[3/4] object-contain object-bottom rounded-t-[4.5rem] md:rounded-t-[5.5rem] rounded-b-none"
                   />
                 </div>
               </div>
 
               {/* Separate Name Container */}
-              <div className="flex flex-col w-full max-w-sm md:max-w-md rounded-b-[1.5rem] md:rounded-b-[2rem] rounded-t-none shadow-xl bg-[var(--color-primary-normal)] justify-center items-center px-4 py-4 md:py-6 text-center">
+              <div className="flex flex-col w-full max-w-[16rem] sm:max-w-xs md:max-w-md rounded-b-[5rem] md:rounded-b-[6rem] rounded-t-none shadow-xl bg-[var(--color-caketang-name)] justify-center items-center px-4 py-4 md:py-6 text-center">
                 <p className="text-white font-bold text-lg sm:text-xl md:text-2xl uppercase leading-tight">
                   {activeCaketang.nama}
                 </p>

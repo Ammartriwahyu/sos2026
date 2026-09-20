@@ -51,7 +51,35 @@ const PemilihanSection = ({
           <h4 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white tracking-wide drop-shadow-lg">
             Saatnya memilih!
           </h4>
-          <div className="flex flex-row justify-center items-center w-full px-4 sm:px-0 -space-x-16 md:-space-x-24 lg:-space-x-32 pt-8 pb-12">
+          <div
+            className="flex flex-row justify-center items-center w-full px-4 sm:px-0 -space-x-16 md:-space-x-24 lg:-space-x-32 pt-8 pb-12"
+            onTouchStart={(e) => {
+              const touchDown = e.touches[0].clientX;
+              e.currentTarget.setAttribute("data-touch", touchDown.toString());
+            }}
+            onTouchEnd={(e) => {
+              const touchDown = parseFloat(
+                e.currentTarget.getAttribute("data-touch") || "0",
+              );
+              if (!touchDown) return;
+              const touchUp = e.changedTouches[0].clientX;
+              const diff = touchDown - touchUp;
+
+              if (Math.abs(diff) > 50) {
+                // threshold 50px
+                const activeIndex = kandidat.findIndex(
+                  (c) => c.id_caketang === activeCardId,
+                );
+                if (diff > 0 && activeIndex < kandidat.length - 1) {
+                  // swiped left, go next
+                  setActiveCardId(kandidat[activeIndex + 1].id_caketang);
+                } else if (diff < 0 && activeIndex > 0) {
+                  // swiped right, go prev
+                  setActiveCardId(kandidat[activeIndex - 1].id_caketang);
+                }
+              }
+            }}
+          >
             {kandidat?.map((caketang: Caketang, index: number) => {
               const activeIndex = kandidat.findIndex(
                 (c) => c.id_caketang === activeCardId,
@@ -64,12 +92,13 @@ const PemilihanSection = ({
                   onClick={() => setActiveCardId(caketang.id_caketang)}
                   index={index}
                   activeIndex={activeIndex}
+                  total={kandidat.length}
                 />
               );
             })}
           </div>
           <Button
-            className="w-full max-w-3xl lg:max-w-4xl mx-auto py-6 rounded-2xl font-bold text-xl md:text-2xl bg-[var(--color-primary-normal)] hover:bg-[var(--color-primary-normal-hover)] text-white transition-all shadow-lg border border-white/20"
+            className="w-full max-w-3xl lg:max-w-4xl mx-auto py-4 md:py-6 rounded-2xl font-bold text-xl md:text-2xl bg-[var(--color-primary-normal)] hover:bg-[var(--color-primary-normal-hover)] text-white transition-all shadow-lg border border-white/20"
             disabled={!kesempatan || user?.tipe_mahasiswa === "pemutihan"}
             onClick={() => setIsConfirmationModalOpen(true)}
           >

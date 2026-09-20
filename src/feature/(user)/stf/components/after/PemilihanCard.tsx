@@ -9,6 +9,7 @@ interface Props {
   onClick: () => void;
   index: number;
   activeIndex: number;
+  total: number;
 }
 
 const PemilihanCard = ({
@@ -16,29 +17,29 @@ const PemilihanCard = ({
   data,
   onClick,
   index,
-  activeIndex,
+  total,
 }: Props) => {
-  const distance = index - activeIndex;
+  const centerIndex = (total - 1) / 2;
+  const staticDistance = index - centerIndex;
 
-  // Calculate dynamic rotation and shift based on distance from active card
-  // This ensures that even if there are 3, 4, or more candidates, they fan out nicely
-  // instead of stacking perfectly behind each other (which hides them)
-  const rotate = distance * 15;
-  const x = distance * 20;
+  // Calculate dynamic rotation and shift based on static position
+  const rotate = staticDistance * 8;
+  const x = staticDistance * 40;
 
   return (
     <motion.div
       onClick={onClick}
+      style={{ zIndex: isActive ? 30 : 20 - Math.abs(staticDistance) }}
       className={`relative cursor-pointer flex flex-col w-full max-w-32 sm:max-w-44 md:max-w-64 lg:max-w-72 rounded-t-[3rem] md:rounded-t-[5rem] rounded-b-3xl md:rounded-b-[3rem] overflow-hidden shadow-2xl transition-colors duration-300 ${
         isActive
-          ? "bg-[var(--color-primary-light)] z-30"
-          : "bg-[var(--color-primary-light)]/50 hover:bg-[var(--color-primary-light)]/70 z-10"
+          ? "bg-[var(--color-primary-light)]"
+          : "bg-[var(--color-primary-light)]/50 hover:bg-[var(--color-primary-light)]/70"
       }`}
       animate={{
         scale: isActive ? 1.15 : 0.85,
-        rotate: isActive ? 0 : rotate,
-        x: isActive ? 0 : x,
-        y: isActive ? -15 : 0,
+        rotate: rotate, // Static rotation
+        x: x, // Static x position
+        y: 0,
       }}
       transition={{ type: "spring", stiffness: 250, damping: 25, mass: 0.8 }}
     >
@@ -59,9 +60,9 @@ const PemilihanCard = ({
       </div>
       <div className="w-full -mt-6 md:-mt-8 relative z-10">
         <div
-          className={`flex justify-center items-center px-1 sm:px-2 md:px-4 pt-3 md:pt-5 pb-3 md:pb-6 text-center min-h-[3.5rem] md:min-h-[4.5rem] rounded-t-[3rem] md:rounded-t-[5rem] shadow-[0_-4px_10px_rgba(0,0,0,0.05)] transition-colors duration-300 ${
+          className={`flex justify-center items-center px-1 sm:px-2 md:px-4 py-1.5 md:py-3 text-center min-h-[2.5rem] md:min-h-[3.5rem] rounded-t-[2.5rem] md:rounded-t-[5rem] shadow-[0_-4px_10px_rgba(0,0,0,0.05)] transition-colors duration-300 ${
             isActive
-              ? "bg-white text-[var(--color-primary-normal)]"
+              ? "bg-[#EAEAEA] text-[#6C4AB6]"
               : "bg-[var(--color-primary-normal)] text-white/70 border-t border-white/10"
           }`}
         >

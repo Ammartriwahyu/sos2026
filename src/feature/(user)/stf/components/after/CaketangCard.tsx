@@ -34,8 +34,8 @@ const CaketangCard = ({ data, isActive, onClick }: CaketangCardProps) => {
           />
         </div>
         <div className="w-full -mt-8 relative z-10">
-          <div className="bg-white flex justify-center items-center px-4 pt-5 pb-6 text-center min-h-[4.5rem] rounded-t-[5rem] shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
-            <p className="text-[var(--color-primary-normal)] text-lg lg:text-xl font-bold uppercase line-clamp-2 leading-tight tracking-wide">
+          <div className="bg-[#EAEAEA] flex justify-center items-center px-4 pt-5 pb-6 text-center min-h-[4.5rem] rounded-t-[5rem] shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+            <p className="text-[#6C4AB6] text-lg lg:text-xl font-bold uppercase line-clamp-2 leading-tight tracking-wide">
               {data.nama}
             </p>
           </div>
@@ -43,7 +43,7 @@ const CaketangCard = ({ data, isActive, onClick }: CaketangCardProps) => {
       </motion.div>
 
       <motion.div
-        className={`md:hidden flex flex-col cursor-pointer w-full max-w-44 rounded-t-[4rem] rounded-b-[2.5rem] overflow-hidden transition-colors duration-300 ${
+        className={`md:hidden flex flex-col cursor-pointer w-full max-w-44 rounded-t-[4rem] rounded-b-xl overflow-hidden transition-colors duration-300 ${
           isActive
             ? "bg-[var(--color-primary-light)] shadow-xl z-10"
             : "bg-[var(--color-primary-light)]/70 hover:bg-[var(--color-primary-light-hover)]"
@@ -62,8 +62,8 @@ const CaketangCard = ({ data, isActive, onClick }: CaketangCardProps) => {
           />
         </div>
         <div className="w-full -mt-6 relative z-10 flex-grow">
-          <div className="bg-white flex justify-center items-center px-2 pt-4 pb-5 text-center min-h-[4rem] h-full rounded-t-[2rem] shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
-            <p className="text-[var(--color-primary-normal)] text-sm font-bold uppercase line-clamp-2 leading-tight">
+          <div className="bg-[#EAEAEA] flex justify-center items-center px-2 py-1.5 text-center min-h-[2.5rem] h-full rounded-t-[2.5rem] shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+            <p className="text-[#6C4AB6] text-sm font-bold uppercase line-clamp-2 leading-tight">
               {data.nama}
             </p>
           </div>

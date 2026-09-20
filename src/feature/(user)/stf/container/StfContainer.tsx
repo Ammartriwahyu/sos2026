@@ -149,7 +149,7 @@ const StfContainer = () => {
           <div className="relative z-10 w-full flex flex-col items-center">
             <div className="mt-12 md:mt-16 text-center px-4 flex flex-col gap-4">
               {stfData?.sesi?.judul && (
-                <h2 className="text-3xl md:text-5xl font-bold text-white drop-shadow-md">
+                <h2 className="text-2xl md:text-4xl font-bold text-white drop-shadow-md">
                   {stfData.sesi.judul}
                 </h2>
               )}

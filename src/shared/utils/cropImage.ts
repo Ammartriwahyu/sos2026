@@ -52,9 +52,37 @@ export default async function getCroppedImg(
     Math.round(0 - safeArea / 2 + image.height * 0.5 - pixelCrop.y),
   );
 
+  // Scale down if image is too large (optimization)
+  const MAX_DIMENSION = 800;
+  let finalCanvas = canvas;
+
+  if (pixelCrop.width > MAX_DIMENSION || pixelCrop.height > MAX_DIMENSION) {
+    const ratio = Math.min(
+      MAX_DIMENSION / pixelCrop.width,
+      MAX_DIMENSION / pixelCrop.height,
+    );
+    const scaledWidth = Math.round(pixelCrop.width * ratio);
+    const scaledHeight = Math.round(pixelCrop.height * ratio);
+
+    finalCanvas = document.createElement("canvas");
+    finalCanvas.width = scaledWidth;
+    finalCanvas.height = scaledHeight;
+    const finalCtx = finalCanvas.getContext("2d");
+    if (finalCtx) {
+      // smooth scaling
+      finalCtx.imageSmoothingEnabled = true;
+      finalCtx.imageSmoothingQuality = "high";
+      finalCtx.drawImage(canvas, 0, 0, scaledWidth, scaledHeight);
+    }
+  }
+
   return new Promise((resolve) => {
-    canvas.toBlob((file) => {
-      resolve(file);
-    }, "image/png");
+    finalCanvas.toBlob(
+      (file) => {
+        resolve(file);
+      },
+      "image/webp",
+      0.9,
+    ); // Use webp for better compression
   });
 }
