@@ -17,8 +17,9 @@ import { StfSummary } from "../type";
 import { columns } from "../type/caketangColumns";
 import { DataTable } from "@/shared/components/table/DataTable";
 import { Button } from "@/shared/components/ui/Button";
+import { Modal } from "@/shared/components/ui/Modal";
 import Link from "next/link";
-import { ChevronLeft, Search } from "lucide-react";
+import { ChevronLeft, Search, CheckCircle, XCircle } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -32,18 +33,46 @@ const StfContainer = () => {
   const router = useRouter();
   const { data, isLoading, error, refresh } = useStf();
 
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isResultModalOpen, setIsResultModalOpen] = useState(false);
+  const [resultMessage, setResultMessage] = useState({
+    title: "",
+    desc: "",
+    type: "success",
+  });
+  const [candidateToDelete, setCandidateToDelete] = useState<StfSummary | null>(
+    null,
+  );
+
   const handleDeleteSuccess = () => {
     refresh();
+    setIsDeleteModalOpen(false);
+    setResultMessage({
+      title: "Berhasil",
+      desc: "Caketang berhasil dihapus.",
+      type: "success",
+    });
+    setIsResultModalOpen(true);
   };
 
-  const { deleteCaketang } = useDeleteStf(handleDeleteSuccess);
+  const handleDeleteError = (msg: string) => {
+    setIsDeleteModalOpen(false);
+    setResultMessage({ title: "Gagal", desc: msg, type: "error" });
+    setIsResultModalOpen(true);
+  };
+
+  const { deleteCaketang, isDeleting } = useDeleteStf(
+    handleDeleteSuccess,
+    handleDeleteError,
+  );
 
   const handleEdit = (caketang: StfSummary) => {
     router.push(`/admin/stf/edit/${caketang.id_caketang}`);
   };
 
-  const handleDelete = (caketang: StfSummary) => {
-    deleteCaketang(caketang.id_caketang, caketang.nama);
+  const handleDeleteClick = (caketang: StfSummary) => {
+    setCandidateToDelete(caketang);
+    setIsDeleteModalOpen(true);
   };
 
   const [sorting, setSorting] = useState<SortingState>([
@@ -80,7 +109,7 @@ const StfContainer = () => {
     getPaginationRowModel: getPaginationRowModel(),
     meta: {
       handleEdit: (data) => handleEdit(data as StfSummary),
-      handleDelete: (data) => handleDelete(data as StfSummary),
+      handleDelete: (data) => handleDeleteClick(data as StfSummary),
     },
   });
 
@@ -152,6 +181,71 @@ const StfContainer = () => {
         hideMeta={true}
         hidePagination={true}
       />
+
+      {/* Modal Konfirmasi Hapus */}
+      <Modal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        title="Hapus Calon"
+      >
+        <div className="mt-4 flex flex-col gap-4">
+          <p className="text-sm text-neutral-600">
+            Apakah Anda yakin ingin menghapus calon &quot;
+            <b>{candidateToDelete?.nama}</b>&quot;?
+          </p>
+          <div className="flex justify-end gap-3 mt-4">
+            <Button
+              variant="admin-outline"
+              onClick={() => setIsDeleteModalOpen(false)}
+            >
+              Batal
+            </Button>
+            <Button
+              variant="admin"
+              className="bg-red-600 hover:bg-red-700 text-white border-none"
+              onClick={() => {
+                if (candidateToDelete) {
+                  deleteCaketang(candidateToDelete.id_caketang);
+                }
+              }}
+              disabled={isDeleting}
+            >
+              {isDeleting ? "Menghapus..." : "Ya, Hapus"}
+            </Button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Modal Hasil Hapus */}
+      <Modal
+        isOpen={isResultModalOpen}
+        onClose={() => setIsResultModalOpen(false)}
+      >
+        <div className="mt-4 flex justify-center items-center flex-col p-4 md:p-8 gap-8">
+          {resultMessage.type === "success" ? (
+            <CheckCircle className="w-24 h-24 md:w-32 md:h-32 text-green-500 mx-auto" />
+          ) : (
+            <XCircle className="w-24 h-24 md:w-32 md:h-32 text-red-500 mx-auto" />
+          )}
+          <div className="flex flex-col justify-center items-center gap-6">
+            <div className="flex flex-col justify-center items-center gap-3">
+              <h5 className="text-xl md:text-3xl font-bold text-center text-default-dark">
+                {resultMessage.title}
+              </h5>
+              <p className="text-center text-sm text-gray-500">
+                {resultMessage.desc}
+              </p>
+            </div>
+            <Button
+              variant="admin"
+              className="px-8 md:px-14"
+              onClick={() => setIsResultModalOpen(false)}
+            >
+              OK
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

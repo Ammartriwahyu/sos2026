@@ -14,12 +14,16 @@ export const useCreateStf = () => {
   const [foto, setFoto] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    event: FormEvent<HTMLFormElement>,
+    onSuccess: () => void,
+    onError: (msg: string) => void,
+  ) => {
     event.preventDefault();
     setIsLoading(true);
 
     if (!nama || !prodi || !visi || !misi || !foto) {
-      alert("Semua field wajib diisi!");
+      onError("Semua field wajib diisi!");
       setIsLoading(false);
       return;
     }
@@ -34,9 +38,7 @@ export const useCreateStf = () => {
     try {
       const response = await stfService.createCaketang(formData);
       if (response.status_code === 201) {
-        alert("Caketang berhasil dibuat!");
-        router.refresh();
-        router.push("/admin/stf");
+        onSuccess();
       } else {
         throw new Error(response.message || "Gagal membuat caketang.");
       }
@@ -48,7 +50,7 @@ export const useCreateStf = () => {
       ) {
         backendMessage = error.response.data.message;
       }
-      alert(`Gagal: ${backendMessage}`);
+      onError(backendMessage);
     } finally {
       setIsLoading(false);
     }

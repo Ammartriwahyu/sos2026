@@ -1,12 +1,22 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { ChevronLeft, Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ChevronLeft, Loader2, CheckCircle, XCircle } from "lucide-react";
 import StfForm from "../components/StfForm";
 import { useEditStf } from "../hooks/useEditStf";
+import { Modal } from "@/shared/components/ui/Modal";
+import { Button } from "@/shared/components/ui/Button";
 
 const EditStfContainer = ({ id_caketang }: { id_caketang: string }) => {
+  const router = useRouter();
+  const [isResultModalOpen, setIsResultModalOpen] = useState(false);
+  const [resultMessage, setResultMessage] = useState({
+    title: "",
+    desc: "",
+    type: "success",
+  });
   const {
     nama,
     setNama,
@@ -22,6 +32,27 @@ const EditStfContainer = ({ id_caketang }: { id_caketang: string }) => {
     handleSubmit,
     fotoUrl,
   } = useEditStf(id_caketang);
+
+  const handleSuccess = () => {
+    setResultMessage({
+      title: "Berhasil",
+      desc: "Data berhasil diperbarui!",
+      type: "success",
+    });
+    setIsResultModalOpen(true);
+  };
+
+  const handleError = (msg: string) => {
+    setResultMessage({ title: "Gagal", desc: msg, type: "error" });
+    setIsResultModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsResultModalOpen(false);
+    if (resultMessage.type === "success") {
+      router.push("/admin/stf");
+    }
+  };
 
   return (
     <div className="px-8 w-full flex flex-col gap-12">
@@ -63,9 +94,37 @@ const EditStfContainer = ({ id_caketang }: { id_caketang: string }) => {
           setMisi={setMisi}
           setFoto={setFoto}
           isLoading={isSubmitting}
-          handleSubmit={handleSubmit}
+          handleSubmit={(e) => handleSubmit(e, handleSuccess, handleError)}
         />
       )}
+
+      {/* Modal Hasil */}
+      <Modal isOpen={isResultModalOpen} onClose={handleModalClose}>
+        <div className="mt-4 flex justify-center items-center flex-col p-4 md:p-8 gap-8">
+          {resultMessage.type === "success" ? (
+            <CheckCircle className="w-24 h-24 md:w-32 md:h-32 text-green-500 mx-auto" />
+          ) : (
+            <XCircle className="w-24 h-24 md:w-32 md:h-32 text-red-500 mx-auto" />
+          )}
+          <div className="flex flex-col justify-center items-center gap-6">
+            <div className="flex flex-col justify-center items-center gap-3">
+              <h5 className="text-xl md:text-3xl font-bold text-center text-default-dark">
+                {resultMessage.title}
+              </h5>
+              <p className="text-center text-sm text-gray-500">
+                {resultMessage.desc}
+              </p>
+            </div>
+            <Button
+              variant="admin"
+              className="px-8 md:px-14"
+              onClick={handleModalClose}
+            >
+              OK
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };
