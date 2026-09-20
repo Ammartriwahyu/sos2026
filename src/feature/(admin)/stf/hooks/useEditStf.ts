@@ -3,6 +3,7 @@
 import { useState, useEffect, FormEvent } from "react";
 import { stfService } from "@/api/services/admin/stf";
 import { useRouter } from "next/navigation";
+import { isAxiosError } from "axios";
 
 export const useEditStf = (id: string) => {
   const router = useRouter();
@@ -35,9 +36,9 @@ export const useEditStf = (id: string) => {
         } else {
           throw new Error("Data caketang tidak ditemukan.");
         }
-      } catch (error) {
-        console.error(error);
-        alert("Gagal memuat data caketang.");
+      } catch (error: unknown) {
+        // toast.error("Gagal memuat data caketang."); // Or handled by parent if needed. For now just silently fail or throw.
+        console.error("Gagal memuat data caketang", error);
       } finally {
         setInitialDataLoading(false);
       }
@@ -48,7 +49,11 @@ export const useEditStf = (id: string) => {
     }
   }, [id]);
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    event: FormEvent<HTMLFormElement>,
+    onSuccess: () => void,
+    onError: (msg: string) => void,
+  ) => {
     event.preventDefault();
     setIsSubmitting(true);
 
@@ -58,7 +63,6 @@ export const useEditStf = (id: string) => {
     formData.append("visi", visi);
     formData.append("misi", misi);
 
-    // Logika ini sudah benar: hanya kirim file baru jika ada.
     if (foto) {
       formData.append("foto", foto);
     }
@@ -66,14 +70,19 @@ export const useEditStf = (id: string) => {
     try {
       const response = await stfService.updateCaketang(id, formData);
       if (response.status_code === 200) {
-        alert("Data berhasil diperbarui!");
-        router.push("/admin/stf");
+        onSuccess();
       } else {
         throw new Error(response.message || "Gagal memperbarui data.");
       }
-    } catch (error) {
-      console.error(error);
-      alert("Terjadi kesalahan saat memperbarui data.");
+    } catch (error: unknown) {
+      let backendMessage = "Terjadi kesalahan saat memperbarui data.";
+      if (
+        isAxiosError<{ message?: string }>(error) &&
+        error.response?.data?.message
+      ) {
+        backendMessage = error.response.data.message;
+      }
+      onError(backendMessage);
     } finally {
       setIsSubmitting(false);
     }

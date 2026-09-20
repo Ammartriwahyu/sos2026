@@ -1,6 +1,7 @@
 "use client";
 
 import React, { FormEvent, useEffect, useState } from "react";
+import Image from "next/image";
 import { Input } from "@/shared/components/ui/Input";
 import {
   Select,
@@ -14,6 +15,7 @@ import { Button } from "@/shared/components/ui/Button";
 import { FileInput } from "@/shared/components/ui/FileInput";
 import { Modal } from "@/shared/components/ui/Modal";
 import { EyeIcon } from "lucide-react";
+import { ImageCropperModal } from "@/shared/components/ui/ImageCropperModal";
 
 interface StfFormProps {
   mode: "create" | "edit";
@@ -50,17 +52,30 @@ const StfForm = ({
   const loadingText = mode === "create" ? "Menambahkan..." : "Menyimpan...";
   const [preview, setPreview] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [cropModalOpen, setCropModalOpen] = useState<boolean>(false);
 
   const handleFileChange = (file: File | null) => {
-    setFoto(file);
     if (file) {
-      if (preview) {
-        URL.revokeObjectURL(preview);
-      }
-      setPreview(URL.createObjectURL(file));
+      setSelectedFile(file);
+      setCropModalOpen(true);
     } else {
+      setSelectedFile(null);
+      setFoto(null);
       setPreview(null);
     }
+  };
+
+  const handleCropComplete = (croppedBlob: Blob) => {
+    const croppedFile = new File([croppedBlob], "foto_caketang.png", {
+      type: "image/png",
+    });
+    setFoto(croppedFile);
+    if (preview) {
+      URL.revokeObjectURL(preview);
+    }
+    setPreview(URL.createObjectURL(croppedBlob));
+    setCropModalOpen(false);
   };
 
   useEffect(() => {
@@ -189,6 +204,16 @@ const StfForm = ({
         </div>
       </form>
 
+      {selectedFile && cropModalOpen && (
+        <ImageCropperModal
+          isOpen={cropModalOpen}
+          onClose={() => setCropModalOpen(false)}
+          imageSrc={URL.createObjectURL(selectedFile)}
+          onCropComplete={handleCropComplete}
+          aspect={3 / 4}
+        />
+      )}
+
       {hasPhoto && (
         <Modal
           isOpen={isModalOpen}
@@ -197,11 +222,13 @@ const StfForm = ({
           containerClassName="max-w-sm"
         >
           <div className="mt-4 flex justify-center">
-            <div className="w-60  overflow-hidden rounded-xl border-2 border-gray-200 shadow-lg">
-              <img
+            <div className="w-60 h-60 overflow-hidden rounded-xl border-2 border-gray-200 shadow-lg relative">
+              <Image
                 src={photoToShow!}
                 alt={preview ? "Preview foto baru" : "Foto saat ini"}
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
+                unoptimized={!!preview}
               />
             </div>
           </div>

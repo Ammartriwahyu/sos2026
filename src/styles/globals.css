@@ -23,6 +23,7 @@
   --color-primary-light: #d8d3f0;
   --color-primary-light-hover: #c4bceb;
   --color-primary-light-active: #a094d6;
+  --color-caketang-name: #a98bd8;
   --color-primary-normal: #2a1f5c;
   --color-primary-normal-hover: #3d2f75;
   --color-primary-normal-active: #322660;
@@ -83,6 +84,16 @@
 
   --color-infoNotif: #eaf5f8;
   --color-borderNotif: #467fbd;
+
+  /* == STF Custom Colors == */
+  --color-stf-primary: #605992;
+  --color-stf-primary-hover: #483d73;
+  --color-stf-text: #eaeaea;
+  --color-stf-title: #2e2a5c;
+  --color-stf-purple: #6c4ab6;
+  --color-stf-purple-light: #a78bfa;
+  --color-stf-purple-dark: #311a68;
+  --color-stf-purple-border: #816ac5;
 
   /* == Black Colors */
   --color-black: #383838;

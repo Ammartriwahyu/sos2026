@@ -83,6 +83,10 @@ class ApiCore {
   private setupInterceptors(): void {
     this.client.interceptors.request.use(
       (config) => {
+        if (config.data instanceof FormData) {
+          delete config.headers["Content-Type"];
+        }
+
         if (typeof window !== "undefined") {
           const getCookie = (name: string): string | undefined => {
             const value = `; ${document.cookie}`;

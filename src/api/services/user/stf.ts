@@ -11,12 +11,27 @@ export interface Caketang {
   foto: string;
 }
 
+export interface Sesi {
+  id_sesi: string;
+  jenis: "caketang" | "kadep";
+  judul: string;
+  prodi: string;
+  nama_prodi: string;
+  urutan: number;
+  pengulangan: boolean;
+  dibuka_at: string | null;
+}
+
 export interface StfData {
-  pemilihan_is_active: boolean;
-  waktu_pemilihan: string;
-  kesempatan: boolean;
-  data_ketang: Caketang[];
-  data_dipilih: Caketang;
+  tahap: "tertutup" | "perkenalan" | "voting" | "menunggu" | "hasil";
+  berhak_memilih: boolean;
+  prodi: string;
+  nama_prodi: string;
+  sesi: Sesi | null;
+  sudah_memilih: boolean;
+  pilihan_saya: Caketang | null;
+  kandidat: Caketang[];
+  is_kadep_open?: boolean;
 }
 
 export interface BackendResponse<T> {
@@ -45,6 +60,11 @@ class StfService {
       id_caketang: id,
     });
     return response as unknown as BackendResponse<null>;
+  }
+
+  async getHasilAkhir(): Promise<BackendResponse<unknown>> {
+    const response = await apiClient.get("/api/stf/hasil");
+    return response as unknown as BackendResponse<unknown>;
   }
 }
 
