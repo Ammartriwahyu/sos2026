@@ -90,51 +90,13 @@ const StfContainer = () => {
   const isVoting = stfData.tahap === "voting";
   const isPengulangan = stfData.sesi?.pengulangan;
 
-  // Jika sudah memilih (tampilkan pilihan_saya)
-  if (stfData.sudah_memilih && stfData.pilihan_saya) {
-    return (
-      <SpaceBackground className="w-full flex flex-col overflow-hidden relative">
-        <div className="relative z-10">
-          <HeroSection jenisSesi={stfData.sesi?.jenis} />
-        </div>
-
-        <div className="relative w-full flex-grow flex flex-col z-20">
-          <GrassDivider className="translate-y-px relative z-20" />
-
-          <div className="w-full peta-flashback-bg relative flex-grow min-h-screen pb-32">
-            <div className="absolute top-0 left-0 right-0 h-[800px] z-0 overflow-hidden pointer-events-none">
-              <AuroraWaves />
-            </div>
-
-            <div className="relative z-10 w-full flex flex-col items-center">
-              <div className="bg-green-500/20 border border-green-500/50 text-white px-6 py-4 rounded-xl mt-8 mb-4 max-w-2xl text-center">
-                <h3 className="text-xl font-bold text-green-400">
-                  Kamu Sudah Memilih
-                </h3>
-                <p>
-                  Pilihan kamu telah tersimpan. Terima kasih atas partisipasi
-                  kamu!
-                </p>
-              </div>
-              <VisiMisiSection
-                kandidat={[stfData.pilihan_saya]}
-                isLoading={isLoading}
-                error={error}
-                activeCardId={stfData.pilihan_saya.id_caketang}
-                setActiveCardId={() => {}}
-              />
-            </div>
-          </div>
-        </div>
-      </SpaceBackground>
-    );
-  }
+  // Remove separate block for sudah_memilih so it falls through to main render
 
   // Tampilkan Kandidat (Perkenalan atau Voting aktif)
   return (
     <SpaceBackground className="w-full flex flex-col overflow-hidden relative">
       <div className="relative z-10">
-        <HeroSection jenisSesi={stfData?.sesi?.jenis} />
+        <HeroSection jenisSesi={stfData?.sesi?.jenis} showToggle={false} />
       </div>
 
       <div className="relative w-full flex-grow flex flex-col z-20">
@@ -147,6 +109,17 @@ const StfContainer = () => {
           </div>
 
           <div className="relative z-10 w-full flex flex-col items-center">
+            {stfData?.sudah_memilih && (
+              <div className="bg-green-500/20 border border-green-500/50 text-white px-6 py-4 rounded-xl mt-12 mb-4 max-w-2xl text-center">
+                <h3 className="text-xl font-bold text-green-400">
+                  Kamu Sudah Memilih
+                </h3>
+                <p>
+                  Pilihan kamu telah tersimpan. Terima kasih atas partisipasi
+                  kamu!
+                </p>
+              </div>
+            )}
             <div className="mt-12 md:mt-16 text-center px-4 flex flex-col gap-4">
               {stfData?.sesi?.judul && (
                 <h2 className="text-2xl md:text-4xl font-bold text-white drop-shadow-md">
@@ -184,11 +157,10 @@ const StfContainer = () => {
                     <div className="w-full peta-flashback-bg relative pb-16 pt-8">
                       <PemilihanSection
                         kandidat={stfData.kandidat}
-                        isLoading={isLoading}
-                        error={error}
                         activeCardId={activeCardId}
                         setActiveCardId={setActiveCardId}
                         kesempatan={true}
+                        sudah_memilih={stfData?.sudah_memilih}
                       />
                     </div>
                   </div>

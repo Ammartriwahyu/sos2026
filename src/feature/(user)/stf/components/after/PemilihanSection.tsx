@@ -6,16 +6,14 @@ import { Caketang } from "@/api/services/user/stf";
 import { useVoteForCaketang } from "../../hooks/useVoteForCaketang";
 import { Modal } from "@/shared/components/ui/Modal";
 import { useGetStfData } from "../../hooks/useGetStfData";
-import Image from "next/image";
 import { CheckCircle, XCircle } from "lucide-react";
 import { useAuthContext } from "@/shared/hooks/useAuthContext";
 
 interface PemilihanSectionProps {
   kandidat: Caketang[];
-  isLoading: boolean;
-  error: string | null;
   activeCardId: string | null;
   kesempatan: boolean;
+  sudah_memilih?: boolean;
   setActiveCardId: (id: string) => void;
 }
 
@@ -24,6 +22,7 @@ const PemilihanSection = ({
   activeCardId,
   setActiveCardId,
   kesempatan = false,
+  sudah_memilih = false,
 }: PemilihanSectionProps) => {
   const { vote, isVoting, voteSuccess } = useVoteForCaketang();
   const { refresh } = useGetStfData();
@@ -48,7 +47,7 @@ const PemilihanSection = ({
     <>
       <section className="relative z-10 w-full pt-16 pb-32">
         <div className="mycontainer text-center text-white w-full max-w-5xl mx-auto flex flex-col gap-16 md:gap-24 items-center">
-          <h4 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white tracking-wide drop-shadow-lg">
+          <h4 className="text-2xl md:text-4xl lg:text-5xl font-bold tracking-wide drop-shadow-lg">
             Saatnya memilih!
           </h4>
           <div
@@ -98,11 +97,15 @@ const PemilihanSection = ({
             })}
           </div>
           <Button
-            className="w-full max-w-3xl lg:max-w-4xl mx-auto py-4 md:py-6 rounded-2xl font-bold text-xl md:text-2xl bg-[var(--color-primary-normal)] hover:bg-[var(--color-primary-normal-hover)] text-white transition-all shadow-lg border border-white/20"
-            disabled={!kesempatan || user?.tipe_mahasiswa === "pemutihan"}
+            className="w-full max-w-3xl lg:max-w-4xl mx-auto py-4 md:py-6 rounded-2xl font-bold text-xl md:text-2xl bg-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary)]/90 text-[var(--color-stf-text)] transition-all shadow-lg border border-white/20 disabled:opacity-50"
+            disabled={
+              !kesempatan ||
+              user?.tipe_mahasiswa === "pemutihan" ||
+              sudah_memilih
+            }
             onClick={() => setIsConfirmationModalOpen(true)}
           >
-            Pilih
+            {sudah_memilih ? "Anda Sudah Memilih" : "Pilih"}
           </Button>
         </div>
       </section>
@@ -110,19 +113,24 @@ const PemilihanSection = ({
       <Modal
         isOpen={isConfirmationModalOpen}
         onClose={() => setIsConfirmationModalOpen(false)}
-        title="Konfirmasi Pilihan"
-        desc={`Apakah Anda yakin ingin memilih ${activeCaketang?.nama}? Pilihan tidak dapat diubah.`}
       >
+        <h2 className="md:text-xl text-lg text-center font-bold leading-6 lg:text-2xl text-[var(--color-stf-title)] mb-2">
+          Konfirmasi Pilihan
+        </h2>
+        <p className="mt-2 text-xs md:text-sm text-center text-gray-500 mb-6">
+          Apakah Anda yakin ingin memilih {activeCaketang?.nama}? Pilihan tidak
+          dapat diubah.
+        </p>
         <div className="mt-4 flex justify-center space-x-4">
           <Button
             variant="outline"
-            className="border-[var(--color-primary-normal)] text-[var(--color-primary-normal)] hover:bg-white hover:text-[var(--color-primary-normal-hover)] hover:border-[var(--color-primary-normal-hover)]"
+            className="border-[var(--color-stf-primary)] text-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary)]/10"
             onClick={() => setIsConfirmationModalOpen(false)}
           >
             Batal
           </Button>
           <Button
-            className="bg-[var(--color-primary-normal)] hover:bg-[var(--color-primary-normal-hover)] text-white"
+            className="bg-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary)]/90 text-[var(--color-stf-text)]"
             onClick={handleVote}
             disabled={isVoting}
           >
@@ -139,17 +147,17 @@ const PemilihanSection = ({
           <div className="mt-4 flex justify-center items-center flex-col p-4 md:p-8 gap-10">
             <CheckCircle className="w-24 h-24 md:w-32 md:h-32 text-green-500 mx-auto" />
             <div className="flex flex-col justify-center items-center gap-6">
-              <div className="text-default-dark flex flex-col justify-center items-center gap-3">
-                <h5 className="text-xl md:text-3xl font-bold text-center">
+              <div className="flex flex-col justify-center items-center gap-3">
+                <h5 className="text-xl md:text-3xl font-bold text-center text-[var(--color-stf-title)]">
                   🎉 Yeay, Kamu Sudah Memilih!
                 </h5>
-                <p className="text-center text-sm">
+                <p className="text-center text-sm text-gray-500">
                   Satu suara darimu berarti besar! Terima kasih telah ikut
                   menentukan masa depan angkatan kita.
                 </p>
               </div>
               <Button
-                className="px-8 md:px-14 bg-[var(--color-primary-normal)] hover:bg-[var(--color-primary-normal-hover)] text-white"
+                className="px-8 md:px-14 bg-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary)]/90 text-[var(--color-stf-text)]"
                 onClick={() => setIsResultModalOpen(false)}
               >
                 Selesai
@@ -160,17 +168,17 @@ const PemilihanSection = ({
           <div className="mt-4 flex justify-center items-center flex-col p-4 md:p-8 gap-10">
             <XCircle className="w-24 h-24 md:w-32 md:h-32 text-red-500 mx-auto" />
             <div className="flex flex-col justify-center items-center gap-6">
-              <div className="text-default-dark flex flex-col justify-center items-center gap-3">
-                <h5 className="text-xl md:text-3xl font-bold text-center">
+              <div className="flex flex-col justify-center items-center gap-3">
+                <h5 className="text-xl md:text-3xl font-bold text-center text-[var(--color-stf-title)]">
                   Gagal Melakukan Pemilihan 😣
                 </h5>
-                <p className="text-center text-sm">
+                <p className="text-center text-sm text-gray-500">
                   Maaf suara kamu belum diterima, silakan coba lagi atau hubungi
                   panitia
                 </p>
               </div>
               <Button
-                className="px-8 md:px-14 bg-[var(--color-primary-normal)] hover:bg-[var(--color-primary-normal-hover)] text-white"
+                className="px-8 md:px-14 bg-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary)]/90 text-[var(--color-stf-text)]"
                 onClick={() => setIsResultModalOpen(false)}
               >
                 Baiklah

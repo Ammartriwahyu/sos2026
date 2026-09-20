@@ -85,6 +85,11 @@
   --color-infoNotif: #eaf5f8;
   --color-borderNotif: #467fbd;
 
+  /* == STF Custom Colors == */
+  --color-stf-primary: #605992;
+  --color-stf-text: #eaeaea;
+  --color-stf-title: #2e2a5c;
+
   /* == Black Colors */
   --color-black: #383838;
   --color-black-50: rgba(56, 56, 56, 0.5);

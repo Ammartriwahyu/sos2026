@@ -31,6 +31,7 @@ export interface StfData {
   sudah_memilih: boolean;
   pilihan_saya: Caketang | null;
   kandidat: Caketang[];
+  is_kadep_open?: boolean;
 }
 
 export interface BackendResponse<T> {

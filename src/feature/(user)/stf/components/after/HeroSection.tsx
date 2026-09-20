@@ -4,9 +4,13 @@ import SolarSystem from "@/assets/assetsos26/shared/solar-system.png";
 
 interface HeroSectionProps {
   jenisSesi?: "caketang" | "kadep";
+  showToggle?: boolean;
 }
 
-const HeroSection = ({ jenisSesi = "caketang" }: HeroSectionProps) => {
+const HeroSection = ({
+  jenisSesi = "caketang",
+  showToggle = false,
+}: HeroSectionProps) => {
   const isKadep = jenisSesi === "kadep";
   const roleName = isKadep ? "Calon Ketua Departemen" : "Calon Ketua Angkatan";
 
@@ -43,6 +47,32 @@ const HeroSection = ({ jenisSesi = "caketang" }: HeroSectionProps) => {
           misi, serta tujuan mereka. Karena setiap suara yang kamu berikan,
           menentukan masa depan kita bersama.
         </p>
+
+        {/* Navigation Toggle for Caketang / Cakadep */}
+        {showToggle && (
+          <div className="flex flex-row justify-center gap-2 sm:gap-4 mt-6 w-full px-2 sm:px-0">
+            <a
+              href="/stf"
+              className={`flex-1 sm:flex-none text-center px-4 py-3 sm:px-6 rounded-xl text-xs sm:text-base font-semibold transition-all flex items-center justify-center ${
+                !isKadep
+                  ? "bg-[var(--color-stf-primary)] text-[var(--color-stf-text)] shadow-lg shadow-[var(--color-stf-primary)]/40 border border-[var(--color-stf-primary)]"
+                  : "bg-[var(--color-stf-primary)]/20 border border-[var(--color-stf-primary)]/40 text-[var(--color-stf-text)]/70 hover:bg-[var(--color-stf-primary)]/40 hover:text-[var(--color-stf-text)]"
+              }`}
+            >
+              Calon Ketua Angkatan
+            </a>
+            <a
+              href="/stf/kadep"
+              className={`flex-1 sm:flex-none text-center px-4 py-3 sm:px-6 rounded-xl text-xs sm:text-base font-semibold transition-all flex items-center justify-center ${
+                isKadep
+                  ? "bg-[var(--color-stf-primary)] text-[var(--color-stf-text)] shadow-lg shadow-[var(--color-stf-primary)]/40 border border-[var(--color-stf-primary)]"
+                  : "bg-[var(--color-stf-primary)]/20 border border-[var(--color-stf-primary)]/40 text-[var(--color-stf-text)]/70 hover:bg-[var(--color-stf-primary)]/40 hover:text-[var(--color-stf-text)]"
+              }`}
+            >
+              Calon Ketua Departemen
+            </a>
+          </div>
+        )}
       </div>
     </section>
   );
