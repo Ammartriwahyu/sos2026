@@ -9,8 +9,9 @@ import HasilSection from "../components/after/HasilSection";
 import CurrentSection from "../components/before/CurrentSection";
 import CtaSection from "../components/before/CtaSection";
 import { useGetStfData } from "../hooks/useGetStfData";
-import SpaceBackground from "@/shared/components/background/SpaceBackground";
 import GrassDivider from "@/shared/components/background/GrassDivider";
+import SpaceBackground from "@/shared/components/background/SpaceBackground";
+import { motion } from "framer-motion";
 import AuroraWaves from "../../peta/components/AuroraWaves";
 import { useAuthContext } from "@/shared/hooks/useAuthContext";
 
@@ -110,7 +111,12 @@ const StfContainer = () => {
 
           <div className="relative z-10 w-full flex flex-col items-center">
             {stfData?.sudah_memilih && (
-              <div className="bg-[var(--color-stf-primary)]/30 border border-[var(--color-stf-primary)]/50 text-[var(--color-stf-text)] px-6 py-4 rounded-xl mt-12 mb-4 max-w-2xl text-center backdrop-blur-sm">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ type: "spring", duration: 0.6 }}
+                className="bg-[var(--color-stf-primary)]/30 border border-[var(--color-stf-primary)]/50 text-[var(--color-stf-text)] px-6 py-4 rounded-xl mt-12 mb-4 mx-4 md:mx-auto inline-block max-w-2xl text-center backdrop-blur-sm"
+              >
                 <h3 className="text-2xl font-bold text-white drop-shadow-md mb-1">
                   Kamu Sudah Memilih
                 </h3>
@@ -118,26 +124,41 @@ const StfContainer = () => {
                   Pilihan kamu telah tersimpan. Terima kasih atas partisipasi
                   kamu!
                 </p>
-              </div>
+              </motion.div>
             )}
             <div className="mt-12 md:mt-16 text-center px-4 flex flex-col gap-4">
               {stfData?.sesi?.judul && (
-                <h2 className="text-2xl md:text-4xl font-bold text-white drop-shadow-md">
+                <motion.h2
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="text-2xl md:text-4xl font-bold text-white drop-shadow-md"
+                >
                   {stfData.sesi.judul}
-                </h2>
+                </motion.h2>
               )}
               {isPengulangan && (
-                <div className="bg-yellow-500/20 border border-yellow-500/50 text-yellow-300 px-6 py-3 rounded-xl mx-auto inline-block font-medium max-w-2xl text-center">
-                  ⚠️ Ini adalah pemungutan suara ulang karena terdapat hasil
-                  seri pada putaran sebelumnya.
-                </div>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ type: "spring", duration: 0.6, delay: 0.1 }}
+                  className="bg-[var(--color-stf-primary)]/30 border border-[var(--color-stf-primary)]/50 text-[var(--color-stf-text)] px-6 py-3 rounded-xl mx-auto inline-block font-medium max-w-2xl text-center backdrop-blur-sm"
+                >
+                  Ini adalah pemungutan suara ulang karena terdapat hasil seri
+                  pada putaran sebelumnya.
+                </motion.div>
               )}
               {!stfData.berhak_memilih && (
-                <div className="bg-red-500/20 border border-red-500/50 text-red-300 px-6 py-3 rounded-xl mx-auto inline-block font-medium max-w-2xl text-center">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ type: "spring", duration: 0.6, delay: 0.1 }}
+                  className="bg-red-500/20 border border-red-500/50 text-red-300 px-6 py-3 rounded-xl mx-auto inline-block font-medium max-w-2xl text-center"
+                >
                   {user?.tipe_mahasiswa === "pemutihan"
                     ? "Mahasiswa pemutihan tidak memiliki hak suara."
                     : "Data prodi kamu belum lengkap, hubungi panitia."}
-                </div>
+                </motion.div>
               )}
             </div>
 

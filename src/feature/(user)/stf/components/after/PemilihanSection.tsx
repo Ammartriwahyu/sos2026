@@ -8,6 +8,7 @@ import { Modal } from "@/shared/components/ui/Modal";
 import { useGetStfData } from "../../hooks/useGetStfData";
 import { CheckCircle, XCircle } from "lucide-react";
 import { useAuthContext } from "@/shared/hooks/useAuthContext";
+import { motion } from "framer-motion";
 
 interface PemilihanSectionProps {
   kandidat: Caketang[];
@@ -47,9 +48,15 @@ const PemilihanSection = ({
     <>
       <section className="relative z-10 w-full pt-16 pb-32">
         <div className="mycontainer text-center text-white w-full max-w-5xl mx-auto flex flex-col gap-16 md:gap-24 items-center">
-          <h4 className="text-2xl md:text-4xl lg:text-5xl font-bold tracking-wide drop-shadow-lg">
+          <motion.h4
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-2xl md:text-4xl lg:text-5xl font-bold tracking-wide drop-shadow-lg"
+          >
             Saatnya memilih!
-          </h4>
+          </motion.h4>
           <div
             className="flex flex-row justify-center items-center w-full px-4 sm:px-0 -space-x-16 md:-space-x-24 lg:-space-x-32 pt-8 pb-12"
             onTouchStart={(e) => {
@@ -96,17 +103,25 @@ const PemilihanSection = ({
               );
             })}
           </div>
-          <Button
-            className="w-full max-w-3xl lg:max-w-4xl mx-auto py-4 md:py-6 rounded-2xl font-bold text-xl md:text-2xl bg-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary)]/90 text-[var(--color-stf-text)] transition-all shadow-lg border border-white/20 disabled:opacity-50"
-            disabled={
-              !kesempatan ||
-              user?.tipe_mahasiswa === "pemutihan" ||
-              sudah_memilih
-            }
-            onClick={() => setIsConfirmationModalOpen(true)}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="w-full max-w-3xl lg:max-w-4xl mx-auto"
           >
-            {sudah_memilih ? "Anda Sudah Memilih" : "Pilih"}
-          </Button>
+            <Button
+              className="w-full py-4 md:py-6 rounded-2xl font-bold text-xl md:text-2xl bg-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary)]/90 text-[var(--color-stf-text)] transition-all shadow-lg border border-white/20 disabled:opacity-50"
+              disabled={
+                !kesempatan ||
+                user?.tipe_mahasiswa === "pemutihan" ||
+                sudah_memilih
+              }
+              onClick={() => setIsConfirmationModalOpen(true)}
+            >
+              {sudah_memilih ? "Anda Sudah Memilih" : "Pilih"}
+            </Button>
+          </motion.div>
         </div>
       </section>
 

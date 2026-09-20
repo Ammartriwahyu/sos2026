@@ -40,18 +40,16 @@ const KendaliStfContainer = () => {
     return <div className="p-8 text-red-500">Gagal memuat papan kendali.</div>;
   }
 
-  const isSesiPrepared = papanData?.prodi?.some(
-    (p: { sesi_aktif: unknown }) => {
-      const sesiRaw = p.sesi_aktif;
-      const sesi = Array.isArray(sesiRaw) ? sesiRaw[0] : sesiRaw;
-      return (
-        sesi &&
-        typeof sesi === "object" &&
-        Object.keys(sesi).length > 0 &&
-        sesi.id_sesi
-      );
-    },
-  );
+  const isSesiPrepared = papanData?.prodi?.some((p) => {
+    const sesiRaw = (p as unknown as Record<string, unknown>).sesi_aktif;
+    const sesi = Array.isArray(sesiRaw) ? sesiRaw[0] : sesiRaw;
+    return (
+      sesi &&
+      typeof sesi === "object" &&
+      Object.keys(sesi).length > 0 &&
+      sesi.id_sesi
+    );
+  });
 
   const TahapButton = ({ name, value }: { name: string; value: string }) => {
     const isActive = papanData.tahap === value;

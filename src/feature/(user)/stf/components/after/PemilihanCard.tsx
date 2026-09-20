@@ -31,15 +31,14 @@ const PemilihanCard = ({
       onClick={onClick}
       style={{ zIndex: isActive ? 30 : 20 - Math.abs(staticDistance) }}
       className={`relative cursor-pointer flex flex-col w-full max-w-32 sm:max-w-44 md:max-w-64 lg:max-w-72 rounded-t-[3rem] md:rounded-t-[5rem] rounded-b-3xl md:rounded-b-[3rem] overflow-hidden shadow-2xl transition-colors duration-300 ${
-        isActive
-          ? "bg-[var(--color-primary-light)]"
-          : "bg-[var(--color-primary-light)]/50 hover:bg-[var(--color-primary-light)]/70"
+        isActive ? "bg-[#EAEAEA]" : "bg-[#605992] hover:bg-[#605992]/90"
       }`}
       animate={{
         scale: isActive ? 1.15 : 0.85,
         rotate: rotate, // Static rotation
         x: x, // Static x position
         y: 0,
+        zIndex: isActive ? 30 : Math.round(20 - Math.abs(staticDistance)),
       }}
       transition={{ type: "spring", stiffness: 250, damping: 25, mass: 0.8 }}
     >
@@ -50,20 +49,20 @@ const PemilihanCard = ({
             width={400}
             height={533}
             alt="Foto Caketang"
-            className="w-full h-auto aspect-[3/4] object-contain object-bottom rounded-t-[2.5rem] md:rounded-t-[4.5rem] rounded-b-none md:rounded-b-none"
+            className="w-full h-auto aspect-[3/4] object-contain object-bottom rounded-t-[3rem] md:rounded-t-[5rem] rounded-b-none"
           />
           {/* Dimmer overlay for inactive cards */}
           {!isActive && (
-            <div className="absolute inset-0 bg-[var(--color-primary-dark)]/60 rounded-t-[2.5rem] md:rounded-t-[4.5rem] rounded-b-none md:rounded-b-none" />
+            <div className="absolute inset-0 bg-black/40 rounded-t-[3rem] md:rounded-t-[5rem]" />
           )}
         </div>
       </div>
-      <div className="w-full -mt-6 md:-mt-8 relative z-10">
+      <div className="w-full -mt-4 md:-mt-6 relative z-10 flex-grow flex flex-col">
         <div
-          className={`flex justify-center items-center px-1 sm:px-2 md:px-4 py-1.5 md:py-3 text-center min-h-[2.5rem] md:min-h-[3.5rem] rounded-t-[2.5rem] md:rounded-t-[5rem] shadow-[0_-4px_10px_rgba(0,0,0,0.05)] transition-colors duration-300 ${
+          className={`flex-grow flex justify-center items-center px-1 sm:px-2 md:px-4 py-3 md:py-4 text-center min-h-[3rem] md:min-h-[4rem] rounded-t-[2.5rem] md:rounded-t-[4rem] shadow-[0_-4px_10px_rgba(0,0,0,0.1)] transition-colors duration-300 ${
             isActive
               ? "bg-[#EAEAEA] text-[#6C4AB6]"
-              : "bg-[var(--color-primary-normal)] text-white/70 border-t border-white/10"
+              : "bg-[#605992] text-white/90 border-t border-white/10"
           }`}
         >
           <p className="text-xs sm:text-sm md:text-lg lg:text-xl font-bold uppercase line-clamp-2 leading-tight tracking-wide">
