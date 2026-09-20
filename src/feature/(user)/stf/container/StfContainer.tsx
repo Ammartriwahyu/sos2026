@@ -110,11 +110,11 @@ const StfContainer = () => {
 
           <div className="relative z-10 w-full flex flex-col items-center">
             {stfData?.sudah_memilih && (
-              <div className="bg-green-500/20 border border-green-500/50 text-white px-6 py-4 rounded-xl mt-12 mb-4 max-w-2xl text-center">
-                <h3 className="text-xl font-bold text-green-400">
+              <div className="bg-[var(--color-stf-primary)]/30 border border-[var(--color-stf-primary)]/50 text-[var(--color-stf-text)] px-6 py-4 rounded-xl mt-12 mb-4 max-w-2xl text-center backdrop-blur-sm">
+                <h3 className="text-2xl font-bold text-white drop-shadow-md mb-1">
                   Kamu Sudah Memilih
                 </h3>
-                <p>
+                <p className="text-[var(--color-stf-text)]">
                   Pilihan kamu telah tersimpan. Terima kasih atas partisipasi
                   kamu!
                 </p>

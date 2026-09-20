@@ -19,7 +19,7 @@ import { DataTable } from "@/shared/components/table/DataTable";
 import { Button } from "@/shared/components/ui/Button";
 import { Modal } from "@/shared/components/ui/Modal";
 import Link from "next/link";
-import { ChevronLeft, Search, CheckCircle, XCircle } from "lucide-react";
+import { ChevronLeft, Search, Check, X } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -223,9 +223,19 @@ const StfContainer = () => {
       >
         <div className="mt-4 flex justify-center items-center flex-col p-4 md:p-8 gap-8">
           {resultMessage.type === "success" ? (
-            <CheckCircle className="w-24 h-24 md:w-32 md:h-32 text-green-500 mx-auto" />
+            <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-green-100 flex items-center justify-center mx-auto">
+              <Check
+                className="w-12 h-12 md:w-16 md:h-16 text-green-600"
+                strokeWidth={3}
+              />
+            </div>
           ) : (
-            <XCircle className="w-24 h-24 md:w-32 md:h-32 text-red-500 mx-auto" />
+            <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-red-100 flex items-center justify-center mx-auto">
+              <X
+                className="w-12 h-12 md:w-16 md:h-16 text-red-600"
+                strokeWidth={3}
+              />
+            </div>
           )}
           <div className="flex flex-col justify-center items-center gap-6">
             <div className="flex flex-col justify-center items-center gap-3">

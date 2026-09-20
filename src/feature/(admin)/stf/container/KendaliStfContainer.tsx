@@ -40,6 +40,19 @@ const KendaliStfContainer = () => {
     return <div className="p-8 text-red-500">Gagal memuat papan kendali.</div>;
   }
 
+  const isSesiPrepared = papanData?.prodi?.some(
+    (p: { sesi_aktif: unknown }) => {
+      const sesiRaw = p.sesi_aktif;
+      const sesi = Array.isArray(sesiRaw) ? sesiRaw[0] : sesiRaw;
+      return (
+        sesi &&
+        typeof sesi === "object" &&
+        Object.keys(sesi).length > 0 &&
+        sesi.id_sesi
+      );
+    },
+  );
+
   const TahapButton = ({ name, value }: { name: string; value: string }) => {
     const isActive = papanData.tahap === value;
     return (
@@ -90,9 +103,9 @@ const KendaliStfContainer = () => {
             <Button
               onClick={() => siapkanPutaranPertama()}
               className="w-full justify-start gap-2"
-              variant="admin-outline"
+              variant={isSesiPrepared ? "admin" : "admin-outline"}
             >
-              <RefreshCw size={18} /> Siapkan Sesi Putaran Pertama
+              <RefreshCw size={18} /> Siapkan Sesi
             </Button>
             <Button
               onClick={() => siapkanSesiKadep()}

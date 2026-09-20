@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, Loader2, CheckCircle, XCircle } from "lucide-react";
+import { ChevronLeft, Loader2, Check, X } from "lucide-react";
 import StfForm from "../components/StfForm";
 import { useEditStf } from "../hooks/useEditStf";
 import { Modal } from "@/shared/components/ui/Modal";
@@ -102,9 +102,19 @@ const EditStfContainer = ({ id_caketang }: { id_caketang: string }) => {
       <Modal isOpen={isResultModalOpen} onClose={handleModalClose}>
         <div className="mt-4 flex justify-center items-center flex-col p-4 md:p-8 gap-8">
           {resultMessage.type === "success" ? (
-            <CheckCircle className="w-24 h-24 md:w-32 md:h-32 text-green-500 mx-auto" />
+            <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-green-100 flex items-center justify-center mx-auto">
+              <Check
+                className="w-12 h-12 md:w-16 md:h-16 text-green-600"
+                strokeWidth={3}
+              />
+            </div>
           ) : (
-            <XCircle className="w-24 h-24 md:w-32 md:h-32 text-red-500 mx-auto" />
+            <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-red-100 flex items-center justify-center mx-auto">
+              <X
+                className="w-12 h-12 md:w-16 md:h-16 text-red-600"
+                strokeWidth={3}
+              />
+            </div>
           )}
           <div className="flex flex-col justify-center items-center gap-6">
             <div className="flex flex-col justify-center items-center gap-3">
