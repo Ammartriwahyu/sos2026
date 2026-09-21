@@ -13,10 +13,7 @@ export const useGetStfData = () => {
   } = useQuery<BackendResponse<StfData>, Error>({
     queryKey: ["stfData"],
     queryFn: () => stfService.getStfData(),
-    refetchInterval: (query) => {
-      const tahap = query.state.data?.data?.tahap;
-      return tahap === "voting" || tahap === "menunggu" ? 5000 : false;
-    },
+    refetchInterval: 5000,
     enabled: hasAuthCookie,
   });
 
