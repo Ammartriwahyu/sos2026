@@ -147,7 +147,9 @@ const DashboardContainer = () => {
         <DashboardCard
           title="Presensi Hari Ini"
           value={data.presensi_sekarang}
-          prefix={"/ " + data.jumlah_maba + " Hadir"}
+          prefix={
+            "/ " + (data.presensi_sekarang + data.presensi_total) + " Hadir"
+          }
           icon={<Check className="w-6 h-6" />}
         />
         <DashboardCard
