@@ -37,6 +37,8 @@ interface QuizFormProps {
   setDurasiKuis: (value: string) => void;
   setKesempatan: (value: string) => void;
   setIdRangkaian: (value: string) => void;
+  is_visible: boolean;
+  setIs_visible: (value: boolean) => void;
 
   // Form handling
   onSubmit: (e: React.FormEvent) => void;
@@ -61,6 +63,8 @@ export const QuizForm: React.FC<QuizFormProps> = ({
   setKesempatan,
   idRangkaian,
   setIdRangkaian,
+  is_visible,
+  setIs_visible,
   onSubmit,
   isSubmitting,
   isFormValid,
@@ -184,6 +188,25 @@ export const QuizForm: React.FC<QuizFormProps> = ({
               required
             />
           </div>
+        </div>
+
+        <div className="space-y-1">
+          <label htmlFor="visibility" className={labelClasses}>
+            Visibilitas <span className="text-red-500">*</span>
+          </label>
+          <Select
+            onValueChange={(value) => setIs_visible(value === "true")}
+            value={is_visible.toString()}
+            disabled={isSubmitting}
+          >
+            <SelectTrigger id="visibility">
+              <SelectValue placeholder="Tampilkan Kuis" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="true">Tampilkan</SelectItem>
+              <SelectItem value="false">Sembunyikan</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="w-full pt-4">

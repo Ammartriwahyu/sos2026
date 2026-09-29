@@ -26,6 +26,7 @@ export const usePenugasan = () => {
   const { data: kuisList, isLoading: isKuisLoading } = useQuery({
     queryKey: ["kuisList"],
     queryFn: () => penugasanService.getAllKuis().then((res) => res.data),
+    select: (data) => data?.filter((kuis) => kuis.is_visible !== "false") || [],
   });
 
   const { data: allTugas, isLoading: isTugasLoading } = useQuery({
@@ -58,7 +59,9 @@ export const usePenugasan = () => {
     }
     return allTugas.filter(
       (tugas) =>
-        tugas.rangkaian && activeRangkaianNames.includes(tugas.rangkaian.Name),
+        tugas.rangkaian &&
+        activeRangkaianNames.includes(tugas.rangkaian.Name) &&
+        tugas.is_visible !== "false",
     );
   }, [allTugas]);
 

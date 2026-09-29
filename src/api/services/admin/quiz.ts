@@ -50,10 +50,12 @@ export interface UpdateQuizPayload {
   kesempatan: number;
   id_rangkaian: string;
   durasi_kuis: string;
+  is_visible: string;
   pertanyaan_list: pertanyaan[];
 }
 export interface DetailQuiz extends Quiz {
   list_pertanyaan: pertanyaan[];
+  is_visible: string;
 }
 export interface Quiz {
   id_kuis: string;
@@ -63,6 +65,7 @@ export interface Quiz {
   data_rangkaian: Rangkaian;
   tenggat_kuis: string;
   durasi_kuis: string;
+  is_visible: string;
   total_soal?: number;
 }
 export interface CreateQuizPayload {
@@ -72,6 +75,11 @@ export interface CreateQuizPayload {
   kesempatan: number;
   id_rangkaian: string;
   durasi_kuis: string;
+  is_visible: string;
+}
+export interface ManualScorePayload {
+  nim: string;
+  jawaban_benar: number;
 }
 
 class KuisService {
@@ -175,6 +183,17 @@ class KuisService {
 
     const response = await apiClient.get(apiUrl);
     return response as unknown as BackendResponse<QuizSubmission[]>;
+  }
+
+  async updateManualScore(
+    kuisId: string,
+    data: ManualScorePayload,
+  ): Promise<BackendResponse<null>> {
+    const response = await apiClient.post(
+      `/api/kuis/sos/admin/${kuisId}/nilai`,
+      data,
+    );
+    return response as unknown as BackendResponse<null>;
   }
 }
 

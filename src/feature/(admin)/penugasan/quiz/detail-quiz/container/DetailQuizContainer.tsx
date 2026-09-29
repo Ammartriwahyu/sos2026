@@ -23,6 +23,9 @@ import EditQuizForm from "../components/EditQuiz";
 import { useToast } from "@/shared/hooks/useToast";
 import { ConfirmDeleteModal } from "../components/DeleteConfirmation";
 import { useDeleteQuiz } from "../hooks/useDeleteQuiz";
+import { Modal } from "@/shared/components/ui/Modal";
+import FormEditNilaiKuis from "../components/FormEditNilaiKuis";
+import { QuizSubmission } from "@/api/services/admin/quiz";
 import Link from "next/link";
 import { useRole } from "@/shared/hooks/useRole";
 import { useDebounce } from "@/shared/hooks/useDebounce";
@@ -36,6 +39,11 @@ const DetailQuizContainer: React.FC<DetailQuizContainerProps> = ({
 }) => {
   const { showToast } = useToast();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [editingNilai, setEditingNilai] = useState<QuizSubmission | null>(null);
+  const handleNilaiEditSuccess = () => {
+    setEditingNilai(null);
+    refreshSubmission();
+  };
   const { isSqc } = useRole();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -86,6 +94,7 @@ const DetailQuizContainer: React.FC<DetailQuizContainerProps> = ({
         title: "Berhasil",
         type: "success",
       });
+      setIsEditing(false);
       refreshDetailQuiz();
     },
     onError: (error) => {
@@ -122,6 +131,10 @@ const DetailQuizContainer: React.FC<DetailQuizContainerProps> = ({
     getPaginationRowModel: getPaginationRowModel(),
     onGlobalFilterChange: setGlobalFilter,
     onSortingChange: setSorting,
+    meta: {
+      openEditModal: (submission: QuizSubmission) =>
+        setEditingNilai(submission),
+    },
   });
 
   if (detailQuizLoading || isLoadingRangkaian) {
@@ -183,6 +196,23 @@ const DetailQuizContainer: React.FC<DetailQuizContainerProps> = ({
         onConfirm={() => deleteQuiz(id_quiz)}
         isLoading={isDeleting}
       />
+      {editingNilai && (
+        <Modal
+          isOpen={!!editingNilai}
+          onClose={() => setEditingNilai(null)}
+          title="Edit Nilai Kuis"
+          desc="Ubah jumlah jawaban benar. Skor dihitung otomatis oleh sistem."
+        >
+          <FormEditNilaiKuis
+            submissionData={editingNilai}
+            kuisId={id_quiz}
+            totalSoal={
+              detailQuiz?.list_pertanyaan?.length ?? detailQuiz?.total_soal ?? 0
+            }
+            onSuccess={handleNilaiEditSuccess}
+          />
+        </Modal>
+      )}
     </section>
   );
 };

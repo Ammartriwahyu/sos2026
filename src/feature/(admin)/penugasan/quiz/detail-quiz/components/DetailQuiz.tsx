@@ -2,7 +2,7 @@
 
 import type { DetailQuiz } from "@/api/services/admin/quiz";
 import { Button } from "@/shared/components/ui/Button";
-import { Calendar, Clock, Trash2 } from "lucide-react";
+import { Calendar, Clock, Eye, EyeOff, Trash2 } from "lucide-react";
 import React from "react";
 
 interface DetailQuizProps {
@@ -71,6 +71,25 @@ const DetailQuiz = ({ quiz, onEdit, onDelete, isSQC }: DetailQuizProps) => {
           <div className="flex flex-col space-y-2 text-gray-700">
             <span className="text-primary-normal font-medium">Rangkaian:</span>
             <span className="w-fit">{quiz?.data_rangkaian.Name}</span>
+          </div>
+
+          <div className="flex flex-col space-y-2 text-gray-700">
+            <span className="text-primary-normal font-medium">
+              Visibilitas:
+            </span>
+            <div className="flex items-center space-x-2">
+              {String(quiz?.is_visible) === "true" ? (
+                <>
+                  <Eye className="w-4 h-4 text-green-600" />
+                  <span className="text-green-600">Terlihat</span>
+                </>
+              ) : (
+                <>
+                  <EyeOff className="w-4 h-4 text-red-600" />
+                  <span className="text-red-600">Tersembunyi</span>
+                </>
+              )}
+            </div>
           </div>
         </div>
         {isSQC && (

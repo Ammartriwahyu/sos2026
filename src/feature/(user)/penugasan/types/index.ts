@@ -89,6 +89,7 @@ export interface Kuis {
   score?: number;
   total_soal?: number;
   total_pertanyaan?: number;
+  is_visible?: string;
 }
 
 export interface KuisDetail {
@@ -105,6 +106,7 @@ export interface KuisDetail {
   score?: number;
   total_soal?: number;
   total_pertanyaan?: number;
+  is_visible?: string;
 }
 
 export interface Tugas {

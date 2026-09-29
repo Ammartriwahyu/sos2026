@@ -14,6 +14,7 @@ export const useQuizForm = ({ onSuccess, onError }: UseQuizFormProps) => {
   const [durasiKuis, setDurasiKuis] = useState("");
   const [kesempatan, setKesempatan] = useState<string>("1");
   const [idRangkaian, setIdRangkaian] = useState("");
+  const [is_visible, setIs_visible] = useState<boolean>(true);
 
   const { createQuiz, isLoading: isSubmitting } = useCreateQuiz({ onSuccess });
 
@@ -54,6 +55,7 @@ export const useQuizForm = ({ onSuccess, onError }: UseQuizFormProps) => {
         durasi_kuis: convertMinutesToHHMM(durasiKuis),
         kesempatan: Number(kesempatan),
         id_rangkaian: idRangkaian,
+        is_visible: "true",
       };
 
       await createQuiz(payload);
@@ -72,9 +74,12 @@ export const useQuizForm = ({ onSuccess, onError }: UseQuizFormProps) => {
     setDurasiKuis("");
     setKesempatan("1");
     setIdRangkaian("");
+    setIs_visible(true);
   };
 
   return {
+    is_visible,
+    setIs_visible,
     kuisNama,
     setKuisNama,
     kuisDeskripsi,

@@ -26,13 +26,17 @@ const formatMenitToHHMM = (totalMenit: number): string => {
 };
 
 // State awal untuk form
-const createDefaultState = (): UpdateQuizPayload => ({
+const createDefaultState = (): UpdateQuizPayload & {
+  is_visible_bool: boolean;
+} => ({
   kuis_nama: "",
   kuis_deskripsi: "",
   tenggat: "",
   kesempatan: 1,
   id_rangkaian: "",
-  durasi_kuis: "60", // Default: 60 menit
+  durasi_kuis: "60",
+  is_visible: "true",
+  is_visible_bool: true,
   pertanyaan_list: [],
 });
 
@@ -67,23 +71,27 @@ const formatDateToLocalInput = (isoString: string | undefined): string => {
 // --------------------------------------------------------------------
 
 export const useEditQuizForm = (initialData: DetailQuiz | null) => {
-  const [formData, setFormData] =
-    useState<UpdateQuizPayload>(createDefaultState);
+  const [formData, setFormData] = useState<
+    UpdateQuizPayload & { is_visible_bool: boolean }
+  >(createDefaultState);
   const [errors, setErrors] = useState<ValidationErrors>({});
 
   useEffect(() => {
     if (initialData) {
+      // Default "true" kalau backend belum kirim field is_visible
+      const rawVisible = initialData.is_visible ?? "true";
+      const isVisString = String(rawVisible) === "true" ? "true" : "false";
       setFormData({
         kuis_nama: initialData.nama_kuis || "",
         kuis_deskripsi: initialData.deskripsi_kuis || "",
-        // --- DIUBAH: Gunakan helper baru untuk konversi timezone ---
         tenggat: formatDateToLocalInput(initialData.tenggat_kuis),
-        // ---------------------------------------------------------
         kesempatan: initialData.kesempatan || 1,
         id_rangkaian: initialData.data_rangkaian?.ID || "",
         durasi_kuis: String(
           parseTimeToMenit(initialData.durasi_kuis || "01:00"),
         ),
+        is_visible: isVisString,
+        is_visible_bool: isVisString === "true",
         pertanyaan_list: initialData.list_pertanyaan || [],
       });
     }
@@ -178,7 +186,14 @@ export const useEditQuizForm = (initialData: DetailQuiz | null) => {
   };
 
   const handleSelectChange = (name: keyof UpdateQuizPayload, value: string) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => {
+      const updated = { ...prev, [name]: value };
+      // Sync is_visible_bool ketika is_visible berubah
+      if (name === "is_visible") {
+        updated.is_visible_bool = value !== "false";
+      }
+      return updated;
+    });
     if (name === "id_rangkaian" && value) clearError("id_rangkaian");
   };
 
@@ -265,6 +280,7 @@ export const useEditQuizForm = (initialData: DetailQuiz | null) => {
       kesempatan: formData.kesempatan || 1,
       id_rangkaian: formData.id_rangkaian || "",
       durasi_kuis: formatMenitToHHMM(Number(formData.durasi_kuis) || 60),
+      is_visible: formData.is_visible || "true",
       pertanyaan_list: (formData.pertanyaan_list || []).map((q) => ({
         id_pertanyaan: q.id_pertanyaan?.startsWith("new_")
           ? undefined

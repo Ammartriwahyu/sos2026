@@ -269,6 +269,28 @@ const EditQuizForm: React.FC<EditQuizFormProps> = ({
               <p className="text-red-500 text-xs mt-1">{errors.id_rangkaian}</p>
             )}
           </div>
+
+          <div>
+            <label
+              htmlFor="is_visible"
+              className="block text-sm font-bold text-primary-normal mb-1"
+            >
+              Visibilitas
+            </label>
+            <Select
+              value={formData.is_visible || "true"}
+              onValueChange={(value) => handleSelectChange("is_visible", value)}
+              disabled={isSubmitting}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Pilih Visibilitas" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="true">Tampilkan</SelectItem>
+                <SelectItem value="false">Sembunyikan</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         {/* Section Header dengan Hint Jumlah Soal */}
