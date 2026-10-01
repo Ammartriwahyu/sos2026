@@ -12,7 +12,7 @@ interface QuizViewSos26Props {
   answers: Record<string, string>;
   timeLeft: string;
   isLastQuestion: boolean;
-  isFinished?: boolean; // <--- Tambahkan baris ini agar TypeScript mengenalinya
+  isFinished?: boolean;
   onSelectAnswer: (questionId: string, answerLabel: string) => void;
   onSubmit: () => void;
   onNext: () => void;
@@ -71,7 +71,6 @@ export const QuizViewSos26 = ({
 
   return (
     <main className="mycontainer py-6 flex flex-col items-center">
-      {/* COMMENT: [Countdown Timer] Gaya Liquid Glass terbaru dengan rounded-12, semi-bold, text-white */}
       <div className="w-full max-w-[1080px] flex justify-end mb-[20px] px-2">
         <div
           className="px-4 py-2 rounded-[12px] text-base font-semibold text-white transition-all"
@@ -86,8 +85,6 @@ export const QuizViewSos26 = ({
           Sisa Waktu: {timeLeft}
         </div>
       </div>
-
-      {/* COMMENT: [Main Card Container] Liquid Glass max-w-[1080px] dengan padding xy 40 */}
       <div
         className="w-full max-w-[1080px] h-auto p-[40px] rounded-[24px] flex flex-col transition-all duration-300"
         style={{
@@ -98,22 +95,17 @@ export const QuizViewSos26 = ({
             "inset 0 2px 4px 0 rgba(0,0,0,0.25), 0 8px 32px 0 rgba(0,0,0,0.2)",
         }}
       >
-        {/* SUB-FRAME 1: Informasi Soal Ke Berapa */}
         <div className="w-full">
           <h2 className="text-xl font-semibold text-white tracking-wide">
             Soal {currentQuestionIndex + 1} dari{" "}
             {kuisData.list_pertanyaan.length}
           </h2>
         </div>
-
-        {/* SUB-FRAME 2: Frame Soal (Gap vertikal 26px) */}
         <div className="w-full mt-[26px]">
           <p className="text-base font-medium text-white whitespace-pre-line break-words leading-relaxed">
             {currentQuestion.pertanyaan}
           </p>
         </div>
-
-        {/* SUB-FRAME 3: Frame Opsi Pilihan Soal (Gap vertikal 26px, antar opsi 18px) */}
         <div className="w-full mt-[26px] flex flex-col gap-[18px]">
           {sortedPilihan.map((pilihan: Pilihan) => {
             const isSelected =
@@ -125,7 +117,7 @@ export const QuizViewSos26 = ({
                 onClick={() =>
                   onSelectAnswer(currentQuestion.id_pertanyaan, pilihan.label)
                 }
-                className="w-full h-[48px] px-4 rounded-[24px] flex items-center text-left transition-all duration-200 border cursor-pointer group"
+                className="w-full min-h-[48px] py-3 px-4 rounded-[24px] flex items-start text-left transition-all duration-200 border cursor-pointer group"
                 style={{
                   background: isSelected
                     ? "rgba(136, 129, 188, 0.5)"
@@ -147,18 +139,16 @@ export const QuizViewSos26 = ({
                   }
                 }}
               >
-                <span className="font-bold text-base mr-3 text-white">
+                <span className="font-bold text-base mr-3 text-white leading-6 shrink-0">
                   {pilihan.label}.
                 </span>
-                <span className="text-base font-normal text-white">
+                <span className="flex-1 min-w-0 text-base font-normal text-white leading-6 whitespace-pre-line break-words">
                   {pilihan.value}
                 </span>
               </button>
             );
           })}
         </div>
-
-        {/* SUB-FRAME 4: Frame Button Navigasi Bawah (Gap vertikal 26px, tanpa line pemisah) */}
         <div className="w-full mt-[26px] flex items-center justify-end">
           {isLastQuestion ? (
             <AktivitasButton
