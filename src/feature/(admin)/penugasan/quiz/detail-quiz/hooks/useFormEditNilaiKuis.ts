@@ -34,13 +34,30 @@ export const useFormEditNilaiKuis = ({
     setIsSubmitting(true);
     try {
       const angka = Number(jawabanBenar);
-      await kuisService.updateManualScore(kuisId, {
+      const payload = {
         nim: submissionData.nim,
         jawaban_benar: angka,
+      };
+      
+      // DEBUG: Log request untuk troubleshoot production issue
+      console.log("[DEBUG] Edit Nilai Kuis Request:", {
+        method: "POST",
+        url: `/api/kuis/sos/admin/${kuisId}/nilai`,
+        payload,
+        baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+        fullURL: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/kuis/sos/admin/${kuisId}/nilai`,
       });
+      
+      await kuisService.updateManualScore(kuisId, payload);
       onSuccess();
     } catch (error) {
       console.error("Gagal memperbarui nilai kuis:", error);
+      if (error instanceof Error) {
+        console.error("[DEBUG] Error details:", {
+          message: error.message,
+          stack: error.stack,
+        });
+      }
       throw error;
     } finally {
       setIsSubmitting(false);
