@@ -190,7 +190,7 @@ class KuisService {
     data: ManualScorePayload,
   ): Promise<BackendResponse<null>> {
     const response = await apiClient.post(
-      `/api/kuis/sos/admin/${kuisId}/nilai/`,
+      `/api/kuis/sos/admin/${kuisId}/nilai`,
       data,
     );
     return response as unknown as BackendResponse<null>;
