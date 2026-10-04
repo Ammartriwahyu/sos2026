@@ -94,8 +94,10 @@ const DetailQuizContainer: React.FC<DetailQuizContainerProps> = ({
         title: "Berhasil",
         type: "success",
       });
-      setIsEditing(false);
-      refreshDetailQuiz();
+      // Redirect to list page so visibility status syncs properly
+      setTimeout(() => {
+        window.location.href = "/admin/penugasan";
+      }, 1500);
     },
     onError: (error) => {
       showToast({
