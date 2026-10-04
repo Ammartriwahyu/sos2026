@@ -62,11 +62,12 @@ export const quizStatusColumns = [
       <button
         type="button"
         onClick={() => table.options.meta?.openEditModal?.(row.original)}
-        className="p-2 rounded-full hover:bg-primary-light focus:outline-none focus:ring-2 focus:ring-primary-light-active focus:ring-offset-2 transition-colors"
-        aria-label="Edit Data"
-        title="Edit Data"
+        disabled
+        className="p-2 rounded-full hover:bg-primary-light focus:outline-none focus:ring-2 focus:ring-primary-light-active focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        aria-label="Edit Data (Sedang dalam perbaikan)"
+        title="Edit Data - Fitur sedang dalam perbaikan"
       >
-        <Edit3Icon className="text-primary-normal h-5 w-5" />
+        <Edit3Icon className="text-gray-400 h-5 w-5" />
       </button>
     ),
     size: 120,
