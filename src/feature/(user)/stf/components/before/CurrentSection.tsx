@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React, { useMemo, useState } from "react";
 import { ProdiTabs } from "./ProdiTabs";
-import { motion, AnimatePresence, Variants } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "motion/react";
 import { stfData2024 } from "../../data/stfData2024";
 import Bintang from "@/assets/assetsos26/stf/bintanggerak.webp";
 import SetengahBulan from "@/assets/assetsos26/stf/setengahbulan.webp";

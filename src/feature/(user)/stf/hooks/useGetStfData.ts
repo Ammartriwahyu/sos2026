@@ -13,7 +13,7 @@ export const useGetStfData = () => {
   } = useQuery<BackendResponse<StfData>, Error>({
     queryKey: ["stfData"],
     queryFn: () => stfService.getStfData(),
-    refetchInterval: 5000,
+    refetchInterval: 15000,
     enabled: hasAuthCookie,
   });
 

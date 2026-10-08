@@ -8,7 +8,7 @@ import { Modal } from "@/shared/components/ui/Modal";
 import { useGetStfData } from "../../hooks/useGetStfData";
 import { CheckCircle, XCircle } from "lucide-react";
 import { useAuthContext } from "@/shared/hooks/useAuthContext";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 interface PemilihanSectionProps {
   kandidat: Caketang[];
@@ -136,25 +136,29 @@ const PemilihanSection = ({
       <Modal
         isOpen={isConfirmationModalOpen}
         onClose={() => setIsConfirmationModalOpen(false)}
+        variant="space"
       >
-        <h2 className="md:text-xl text-lg text-center font-bold leading-6 lg:text-2xl text-[var(--color-stf-title)] mb-2">
+        <h2 className="md:text-xl text-lg text-center font-bold leading-6 lg:text-2xl text-white mb-2">
           Konfirmasi Pilihan
         </h2>
-        <p className="mt-2 text-xs md:text-sm text-center text-gray-500 mb-6">
-          Apakah Anda yakin ingin memilih {activeCaketang?.nama}? Pilihan tidak
-          dapat diubah.
+        <p className="mt-2 text-xs md:text-sm text-center text-gray-300 mb-8">
+          Apakah Anda yakin ingin memilih{" "}
+          <span className="font-semibold text-white">
+            {activeCaketang?.nama}
+          </span>
+          ? Pilihan tidak dapat diubah.
         </p>
-        <div className="mt-4 flex justify-center space-x-4">
+        <div className="mt-4 flex justify-center space-x-3 md:space-x-4">
           <Button
             variant="none"
-            className="border border-[var(--color-stf-primary)] text-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary)]/10 px-5 py-3 rounded-2xl"
+            className="border border-white/20 text-white/80 hover:bg-white/10 hover:text-white px-6 py-2.5 rounded-xl transition-colors font-medium"
             onClick={() => setIsConfirmationModalOpen(false)}
           >
             Batal
           </Button>
           <Button
             variant="none"
-            className="bg-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary-hover)] text-[var(--color-stf-text)] px-5 py-3 rounded-2xl disabled:opacity-50"
+            className="bg-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary-hover)] text-white px-6 py-2.5 rounded-xl disabled:opacity-50 transition-colors font-medium"
             onClick={handleVote}
             disabled={isVoting}
           >
@@ -166,23 +170,27 @@ const PemilihanSection = ({
       <Modal
         isOpen={isResultModalOpen}
         onClose={() => setIsResultModalOpen(false)}
+        variant="space"
       >
         {voteSuccess ? (
-          <div className="mt-4 flex justify-center items-center flex-col p-4 md:p-8 gap-10">
-            <CheckCircle className="w-24 h-24 md:w-32 md:h-32 text-green-500 mx-auto" />
+          <div className="mt-4 flex justify-center items-center flex-col p-4 md:p-6 gap-8">
+            <CheckCircle
+              className="w-20 h-20 md:w-24 md:h-24 text-green-400 mx-auto"
+              strokeWidth={1.5}
+            />
             <div className="flex flex-col justify-center items-center gap-6">
-              <div className="flex flex-col justify-center items-center gap-3">
-                <h5 className="text-xl md:text-3xl font-bold text-center text-[var(--color-stf-title)]">
-                  🎉 Yeay, Kamu Sudah Memilih!
+              <div className="flex flex-col justify-center items-center gap-2">
+                <h5 className="text-xl md:text-2xl font-bold text-center text-white">
+                  Yeay, Kamu Sudah Memilih!
                 </h5>
-                <p className="text-center text-sm text-gray-500">
+                <p className="text-center text-sm text-gray-300">
                   Satu suara darimu berarti besar! Terima kasih telah ikut
                   menentukan masa depan angkatan kita.
                 </p>
               </div>
               <Button
                 variant="none"
-                className="px-8 md:px-14 py-3 rounded-2xl bg-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary-hover)] text-[var(--color-stf-text)]"
+                className="px-10 py-2.5 rounded-xl bg-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary-hover)] text-white font-medium transition-colors"
                 onClick={() => setIsResultModalOpen(false)}
               >
                 Selesai
@@ -190,24 +198,27 @@ const PemilihanSection = ({
             </div>
           </div>
         ) : (
-          <div className="mt-4 flex justify-center items-center flex-col p-4 md:p-8 gap-10">
-            <XCircle className="w-24 h-24 md:w-32 md:h-32 text-red-500 mx-auto" />
+          <div className="mt-4 flex justify-center items-center flex-col p-4 md:p-6 gap-8">
+            <XCircle
+              className="w-20 h-20 md:w-24 md:h-24 text-red-400 mx-auto"
+              strokeWidth={1.5}
+            />
             <div className="flex flex-col justify-center items-center gap-6">
-              <div className="flex flex-col justify-center items-center gap-3">
-                <h5 className="text-xl md:text-3xl font-bold text-center text-[var(--color-stf-title)]">
-                  Gagal Melakukan Pemilihan 😣
+              <div className="flex flex-col justify-center items-center gap-2">
+                <h5 className="text-xl md:text-2xl font-bold text-center text-white">
+                  Gagal Melakukan Pemilihan
                 </h5>
-                <p className="text-center text-sm text-gray-500">
+                <p className="text-center text-sm text-gray-300">
                   Maaf suara kamu belum diterima, silakan coba lagi atau hubungi
                   panitia
                 </p>
               </div>
               <Button
                 variant="none"
-                className="px-8 md:px-14 py-3 rounded-2xl bg-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary-hover)] text-[var(--color-stf-text)]"
+                className="px-10 py-2.5 rounded-xl border border-white/20 text-white/80 hover:bg-white/10 hover:text-white font-medium transition-colors"
                 onClick={() => setIsResultModalOpen(false)}
               >
-                Baiklah
+                Tutup
               </Button>
             </div>
           </div>
