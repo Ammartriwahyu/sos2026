@@ -10,6 +10,7 @@ import {
   Users,
   Trophy,
   RotateCcw,
+  CheckCircle,
 } from "lucide-react";
 import { useKendaliStf } from "../hooks/useKendaliStf";
 import { Button } from "@/shared/components/ui/Button";
@@ -40,16 +41,23 @@ const KendaliStfContainer = () => {
     return <div className="p-8 text-red-500">Gagal memuat papan kendali.</div>;
   }
 
-  const isSesiPrepared = papanData?.prodi?.some((p) => {
-    const sesiRaw = (p as unknown as Record<string, unknown>).sesi_aktif;
-    const sesi = Array.isArray(sesiRaw) ? sesiRaw[0] : sesiRaw;
-    return (
-      sesi &&
-      typeof sesi === "object" &&
-      Object.keys(sesi).length > 0 &&
-      sesi.id_sesi
-    );
-  });
+  // Tombol A selesai jika setidaknya satu prodi sudah pernah punya sesi caketang
+  // Backend menyediakan flag siap_buka_kadep saat putaran angkatan telah selesai
+  const isAngkatanPrepared =
+    papanData?.prodi?.some((p) => p.selesai) ||
+    papanData?.siap_buka_kadep ||
+    papanData?.siap_finalisasi ||
+    papanData?.hasil_akhir?.sudah_final ||
+    false;
+
+  // Tombol B selesai jika sesi_kadep sudah ada (dibuat oleh backend)
+  const isKadepPrepared = !!papanData?.sesi_kadep;
+
+  // Tombol C selesai jika finalisasi sudah dilakukan
+  const isFinalisasiDone = papanData?.hasil_akhir?.sudah_final || false;
+
+  // Tombol A hanya bisa diklik jika tahap sudah voting
+  const isTahapVoting = papanData?.tahap === "voting";
 
   const TahapButton = ({ name, value }: { name: string; value: string }) => {
     const isActive = papanData.tahap === value;
@@ -123,10 +131,16 @@ const KendaliStfContainer = () => {
               <div className="flex flex-col gap-2">
                 <Button
                   onClick={() => siapkanPutaranPertama()}
-                  className="w-full justify-start gap-3 py-3"
-                  variant={isSesiPrepared ? "admin" : "admin-outline"}
+                  className="w-full justify-start gap-3 py-3 transition-all"
+                  variant={isAngkatanPrepared ? "admin" : "admin-outline"}
+                  disabled={!isTahapVoting || isAngkatanPrepared}
                 >
-                  <RefreshCw size={18} /> A. Siapkan Pemilihan Angkatan
+                  {isAngkatanPrepared ? (
+                    <CheckCircle size={18} />
+                  ) : (
+                    <RefreshCw size={18} />
+                  )}
+                  A. Siapkan Pemilihan Angkatan
                 </Button>
                 <p className="text-[11px] text-neutral-400 leading-tight px-1">
                   Menyiapkan sistem untuk menerima suara mahasiswa. Tekan tombol
@@ -137,13 +151,16 @@ const KendaliStfContainer = () => {
               <div className="flex flex-col gap-2">
                 <Button
                   onClick={() => siapkanSesiKadep()}
-                  className="w-full justify-start gap-3 py-3"
-                  variant={
-                    papanData.siap_buka_kadep ? "admin" : "admin-outline"
-                  }
-                  disabled={!papanData.siap_buka_kadep}
+                  className="w-full justify-start gap-3 py-3 transition-all"
+                  variant={isKadepPrepared ? "admin" : "admin-outline"}
+                  disabled={!papanData.siap_buka_kadep || isKadepPrepared}
                 >
-                  <Users size={18} /> B. Siapkan Pemilihan Kadep
+                  {isKadepPrepared ? (
+                    <CheckCircle size={18} />
+                  ) : (
+                    <Users size={18} />
+                  )}
+                  B. Siapkan Pemilihan Kadep
                 </Button>
                 <p className="text-[11px] text-neutral-400 leading-tight px-1">
                   Menyiapkan sistem untuk pemilihan Kepala Departemen (hanya
@@ -154,13 +171,16 @@ const KendaliStfContainer = () => {
               <div className="flex flex-col gap-2">
                 <Button
                   onClick={() => finalisasi()}
-                  className="w-full justify-start gap-3 py-3"
-                  variant={
-                    papanData.siap_finalisasi ? "admin" : "admin-outline"
-                  }
-                  disabled={!papanData.siap_finalisasi}
+                  className="w-full justify-start gap-3 py-3 transition-all"
+                  variant={isFinalisasiDone ? "admin" : "admin-outline"}
+                  disabled={!papanData.siap_finalisasi || isFinalisasiDone}
                 >
-                  <Trophy size={18} /> C. Selesaikan & Hitung Hasil Akhir
+                  {isFinalisasiDone ? (
+                    <CheckCircle size={18} />
+                  ) : (
+                    <Trophy size={18} />
+                  )}
+                  C. Selesaikan & Hitung Hasil Akhir
                 </Button>
                 <p className="text-[11px] text-neutral-400 leading-tight px-1">
                   Mengunci seluruh bilik suara secara permanen dan menghitung
