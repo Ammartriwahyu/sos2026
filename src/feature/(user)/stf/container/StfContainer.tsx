@@ -11,7 +11,7 @@ import CtaSection from "../components/before/CtaSection";
 import { useGetStfData } from "../hooks/useGetStfData";
 import GrassDivider from "@/shared/components/background/GrassDivider";
 import SpaceBackground from "@/shared/components/background/SpaceBackground";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import AuroraWaves from "../../peta/components/AuroraWaves";
 import { useAuthContext } from "@/shared/hooks/useAuthContext";
 

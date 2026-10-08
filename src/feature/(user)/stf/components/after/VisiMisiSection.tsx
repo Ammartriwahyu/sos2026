@@ -7,7 +7,7 @@ import { Caketang } from "@/api/services/user/stf";
 import Image from "next/image";
 import { formatText } from "@/lib/utils";
 import Starfield from "@/shared/components/background/Starfield";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 
 interface VisiMisiSectionProps {
   kandidat: Caketang[];

@@ -6,7 +6,7 @@ import { stfService, Caketang } from "@/api/services/user/stf";
 import { Trophy, Medal, Star } from "lucide-react";
 import SpaceBackground from "@/shared/components/background/SpaceBackground";
 import GrassDivider from "@/shared/components/background/GrassDivider";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 const HasilSection = () => {
   const {

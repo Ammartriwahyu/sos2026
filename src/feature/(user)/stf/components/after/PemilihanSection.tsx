@@ -8,7 +8,7 @@ import { Modal } from "@/shared/components/ui/Modal";
 import { useGetStfData } from "../../hooks/useGetStfData";
 import { CheckCircle, XCircle } from "lucide-react";
 import { useAuthContext } from "@/shared/hooks/useAuthContext";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 interface PemilihanSectionProps {
   kandidat: Caketang[];
