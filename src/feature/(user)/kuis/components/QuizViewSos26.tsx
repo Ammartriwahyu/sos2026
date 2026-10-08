@@ -159,7 +159,22 @@ export const QuizViewSos26 = ({
         </div>
 
         {/* SUB-FRAME 4: Frame Button Navigasi Bawah (Gap vertikal 26px, tanpa line pemisah) */}
-        <div className="w-full mt-[26px] flex items-center justify-end">
+        <div
+          className={`w-full mt-[26px] flex items-center gap-4 ${
+            currentQuestionIndex > 0 ? "justify-between" : "justify-end"
+          }`}
+        >
+          {/* Button Sebelumnya - hanya muncul kalau bukan soal pertama */}
+          {currentQuestionIndex > 0 && (
+            <AktivitasButton
+              onClick={onPrev}
+              className="bg-white/10 hover:bg-white/20 text-white border border-white/30 shadow-md"
+            >
+              Sebelumnya
+            </AktivitasButton>
+          )}
+
+          {/* Button Berikutnya / Selesai */}
           {isLastQuestion ? (
             <AktivitasButton
               onClick={onSubmit}

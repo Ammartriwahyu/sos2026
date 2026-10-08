@@ -78,7 +78,9 @@ const DetailQuiz = ({ quiz, onEdit, onDelete, isSQC }: DetailQuizProps) => {
               Visibilitas:
             </span>
             <div className="flex items-center space-x-2">
-              {String(quiz?.is_visible) === "true" ? (
+              {String(quiz?.is_visible) === "true" ||
+              String(quiz?.is_visible) === "1" ||
+              quiz?.is_visible === (true as unknown as string) ? (
                 <>
                   <Eye className="w-4 h-4 text-green-600" />
                   <span className="text-green-600">Terlihat</span>

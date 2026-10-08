@@ -91,7 +91,9 @@ const DetailTugas = ({ tugas, onEdit, isSQC }: DetailTugasProps) => {
               Visibilitas:
             </span>
             <div className="flex items-center space-x-2">
-              {String(tugas?.is_visible) === "true" ? (
+              {String(tugas?.is_visible) === "true" ||
+              String(tugas?.is_visible) === "1" ||
+              tugas?.is_visible === "1" ? (
                 <>
                   <Eye className="w-4 h-4 text-green-600" />
                   <span className="text-green-600">Terlihat</span>

@@ -18,7 +18,9 @@ export const TugasCard: React.FC<TugasCardProps> = ({ tugas, idx }) => {
         <span className="text-xl">({tugas.judul})</span>
       </div>
       <div className="flex items-center gap-4">
-        {String(tugas.is_visible) === "true" ? (
+        {String(tugas.is_visible) === "true" ||
+        String(tugas.is_visible) === "1" ||
+        tugas.is_visible === (true as unknown as string) ? (
           <>
             <Eye className="w-5 h-5 text-green-600" />
             <span className="text-green-600 text-sm">Terlihat</span>
