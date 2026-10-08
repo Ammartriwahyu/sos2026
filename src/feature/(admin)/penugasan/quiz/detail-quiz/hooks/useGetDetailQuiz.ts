@@ -11,7 +11,25 @@ export const useGetDetailQuiz = (id_quiz: string) => {
     setError(null);
     try {
       const response = await kuisService.getDetailKuisById(id_quiz);
-      setData(response.data);
+      const detail = response.data;
+
+      if (detail && !detail.is_visible) {
+        try {
+          const listResponse = await kuisService.getAllKuis();
+          const summary = listResponse.data?.find(
+            (kuis) => kuis.id_kuis === id_quiz,
+          );
+
+          if (summary?.is_visible) {
+            setData({ ...detail, is_visible: summary.is_visible });
+            return;
+          }
+        } catch (listError) {
+          console.error(listError);
+        }
+      }
+
+      setData(detail);
     } catch (err: unknown) {
       const errorMessage =
         err instanceof Error

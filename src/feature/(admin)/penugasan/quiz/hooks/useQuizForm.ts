@@ -55,7 +55,7 @@ export const useQuizForm = ({ onSuccess, onError }: UseQuizFormProps) => {
         durasi_kuis: convertMinutesToHHMM(durasiKuis),
         kesempatan: Number(kesempatan),
         id_rangkaian: idRangkaian,
-        is_visible: "true",
+        is_visible: String(is_visible),
       };
 
       await createQuiz(payload);
