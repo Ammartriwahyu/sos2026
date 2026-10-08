@@ -7,7 +7,7 @@ import { Caketang } from "@/api/services/user/stf";
 import Image from "next/image";
 import { formatText } from "@/lib/utils";
 import Starfield from "@/shared/components/background/Starfield";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
 
 interface VisiMisiSectionProps {
   kandidat: Caketang[];
@@ -64,22 +64,22 @@ const VisiMisiSection = ({
         </motion.div>
 
         {/* Detail Section */}
-        <AnimatePresence mode="wait">
-          {activeCaketang && (
-            <motion.div
-              key={activeCaketang.id_caketang}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
-              className="grid grid-cols-1 lg:grid-cols-12 w-full gap-10 md:gap-16 items-start"
+        <div className="w-full relative grid grid-cols-1">
+          {kandidat?.map((caketang) => (
+            <div
+              key={caketang.id_caketang}
+              className={`col-start-1 row-start-1 grid grid-cols-1 lg:grid-cols-12 w-full gap-10 md:gap-16 items-start transition-all duration-500 ease-in-out ${
+                caketang.id_caketang === activeCardId
+                  ? "opacity-100 z-10 translate-y-0"
+                  : "opacity-0 z-0 pointer-events-none translate-y-4"
+              }`}
             >
               {/* Left: Photo */}
               <div className="col-span-1 lg:col-span-4 flex flex-col justify-center items-center gap-2 md:gap-4 px-4 md:px-0">
                 <div className="flex flex-col w-full max-w-[16rem] sm:max-w-xs md:max-w-md rounded-t-[5rem] md:rounded-t-[6rem] rounded-b-none overflow-hidden shadow-2xl bg-[var(--color-primary-light)]">
                   <div className="w-full pt-1.5 md:pt-2 px-1.5 md:px-2 pb-0 md:pb-0">
                     <Image
-                      src={activeCaketang.foto || "/placeholder-image.jpg"}
+                      src={caketang.foto || "/placeholder-image.jpg"}
                       width={400}
                       height={533}
                       alt="Foto Caketang"
@@ -91,7 +91,7 @@ const VisiMisiSection = ({
                 {/* Separate Name Container */}
                 <div className="flex flex-col w-full max-w-[16rem] sm:max-w-xs md:max-w-md rounded-b-[5rem] md:rounded-b-[6rem] rounded-t-none shadow-xl bg-[var(--color-caketang-name)] justify-center items-center px-4 py-4 md:py-6 text-center">
                   <p className="text-white font-bold text-lg sm:text-xl md:text-2xl uppercase leading-tight">
-                    {activeCaketang.nama}
+                    {caketang.nama}
                   </p>
                 </div>
               </div>
@@ -99,15 +99,15 @@ const VisiMisiSection = ({
               {/* Right: Details (Prodi, Visi, Misi) */}
               <div className="col-span-1 lg:col-span-8 flex flex-col gap-10">
                 <h4 className="text-white text-2xl md:text-3xl lg:text-4xl font-bold text-center lg:text-left leading-tight">
-                  {activeCaketang.prodi}
+                  {caketang.prodi}
                 </h4>
 
                 <div className="flex flex-col gap-4">
                   <h5 className="text-xl md:text-2xl font-bold text-white/90">
                     Visi :
                   </h5>
-                  {activeCaketang.visi &&
-                    formatText(activeCaketang.visi).map((line, index) => (
+                  {caketang.visi &&
+                    formatText(caketang.visi).map((line, index) => (
                       <p
                         key={index}
                         className="text-sm md:text-base leading-7 font-normal text-justify text-white/80"
@@ -122,8 +122,8 @@ const VisiMisiSection = ({
                     Misi :
                   </h5>
                   <div className="flex flex-col gap-2">
-                    {activeCaketang.misi &&
-                      formatText(activeCaketang.misi).map((line, index) => (
+                    {caketang.misi &&
+                      formatText(caketang.misi).map((line, index) => (
                         <p
                           key={index}
                           className="text-sm md:text-base leading-7 font-normal text-justify text-white/80"
@@ -134,9 +134,9 @@ const VisiMisiSection = ({
                   </div>
                 </div>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
