@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { useGetSoalKuis } from "./useGetSoalQuiz";
 import { useSubmitKuis } from "./useSubmitJawaban";
 import { useRouter } from "next/navigation";
@@ -46,23 +46,31 @@ export const useQuiz = ({
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [timeLeft, setTimeLeft] = useState(0);
+  const [isTimerReady, setIsTimerReady] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
   const [modalContent, setModalContent] = useState<ModalContent | null>(null);
   const [isSubmissionInProgress, setIsSubmissionInProgress] = useState(false);
   const [quizResult, setQuizResult] = useState<QuizResult | null>(null);
+  const hasAutoSubmitted = useRef(false);
 
   const totalDuration = useMemo(() => {
     return kuisData ? parseDurationToSeconds(kuisData.durasi_kuis) : 0;
   }, [kuisData]);
 
-  // Initialize timer dengan memperhitungkan waktu yang sudah berlalu
+  const getRemainingTime = useCallback(() => {
+    const savedStartTime = localStorage.getItem(`quizStartTime-${id_kuis}`);
+    const startTime = savedStartTime ? parseInt(savedStartTime, 10) : NaN;
+    if (isNaN(startTime)) return totalDuration;
+    const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+    return Math.max(0, totalDuration - elapsedSeconds);
+  }, [id_kuis, totalDuration]);
+
   useEffect(() => {
     if (totalDuration > 0) {
       const startTimeKey = `quizStartTime-${id_kuis}`;
       const savedAnswersKey = `quizAnswers-${id_kuis}`;
       const savedIndexKey = `quizCurrentIndex-${id_kuis}`;
 
-      // Restore jawaban dan index yang tersimpan
       const savedAnswers = localStorage.getItem(savedAnswersKey);
       const savedIndex = localStorage.getItem(savedIndexKey);
 
@@ -81,31 +89,23 @@ export const useQuiz = ({
         }
       }
 
-      // Cek apakah quiz sudah dimulai sebelumnya
-      const savedStartTime = localStorage.getItem(startTimeKey);
-      const now = Date.now();
-
-      if (savedStartTime) {
-        // Hitung waktu yang sudah berlalu
-        const startTime = parseInt(savedStartTime, 10);
-        const elapsedSeconds = Math.floor((now - startTime) / 1000);
-        const remainingTime = Math.max(0, totalDuration - elapsedSeconds);
+      if (localStorage.getItem(startTimeKey)) {
+        const remainingTime = getRemainingTime();
 
         setTimeLeft(remainingTime);
 
-        // Jika waktu sudah habis, auto submit
         if (remainingTime <= 0) {
           setIsFinished(true);
         }
       } else {
-        // Pertama kali memulai quiz
-        localStorage.setItem(startTimeKey, now.toString());
+        localStorage.setItem(startTimeKey, Date.now().toString());
         setTimeLeft(totalDuration);
       }
-    }
-  }, [totalDuration, id_kuis]);
 
-  // Save jawaban dan index ke localStorage setiap kali berubah
+      setIsTimerReady(true);
+    }
+  }, [totalDuration, id_kuis, getRemainingTime]);
+
   useEffect(() => {
     if (!isFinished && Object.keys(answers).length > 0) {
       localStorage.setItem(`quizAnswers-${id_kuis}`, JSON.stringify(answers));
@@ -129,7 +129,6 @@ export const useQuiz = ({
     localStorage.removeItem(`quizCurrentIndex-${id_kuis}`);
   }, [id_kuis]);
 
-  // Di dalam useQuiz, ubah bagian executeSubmit:
   const executeSubmit = useCallback(async () => {
     if (!kuisData || isFinished || isSubmissionInProgress) return;
 
@@ -149,14 +148,12 @@ export const useQuiz = ({
       setIsFinished(true);
       cleanupLocalStorage();
 
-      // Simpan hasil kuis ke state agar modal dapat membacanya
       if (result) {
         setQuizResult(result);
       }
 
       setIsSubmissionInProgress(false);
 
-      // Panggil callback jika ada
       if (onQuizComplete && result) {
         await onQuizComplete(result);
       }
@@ -242,11 +239,39 @@ export const useQuiz = ({
   ]);
 
   useEffect(() => {
-    if (isFinished || timeLeft <= 0 || isSubmissionInProgress) return;
-    if (timeLeft === 1) handleSubmit();
-    const timerId = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
-    return () => clearInterval(timerId);
-  }, [timeLeft, isFinished, isSubmissionInProgress, handleSubmit]);
+    if (!isTimerReady || isFinished || isSubmissionInProgress) return;
+
+    const syncTimeLeft = () => setTimeLeft(getRemainingTime());
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") syncTimeLeft();
+    };
+
+    syncTimeLeft();
+    const timerId = setInterval(syncTimeLeft, 1000);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("focus", syncTimeLeft);
+    window.addEventListener("pageshow", syncTimeLeft);
+
+    return () => {
+      clearInterval(timerId);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("focus", syncTimeLeft);
+      window.removeEventListener("pageshow", syncTimeLeft);
+    };
+  }, [isTimerReady, isFinished, isSubmissionInProgress, getRemainingTime]);
+
+  useEffect(() => {
+    if (!isTimerReady || isFinished || isSubmissionInProgress) return;
+    if (timeLeft > 1 || hasAutoSubmitted.current) return;
+    hasAutoSubmitted.current = true;
+    executeSubmit();
+  }, [
+    timeLeft,
+    isTimerReady,
+    isFinished,
+    isSubmissionInProgress,
+    executeSubmit,
+  ]);
 
   useEffect(() => {
     if (isFinished) return;
@@ -312,7 +337,7 @@ export const useQuiz = ({
     answers,
     timeLeft: formatTime(timeLeft),
     isLastQuestion,
-    isFinished, // <--- Pastikan ini ada di sini!
+    isFinished,
     modalContent,
     closeModal,
     quizResult,

@@ -149,35 +149,32 @@ export const QuizViewSos26 = ({
             );
           })}
         </div>
-        {/* SUB-FRAME 4: Frame Button Navigasi Bawah (Gap vertikal 26px, tanpa line pemisah) */}
         <div
           className={`w-full mt-[26px] flex items-center gap-4 ${
             currentQuestionIndex > 0 ? "justify-between" : "justify-end"
           }`}
         >
-          {/* Button Sebelumnya - hanya muncul kalau bukan soal pertama */}
           {currentQuestionIndex > 0 && (
             <AktivitasButton
               onClick={onPrev}
-              className="bg-white/10 hover:bg-white/20 text-white border border-white/30 shadow-md"
+              className="max-sm:flex-none max-sm:w-[calc(50%-8px)] max-sm:h-[52px] max-sm:px-2 max-sm:text-sm max-sm:leading-tight bg-white/10 hover:bg-white/20 text-white border border-white/30 shadow-md"
             >
               Sebelumnya
             </AktivitasButton>
           )}
 
-          {/* Button Berikutnya / Selesai */}
           {isLastQuestion ? (
             <AktivitasButton
               onClick={onSubmit}
               disabled={isSubmitting}
-              className="bg-[#8881BC] hover:bg-[#776fa8] text-white border-none shadow-md"
+              className="max-sm:flex-none max-sm:w-[calc(50%-8px)] max-sm:h-[52px] max-sm:px-2 max-sm:text-sm max-sm:leading-tight bg-[#8881BC] hover:bg-[#776fa8] text-white border-none shadow-md"
             >
               {isSubmitting ? "Mengumpulkan..." : "Selesai"}
             </AktivitasButton>
           ) : (
             <AktivitasButton
               onClick={onNext}
-              className="bg-[#8881BC] hover:bg-[#776fa8] text-white border-none shadow-md"
+              className="max-sm:flex-none max-sm:w-[calc(50%-8px)] max-sm:h-[52px] max-sm:px-2 max-sm:text-sm max-sm:leading-tight bg-[#8881BC] hover:bg-[#776fa8] text-white border-none shadow-md"
             >
               Soal Berikutnya
             </AktivitasButton>
