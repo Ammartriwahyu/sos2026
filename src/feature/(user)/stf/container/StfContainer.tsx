@@ -14,6 +14,7 @@ import { useGetStfData } from "../hooks/useGetStfData";
 import { useGetPapanHasil } from "../hooks/useGetPapanHasil";
 import GrassDivider from "@/shared/components/background/GrassDivider";
 import SpaceBackground from "@/shared/components/background/SpaceBackground";
+import Starfield from "@/shared/components/background/Starfield";
 import { motion, AnimatePresence } from "motion/react";
 import AuroraWaves from "../../peta/components/AuroraWaves";
 import { useAuthContext } from "@/shared/hooks/useAuthContext";
@@ -95,29 +96,28 @@ const StfContainer = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-            className="w-full flex flex-col items-center justify-start text-white relative z-10 px-4 py-20 min-h-screen"
+            className="w-full flex flex-col items-center justify-start text-white relative z-10 px-4 py-16 min-h-screen"
           >
-            <div className="max-w-xl mx-auto flex flex-col items-center text-center gap-4 mb-8">
-              <h2 className="text-3xl md:text-5xl font-bold">
-                Harap Tunggu ⏳
-              </h2>
-              <p className="text-lg md:text-xl text-white/80">
-                Sesi sedang dipersiapkan atau hasil pemungutan suara sedang
-                dihitung oleh panitia. Mohon tunggu sebentar, halaman ini akan
-                otomatis diperbarui.
-              </p>
-            </div>
+            <Starfield />
 
-            {adaHasilPapanMenunggu && (
-              <div className="w-full relative z-20 mt-8">
-                <GrassDivider className="translate-y-px relative z-20" />
-                <div className="w-full peta-flashback-bg relative pb-16 pt-8">
-                  <HasilAngkatanSection
-                    putaranPertama={papanHasil?.putaran_pertama}
-                    putaranKadep={papanHasil?.putaran_kadep}
-                    prodiSaya={stfData?.prodi}
-                  />
-                </div>
+            {adaHasilPapanMenunggu ? (
+              <div className="w-full relative z-10">
+                <HasilAngkatanSection
+                  putaranPertama={papanHasil?.putaran_pertama}
+                  putaranKadep={papanHasil?.putaran_kadep}
+                  prodiSaya={stfData?.prodi}
+                />
+              </div>
+            ) : (
+              <div className="max-w-xl mx-auto flex flex-col items-center text-center gap-4 my-auto relative z-10">
+                <h2 className="text-3xl md:text-5xl font-bold">
+                  Harap Tunggu ⏳
+                </h2>
+                <p className="text-lg md:text-xl text-white/80">
+                  Sesi sedang dipersiapkan atau hasil pemungutan suara sedang
+                  dihitung oleh panitia. Mohon tunggu sebentar, halaman ini akan
+                  otomatis diperbarui.
+                </p>
               </div>
             )}
           </motion.div>
@@ -183,16 +183,10 @@ const StfContainer = () => {
                       <h3 className="text-2xl font-bold text-white drop-shadow-md mb-2">
                         Kamu Sudah Memilih
                       </h3>
-                      <p className="text-[var(--color-stf-text)] mb-2">
+                      <p className="text-[var(--color-stf-text)]">
                         Pilihan kamu telah tersimpan. Terima kasih atas
                         partisipasi kamu!
                       </p>
-                      {!adaHasilPapanVoting && (
-                        <p className="text-xs text-white/70 bg-white/10 px-4 py-2 rounded-xl inline-block mt-1">
-                          ⏳ Angka perolehan voting tiap angkatan akan otomatis
-                          muncul di sini begitu sesi ditutup oleh panitia.
-                        </p>
-                      )}
                     </motion.div>
                   )}
 
@@ -283,14 +277,11 @@ const StfContainer = () => {
                   {/* ── Tampilkan Papan Hasil Angkatan & Kadep jika sudah ada sesi yang selesai ── */}
                   {adaHasilPapanVoting && (
                     <div className="w-full relative z-20 mt-16 md:mt-24">
-                      <GrassDivider className="translate-y-px relative z-20" />
-                      <div className="w-full peta-flashback-bg relative pb-16 pt-8">
-                        <HasilAngkatanSection
-                          putaranPertama={papanHasil?.putaran_pertama}
-                          putaranKadep={papanHasil?.putaran_kadep}
-                          prodiSaya={stfData?.prodi}
-                        />
-                      </div>
+                      <HasilAngkatanSection
+                        putaranPertama={papanHasil?.putaran_pertama}
+                        putaranKadep={papanHasil?.putaran_kadep}
+                        prodiSaya={stfData?.prodi}
+                      />
                     </div>
                   )}
                 </div>

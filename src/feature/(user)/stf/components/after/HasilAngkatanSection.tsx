@@ -90,77 +90,82 @@ export const KandidatHasilCard = ({
         />
       </div>
 
-      {/* ── Info & Angka Perolehan Suara ── */}
-      <div className="w-full relative z-10 -mt-6 flex-grow flex flex-col justify-between">
+      {/* ── Info & Angka Perolehan Suara (Ketinggian Dipendekkan & Seragam) ── */}
+      <div className="w-full relative z-10 -mt-6">
         <div
-          className={`flex flex-col justify-between items-center px-4 pt-5 pb-6 text-center h-full rounded-t-[2.5rem] border-t-2 ${
+          className={`flex flex-col items-center px-4 pt-3.5 pb-3.5 text-center rounded-t-[2.5rem] border-t-2 ${
             isJuara1
               ? "border-amber-400/40 bg-gradient-to-b from-[var(--color-space-top)] to-[var(--color-space-base)]"
               : "border-[var(--color-stf-purple-border)]/40 bg-gradient-to-b from-[var(--color-space-top)] to-[var(--color-space-base)]"
           }`}
         >
-          {/* Nama Kandidat */}
-          <p
-            className={`font-black uppercase line-clamp-2 leading-tight tracking-wide mb-2 ${
-              isJuara1
-                ? "text-amber-300 text-lg lg:text-xl"
-                : "text-white text-base lg:text-lg"
-            }`}
-          >
-            {kandidat.nama}
-          </p>
+          {/* Nama Kandidat (Tinggi seragam 1 baris terpusat) */}
+          <div className="h-7 flex items-center justify-center w-full mb-1">
+            <p
+              className={`font-black uppercase line-clamp-1 leading-tight tracking-wide ${
+                isJuara1
+                  ? "text-amber-300 text-sm md:text-base"
+                  : "text-white text-xs md:text-sm"
+              }`}
+            >
+              {kandidat.nama}
+            </p>
+          </div>
 
-          {/* Status Jabatan / Finalis */}
-          {isKadepSection ? (
-            isJuara1 ? (
-              <div className="flex items-center gap-1 text-[11px] font-semibold text-amber-300 mb-3 bg-amber-400/10 border border-amber-400/30 px-3 py-0.5 rounded-full">
-                <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-                <span>Kepala Departemen Terpilih</span>
+          {/* Status Jabatan / Finalis (Semua kartu punya badge seragam sehingga punya Ascarya tidak beda sendiri) */}
+          <div className="h-6 flex items-center justify-center mb-2">
+            {isKadepSection ? (
+              isJuara1 ? (
+                <div className="flex items-center gap-1 text-[10px] font-semibold text-amber-300 bg-amber-400/10 border border-amber-400/30 px-2.5 py-0.5 rounded-full">
+                  <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
+                  <span>Kepala Departemen Terpilih</span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-1 text-[10px] font-semibold text-[var(--color-stf-purple-light)] bg-[var(--color-stf-primary)]/20 border border-[var(--color-stf-purple-border)]/30 px-2.5 py-0.5 rounded-full">
+                  <Award className="w-3 h-3" />
+                  <span>
+                    Finalis Kadep {kandidat.prodi ? `(${kandidat.prodi})` : ""}
+                  </span>
+                </div>
+              )
+            ) : isJuara1 ? (
+              <div className="flex items-center gap-1 text-[10px] font-semibold text-amber-300 bg-amber-400/10 border border-amber-400/30 px-2.5 py-0.5 rounded-full">
+                <CheckCircle2 className="w-3 h-3" />
+                <span>Ketua Angkatan / Finalis Kadep</span>
+              </div>
+            ) : isJuara2 ? (
+              <div className="flex items-center gap-1 text-[10px] font-semibold text-[var(--color-stf-purple-light)] bg-[var(--color-stf-primary)]/20 border border-[var(--color-stf-purple-border)]/30 px-2.5 py-0.5 rounded-full">
+                <Award className="w-3 h-3" />
+                <span>Kandidat Cadangan</span>
               </div>
             ) : (
-              <div className="flex items-center gap-1 text-[11px] font-semibold text-[var(--color-stf-purple-light)] mb-3 bg-[var(--color-stf-primary)]/20 border border-[var(--color-stf-purple-border)]/30 px-3 py-0.5 rounded-full">
-                <Award className="w-3.5 h-3.5" />
-                <span>
-                  Finalis Kadep {kandidat.prodi ? `(${kandidat.prodi})` : ""}
-                </span>
+              <div className="flex items-center gap-1 text-[10px] font-semibold text-white/70 bg-white/5 border border-white/20 px-2.5 py-0.5 rounded-full">
+                <Award className="w-3 h-3 text-white/50" />
+                <span>Kandidat Angkatan</span>
               </div>
-            )
-          ) : (
-            <>
-              {isJuara1 && (
-                <div className="flex items-center gap-1 text-[11px] font-semibold text-amber-300 mb-3 bg-amber-400/10 border border-amber-400/30 px-3 py-0.5 rounded-full">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>Ketua Angkatan / Finalis Kadep</span>
-                </div>
-              )}
-
-              {isJuara2 && (
-                <div className="flex items-center gap-1 text-[11px] font-semibold text-[var(--color-stf-purple-light)] mb-3 bg-[var(--color-stf-primary)]/20 border border-[var(--color-stf-purple-border)]/30 px-3 py-0.5 rounded-full">
-                  <Award className="w-3.5 h-3.5" />
-                  <span>Kandidat Cadangan</span>
-                </div>
-              )}
-            </>
-          )}
+            )}
+          </div>
 
           {/* ── Kotak Angka Perolehan Suara ── */}
-          <div className="w-full mt-auto pt-3 border-t border-white/10 flex flex-col gap-1.5">
-            <div className="flex items-center justify-between w-full px-1 text-xs">
+          <div className="w-full pt-2 border-t border-white/10 flex flex-col gap-1">
+            <div className="flex items-center justify-between w-full px-1 text-[11px] md:text-xs">
               <span className="text-white/70 font-medium">
                 Perolehan Suara:
               </span>
               <span
-                className={`font-black text-sm md:text-base ${
+                className={`font-black ${
                   isJuara1 ? "text-amber-300" : "text-white"
                 }`}
               >
                 {kandidat.jumlah_suara}{" "}
-                <span className="text-xs font-normal text-white/70">suara</span>
+                <span className="text-[10px] font-normal text-white/70">
+                  suara
+                </span>
               </span>
             </div>
 
             {/* Progress Bar Persentase */}
-            <div className="w-full bg-white/10 rounded-full h-2.5 overflow-hidden p-0.5 border border-white/10">
+            <div className="w-full bg-white/10 rounded-full h-2 overflow-hidden p-0.5 border border-white/10">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{
@@ -179,7 +184,7 @@ export const KandidatHasilCard = ({
               />
             </div>
 
-            <div className="flex justify-between items-center px-1 text-[11px] text-white/60">
+            <div className="flex justify-between items-center px-1 text-[10px] text-white/60">
               <span>Porsi</span>
               <span className="font-bold text-white/90">
                 {kandidat.persentase}%
@@ -281,10 +286,10 @@ export const HasilAngkatanSection = ({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
-                className="flex flex-col items-center text-center gap-2"
+                className="flex flex-col items-center text-center gap-3 md:gap-4"
               >
-                <div className="flex items-center gap-2">
-                  <span className="px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-400/20 border border-amber-400/40 text-amber-300 backdrop-blur-sm">
+                <div className="flex items-center justify-center mb-1 md:mb-2">
+                  <span className="px-5 py-2 md:px-7 md:py-2.5 rounded-full text-xs sm:text-sm md:text-base font-black uppercase tracking-widest bg-amber-400/20 border border-amber-400/40 text-amber-300 backdrop-blur-md shadow-[0_0_20px_rgba(251,191,36,0.3)]">
                     Departemen Sistem Informasi
                   </span>
                 </div>
@@ -368,17 +373,12 @@ export const HasilAngkatanSection = ({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="flex flex-col items-center text-center gap-2"
+              className="flex flex-col items-center text-center gap-3 md:gap-4"
             >
-              <div className="flex items-center gap-2">
-                <span className="px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-[var(--color-stf-primary)]/40 border border-[var(--color-stf-purple-border)] text-white backdrop-blur-sm">
+              <div className="flex items-center justify-center mb-1 md:mb-2">
+                <span className="px-5 py-2 md:px-7 md:py-2.5 rounded-full text-xs sm:text-sm md:text-base font-black uppercase tracking-widest bg-[var(--color-stf-primary)]/50 border border-[var(--color-stf-purple-border)] text-white backdrop-blur-md shadow-[0_0_20px_rgba(129,106,197,0.35)]">
                   Prodi {prodi.nama_prodi}
                 </span>
-                {isMyProdi && (
-                  <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-400/20 border border-amber-400/50 text-amber-300">
-                    Prodi Kamu
-                  </span>
-                )}
               </div>
 
               <h3 className="text-2xl md:text-4xl font-bold text-white drop-shadow-md">
