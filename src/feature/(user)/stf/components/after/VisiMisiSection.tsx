@@ -1,7 +1,7 @@
 // VisiMisiSection.tsx
 
 "use client";
-import React from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import CaketangCard from "./CaketangCard";
 import { Caketang } from "@/api/services/user/stf";
 import Image from "next/image";
@@ -17,14 +17,130 @@ interface VisiMisiSectionProps {
   setActiveCardId: (id: string) => void;
 }
 
+/* ─── Helpers Normalisasi & Label Prodi ───────────────────────────── */
+const normalizeProdiKey = (prodi: string | undefined): string => {
+  if (!prodi) return "SI";
+  const p = prodi.trim().toLowerCase();
+  if (p === "si" || p.includes("sistem informasi")) return "SI";
+  if (p === "pti" || p.includes("pendidikan")) return "PTI";
+  if (p === "ti" || p.includes("teknologi informasi")) return "TI";
+  return prodi.toUpperCase();
+};
+
+const getProdiMeta = (key: string) => {
+  const norm = normalizeProdiKey(key);
+  switch (norm) {
+    case "SI":
+      return {
+        key: "SI",
+        short: "SI",
+        full: "Sistem Informasi",
+        label: "Sistem Informasi (SI)",
+      };
+    case "TI":
+      return {
+        key: "TI",
+        short: "TI",
+        full: "Teknologi Informasi",
+        label: "Teknologi Informasi (TI)",
+      };
+    case "PTI":
+      return {
+        key: "PTI",
+        short: "PTI",
+        full: "Pendidikan Teknologi Informasi",
+        label: "Pendidikan TI (PTI)",
+      };
+    default:
+      return {
+        key,
+        short: key,
+        full: key,
+        label: key,
+      };
+  }
+};
+
+const PRODI_SORT_ORDER = ["SI", "TI", "PTI"];
+
 const VisiMisiSection = ({
   kandidat,
   activeCardId,
   setActiveCardId,
 }: VisiMisiSectionProps) => {
-  const activeCaketang = kandidat?.find(
-    (caketang: Caketang) => caketang.id_caketang === activeCardId,
-  );
+  // Ambil daftar unik prodi yang ada dalam daftar kandidat
+  const uniqueProdiKeys = useMemo(() => {
+    if (!kandidat || kandidat.length === 0) return [];
+    const keys = Array.from(
+      new Set(kandidat.map((k) => normalizeProdiKey(k.prodi))),
+    );
+    return keys.sort((a, b) => {
+      const idxA = PRODI_SORT_ORDER.indexOf(a);
+      const idxB = PRODI_SORT_ORDER.indexOf(b);
+      return (idxA !== -1 ? idxA : 99) - (idxB !== -1 ? idxB : 99);
+    });
+  }, [kandidat]);
+
+  const uniqueProdis = useMemo(() => {
+    return uniqueProdiKeys.map((k) => getProdiMeta(k));
+  }, [uniqueProdiKeys]);
+
+  // State prodi aktif yang dipilih pada tab filter
+  const [selectedProdi, setSelectedProdi] = useState<string>(() => {
+    if (activeCardId && kandidat) {
+      const activeCand = kandidat.find((k) => k.id_caketang === activeCardId);
+      if (activeCand) return normalizeProdiKey(activeCand.prodi);
+    }
+    return uniqueProdiKeys[0] || "SI";
+  });
+
+  // Sinkronisasi bila uniqueProdiKeys berubah
+  useEffect(() => {
+    if (
+      uniqueProdiKeys.length > 0 &&
+      !uniqueProdiKeys.includes(selectedProdi)
+    ) {
+      setSelectedProdi(uniqueProdiKeys[0]);
+    }
+  }, [uniqueProdiKeys, selectedProdi]);
+
+  // Filter kandidat hanya sesuai prodi yang dipilih (maksimal 3 kartu)
+  const filteredKandidat = useMemo(() => {
+    if (!kandidat) return [];
+    if (uniqueProdiKeys.length <= 1) return kandidat;
+    return kandidat.filter((k) => normalizeProdiKey(k.prodi) === selectedProdi);
+  }, [kandidat, uniqueProdiKeys, selectedProdi]);
+
+  // Pastikan kandidat yang aktif selalu ada dalam kandidat yang sedang difilter
+  useEffect(() => {
+    if (filteredKandidat.length > 0) {
+      const isActiveInFiltered = filteredKandidat.some(
+        (k) => k.id_caketang === activeCardId,
+      );
+      if (!isActiveInFiltered) {
+        const nextActive =
+          filteredKandidat.length > 1
+            ? filteredKandidat[1].id_caketang
+            : filteredKandidat[0].id_caketang;
+        setActiveCardId(nextActive);
+      }
+    }
+  }, [filteredKandidat, activeCardId, setActiveCardId]);
+
+  // Handler saat user klik tombol prodi SI / TI / PTI
+  const handleSelectProdi = (key: string) => {
+    setSelectedProdi(key);
+    const targetCandidates = kandidat.filter(
+      (k) => normalizeProdiKey(k.prodi) === key,
+    );
+    if (targetCandidates.length > 0) {
+      const nextActive =
+        targetCandidates.length > 1
+          ? targetCandidates[1].id_caketang
+          : targetCandidates[0].id_caketang;
+      setActiveCardId(nextActive);
+    }
+  };
 
   return (
     <section className="relative w-full overflow-hidden">
@@ -44,16 +160,65 @@ const VisiMisiSection = ({
 
       <Starfield />
 
-      <div className="mx-auto flex w-full flex-col relative z-10 items-center justify-center py-16 md:py-24 px-4 gap-20 md:gap-32 text-white lg:px-8 md:px-12 xl:px-24">
-        {/* Cards Row */}
+      <div className="mx-auto flex w-full flex-col relative z-10 items-center justify-center py-16 md:py-24 px-4 gap-12 md:gap-20 text-white lg:px-8 md:px-12 xl:px-24">
+        {/* ── Filter Tombol Prodi (hanya muncul saat ada >1 prodi, misal tamu belum login) ── */}
+        {uniqueProdis.length > 1 && (
+          <motion.div
+            initial={{ opacity: 0, y: -15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="flex flex-col items-center gap-2.5 w-full -mb-2"
+          >
+            <p className="text-xs md:text-sm font-semibold text-white/70 tracking-wider uppercase">
+              Pilih Program Studi:
+            </p>
+            <div className="bg-black/40 backdrop-blur-xl p-1.5 rounded-full border border-white/15 flex items-center gap-1.5 sm:gap-2 shadow-2xl">
+              {uniqueProdis.map((p) => {
+                const isSelected = selectedProdi === p.key;
+                return (
+                  <button
+                    key={p.key}
+                    type="button"
+                    onClick={() => handleSelectProdi(p.key)}
+                    className={`relative px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
+                      isSelected
+                        ? "text-white shadow-[0_0_20px_rgba(108,74,182,0.6)]"
+                        : "text-white/60 hover:text-white hover:bg-white/10"
+                    }`}
+                  >
+                    {isSelected && (
+                      <motion.div
+                        layoutId="activeProdiPill"
+                        className="absolute inset-0 rounded-full bg-gradient-to-r from-[var(--color-stf-purple)] to-[var(--color-stf-primary)] border border-[var(--color-stf-purple-border)] shadow-[0_0_15px_rgba(129,106,197,0.5)] -z-0"
+                        transition={{
+                          type: "spring",
+                          stiffness: 400,
+                          damping: 30,
+                        }}
+                      />
+                    )}
+                    <span className="relative z-10 flex items-center gap-1.5">
+                      <span className="font-extrabold">{p.short}</span>
+                      <span className="hidden md:inline font-normal opacity-90 text-[11px] normal-case">
+                        ({p.full})
+                      </span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+
+        {/* ── Cards Row (Selalu 3 kartu per prodi yang dipilih) ── */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          key={selectedProdi}
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
           className="flex w-full flex-nowrap justify-center gap-4 md:gap-12 lg:gap-20"
         >
-          {kandidat?.map((caketang: Caketang) => (
+          {filteredKandidat?.map((caketang: Caketang) => (
             <CaketangCard
               key={caketang.id_caketang}
               data={caketang}
@@ -63,7 +228,7 @@ const VisiMisiSection = ({
           ))}
         </motion.div>
 
-        {/* Detail Section */}
+        {/* ── Detail Section (Visi & Misi) ── */}
         <div className="w-full relative grid grid-cols-1">
           {kandidat?.map((caketang) => (
             <div
