@@ -17,9 +17,255 @@ import {
   SesiPapanItem,
 } from "@/api/services/user/stf";
 
+/* ─── Tipe Kandidat Hasil Gabungan ─────────────────────────────────── */
+export type MergedPerolehanKandidat = PerolehanSuaraPapan & {
+  catatanSesi?: string;
+  isPemenangAwal?: boolean;
+};
+
+/* ─── Helper: Menggabungkan Hasil Sesi Putaran Pertama (Prodi) ─────── */
+export const getProdiMergedKandidat = (
+  prodi: ProdiPutaranPertama,
+): MergedPerolehanKandidat[] => {
+  if (!prodi.sesi || prodi.sesi.length === 0) return [];
+
+  // Jika hanya ada 1 sesi, perolehan langsung dari sesi 1
+  if (prodi.sesi.length === 1) {
+    return prodi.sesi[0].perolehan || [];
+  }
+
+  // Jika ada sesi pengulangan (prodi.sesi.length > 1):
+  // Sesi 1 selalu memuat seluruh kandidat awal (3 orang)
+  const sesiPertama = prodi.sesi[0];
+  const sesiTerakhir = prodi.sesi[prodi.sesi.length - 1];
+
+  if (!sesiPertama?.perolehan) return sesiTerakhir?.perolehan || [];
+
+  // Peta kandidat dasar dari sesi pertama
+  const baseMap = new Map<string, PerolehanSuaraPapan>();
+  for (const k of sesiPertama.perolehan) {
+    baseMap.set(k.id_caketang, { ...k });
+  }
+
+  // Peta kandidat yang ikut sesi terakhir
+  const sesiUlangMap = new Map<string, PerolehanSuaraPapan>();
+  if (sesiTerakhir?.perolehan) {
+    for (const k of sesiTerakhir.perolehan) {
+      sesiUlangMap.set(k.id_caketang, { ...k });
+    }
+  }
+
+  // Cek apakah di sesi pertama ada pemenang tunggal mutlak peringkat 1 (tidak seri)
+  // Contoh Kasus 2: Juara 1 menang mutlak di Sesi 1, yang seri adalah peringkat 2 & 3
+  const pemenangAwal = sesiPertama.perolehan.find(
+    (k) => k.peringkat === 1 && !k.seri,
+  );
+
+  // Status resmi backend bila sudah terisi
+  const finalisId = prodi.finalis?.id_caketang;
+  const cadanganId = prodi.cadangan?.id_caketang;
+
+  const result: MergedPerolehanKandidat[] = [];
+
+  for (const [id, baseKandidat] of baseMap.entries()) {
+    const kUlang = sesiUlangMap.get(id);
+
+    if (kUlang) {
+      // Kandidat yang ikut putaran ulang
+      result.push({
+        ...baseKandidat,
+        jumlah_suara: kUlang.jumlah_suara,
+        persentase: kUlang.persentase,
+        seri: kUlang.seri,
+        peringkat: kUlang.peringkat,
+        catatanSesi: "Putaran Ulang",
+      });
+    } else {
+      // Kandidat yang TIDAK ikut putaran ulang:
+      // Bisa jadi dia pemenang mutlak di Sesi 1, atau dia tersingkir di Sesi 1
+      const isWinnerSesi1 = pemenangAwal && pemenangAwal.id_caketang === id;
+      result.push({
+        ...baseKandidat,
+        catatanSesi: "Putaran 1",
+        isPemenangAwal: Boolean(isWinnerSesi1),
+      });
+    }
+  }
+
+  // Normalisasi Peringkat:
+  if (finalisId || cadanganId) {
+    // Jalur Resmi dari Data Backend
+    for (const k of result) {
+      if (finalisId && k.id_caketang === finalisId) {
+        k.peringkat = 1;
+        k.seri = false;
+      } else if (cadanganId && k.id_caketang === cadanganId) {
+        k.peringkat = 2;
+        k.seri = false;
+      } else {
+        k.peringkat = 3;
+        k.seri = false;
+      }
+    }
+  } else if (pemenangAwal) {
+    // KASUS 2: Pemenang sesi 1 sudah jelas (Andi menang mutlak)
+    // Sesi ulang hanya perebutan Cadangan (peringkat 2) dan Peringkat 3!
+    for (const k of result) {
+      if (k.id_caketang === pemenangAwal.id_caketang) {
+        k.peringkat = 1;
+        k.seri = false;
+      } else {
+        const kUlang = sesiUlangMap.get(k.id_caketang);
+        if (kUlang) {
+          // Peringkat 1 di sesi ulang -> Juara 2 (Cadangan)
+          // Peringkat 2 di sesi ulang -> Juara 3 (Kandidat Angkatan)
+          k.peringkat = kUlang.peringkat + 1;
+          k.seri = kUlang.seri;
+        } else {
+          k.peringkat = 3;
+          k.seri = false;
+        }
+      }
+    }
+  } else {
+    // KASUS 1: Seri di peringkat 1 pada Sesi 1
+    // Sesi ulang adalah perebutan Juara 1 (Finalis) dan Juara 2 (Cadangan)
+    for (const k of result) {
+      const kUlang = sesiUlangMap.get(k.id_caketang);
+      if (kUlang) {
+        k.peringkat = kUlang.peringkat;
+        k.seri = kUlang.seri;
+      } else {
+        // Kandidat yang tidak ikut sesi ulang (peringkat 3 pada Sesi 1)
+        k.peringkat = 3;
+        k.seri = false;
+      }
+    }
+  }
+
+  // Urutkan kandidat berdasarkan peringkat menaik (1, 2, 3)
+  result.sort((a, b) => {
+    if (a.peringkat !== b.peringkat) {
+      return a.peringkat - b.peringkat;
+    }
+    return b.jumlah_suara - a.jumlah_suara;
+  });
+
+  return result;
+};
+
+/* ─── Helper: Menggabungkan Hasil Sesi Kadep ───────────────────────── */
+export const getKadepMergedKandidat = (
+  putaranKadep: PutaranKadepPapan,
+): MergedPerolehanKandidat[] => {
+  if (!putaranKadep.sesi || putaranKadep.sesi.length === 0) return [];
+
+  if (putaranKadep.sesi.length === 1) {
+    return putaranKadep.sesi[0].perolehan || [];
+  }
+
+  const sesiPertama = putaranKadep.sesi[0];
+  const sesiTerakhir = putaranKadep.sesi[putaranKadep.sesi.length - 1];
+
+  if (!sesiPertama?.perolehan) return sesiTerakhir?.perolehan || [];
+
+  const baseMap = new Map<string, PerolehanSuaraPapan>();
+  for (const k of sesiPertama.perolehan) {
+    baseMap.set(k.id_caketang, { ...k });
+  }
+
+  const sesiUlangMap = new Map<string, PerolehanSuaraPapan>();
+  if (sesiTerakhir?.perolehan) {
+    for (const k of sesiTerakhir.perolehan) {
+      sesiUlangMap.set(k.id_caketang, { ...k });
+    }
+  }
+
+  const pemenangAwal = sesiPertama.perolehan.find(
+    (k) => k.peringkat === 1 && !k.seri,
+  );
+  const pemenangId = putaranKadep.pemenang?.id_caketang;
+
+  const result: MergedPerolehanKandidat[] = [];
+
+  for (const [id, baseKandidat] of baseMap.entries()) {
+    const kUlang = sesiUlangMap.get(id);
+
+    if (kUlang) {
+      result.push({
+        ...baseKandidat,
+        jumlah_suara: kUlang.jumlah_suara,
+        persentase: kUlang.persentase,
+        seri: kUlang.seri,
+        peringkat: kUlang.peringkat,
+        catatanSesi: "Putaran Ulang",
+      });
+    } else {
+      const isWinnerSesi1 = pemenangAwal && pemenangAwal.id_caketang === id;
+      result.push({
+        ...baseKandidat,
+        catatanSesi: "Putaran 1",
+        isPemenangAwal: Boolean(isWinnerSesi1),
+      });
+    }
+  }
+
+  if (pemenangId) {
+    for (const k of result) {
+      if (k.id_caketang === pemenangId) {
+        k.peringkat = 1;
+        k.seri = false;
+      } else {
+        const kUlang = sesiUlangMap.get(k.id_caketang);
+        if (kUlang) {
+          k.peringkat = kUlang.peringkat === 1 ? 2 : kUlang.peringkat;
+        } else {
+          k.peringkat = 3;
+        }
+      }
+    }
+  } else if (pemenangAwal) {
+    for (const k of result) {
+      if (k.id_caketang === pemenangAwal.id_caketang) {
+        k.peringkat = 1;
+        k.seri = false;
+      } else {
+        const kUlang = sesiUlangMap.get(k.id_caketang);
+        if (kUlang) {
+          k.peringkat = kUlang.peringkat + 1;
+          k.seri = kUlang.seri;
+        } else {
+          k.peringkat = 3;
+          k.seri = false;
+        }
+      }
+    }
+  } else {
+    for (const k of result) {
+      const kUlang = sesiUlangMap.get(k.id_caketang);
+      if (kUlang) {
+        k.peringkat = kUlang.peringkat;
+        k.seri = kUlang.seri;
+      } else {
+        k.peringkat = 3;
+        k.seri = false;
+      }
+    }
+  }
+
+  result.sort((a, b) => {
+    if (a.peringkat !== b.peringkat) {
+      return a.peringkat - b.peringkat;
+    }
+    return b.jumlah_suara - a.jumlah_suara;
+  });
+
+  return result;
+};
+
 /* ─── Kartu Kandidat Hasil Suara (Identik dengan CaketangCard) ─────── */
 export interface KandidatHasilCardProps {
-  kandidat: PerolehanSuaraPapan;
+  kandidat: MergedPerolehanKandidat;
   index: number;
   totalSuaraSesi?: number;
   isKadepSection?: boolean;
@@ -112,7 +358,7 @@ export const KandidatHasilCard = ({
             </p>
           </div>
 
-          {/* Status Jabatan / Finalis (Semua kartu punya badge seragam sehingga punya Ascarya tidak beda sendiri) */}
+          {/* Status Jabatan / Finalis */}
           <div className="h-6 flex items-center justify-center mb-2">
             {isKadepSection ? (
               isJuara1 ? (
@@ -185,7 +431,11 @@ export const KandidatHasilCard = ({
             </div>
 
             <div className="flex justify-between items-center px-1 text-[10px] text-white/60">
-              <span>Porsi</span>
+              <span>
+                {kandidat.catatanSesi
+                  ? `Porsi (${kandidat.catatanSesi})`
+                  : "Porsi"}
+              </span>
               <span className="font-bold text-white/90">
                 {kandidat.persentase}%
               </span>
@@ -276,6 +526,9 @@ export const HasilAngkatanSection = ({
             putaranKadep.sesi[putaranKadep.sesi.length - 1];
           if (!sesiKadepAktif || !sesiKadepAktif.perolehan) return null;
 
+          // Gabungkan seluruh kandidat kadep agar tidak ada yang hilang saat sesi ulang
+          const kandidatKadepList = getKadepMergedKandidat(putaranKadep);
+
           return (
             <section
               key="putaran-kadep"
@@ -300,10 +553,21 @@ export const HasilAngkatanSection = ({
 
                 {sesiKadepAktif.jumlah_suara !== undefined && (
                   <p className="text-sm md:text-base text-white/70">
-                    Total Suara Masuk:{" "}
-                    <span className="font-bold text-white">
-                      {sesiKadepAktif.jumlah_suara}
-                    </span>
+                    {putaranKadep.sesi.length > 1 ? (
+                      <>
+                        Total Suara Putaran Terakhir:{" "}
+                        <span className="font-bold text-white">
+                          {sesiKadepAktif.jumlah_suara}
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        Total Suara Masuk:{" "}
+                        <span className="font-bold text-white">
+                          {sesiKadepAktif.jumlah_suara}
+                        </span>
+                      </>
+                    )}
                     {sesiKadepAktif.jumlah_berhak ? (
                       <>
                         {" "}
@@ -323,19 +587,19 @@ export const HasilAngkatanSection = ({
                   </p>
                 )}
 
-                {sesiKadepAktif.pengulangan && (
+                {putaranKadep.sesi.length > 1 && (
                   <div className="flex items-center gap-2 mt-2 px-4 py-2 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-200 text-xs md:text-sm font-medium">
                     <AlertCircle className="w-4 h-4 text-amber-400 shrink-0" />
                     <span>
-                      Hasil ini adalah pemungutan suara ulang karena sempat
-                      terjadi perolehan suara seri pada sesi sebelumnya.
+                      Hasil akhir telah diperbarui dengan sesi putaran ulang
+                      karena sempat terjadi perolehan suara seri sebelumnya.
                     </span>
                   </div>
                 )}
               </motion.div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full place-items-center">
-                {sesiKadepAktif.perolehan.map((kandidat, idx) => (
+                {kandidatKadepList.map((kandidat, idx) => (
                   <KandidatHasilCard
                     key={kandidat.id_caketang}
                     kandidat={kandidat}
@@ -359,8 +623,8 @@ export const HasilAngkatanSection = ({
 
         if (!sesiAktif || !sesiAktif.perolehan) return null;
 
-        const isMyProdi =
-          prodiSaya && prodi.prodi.toUpperCase() === prodiSaya.toUpperCase();
+        // Gabungkan seluruh kandidat prodi secara lengkap & urutkan dengan tepat
+        const kandidatProdiList = getProdiMergedKandidat(prodi);
 
         return (
           <section
@@ -388,10 +652,21 @@ export const HasilAngkatanSection = ({
               {/* Status Partisipasi Suara */}
               {sesiAktif.jumlah_suara !== undefined && (
                 <p className="text-sm md:text-base text-white/70">
-                  Total Suara Masuk:{" "}
-                  <span className="font-bold text-white">
-                    {sesiAktif.jumlah_suara}
-                  </span>
+                  {prodi.sesi.length > 1 ? (
+                    <>
+                      Total Suara Putaran Terakhir:{" "}
+                      <span className="font-bold text-white">
+                        {sesiAktif.jumlah_suara}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      Total Suara Masuk:{" "}
+                      <span className="font-bold text-white">
+                        {sesiAktif.jumlah_suara}
+                      </span>
+                    </>
+                  )}
                   {sesiAktif.jumlah_berhak ? (
                     <>
                       {" "}
@@ -411,12 +686,12 @@ export const HasilAngkatanSection = ({
               )}
 
               {/* Banner Sesi Pengulangan */}
-              {sesiAktif.pengulangan && (
+              {prodi.sesi.length > 1 && (
                 <div className="flex items-center gap-2 mt-2 px-4 py-2 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-200 text-xs md:text-sm font-medium">
                   <AlertCircle className="w-4 h-4 text-amber-400 shrink-0" />
                   <span>
-                    Hasil ini adalah putaran ulang karena sempat terjadi skor
-                    seri pada sesi sebelumnya.
+                    Hasil akhir telah diperbarui dengan sesi putaran ulang
+                    karena sempat terjadi perolehan suara seri sebelumnya.
                   </span>
                 </div>
               )}
@@ -424,7 +699,7 @@ export const HasilAngkatanSection = ({
 
             {/* ── Grid Kartu Perolehan Suara ── */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full place-items-center">
-              {sesiAktif.perolehan.map((kandidat, idx) => (
+              {kandidatProdiList.map((kandidat, idx) => (
                 <KandidatHasilCard
                   key={kandidat.id_caketang}
                   kandidat={kandidat}
