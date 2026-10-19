@@ -12,6 +12,7 @@ import CurrentSection from "../components/before/CurrentSection";
 import CtaSection from "../components/before/CtaSection";
 import { useGetStfData } from "../hooks/useGetStfData";
 import { useGetPapanHasil } from "../hooks/useGetPapanHasil";
+import { useGetVisibilitasHasil } from "../hooks/useGetVisibilitasHasil";
 import GrassDivider from "@/shared/components/background/GrassDivider";
 import SpaceBackground from "@/shared/components/background/SpaceBackground";
 import Starfield from "@/shared/components/background/Starfield";
@@ -22,9 +23,28 @@ import { useAuthContext } from "@/shared/hooks/useAuthContext";
 const StfContainer = () => {
   const { stfData, isLoading, error } = useGetStfData();
   const { papanHasil } = useGetPapanHasil();
+  const { isProdiVisible } = useGetVisibilitasHasil();
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const { user, isLoading: isAuthLoading } = useAuthContext();
+
+  // Filter daftar prodi yang sudah diizinkan tayang oleh panitia
+  const putaranPertamaTayang = React.useMemo(() => {
+    if (!papanHasil?.putaran_pertama) return [];
+    return papanHasil.putaran_pertama.filter((p) => isProdiVisible(p.prodi));
+  }, [papanHasil?.putaran_pertama, isProdiVisible]);
+
+  // Cek apakah ada hasil yang diizinkan untuk ditampilkan
+  const adaHasilProdiDiizinkan =
+    putaranPertamaTayang.some((p) =>
+      p.sesi?.some((s) => s.perolehan && s.perolehan.length > 0),
+    ) ||
+    Boolean(
+      papanHasil?.putaran_kadep?.sesi &&
+      papanHasil.putaran_kadep.sesi.some(
+        (s) => s.perolehan && s.perolehan.length > 0,
+      ),
+    );
 
   useEffect(() => {
     if (!isLoading && !isAuthLoading) {
@@ -84,16 +104,6 @@ const StfContainer = () => {
         );
 
       case "menunggu":
-        const adaHasilPapanMenunggu =
-          (papanHasil?.putaran_pertama &&
-            papanHasil.putaran_pertama.some((p) =>
-              p.sesi?.some((s) => s.perolehan && s.perolehan.length > 0),
-            )) ||
-          (papanHasil?.putaran_kadep?.sesi &&
-            papanHasil.putaran_kadep.sesi.some(
-              (s) => s.perolehan && s.perolehan.length > 0,
-            ));
-
         return (
           <motion.div
             key="menunggu"
@@ -105,10 +115,10 @@ const StfContainer = () => {
           >
             <Starfield />
 
-            {adaHasilPapanMenunggu ? (
+            {adaHasilProdiDiizinkan ? (
               <div className="w-full relative z-10">
                 <HasilAngkatanSection
-                  putaranPertama={papanHasil?.putaran_pertama}
+                  putaranPertama={putaranPertamaTayang}
                   putaranKadep={papanHasil?.putaran_kadep}
                   prodiSaya={stfData?.prodi}
                 />
@@ -143,16 +153,6 @@ const StfContainer = () => {
 
       case "perkenalan":
       case "voting":
-        const adaHasilPapanVoting =
-          (papanHasil?.putaran_pertama &&
-            papanHasil.putaran_pertama.some((p) =>
-              p.sesi?.some((s) => s.perolehan && s.perolehan.length > 0),
-            )) ||
-          (papanHasil?.putaran_kadep?.sesi &&
-            papanHasil.putaran_kadep.sesi.some(
-              (s) => s.perolehan && s.perolehan.length > 0,
-            ));
-
         return (
           <motion.div
             key="voting-perkenalan"
@@ -192,6 +192,13 @@ const StfContainer = () => {
                         Pilihan kamu telah tersimpan. Terima kasih atas
                         partisipasi kamu!
                       </p>
+                      {!adaHasilProdiDiizinkan && (
+                        <p className="text-xs text-white/70 mt-3 pt-3 border-t border-white/10">
+                          ⏳ Hasil perolehan suara sedang menunggu verifikasi
+                          panitia dan akan ditampilkan setelah bilik suara
+                          ditutup serta hasil diumumkan.
+                        </p>
+                      )}
                     </motion.div>
                   )}
 
@@ -280,11 +287,11 @@ const StfContainer = () => {
                     </>
                   )}
 
-                  {/* ── Tampilkan Papan Hasil Angkatan & Kadep jika sudah ada sesi yang selesai ── */}
-                  {adaHasilPapanVoting && (
+                  {/* ── Tampilkan Papan Hasil Angkatan & Kadep jika sudah diizinkan tayang oleh panitia ── */}
+                  {adaHasilProdiDiizinkan && (
                     <div className="w-full relative z-20 mt-16 md:mt-24">
                       <HasilAngkatanSection
-                        putaranPertama={papanHasil?.putaran_pertama}
+                        putaranPertama={putaranPertamaTayang}
                         putaranKadep={papanHasil?.putaran_kadep}
                         prodiSaya={stfData?.prodi}
                       />
