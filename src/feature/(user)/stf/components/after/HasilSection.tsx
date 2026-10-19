@@ -13,132 +13,137 @@ import { useGetVisibilitasHasil } from "../../hooks/useGetVisibilitasHasil";
 import HasilAngkatanSection from "./HasilAngkatanSection";
 
 /* ─── Reusable Card ──────────────────────────────────────────────── */
-const WinnerCard = ({
-  caketang,
-  index,
-  isKadep = false,
-  jumlahSuara,
-  persentase,
-}: {
-  caketang: Caketang;
-  index?: number;
-  isKadep?: boolean;
-  jumlahSuara?: number;
-  persentase?: number;
-}) => {
-  const delay = (index ?? 0) * 0.15;
-  const displaySuara = jumlahSuara ?? caketang.jumlah_suara;
-  const displayPersen = persentase ?? caketang.persentase;
+const WinnerCard = React.memo(
+  ({
+    caketang,
+    index,
+    isKadep = false,
+    jumlahSuara,
+    persentase,
+  }: {
+    caketang: Caketang;
+    index?: number;
+    isKadep?: boolean;
+    jumlahSuara?: number;
+    persentase?: number;
+  }) => {
+    const delay = (index ?? 0) * 0.15;
+    const displaySuara = jumlahSuara ?? caketang.jumlah_suara;
+    const displayPersen = persentase ?? caketang.persentase;
 
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{
-        type: "spring",
-        duration: 0.8,
-        delay,
-      }}
-      whileHover={{ y: -10, scale: 1.02 }}
-      className={`flex flex-col relative z-10 w-full max-w-xs sm:max-w-sm rounded-t-[4rem] rounded-b-[2.5rem] overflow-hidden shadow-2xl bg-[var(--color-space-top)]/40 backdrop-blur-xl ring-2 ${
-        isKadep
-          ? "ring-amber-400/40 shadow-amber-500/20"
-          : "ring-white/20 shadow-black/50"
-      } group`}
-    >
-      <div className="w-full pt-2 px-2 pb-0">
-        <Image
-          src={caketang.foto || "/placeholder-image.jpg"}
-          alt={caketang.nama}
-          width={400}
-          height={533}
-          className="w-full h-auto aspect-[3/4] object-contain object-bottom transition-transform duration-500 group-hover:scale-105 rounded-t-[3.5rem] rounded-b-none"
-        />
-      </div>
-      <div className="w-full relative z-10 -mt-6">
-        <div
-          className={`flex flex-col justify-center items-center px-4 pt-6 pb-8 text-center min-h-[4.5rem] rounded-t-[3rem] border-t-2 ${
-            isKadep
-              ? "border-amber-300/50 bg-gradient-to-b from-[var(--color-space-top)] to-[var(--color-space-base)] shadow-[0_-4px_15px_rgba(251,191,36,0.15)]"
-              : "border-[var(--color-stf-purple-border)]/50 bg-gradient-to-b from-[var(--color-space-top)] to-[var(--color-space-base)] shadow-[0_-4px_10px_rgba(0,0,0,0.2)]"
-          }`}
-        >
-          <p
-            className={`font-black uppercase line-clamp-2 leading-tight tracking-wide mb-3 ${
-              isKadep
-                ? "text-amber-300 text-lg lg:text-2xl"
-                : "text-white text-lg lg:text-2xl"
-            }`}
-          >
-            {caketang.nama}
-          </p>
-          <div
-            className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold shadow-inner backdrop-blur-sm border ${
-              isKadep
-                ? "bg-amber-400/10 border-amber-400/30 text-amber-300"
-                : "bg-[var(--color-stf-primary)]/30 border-[var(--color-stf-purple-border)]/40 text-[var(--color-stf-purple-light)]"
-            }`}
-          >
-            {isKadep ? (
-              <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-            ) : (
-              <Medal className="w-4 h-4 text-[var(--color-stf-purple-light)]" />
-            )}
-            {isKadep ? "Kepala Departemen SI" : `Prodi ${caketang.prodi}`}
-          </div>
-
-          {/* Badge & Progress Angka Perolehan Suara */}
-          {displaySuara !== undefined && (
-            <div className="w-full mt-4 pt-3 border-t border-white/10 flex flex-col gap-1.5 items-center">
-              <div className="flex items-center justify-between w-full px-2 text-xs">
-                <span className="text-white/70 font-medium">
-                  Perolehan Suara
-                </span>
-                <span
-                  className={`font-bold ${isKadep ? "text-amber-300" : "text-white"} text-sm`}
-                >
-                  {displaySuara}{" "}
-                  <span className="text-white/60 font-normal text-xs">
-                    suara
-                  </span>
-                </span>
-              </div>
-              {displayPersen !== undefined && (
-                <div className="w-full bg-white/10 rounded-full h-2.5 overflow-hidden p-0.5 border border-white/10">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{
-                      width: `${Math.min(100, Math.max(0, displayPersen))}%`,
-                    }}
-                    transition={{
-                      duration: 0.8,
-                      ease: "easeOut",
-                      delay: delay + 0.2,
-                    }}
-                    className={`h-full rounded-full ${
-                      isKadep
-                        ? "bg-gradient-to-r from-amber-500 to-amber-300"
-                        : "bg-gradient-to-r from-[var(--color-stf-primary)] to-[var(--color-stf-purple-light)]"
-                    }`}
-                  />
-                </div>
-              )}
-              {displayPersen !== undefined && (
-                <div className="flex justify-between items-center w-full px-2 text-[11px] text-white/60">
-                  <span>Porsi Suara</span>
-                  <span className="font-bold text-white/90">
-                    {displayPersen}%
-                  </span>
-                </div>
-              )}
-            </div>
-          )}
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{
+          type: "spring",
+          duration: 0.8,
+          delay,
+        }}
+        whileHover={{ y: -10, scale: 1.02 }}
+        className={`flex flex-col relative z-10 w-full max-w-xs sm:max-w-sm rounded-t-[4rem] rounded-b-[2.5rem] overflow-hidden shadow-2xl bg-[var(--color-space-top)]/40 backdrop-blur-xl ring-2 ${
+          isKadep
+            ? "ring-amber-400/40 shadow-amber-500/20"
+            : "ring-white/20 shadow-black/50"
+        } group`}
+      >
+        <div className="w-full pt-2 px-2 pb-0">
+          <Image
+            src={caketang.foto || "/placeholder-image.jpg"}
+            alt={caketang.nama}
+            width={400}
+            height={533}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 384px"
+            className="w-full h-auto aspect-[3/4] object-contain object-bottom transition-transform duration-500 group-hover:scale-105 rounded-t-[3.5rem] rounded-b-none"
+          />
         </div>
-      </div>
-    </motion.div>
-  );
-};
+        <div className="w-full relative z-10 -mt-6">
+          <div
+            className={`flex flex-col justify-center items-center px-4 pt-6 pb-8 text-center min-h-[4.5rem] rounded-t-[3rem] border-t-2 ${
+              isKadep
+                ? "border-amber-300/50 bg-gradient-to-b from-[var(--color-space-top)] to-[var(--color-space-base)] shadow-[0_-4px_15px_rgba(251,191,36,0.15)]"
+                : "border-[var(--color-stf-purple-border)]/50 bg-gradient-to-b from-[var(--color-space-top)] to-[var(--color-space-base)] shadow-[0_-4px_10px_rgba(0,0,0,0.2)]"
+            }`}
+          >
+            <p
+              className={`font-black uppercase line-clamp-2 leading-tight tracking-wide mb-3 ${
+                isKadep
+                  ? "text-amber-300 text-lg lg:text-2xl"
+                  : "text-white text-lg lg:text-2xl"
+              }`}
+            >
+              {caketang.nama}
+            </p>
+            <div
+              className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold shadow-inner backdrop-blur-sm border ${
+                isKadep
+                  ? "bg-amber-400/10 border-amber-400/30 text-amber-300"
+                  : "bg-[var(--color-stf-primary)]/30 border-[var(--color-stf-purple-border)]/40 text-[var(--color-stf-purple-light)]"
+              }`}
+            >
+              {isKadep ? (
+                <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+              ) : (
+                <Medal className="w-4 h-4 text-[var(--color-stf-purple-light)]" />
+              )}
+              {isKadep ? "Kepala Departemen SI" : `Prodi ${caketang.prodi}`}
+            </div>
+
+            {/* Badge & Progress Angka Perolehan Suara */}
+            {displaySuara !== undefined && (
+              <div className="w-full mt-4 pt-3 border-t border-white/10 flex flex-col gap-1.5 items-center">
+                <div className="flex items-center justify-between w-full px-2 text-xs">
+                  <span className="text-white/70 font-medium">
+                    Perolehan Suara
+                  </span>
+                  <span
+                    className={`font-bold ${isKadep ? "text-amber-300" : "text-white"} text-sm`}
+                  >
+                    {displaySuara}{" "}
+                    <span className="text-white/60 font-normal text-xs">
+                      suara
+                    </span>
+                  </span>
+                </div>
+                {displayPersen !== undefined && (
+                  <div className="w-full bg-white/10 rounded-full h-2.5 overflow-hidden p-0.5 border border-white/10">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{
+                        width: `${Math.min(100, Math.max(0, displayPersen))}%`,
+                      }}
+                      transition={{
+                        duration: 0.8,
+                        ease: "easeOut",
+                        delay: delay + 0.2,
+                      }}
+                      className={`h-full rounded-full ${
+                        isKadep
+                          ? "bg-gradient-to-r from-amber-500 to-amber-300"
+                          : "bg-gradient-to-r from-[var(--color-stf-primary)] to-[var(--color-stf-purple-light)]"
+                      }`}
+                    />
+                  </div>
+                )}
+                {displayPersen !== undefined && (
+                  <div className="flex justify-between items-center w-full px-2 text-[11px] text-white/60">
+                    <span>Porsi Suara</span>
+                    <span className="font-bold text-white/90">
+                      {displayPersen}%
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </motion.div>
+    );
+  },
+);
+
+WinnerCard.displayName = "WinnerCard";
 
 /* ─── Main Component ─────────────────────────────────────────────── */
 const HasilSection = () => {
@@ -149,6 +154,10 @@ const HasilSection = () => {
   } = useQuery({
     queryKey: ["stfHasil"],
     queryFn: () => stfService.getHasilAkhir(),
+    refetchInterval: 10000,
+    refetchIntervalInBackground: false,
+    refetchOnWindowFocus: true,
+    staleTime: 5000,
   });
 
   const { papanHasil } = useGetPapanHasil();
@@ -376,6 +385,7 @@ const HasilSection = () => {
             <HasilAngkatanSection
               putaranPertama={papanHasil?.putaran_pertama}
               putaranKadep={papanHasil?.putaran_kadep}
+              adaHasil={papanHasil?.ada_hasil}
             />
           </div>
         )}

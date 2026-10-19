@@ -1,7 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { stfService, StfData, BackendResponse } from "@/api/services/user/stf";
 
-export const useGetStfData = () => {
+export interface UseGetStfDataOptions {
+  enabled?: boolean;
+}
+
+export const useGetStfData = (options?: UseGetStfDataOptions) => {
   const {
     data: response,
     isLoading,
@@ -11,7 +15,11 @@ export const useGetStfData = () => {
     queryKey: ["stfData"],
     queryFn: () => stfService.getStfData(),
     refetchInterval: 10000,
+    refetchIntervalInBackground: false,
+    refetchOnWindowFocus: true,
+    staleTime: 5000,
     retry: 1,
+    enabled: options?.enabled ?? true,
   });
 
   const stfData = response?.status_code === 200 ? response.data : null;

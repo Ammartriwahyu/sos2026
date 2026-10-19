@@ -15,6 +15,9 @@ export const useGetPapanHasil = () => {
     queryKey: ["stfPapanHasil"],
     queryFn: () => stfService.getPapanHasil(),
     refetchInterval: 10000,
+    refetchIntervalInBackground: false,
+    refetchOnWindowFocus: true,
+    staleTime: 5000,
     retry: 1,
   });
 

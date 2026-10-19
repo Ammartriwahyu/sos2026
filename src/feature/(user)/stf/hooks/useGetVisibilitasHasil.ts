@@ -35,6 +35,9 @@ export const useGetVisibilitasHasil = () => {
       }
     },
     refetchInterval: 5000, // Polling setiap 5 detik agar sinkron real-time
+    refetchIntervalInBackground: false,
+    refetchOnWindowFocus: true,
+    staleTime: 2500,
   });
 
   const updateMutation = useMutation({

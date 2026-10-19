@@ -21,12 +21,12 @@ import AuroraWaves from "../../peta/components/AuroraWaves";
 import { useAuthContext } from "@/shared/hooks/useAuthContext";
 
 const StfContainer = () => {
-  const { stfData, isLoading, error } = useGetStfData();
+  const { user, isLoading: isAuthLoading } = useAuthContext();
+  const { stfData, isLoading, error } = useGetStfData({ enabled: !!user });
   const { papanHasil } = useGetPapanHasil();
   const { isProdiVisible, isKadepVisible } = useGetVisibilitasHasil();
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
-  const { user, isLoading: isAuthLoading } = useAuthContext();
 
   // Filter daftar prodi yang sudah diizinkan tayang oleh panitia
   const putaranPertamaTayang = React.useMemo(() => {
@@ -174,6 +174,7 @@ const StfContainer = () => {
                   putaranPertama={putaranPertamaTayang}
                   putaranKadep={null}
                   prodiSaya={stfData?.prodi}
+                  adaHasil={papanHasil?.ada_hasil}
                 />
               </div>
             ) : (
@@ -304,8 +305,6 @@ const StfContainer = () => {
                     <>
                       <VisiMisiSection
                         kandidat={stfData.kandidat}
-                        isLoading={isLoading}
-                        error={error}
                         activeCardId={activeCardId}
                         setActiveCardId={setActiveCardId}
                         isKadep={isKadepRealtime}
@@ -335,6 +334,7 @@ const StfContainer = () => {
                         putaranPertama={putaranPertamaTayang}
                         putaranKadep={null}
                         prodiSaya={stfData?.prodi}
+                        adaHasil={papanHasil?.ada_hasil}
                       />
                     </div>
                   )}

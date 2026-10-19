@@ -11,8 +11,6 @@ import { motion } from "motion/react";
 
 interface VisiMisiSectionProps {
   kandidat: Caketang[];
-  isLoading: boolean;
-  error: string | null;
   activeCardId: string | null;
   setActiveCardId: (id: string) => void;
   isKadep?: boolean;
@@ -329,4 +327,4 @@ const VisiMisiSection = ({
   );
 };
 
-export default VisiMisiSection;
+export default React.memo(VisiMisiSection);
