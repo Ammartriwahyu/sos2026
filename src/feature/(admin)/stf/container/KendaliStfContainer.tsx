@@ -11,14 +11,19 @@ import {
   Trophy,
   RotateCcw,
   CheckCircle,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 import { useKendaliStf } from "../hooks/useKendaliStf";
+import { useGetVisibilitasHasil } from "@/feature/(user)/stf/hooks/useGetVisibilitasHasil";
 import { Button } from "@/shared/components/ui/Button";
 import { Modal } from "@/shared/components/ui/Modal";
 
 const KendaliStfContainer = () => {
   const [isResetModalOpen, setIsResetModalOpen] = useState(false);
   const [resetKey, setResetKey] = useState("");
+  const { updateVisibilitas, isUpdating, isProdiVisible, isKadepVisible } =
+    useGetVisibilitasHasil();
   const {
     papanData,
     isLoading,
@@ -82,9 +87,19 @@ const KendaliStfContainer = () => {
           <ChevronLeft size={24} />
           <span className="text-xl">Kelola Kandidat</span>
         </Link>
-        <h1 className="text-3xl md:text-4xl font-semibold text-default-dark">
-          Papan Kendali Pemilihan
-        </h1>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <h1 className="text-3xl md:text-4xl font-semibold text-default-dark">
+            Papan Kendali Pemilihan
+          </h1>
+          <a
+            href="/stf/ddm"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-xl text-xs sm:text-sm font-bold shadow-sm transition-all w-fit cursor-pointer"
+          >
+            <Trophy size={16} /> Buka Layar DDM (Proyektor) ↗
+          </a>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -100,11 +115,10 @@ const KendaliStfContainer = () => {
                 Mengontrol halaman apa yang dilihat mahasiswa saat ini.
               </p>
             </div>
-            <div className="grid grid-cols-2 gap-3 mt-2">
+            <div className="grid grid-cols-3 gap-3 mt-2">
               <TahapButton name="Tertutup" value="tertutup" />
               <TahapButton name="Perkenalan" value="perkenalan" />
               <TahapButton name="Voting" value="voting" />
-              <TahapButton name="Hasil" value="hasil" />
             </div>
             <div className="bg-blue-50/50 p-3 rounded-xl border border-blue-100 mt-2">
               <p className="text-xs text-blue-700 leading-relaxed">
@@ -217,7 +231,7 @@ const KendaliStfContainer = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-1">
               {papanData.prodi.map((p) => {
                 const sesiRaw = p.sesi_aktif;
                 const sesi = Array.isArray(sesiRaw) ? sesiRaw[0] : sesiRaw;
@@ -226,6 +240,15 @@ const KendaliStfContainer = () => {
                   typeof sesi === "object" &&
                   Object.keys(sesi).length > 0 &&
                   sesi.id_sesi;
+
+                const derivedStatus = isSesiValid
+                  ? sesi.status || (sesi.dibuka_at ? "dibuka" : "tertutup")
+                  : "tertutup";
+                const suaraMasuk = isSesiValid ? (sesi.jumlah_suara ?? 0) : 0;
+                const berhakMemilih = isSesiValid
+                  ? (sesi.jumlah_berhak ?? 0)
+                  : 0;
+                const bolehKontrolHasil = Boolean(p.selesai || p.finalis);
 
                 return (
                   <div
@@ -253,13 +276,6 @@ const KendaliStfContainer = () => {
 
                     {(() => {
                       if (isSesiValid) {
-                        // BACKEND FIX: Derive status and defaults if backend omits them
-                        const derivedStatus =
-                          sesi.status ||
-                          (sesi.dibuka_at ? "dibuka" : "tertutup");
-                        const suaraMasuk = sesi.jumlah_suara ?? 0;
-                        const berhakMemilih = sesi.jumlah_berhak ?? 0;
-
                         return (
                           <div className="text-sm bg-white p-4 rounded-xl shadow-sm border border-neutral-100 flex flex-col gap-3">
                             <div className="flex justify-between items-center border-b border-neutral-100 pb-2">
@@ -336,6 +352,35 @@ const KendaliStfContainer = () => {
                         <span className="text-primary-normal font-bold text-base">
                           {p.finalis.nama}
                         </span>
+                      </div>
+                    )}
+
+                    {/* Tombol Kontrol Visibilitas Hasil Per Prodi */}
+                    {bolehKontrolHasil && (
+                      <div className="mt-1 pt-3 border-t border-neutral-200/60 flex items-center justify-between">
+                        <span className="text-xs text-neutral-500 font-medium">
+                          Status di Mahasiswa:
+                        </span>
+                        <Button
+                          variant="none"
+                          onClick={() => updateVisibilitas({ prodi: p.prodi })}
+                          disabled={isUpdating}
+                          className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs ${
+                            isProdiVisible(p.prodi)
+                              ? "bg-green-600 hover:bg-green-700 text-white"
+                              : "bg-purple-600 hover:bg-purple-700 text-white"
+                          }`}
+                        >
+                          {isProdiVisible(p.prodi) ? (
+                            <>
+                              <Eye size={14} /> Hasil Ditampilkan
+                            </>
+                          ) : (
+                            <>
+                              <EyeOff size={14} /> Tampilkan Hasil
+                            </>
+                          )}
+                        </Button>
                       </div>
                     )}
                   </div>
@@ -427,6 +472,42 @@ const KendaliStfContainer = () => {
                         </Button>
                       )}
                     </div>
+
+                    {/* Tombol Kontrol Visibilitas Hasil Kadep (hanya setelah sesi Kadep selesai ditutup / ada suara masuk) */}
+                    {Boolean(
+                      papanData.siap_finalisasi ||
+                      isFinalisasiDone ||
+                      (derivedStatus === "tertutup" &&
+                        (kadep.ditutup_at || suaraMasuk > 0)),
+                    ) && (
+                      <div className="mt-1 pt-3 border-t border-neutral-200/60 flex items-center justify-between">
+                        <span className="text-xs text-neutral-500 font-medium">
+                          Status di Mahasiswa:
+                        </span>
+                        <Button
+                          variant="none"
+                          onClick={() =>
+                            updateVisibilitas({ kadep: !isKadepVisible() })
+                          }
+                          disabled={isUpdating}
+                          className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs ${
+                            isKadepVisible()
+                              ? "bg-green-600 hover:bg-green-700 text-white"
+                              : "bg-purple-600 hover:bg-purple-700 text-white"
+                          }`}
+                        >
+                          {isKadepVisible() ? (
+                            <>
+                              <Eye size={14} /> Hasil Ditampilkan
+                            </>
+                          ) : (
+                            <>
+                              <EyeOff size={14} /> Tampilkan Hasil
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 );
               } else {
@@ -476,6 +557,7 @@ const KendaliStfContainer = () => {
               onClick={() => {
                 if (resetKey) {
                   resetSesi(resetKey);
+                  updateVisibilitas({ action: "reset" });
                   setIsResetModalOpen(false);
                 }
               }}

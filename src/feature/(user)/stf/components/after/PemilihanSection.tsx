@@ -35,7 +35,7 @@ const PemilihanSection = ({
     (caketang: Caketang) => caketang.id_caketang === activeCardId,
   );
 
-  const handleVote = async () => {
+  const handleVote = React.useCallback(async () => {
     if (activeCaketang) {
       const success = await vote(activeCaketang.id_caketang);
       setIsConfirmationModalOpen(false);
@@ -44,7 +44,7 @@ const PemilihanSection = ({
       }
       refresh();
     }
-  };
+  }, [activeCaketang, vote, refresh]);
 
   return (
     <>
@@ -89,9 +89,6 @@ const PemilihanSection = ({
             }}
           >
             {kandidat?.map((caketang: Caketang, index: number) => {
-              const activeIndex = kandidat.findIndex(
-                (c) => c.id_caketang === activeCardId,
-              );
               return (
                 <PemilihanCard
                   key={caketang.id_caketang}
@@ -99,7 +96,6 @@ const PemilihanSection = ({
                   isActive={caketang.id_caketang === activeCardId}
                   onClick={() => setActiveCardId(caketang.id_caketang)}
                   index={index}
-                  activeIndex={activeIndex}
                   total={kandidat.length}
                 />
               );
