@@ -15,6 +15,7 @@ interface VisiMisiSectionProps {
   error: string | null;
   activeCardId: string | null;
   setActiveCardId: (id: string) => void;
+  isKadep?: boolean;
 }
 
 /* ─── Helpers Normalisasi & Label Prodi ───────────────────────────── */
@@ -67,7 +68,25 @@ const VisiMisiSection = ({
   kandidat,
   activeCardId,
   setActiveCardId,
+  isKadep = false,
 }: VisiMisiSectionProps) => {
+  // Deteksi apakah ini pemilihan ketua departemen
+  const isKadepElection = useMemo(() => {
+    if (isKadep) return true;
+    if (kandidat?.some((k) => k.jabatan === "kadep")) return true;
+    // Cek jika setiap prodi hanya punya maksimal 1 kandidat dan total <= 3 (format 3 finalis kadep)
+    const countPerProdi: Record<string, number> = {};
+    for (const k of kandidat || []) {
+      const key = normalizeProdiKey(k.prodi);
+      countPerProdi[key] = (countPerProdi[key] || 0) + 1;
+    }
+    const maxPerProdi = Math.max(...Object.values(countPerProdi), 0);
+    if (maxPerProdi <= 1 && (kandidat?.length || 0) <= 3) {
+      return true;
+    }
+    return false;
+  }, [isKadep, kandidat]);
+
   // Ambil daftar unik prodi yang ada dalam daftar kandidat
   const uniqueProdiKeys = useMemo(() => {
     if (!kandidat || kandidat.length === 0) return [];
@@ -84,6 +103,9 @@ const VisiMisiSection = ({
   const uniqueProdis = useMemo(() => {
     return uniqueProdiKeys.map((k) => getProdiMeta(k));
   }, [uniqueProdiKeys]);
+
+  // Tombol filter prodi HANYA dimunculkan jika BUKAN pemilihan kadep dan ada >1 prodi
+  const showProdiFilter = !isKadepElection && uniqueProdiKeys.length > 1;
 
   // State prodi aktif yang dipilih pada tab filter
   const [selectedProdi, setSelectedProdi] = useState<string>(() => {
@@ -104,12 +126,12 @@ const VisiMisiSection = ({
     }
   }, [uniqueProdiKeys, selectedProdi]);
 
-  // Filter kandidat hanya sesuai prodi yang dipilih (maksimal 3 kartu)
+  // Filter kandidat hanya sesuai prodi yang dipilih jika showProdiFilter aktif (maksimal 3 kartu)
   const filteredKandidat = useMemo(() => {
     if (!kandidat) return [];
-    if (uniqueProdiKeys.length <= 1) return kandidat;
+    if (!showProdiFilter) return kandidat;
     return kandidat.filter((k) => normalizeProdiKey(k.prodi) === selectedProdi);
-  }, [kandidat, uniqueProdiKeys, selectedProdi]);
+  }, [kandidat, showProdiFilter, selectedProdi]);
 
   // Pastikan kandidat yang aktif selalu ada dalam kandidat yang sedang difilter
   useEffect(() => {
@@ -161,8 +183,8 @@ const VisiMisiSection = ({
       <Starfield />
 
       <div className="mx-auto flex w-full flex-col relative z-10 items-center justify-center py-16 md:py-24 px-4 gap-12 md:gap-20 text-white lg:px-8 md:px-12 xl:px-24">
-        {/* ── Filter Tombol Prodi (hanya muncul saat ada >1 prodi, misal tamu belum login) ── */}
-        {uniqueProdis.length > 1 && (
+        {/* ── Filter Tombol Prodi (hanya muncul saat ada >1 prodi pada pemilihan ketang maba belum login) ── */}
+        {showProdiFilter && (
           <motion.div
             initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -210,9 +232,9 @@ const VisiMisiSection = ({
           </motion.div>
         )}
 
-        {/* ── Cards Row (Selalu 3 kartu per prodi yang dipilih) ── */}
+        {/* ── Cards Row (Selalu 3 kartu per prodi yang dipilih atau 3 calon kadep) ── */}
         <motion.div
-          key={selectedProdi}
+          key={showProdiFilter ? selectedProdi : "all-candidates"}
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.35, ease: "easeOut" }}

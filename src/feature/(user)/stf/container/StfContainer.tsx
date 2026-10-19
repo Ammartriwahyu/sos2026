@@ -56,6 +56,11 @@ const StfContainer = () => {
 
   const tahap = stfData?.tahap || "tertutup";
   const isPengulangan = stfData?.sesi?.pengulangan;
+  const isKadep =
+    stfData?.sesi?.jenis === "kadep" ||
+    Boolean(stfData?.is_kadep_open) ||
+    Boolean(stfData?.sesi?.judul?.toLowerCase().includes("departemen")) ||
+    Boolean(stfData?.kandidat?.some((k) => k.jabatan === "kadep"));
 
   const renderContent = () => {
     switch (tahap) {
@@ -255,6 +260,7 @@ const StfContainer = () => {
                         error={error}
                         activeCardId={activeCardId}
                         setActiveCardId={setActiveCardId}
+                        isKadep={isKadep}
                       />
 
                       {tahap === "voting" && stfData.berhak_memilih && (
