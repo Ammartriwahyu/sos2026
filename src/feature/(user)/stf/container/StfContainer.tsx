@@ -74,6 +74,29 @@ const StfContainer = () => {
     );
   }
 
+  // Jika user belum login di /stf biasa, tetap stay di halaman before (seperti sebelumnya)
+  if (!user) {
+    return (
+      <SpaceBackground className="w-full flex flex-col h-full min-h-screen overflow-x-hidden relative">
+        <motion.div
+          key="before-login"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="w-full flex flex-col overflow-hidden"
+        >
+          <CurrentSection />
+          <div className="relative z-20 w-full mt-24">
+            <GrassDivider className="translate-y-px" />
+            <div className="w-full h-16 md:h-24 peta-flashback-bg" />
+          </div>
+          <CtaSection />
+        </motion.div>
+      </SpaceBackground>
+    );
+  }
+
   const tahap = stfData?.tahap || "tertutup";
   const isPengulangan = stfData?.sesi?.pengulangan;
   const isKadep =

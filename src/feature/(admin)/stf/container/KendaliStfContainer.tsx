@@ -87,9 +87,19 @@ const KendaliStfContainer = () => {
           <ChevronLeft size={24} />
           <span className="text-xl">Kelola Kandidat</span>
         </Link>
-        <h1 className="text-3xl md:text-4xl font-semibold text-default-dark">
-          Papan Kendali Pemilihan
-        </h1>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <h1 className="text-3xl md:text-4xl font-semibold text-default-dark">
+            Papan Kendali Pemilihan
+          </h1>
+          <a
+            href="/stf/ddm"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-xl text-xs sm:text-sm font-bold shadow-sm transition-all w-fit cursor-pointer"
+          >
+            <Trophy size={16} /> Buka Layar DDM (Proyektor) ↗
+          </a>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
