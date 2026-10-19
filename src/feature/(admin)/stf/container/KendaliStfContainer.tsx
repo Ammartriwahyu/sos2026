@@ -22,7 +22,7 @@ import { Modal } from "@/shared/components/ui/Modal";
 const KendaliStfContainer = () => {
   const [isResetModalOpen, setIsResetModalOpen] = useState(false);
   const [resetKey, setResetKey] = useState("");
-  const { updateVisibilitas, isUpdating, isProdiVisible } =
+  const { updateVisibilitas, isUpdating, isProdiVisible, isKadepVisible } =
     useGetVisibilitasHasil();
   const {
     papanData,
@@ -115,11 +115,10 @@ const KendaliStfContainer = () => {
                 Mengontrol halaman apa yang dilihat mahasiswa saat ini.
               </p>
             </div>
-            <div className="grid grid-cols-2 gap-3 mt-2">
+            <div className="grid grid-cols-3 gap-3 mt-2">
               <TahapButton name="Tertutup" value="tertutup" />
               <TahapButton name="Perkenalan" value="perkenalan" />
               <TahapButton name="Voting" value="voting" />
-              <TahapButton name="Hasil" value="hasil" />
             </div>
             <div className="bg-blue-50/50 p-3 rounded-xl border border-blue-100 mt-2">
               <p className="text-xs text-blue-700 leading-relaxed">
@@ -473,6 +472,42 @@ const KendaliStfContainer = () => {
                         </Button>
                       )}
                     </div>
+
+                    {/* Tombol Kontrol Visibilitas Hasil Kadep (hanya setelah sesi Kadep selesai ditutup / ada suara masuk) */}
+                    {Boolean(
+                      papanData.siap_finalisasi ||
+                      isFinalisasiDone ||
+                      (derivedStatus === "tertutup" &&
+                        (kadep.ditutup_at || suaraMasuk > 0)),
+                    ) && (
+                      <div className="mt-1 pt-3 border-t border-neutral-200/60 flex items-center justify-between">
+                        <span className="text-xs text-neutral-500 font-medium">
+                          Status di Mahasiswa:
+                        </span>
+                        <Button
+                          variant="none"
+                          onClick={() =>
+                            updateVisibilitas({ kadep: !isKadepVisible() })
+                          }
+                          disabled={isUpdating}
+                          className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs ${
+                            isKadepVisible()
+                              ? "bg-green-600 hover:bg-green-700 text-white"
+                              : "bg-purple-600 hover:bg-purple-700 text-white"
+                          }`}
+                        >
+                          {isKadepVisible() ? (
+                            <>
+                              <Eye size={14} /> Hasil Ditampilkan
+                            </>
+                          ) : (
+                            <>
+                              <EyeOff size={14} /> Tampilkan Hasil
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 );
               } else {

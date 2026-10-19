@@ -23,7 +23,7 @@ import { useAuthContext } from "@/shared/hooks/useAuthContext";
 const StfContainer = () => {
   const { stfData, isLoading, error } = useGetStfData();
   const { papanHasil } = useGetPapanHasil();
-  const { isProdiVisible } = useGetVisibilitasHasil();
+  const { isProdiVisible, isKadepVisible } = useGetVisibilitasHasil();
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const { user, isLoading: isAuthLoading } = useAuthContext();
@@ -34,17 +34,10 @@ const StfContainer = () => {
     return papanHasil.putaran_pertama.filter((p) => isProdiVisible(p.prodi));
   }, [papanHasil?.putaran_pertama, isProdiVisible]);
 
-  // Cek apakah ada hasil yang diizinkan untuk ditampilkan
-  const adaHasilProdiDiizinkan =
-    putaranPertamaTayang.some((p) =>
-      p.sesi?.some((s) => s.perolehan && s.perolehan.length > 0),
-    ) ||
-    Boolean(
-      papanHasil?.putaran_kadep?.sesi &&
-      papanHasil.putaran_kadep.sesi.some(
-        (s) => s.perolehan && s.perolehan.length > 0,
-      ),
-    );
+  // Cek apakah ada hasil prodi yang diizinkan untuk ditampilkan oleh panitia
+  const adaHasilProdiDiizinkan = putaranPertamaTayang.some((p) =>
+    p.sesi?.some((s) => s.perolehan && s.perolehan.length > 0),
+  );
 
   useEffect(() => {
     if (!isLoading && !isAuthLoading) {
@@ -99,13 +92,45 @@ const StfContainer = () => {
 
   const tahap = stfData?.tahap || "tertutup";
   const isPengulangan = stfData?.sesi?.pengulangan;
-  const isKadep =
+
+  // Deteksi apakah finalisasi sudah dilakukan oleh admin (tombol C. Selesaikan)
+  const isFinalisasiDone = Boolean(papanHasil?.hasil_akhir?.sudah_final);
+
+  // Deteksi apakah sedang dalam sesi Kadep
+  const isKadepRealtime =
     stfData?.sesi?.jenis === "kadep" ||
     Boolean(stfData?.is_kadep_open) ||
     Boolean(stfData?.sesi?.judul?.toLowerCase().includes("departemen")) ||
     Boolean(stfData?.kandidat?.some((k) => k.jabatan === "kadep"));
 
+  // Deteksi apakah sudah masuk putaran Kadep (sedang berjalan atau sudah selesai ditutup)
+  const isKadepStage =
+    isKadepRealtime ||
+    Boolean(
+      papanHasil?.putaran_kadep?.sesi &&
+      papanHasil.putaran_kadep.sesi.length > 0,
+    ) ||
+    Boolean(papanHasil?.putaran_kadep?.selesai) ||
+    Boolean(papanHasil?.putaran_kadep?.pemenang) ||
+    isFinalisasiDone;
+
   const renderContent = () => {
+    // Hasil akhir HANYA boleh tampil jika admin sudah menekan "C. Selesaikan & Hitung Hasil Akhir" (finalisasi)
+    // DAN sudah mengaktifkan visibilitas tampilan hasil (isKadepVisible)
+    if (isFinalisasiDone && isKadepVisible()) {
+      return (
+        <motion.div
+          key="hasil"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <HasilSection />
+        </motion.div>
+      );
+    }
+
     switch (tahap) {
       case "tertutup":
         return (
@@ -126,7 +151,12 @@ const StfContainer = () => {
           </motion.div>
         );
 
-      case "menunggu":
+      case "hasil":
+      case "menunggu": {
+        // Jika sedang atau baru saja menutup bilik Kadep, maba WAJIB melihat status Harap Tunggu ⏳
+        // Hasil kadep TIDAK BOLEH muncul sampai admin menekan Selesaikan & Tampilkan Hasil!
+        const isMenungguKadep = isKadepStage || tahap === "hasil";
+
         return (
           <motion.div
             key="menunggu"
@@ -138,11 +168,11 @@ const StfContainer = () => {
           >
             <Starfield />
 
-            {adaHasilProdiDiizinkan ? (
+            {!isMenungguKadep && adaHasilProdiDiizinkan ? (
               <div className="w-full relative z-10">
                 <HasilAngkatanSection
                   putaranPertama={putaranPertamaTayang}
-                  putaranKadep={papanHasil?.putaran_kadep}
+                  putaranKadep={null}
                   prodiSaya={stfData?.prodi}
                 />
               </div>
@@ -152,27 +182,15 @@ const StfContainer = () => {
                   Harap Tunggu ⏳
                 </h2>
                 <p className="text-lg md:text-xl text-white/80">
-                  Sesi sedang dipersiapkan atau hasil pemungutan suara sedang
-                  dihitung oleh panitia. Mohon tunggu sebentar, halaman ini akan
-                  otomatis diperbarui.
+                  {isMenungguKadep
+                    ? "Pemungutan suara telah ditutup. Hasil sedang dihitung dan diverifikasi oleh panitia. Mohon tunggu sebentar untuk pengumuman hasil akhir."
+                    : "Sesi sedang dipersiapkan atau hasil pemungutan suara sedang dihitung oleh panitia. Mohon tunggu sebentar, halaman ini akan otomatis diperbarui."}
                 </p>
               </div>
             )}
           </motion.div>
         );
-
-      case "hasil":
-        return (
-          <motion.div
-            key="hasil"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <HasilSection />
-          </motion.div>
-        );
+      }
 
       case "perkenalan":
       case "voting":
@@ -290,7 +308,7 @@ const StfContainer = () => {
                         error={error}
                         activeCardId={activeCardId}
                         setActiveCardId={setActiveCardId}
-                        isKadep={isKadep}
+                        isKadep={isKadepRealtime}
                       />
 
                       {tahap === "voting" && stfData.berhak_memilih && (
@@ -310,12 +328,12 @@ const StfContainer = () => {
                     </>
                   )}
 
-                  {/* ── Tampilkan Papan Hasil Angkatan & Kadep jika sudah diizinkan tayang oleh panitia ── */}
-                  {adaHasilProdiDiizinkan && (
+                  {/* ── Tampilkan Papan Hasil Angkatan jika sudah diizinkan tayang oleh panitia (hanya sebelum putaran Kadep) ── */}
+                  {!isKadepStage && adaHasilProdiDiizinkan && (
                     <div className="w-full relative z-20 mt-16 md:mt-24">
                       <HasilAngkatanSection
                         putaranPertama={putaranPertamaTayang}
-                        putaranKadep={papanHasil?.putaran_kadep}
+                        putaranKadep={null}
                         prodiSaya={stfData?.prodi}
                       />
                     </div>

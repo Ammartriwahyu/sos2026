@@ -8,6 +8,7 @@ interface VisibilitasState {
     TI: boolean;
     PTI: boolean;
   };
+  kadep: boolean;
 }
 
 // In-memory state pada runtime Next.js server
@@ -18,6 +19,7 @@ const globalState: VisibilitasState = {
     TI: false,
     PTI: false,
   },
+  kadep: false,
 };
 
 export async function GET() {
@@ -36,6 +38,7 @@ export async function POST(request: NextRequest) {
     if (body.action === "reset") {
       globalState.tampilkan_semua = false;
       globalState.prodi = { SI: false, TI: false, PTI: false };
+      globalState.kadep = false;
       return NextResponse.json({
         status_code: 200,
         message: "Status visibilitas berhasil di-reset",
@@ -49,6 +52,11 @@ export async function POST(request: NextRequest) {
       globalState.prodi.SI = body.tampilkan_semua;
       globalState.prodi.TI = body.tampilkan_semua;
       globalState.prodi.PTI = body.tampilkan_semua;
+    }
+
+    // Toggle atau set status visibilitas kadep
+    if (typeof body.kadep === "boolean") {
+      globalState.kadep = body.kadep;
     }
 
     // Toggle atau set spesifik per prodi (SI / TI / PTI)

@@ -8,6 +8,7 @@ export interface VisibilitasHasilData {
     TI: boolean;
     PTI: boolean;
   };
+  kadep?: boolean;
 }
 
 export const useGetVisibilitasHasil = () => {
@@ -22,12 +23,14 @@ export const useGetVisibilitasHasil = () => {
           res.data?.data || {
             tampilkan_semua: false,
             prodi: { SI: false, TI: false, PTI: false },
+            kadep: false,
           }
         );
       } catch {
         return {
           tampilkan_semua: false,
           prodi: { SI: false, TI: false, PTI: false },
+          kadep: false,
         };
       }
     },
@@ -39,6 +42,7 @@ export const useGetVisibilitasHasil = () => {
       tampilkan_semua?: boolean;
       prodi?: string;
       visible?: boolean;
+      kadep?: boolean;
       action?: string;
     }) => {
       const res = await axios.post("/api/stf/visibilitas-hasil", payload);
@@ -55,6 +59,7 @@ export const useGetVisibilitasHasil = () => {
   const visibilitas: VisibilitasHasilData = data || {
     tampilkan_semua: false,
     prodi: { SI: false, TI: false, PTI: false },
+    kadep: false,
   };
 
   const isProdiVisible = (prodiKey?: string | null): boolean => {
@@ -66,6 +71,10 @@ export const useGetVisibilitasHasil = () => {
     return Boolean(visibilitas.prodi[key]);
   };
 
+  const isKadepVisible = (): boolean => {
+    return Boolean(visibilitas.kadep);
+  };
+
   return {
     visibilitas,
     isLoading,
@@ -73,5 +82,6 @@ export const useGetVisibilitasHasil = () => {
     updateVisibilitas: updateMutation.mutateAsync,
     isUpdating: updateMutation.isPending,
     isProdiVisible,
+    isKadepVisible,
   };
 };

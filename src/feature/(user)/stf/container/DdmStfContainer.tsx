@@ -52,11 +52,7 @@ const WinnerCard = ({
         delay,
       }}
       whileHover={{ y: -8, scale: 1.02 }}
-      className={`flex flex-col relative z-10 ${
-        isKadep
-          ? "w-full max-w-sm rounded-t-[5rem] rounded-b-[3rem]"
-          : "w-full max-w-xs sm:max-w-sm rounded-t-[4rem] rounded-b-[2.5rem]"
-      } overflow-hidden shadow-2xl bg-[var(--color-space-top)]/40 backdrop-blur-xl ring-2 ${
+      className={`flex flex-col relative z-10 w-full max-w-xs sm:max-w-sm rounded-t-[4rem] rounded-b-[2.5rem] overflow-hidden shadow-2xl bg-[var(--color-space-top)]/40 backdrop-blur-xl ring-2 ${
         isKadep
           ? "ring-amber-400/40 shadow-amber-500/20"
           : "ring-white/20 shadow-black/50"
@@ -68,23 +64,21 @@ const WinnerCard = ({
           alt={caketang.nama}
           width={400}
           height={533}
-          className={`w-full h-auto aspect-[3/4] object-contain object-bottom transition-transform duration-500 group-hover:scale-105 ${
-            isKadep ? "rounded-t-[4.5rem]" : "rounded-t-[3.5rem]"
-          } rounded-b-none`}
+          className="w-full h-auto aspect-[3/4] object-contain object-bottom transition-transform duration-500 group-hover:scale-105 rounded-t-[3.5rem] rounded-b-none"
         />
       </div>
-      <div className={`w-full relative z-10 ${isKadep ? "-mt-8" : "-mt-6"}`}>
+      <div className="w-full relative z-10 -mt-6">
         <div
-          className={`flex flex-col justify-center items-center px-4 pt-6 pb-8 text-center ${
+          className={`flex flex-col justify-center items-center px-4 pt-6 pb-8 text-center min-h-[4.5rem] rounded-t-[3rem] border-t-2 ${
             isKadep
-              ? "min-h-[5rem] rounded-t-[5rem] border-t-2 border-amber-300/50 bg-gradient-to-b from-[var(--color-space-top)] to-[var(--color-space-base)] shadow-[0_-4px_15px_rgba(251,191,36,0.15)]"
-              : "min-h-[4.5rem] rounded-t-[3rem] border-t-2 border-[var(--color-stf-purple-border)]/50 bg-gradient-to-b from-[var(--color-space-top)] to-[var(--color-space-base)] shadow-[0_-4px_10px_rgba(0,0,0,0.2)]"
+              ? "border-amber-300/50 bg-gradient-to-b from-[var(--color-space-top)] to-[var(--color-space-base)] shadow-[0_-4px_15px_rgba(251,191,36,0.15)]"
+              : "border-[var(--color-stf-purple-border)]/50 bg-gradient-to-b from-[var(--color-space-top)] to-[var(--color-space-base)] shadow-[0_-4px_10px_rgba(0,0,0,0.2)]"
           }`}
         >
           <p
             className={`font-black uppercase line-clamp-2 leading-tight tracking-wide mb-3 ${
               isKadep
-                ? "text-amber-300 text-xl lg:text-3xl"
+                ? "text-amber-300 text-lg lg:text-2xl"
                 : "text-white text-lg lg:text-2xl"
             }`}
           >
@@ -493,7 +487,7 @@ const DdmStfContainer = () => {
                     <div className="hidden md:block h-px w-20 bg-gradient-to-l from-transparent to-amber-400/50" />
                   </motion.div>
 
-                  <div className="relative">
+                  <div className="relative w-full max-w-xs sm:max-w-sm flex justify-center">
                     <div className="absolute inset-0 bg-amber-400/20 blur-3xl rounded-full scale-110 -z-10" />
                     <WinnerCard
                       caketang={kadep}
