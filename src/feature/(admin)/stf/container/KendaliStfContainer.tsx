@@ -22,7 +22,7 @@ import { Modal } from "@/shared/components/ui/Modal";
 const KendaliStfContainer = () => {
   const [isResetModalOpen, setIsResetModalOpen] = useState(false);
   const [resetKey, setResetKey] = useState("");
-  const { visibilitas, updateVisibilitas, isUpdating, isProdiVisible } =
+  const { updateVisibilitas, isUpdating, isProdiVisible } =
     useGetVisibilitasHasil();
   const {
     papanData,
@@ -222,59 +222,6 @@ const KendaliStfContainer = () => {
               </p>
             </div>
 
-            {/* Banner & Tombol Kontrol Tampilkan Hasil Per Prodi */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-gradient-to-r from-purple-50 via-indigo-50 to-purple-50 border border-purple-200 p-4 rounded-2xl gap-3 shadow-xs mt-1">
-              <div className="flex items-center gap-3">
-                <div
-                  className={`p-2.5 rounded-xl flex items-center justify-center shrink-0 ${
-                    visibilitas.tampilkan_semua
-                      ? "bg-green-100 text-green-700"
-                      : "bg-purple-100 text-purple-700"
-                  }`}
-                >
-                  {visibilitas.tampilkan_semua ? (
-                    <Eye size={20} />
-                  ) : (
-                    <EyeOff size={20} />
-                  )}
-                </div>
-                <div>
-                  <h4 className="font-bold text-sm text-neutral-800">
-                    Tayang Hasil Pemilihan Mahasiswa
-                  </h4>
-                  <p className="text-xs text-neutral-500 mt-0.5">
-                    {visibilitas.tampilkan_semua
-                      ? "Hasil per prodi DITAMPILKAN di layar mahasiswa."
-                      : "Hasil per prodi DISEMBUYIKAN (Mahasiswa melihat status Menunggu ⏳)."}
-                  </p>
-                </div>
-              </div>
-              <Button
-                variant="none"
-                onClick={() =>
-                  updateVisibilitas({
-                    tampilkan_semua: !visibilitas.tampilkan_semua,
-                  })
-                }
-                disabled={isUpdating}
-                className={`w-full sm:w-auto px-4 py-2.5 rounded-xl font-bold text-xs shadow-sm transition-all flex items-center justify-center gap-2 shrink-0 ${
-                  visibilitas.tampilkan_semua
-                    ? "bg-amber-600 hover:bg-amber-700 text-white"
-                    : "bg-purple-600 hover:bg-purple-700 text-white"
-                }`}
-              >
-                {visibilitas.tampilkan_semua ? (
-                  <>
-                    <EyeOff size={16} /> Sembunyikan Semua Hasil
-                  </>
-                ) : (
-                  <>
-                    <Eye size={16} /> Tampilkan Hasil Per Prodi
-                  </>
-                )}
-              </Button>
-            </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-1">
               {papanData.prodi.map((p) => {
                 const sesiRaw = p.sesi_aktif;
@@ -292,12 +239,7 @@ const KendaliStfContainer = () => {
                 const berhakMemilih = isSesiValid
                   ? (sesi.jumlah_berhak ?? 0)
                   : 0;
-                const bolehKontrolHasil =
-                  p.selesai ||
-                  Boolean(p.finalis) ||
-                  (isSesiValid &&
-                    derivedStatus === "tertutup" &&
-                    suaraMasuk > 0);
+                const bolehKontrolHasil = Boolean(p.selesai || p.finalis);
 
                 return (
                   <div
