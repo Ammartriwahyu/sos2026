@@ -2,13 +2,16 @@
 
 "use client";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import HeroSection from "../components/after/HeroSection";
 import PemilihanSection from "../components/after/PemilihanSection";
 import VisiMisiSection from "../components/after/VisiMisiSection";
 import HasilSection from "../components/after/HasilSection";
+import HasilAngkatanSection from "../components/after/HasilAngkatanSection";
 import CurrentSection from "../components/before/CurrentSection";
 import CtaSection from "../components/before/CtaSection";
 import { useGetStfData } from "../hooks/useGetStfData";
+import { useGetPapanHasil } from "../hooks/useGetPapanHasil";
 import GrassDivider from "@/shared/components/background/GrassDivider";
 import SpaceBackground from "@/shared/components/background/SpaceBackground";
 import { motion, AnimatePresence } from "motion/react";
@@ -17,6 +20,7 @@ import { useAuthContext } from "@/shared/hooks/useAuthContext";
 
 const StfContainer = () => {
   const { stfData, isLoading, error } = useGetStfData();
+  const { papanHasil } = useGetPapanHasil();
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const { user, isLoading: isAuthLoading } = useAuthContext();
@@ -74,20 +78,48 @@ const StfContainer = () => {
         );
 
       case "menunggu":
+        const adaHasilPapanMenunggu =
+          (papanHasil?.putaran_pertama &&
+            papanHasil.putaran_pertama.some((p) =>
+              p.sesi?.some((s) => s.perolehan && s.perolehan.length > 0),
+            )) ||
+          (papanHasil?.putaran_kadep?.sesi &&
+            papanHasil.putaran_kadep.sesi.some(
+              (s) => s.perolehan && s.perolehan.length > 0,
+            ));
+
         return (
           <motion.div
             key="menunggu"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.05 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-            className="mx-auto flex h-full flex-col items-center justify-center text-white relative z-10 text-center gap-4 px-4 min-h-screen"
+            className="w-full flex flex-col items-center justify-start text-white relative z-10 px-4 py-20 min-h-screen"
           >
-            <h2 className="text-3xl md:text-5xl font-bold">Harap Tunggu ⏳</h2>
-            <p className="text-lg md:text-xl text-white/80 max-w-lg">
-              Hasil pemungutan suara sedang dihitung oleh panitia. Mohon tunggu
-              sebentar, halaman ini akan otomatis diperbarui.
-            </p>
+            <div className="max-w-xl mx-auto flex flex-col items-center text-center gap-4 mb-8">
+              <h2 className="text-3xl md:text-5xl font-bold">
+                Harap Tunggu ⏳
+              </h2>
+              <p className="text-lg md:text-xl text-white/80">
+                Sesi sedang dipersiapkan atau hasil pemungutan suara sedang
+                dihitung oleh panitia. Mohon tunggu sebentar, halaman ini akan
+                otomatis diperbarui.
+              </p>
+            </div>
+
+            {adaHasilPapanMenunggu && (
+              <div className="w-full relative z-20 mt-8">
+                <GrassDivider className="translate-y-px relative z-20" />
+                <div className="w-full peta-flashback-bg relative pb-16 pt-8">
+                  <HasilAngkatanSection
+                    putaranPertama={papanHasil?.putaran_pertama}
+                    putaranKadep={papanHasil?.putaran_kadep}
+                    prodiSaya={stfData?.prodi}
+                  />
+                </div>
+              </div>
+            )}
           </motion.div>
         );
 
@@ -106,6 +138,16 @@ const StfContainer = () => {
 
       case "perkenalan":
       case "voting":
+        const adaHasilPapanVoting =
+          (papanHasil?.putaran_pertama &&
+            papanHasil.putaran_pertama.some((p) =>
+              p.sesi?.some((s) => s.perolehan && s.perolehan.length > 0),
+            )) ||
+          (papanHasil?.putaran_kadep?.sesi &&
+            papanHasil.putaran_kadep.sesi.some(
+              (s) => s.perolehan && s.perolehan.length > 0,
+            ));
+
         return (
           <motion.div
             key="voting-perkenalan"
@@ -136,15 +178,21 @@ const StfContainer = () => {
                       initial={{ opacity: 0, scale: 0.9, y: 20 }}
                       animate={{ opacity: 1, scale: 1, y: 0 }}
                       transition={{ type: "spring", duration: 0.6 }}
-                      className="bg-[var(--color-stf-primary)]/30 border border-[var(--color-stf-primary)]/50 text-[var(--color-stf-text)] px-6 py-4 rounded-xl mt-12 mb-4 mx-4 md:mx-auto inline-block max-w-2xl text-center backdrop-blur-sm"
+                      className="bg-[var(--color-stf-primary)]/30 border border-[var(--color-stf-primary)]/50 text-[var(--color-stf-text)] px-6 py-5 rounded-2xl mt-12 mb-4 mx-4 md:mx-auto max-w-2xl text-center backdrop-blur-sm shadow-xl"
                     >
-                      <h3 className="text-2xl font-bold text-white drop-shadow-md mb-1">
+                      <h3 className="text-2xl font-bold text-white drop-shadow-md mb-2">
                         Kamu Sudah Memilih
                       </h3>
-                      <p className="text-[var(--color-stf-text)]">
+                      <p className="text-[var(--color-stf-text)] mb-2">
                         Pilihan kamu telah tersimpan. Terima kasih atas
                         partisipasi kamu!
                       </p>
+                      {!adaHasilPapanVoting && (
+                        <p className="text-xs text-white/70 bg-white/10 px-4 py-2 rounded-xl inline-block mt-1">
+                          ⏳ Angka perolehan voting tiap angkatan akan otomatis
+                          muncul di sini begitu sesi ditutup oleh panitia.
+                        </p>
+                      )}
                     </motion.div>
                   )}
 
@@ -185,9 +233,22 @@ const StfContainer = () => {
                         }}
                         className="bg-red-500/20 border border-red-500/50 text-red-300 px-6 py-3 rounded-xl mx-auto inline-block font-medium max-w-2xl text-center"
                       >
-                        {user?.tipe_mahasiswa === "pemutihan"
-                          ? "Mahasiswa pemutihan tidak memiliki hak suara."
-                          : "Data prodi kamu belum lengkap, hubungi panitia."}
+                        {user?.tipe_mahasiswa === "pemutihan" ? (
+                          "Mahasiswa pemutihan tidak memiliki hak suara."
+                        ) : !user ? (
+                          <span>
+                            Kamu belum login. Silakan{" "}
+                            <Link
+                              href="/login"
+                              className="underline font-bold text-amber-300 hover:text-amber-200"
+                            >
+                              login terlebih dahulu
+                            </Link>{" "}
+                            menggunakan akun mahasiswa untuk memberikan suara.
+                          </span>
+                        ) : (
+                          "Data prodi kamu belum lengkap atau kamu tidak berhak memilih pada sesi ini, hubungi panitia."
+                        )}
                       </motion.div>
                     )}
                   </div>
@@ -217,6 +278,20 @@ const StfContainer = () => {
                         </div>
                       )}
                     </>
+                  )}
+
+                  {/* ── Tampilkan Papan Hasil Angkatan & Kadep jika sudah ada sesi yang selesai ── */}
+                  {adaHasilPapanVoting && (
+                    <div className="w-full relative z-20 mt-16 md:mt-24">
+                      <GrassDivider className="translate-y-px relative z-20" />
+                      <div className="w-full peta-flashback-bg relative pb-16 pt-8">
+                        <HasilAngkatanSection
+                          putaranPertama={papanHasil?.putaran_pertama}
+                          putaranKadep={papanHasil?.putaran_kadep}
+                          prodiSaya={stfData?.prodi}
+                        />
+                      </div>
+                    </div>
                   )}
                 </div>
               </div>

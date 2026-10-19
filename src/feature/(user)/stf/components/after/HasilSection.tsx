@@ -7,18 +7,26 @@ import { Trophy, Medal, Star } from "lucide-react";
 import SpaceBackground from "@/shared/components/background/SpaceBackground";
 import GrassDivider from "@/shared/components/background/GrassDivider";
 import { motion } from "motion/react";
+import { useGetPapanHasil } from "../../hooks/useGetPapanHasil";
+import HasilAngkatanSection from "./HasilAngkatanSection";
 
 /* ─── Reusable Card ──────────────────────────────────────────────── */
 const WinnerCard = ({
   caketang,
   index,
   isKadep = false,
+  jumlahSuara,
+  persentase,
 }: {
   caketang: Caketang;
   index?: number;
   isKadep?: boolean;
+  jumlahSuara?: number;
+  persentase?: number;
 }) => {
   const delay = (index ?? 0) * 0.15;
+  const displaySuara = jumlahSuara ?? caketang.jumlah_suara;
+  const displayPersen = persentase ?? caketang.persentase;
 
   return (
     <motion.div
@@ -83,6 +91,53 @@ const WinnerCard = ({
             )}
             {isKadep ? "Kepala Departemen SI" : `Prodi ${caketang.prodi}`}
           </div>
+
+          {/* Badge & Progress Angka Perolehan Suara */}
+          {displaySuara !== undefined && (
+            <div className="w-full mt-4 pt-3 border-t border-white/10 flex flex-col gap-1.5 items-center">
+              <div className="flex items-center justify-between w-full px-2 text-xs">
+                <span className="text-white/70 font-medium">
+                  Perolehan Suara
+                </span>
+                <span
+                  className={`font-bold ${isKadep ? "text-amber-300" : "text-white"} text-sm`}
+                >
+                  {displaySuara}{" "}
+                  <span className="text-white/60 font-normal text-xs">
+                    suara
+                  </span>
+                </span>
+              </div>
+              {displayPersen !== undefined && (
+                <div className="w-full bg-white/10 rounded-full h-2.5 overflow-hidden p-0.5 border border-white/10">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{
+                      width: `${Math.min(100, Math.max(0, displayPersen))}%`,
+                    }}
+                    transition={{
+                      duration: 0.8,
+                      ease: "easeOut",
+                      delay: delay + 0.2,
+                    }}
+                    className={`h-full rounded-full ${
+                      isKadep
+                        ? "bg-gradient-to-r from-amber-500 to-amber-300"
+                        : "bg-gradient-to-r from-[var(--color-stf-primary)] to-[var(--color-stf-purple-light)]"
+                    }`}
+                  />
+                </div>
+              )}
+              {displayPersen !== undefined && (
+                <div className="flex justify-between items-center w-full px-2 text-[11px] text-white/60">
+                  <span>Porsi Suara</span>
+                  <span className="font-bold text-white/90">
+                    {displayPersen}%
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </motion.div>
@@ -99,6 +154,8 @@ const HasilSection = () => {
     queryKey: ["stfHasil"],
     queryFn: () => stfService.getHasilAkhir(),
   });
+
+  const { papanHasil } = useGetPapanHasil();
 
   if (isLoading) {
     return (
@@ -133,6 +190,45 @@ const HasilSection = () => {
   };
 
   const hasData = kadep || (ketang && ketang.length > 0);
+
+  // Ambil data suara untuk kadep dari papanHasil (sesi terakhir jika ada)
+  const sesiKadepList = papanHasil?.putaran_kadep?.sesi;
+  const sesiKadepTerakhir =
+    sesiKadepList && sesiKadepList.length > 0
+      ? sesiKadepList[sesiKadepList.length - 1]
+      : null;
+  const perolehanKadep = sesiKadepTerakhir?.perolehan?.find(
+    (p) =>
+      p.id_caketang === kadep?.id_caketang ||
+      p.nama?.toLowerCase().trim() === kadep?.nama?.toLowerCase().trim() ||
+      p.peringkat === 1,
+  );
+  const kadepSuara = perolehanKadep?.jumlah_suara ?? kadep?.jumlah_suara;
+  const kadepPersen = perolehanKadep?.persentase ?? kadep?.persentase;
+
+  // Helper untuk mengambil data suara tiap ketang
+  const getKetangSuara = (k: Caketang) => {
+    const prodiPapan = papanHasil?.putaran_pertama?.find(
+      (p) =>
+        p.prodi.toUpperCase() === k.prodi?.toUpperCase() ||
+        (k.prodi && p.nama_prodi.toLowerCase().includes(k.prodi.toLowerCase())),
+    );
+    const sesiKetangList = prodiPapan?.sesi;
+    const sesiKetangTerakhir =
+      sesiKetangList && sesiKetangList.length > 0
+        ? sesiKetangList[sesiKetangList.length - 1]
+        : null;
+    const perolehanKetang = sesiKetangTerakhir?.perolehan?.find(
+      (p) =>
+        p.id_caketang === k.id_caketang ||
+        p.nama?.toLowerCase().trim() === k.nama?.toLowerCase().trim() ||
+        p.peringkat === 1,
+    );
+    return {
+      suara: perolehanKetang?.jumlah_suara ?? k.jumlah_suara,
+      persen: perolehanKetang?.persentase ?? k.persentase,
+    };
+  };
 
   return (
     <SpaceBackground className="w-full flex flex-col min-h-screen overflow-hidden relative">
@@ -203,7 +299,12 @@ const HasilSection = () => {
 
             <div className="relative">
               <div className="absolute inset-0 bg-amber-400/20 blur-3xl rounded-full scale-110 -z-10" />
-              <WinnerCard caketang={kadep} isKadep />
+              <WinnerCard
+                caketang={kadep}
+                isKadep
+                jumlahSuara={kadepSuara}
+                persentase={kadepPersen}
+              />
             </div>
           </section>
         )}
@@ -233,16 +334,34 @@ const HasilSection = () => {
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 w-full place-items-center">
-              {ketang.map((k: Caketang, index: number) => (
-                <WinnerCard
-                  key={k.id_caketang}
-                  caketang={k}
-                  index={index}
-                  isKadep={false}
-                />
-              ))}
+              {ketang.map((k: Caketang, index: number) => {
+                const suaraInfo = getKetangSuara(k);
+                return (
+                  <WinnerCard
+                    key={k.id_caketang}
+                    caketang={k}
+                    index={index}
+                    isKadep={false}
+                    jumlahSuara={suaraInfo.suara}
+                    persentase={suaraInfo.persen}
+                  />
+                );
+              })}
             </div>
           </section>
+        )}
+
+        {/* ── Rincian Perolehan Suara Tiap Angkatan & Putaran Kadep ── */}
+        {((papanHasil?.putaran_pertama &&
+          papanHasil.putaran_pertama.length > 0) ||
+          papanHasil?.putaran_kadep) && (
+          <div className="w-full max-w-6xl mx-auto mt-6">
+            <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-12" />
+            <HasilAngkatanSection
+              putaranPertama={papanHasil?.putaran_pertama}
+              putaranKadep={papanHasil?.putaran_kadep}
+            />
+          </div>
         )}
       </div>
 
