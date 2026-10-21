@@ -51,14 +51,25 @@ const StfContainer = () => {
   }, [isLoading, isAuthLoading, isAuth]);
 
   useEffect(() => {
-    if (stfData?.kandidat && stfData.kandidat.length > 0 && !activeCardId) {
+    if (stfData?.sudah_memilih && stfData?.pilihan_saya?.id_caketang) {
+      setActiveCardId(stfData.pilihan_saya.id_caketang);
+    } else if (
+      stfData?.kandidat &&
+      stfData.kandidat.length > 0 &&
+      !activeCardId
+    ) {
       const defaultId =
         stfData.kandidat.length > 1
           ? stfData.kandidat[1].id_caketang
           : stfData.kandidat[0].id_caketang;
       setActiveCardId(defaultId);
     }
-  }, [stfData?.kandidat, activeCardId]);
+  }, [
+    stfData?.kandidat,
+    stfData?.sudah_memilih,
+    stfData?.pilihan_saya,
+    activeCardId,
+  ]);
 
   if (isInitialLoad && (isAuthLoading || (isAuth && isLoading))) {
     return (

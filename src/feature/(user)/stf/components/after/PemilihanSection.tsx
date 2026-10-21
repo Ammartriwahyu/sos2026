@@ -6,7 +6,7 @@ import { Caketang } from "@/api/services/user/stf";
 import { useVoteForCaketang } from "../../hooks/useVoteForCaketang";
 import { Modal } from "@/shared/components/ui/Modal";
 import { useGetStfData } from "../../hooks/useGetStfData";
-import { CheckCircle, XCircle } from "lucide-react";
+import { Check, CheckCircle, XCircle } from "lucide-react";
 import { useAuthContext } from "@/shared/hooks/useAuthContext";
 import { motion } from "motion/react";
 
@@ -35,6 +35,24 @@ const PemilihanSection = ({
     (caketang: Caketang) => caketang.id_caketang === activeCardId,
   );
 
+  const displayKandidat = React.useMemo(() => {
+    if (!kandidat || kandidat.length === 0) return [];
+    if (!sudah_memilih || !activeCardId) return kandidat;
+
+    const votedIndex = kandidat.findIndex(
+      (c) => c.id_caketang === activeCardId,
+    );
+    if (votedIndex === -1) return kandidat;
+
+    const targetIndex = Math.floor((kandidat.length - 1) / 2);
+    if (votedIndex === targetIndex) return kandidat;
+
+    const list = [...kandidat];
+    const [votedCandidate] = list.splice(votedIndex, 1);
+    list.splice(targetIndex, 0, votedCandidate);
+    return list;
+  }, [kandidat, sudah_memilih, activeCardId]);
+
   const handleVote = React.useCallback(async () => {
     if (
       !activeCaketang ||
@@ -49,36 +67,58 @@ const PemilihanSection = ({
     if (success) {
       setIsResultModalOpen(true);
     }
+  }, [activeCaketang, isVoting, sudah_memilih, user?.tipe_mahasiswa, vote]);
+
+  const handleCloseResultModal = React.useCallback(() => {
+    setIsResultModalOpen(false);
     refresh();
-  }, [
-    activeCaketang,
-    isVoting,
-    sudah_memilih,
-    user?.tipe_mahasiswa,
-    vote,
-    refresh,
-  ]);
+  }, [refresh]);
 
   return (
     <>
       <section className="relative z-10 w-full pt-16 pb-32">
-        <div className="mycontainer text-center text-white w-full max-w-5xl mx-auto flex flex-col gap-16 md:gap-24 items-center">
-          <motion.h4
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-2xl md:text-4xl lg:text-5xl font-bold tracking-wide drop-shadow-lg"
-          >
-            Saatnya memilih!
-          </motion.h4>
+        <div
+          className={`mycontainer text-center text-white w-full max-w-5xl mx-auto flex flex-col items-center ${
+            sudah_memilih ? "gap-10 md:gap-14" : "gap-16 md:gap-24"
+          }`}
+        >
+          <div className="flex flex-col items-center gap-3">
+            <motion.h4
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-2xl md:text-4xl lg:text-5xl font-bold tracking-wide drop-shadow-lg"
+            >
+              {sudah_memilih
+                ? "Pilihan Kamu Telah Disimpan"
+                : "Saatnya memilih!"}
+            </motion.h4>
+            {sudah_memilih && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[var(--color-stf-text)] text-[var(--color-stf-purple)] font-bold text-xs md:text-sm shadow-md"
+              >
+                <Check
+                  className="w-4 h-4 text-[var(--color-stf-purple)]"
+                  strokeWidth={2.5}
+                />
+                <span>Pilihan Kamu</span>
+              </motion.div>
+            )}
+          </div>
+
           <div
-            className="flex flex-row justify-center items-center w-full px-4 sm:px-0 -space-x-16 md:-space-x-24 lg:-space-x-32 pt-8 pb-12"
+            className="flex flex-row justify-center items-center w-full px-4 sm:px-0 -space-x-16 md:-space-x-24 lg:-space-x-32 pt-8 sm:pt-12 pb-12"
             onTouchStart={(e) => {
+              if (sudah_memilih) return;
               const touchDown = e.touches[0].clientX;
               e.currentTarget.setAttribute("data-touch", touchDown.toString());
             }}
             onTouchEnd={(e) => {
+              if (sudah_memilih) return;
               const touchDown = parseFloat(
                 e.currentTarget.getAttribute("data-touch") || "0",
               );
@@ -88,28 +128,36 @@ const PemilihanSection = ({
 
               if (Math.abs(diff) > 50) {
                 // threshold 50px
-                const activeIndex = kandidat.findIndex(
+                const activeIndex = displayKandidat.findIndex(
                   (c) => c.id_caketang === activeCardId,
                 );
-                if (diff > 0 && activeIndex < kandidat.length - 1) {
+                if (diff > 0 && activeIndex < displayKandidat.length - 1) {
                   // swiped left, go next
-                  setActiveCardId(kandidat[activeIndex + 1].id_caketang);
+                  setActiveCardId(displayKandidat[activeIndex + 1].id_caketang);
                 } else if (diff < 0 && activeIndex > 0) {
                   // swiped right, go prev
-                  setActiveCardId(kandidat[activeIndex - 1].id_caketang);
+                  setActiveCardId(displayKandidat[activeIndex - 1].id_caketang);
                 }
               }
             }}
           >
-            {kandidat?.map((caketang: Caketang, index: number) => {
+            {displayKandidat.map((caketang: Caketang, index: number) => {
+              const isThisCardVoted =
+                sudah_memilih && caketang.id_caketang === activeCardId;
               return (
                 <PemilihanCard
                   key={caketang.id_caketang}
                   data={caketang}
                   isActive={caketang.id_caketang === activeCardId}
-                  onClick={() => setActiveCardId(caketang.id_caketang)}
+                  onClick={() => {
+                    if (!sudah_memilih) {
+                      setActiveCardId(caketang.id_caketang);
+                    }
+                  }}
                   index={index}
-                  total={kandidat.length}
+                  total={displayKandidat.length}
+                  isLocked={sudah_memilih}
+                  isPilihanSaya={isThisCardVoted}
                 />
               );
             })}
@@ -187,7 +235,7 @@ const PemilihanSection = ({
 
       <Modal
         isOpen={isResultModalOpen}
-        onClose={() => setIsResultModalOpen(false)}
+        onClose={handleCloseResultModal}
         variant="space"
       >
         {voteSuccess ? (
@@ -209,7 +257,7 @@ const PemilihanSection = ({
               <Button
                 variant="none"
                 className="px-10 py-2.5 rounded-xl bg-[var(--color-stf-primary)] hover:bg-[var(--color-stf-primary-hover)] text-white font-medium transition-colors"
-                onClick={() => setIsResultModalOpen(false)}
+                onClick={handleCloseResultModal}
               >
                 Selesai
               </Button>
@@ -234,7 +282,7 @@ const PemilihanSection = ({
               <Button
                 variant="none"
                 className="px-10 py-2.5 rounded-xl border border-white/20 text-white/80 hover:bg-white/10 hover:text-white font-medium transition-colors"
-                onClick={() => setIsResultModalOpen(false)}
+                onClick={handleCloseResultModal}
               >
                 Tutup
               </Button>
