@@ -43,13 +43,15 @@ export const getProdiMergedKandidat = (
 
   // Peta kandidat dasar dari sesi pertama
   const baseMap = new Map<string, PerolehanSuaraPapan>();
-  for (const k of sesiPertama.perolehan) {
-    baseMap.set(k.id_caketang, { ...k });
+  if (Array.isArray(sesiPertama?.perolehan)) {
+    for (const k of sesiPertama.perolehan) {
+      baseMap.set(k.id_caketang, { ...k });
+    }
   }
 
   // Peta kandidat yang ikut sesi terakhir
   const sesiUlangMap = new Map<string, PerolehanSuaraPapan>();
-  if (sesiTerakhir?.perolehan) {
+  if (Array.isArray(sesiTerakhir?.perolehan)) {
     for (const k of sesiTerakhir.perolehan) {
       sesiUlangMap.set(k.id_caketang, { ...k });
     }
@@ -57,9 +59,9 @@ export const getProdiMergedKandidat = (
 
   // Cek apakah di sesi pertama ada pemenang tunggal mutlak peringkat 1 (tidak seri)
   // Contoh Kasus 2: Juara 1 menang mutlak di Sesi 1, yang seri adalah peringkat 2 & 3
-  const pemenangAwal = sesiPertama.perolehan.find(
-    (k) => k.peringkat === 1 && !k.seri,
-  );
+  const pemenangAwal = Array.isArray(sesiPertama?.perolehan)
+    ? sesiPertama.perolehan.find((k) => k.peringkat === 1 && !k.seri)
+    : undefined;
 
   // Status resmi backend bila sudah terisi
   const finalisId = prodi.finalis?.id_caketang;
@@ -170,20 +172,22 @@ export const getKadepMergedKandidat = (
   if (!sesiPertama?.perolehan) return sesiTerakhir?.perolehan || [];
 
   const baseMap = new Map<string, PerolehanSuaraPapan>();
-  for (const k of sesiPertama.perolehan) {
-    baseMap.set(k.id_caketang, { ...k });
+  if (Array.isArray(sesiPertama?.perolehan)) {
+    for (const k of sesiPertama.perolehan) {
+      baseMap.set(k.id_caketang, { ...k });
+    }
   }
 
   const sesiUlangMap = new Map<string, PerolehanSuaraPapan>();
-  if (sesiTerakhir?.perolehan) {
+  if (Array.isArray(sesiTerakhir?.perolehan)) {
     for (const k of sesiTerakhir.perolehan) {
       sesiUlangMap.set(k.id_caketang, { ...k });
     }
   }
 
-  const pemenangAwal = sesiPertama.perolehan.find(
-    (k) => k.peringkat === 1 && !k.seri,
-  );
+  const pemenangAwal = Array.isArray(sesiPertama?.perolehan)
+    ? sesiPertama.perolehan.find((k) => k.peringkat === 1 && !k.seri)
+    : undefined;
   const pemenangId = putaranKadep.pemenang?.id_caketang;
 
   const result: MergedPerolehanKandidat[] = [];
@@ -504,7 +508,7 @@ export const HasilAngkatanSection = ({
                 {riwayat.judul} (Total: {riwayat.jumlah_suara} Suara)
               </span>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {riwayat.perolehan.map((p) => (
+                {(riwayat.perolehan || []).map((p) => (
                   <div
                     key={p.id_caketang}
                     className="bg-white/5 p-2 rounded-lg text-xs"

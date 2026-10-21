@@ -36,15 +36,28 @@ const PemilihanSection = ({
   );
 
   const handleVote = React.useCallback(async () => {
-    if (activeCaketang) {
-      const success = await vote(activeCaketang.id_caketang);
-      setIsConfirmationModalOpen(false);
-      if (success) {
-        setIsResultModalOpen(true);
-      }
-      refresh();
+    if (
+      !activeCaketang ||
+      isVoting ||
+      sudah_memilih ||
+      user?.tipe_mahasiswa === "pemutihan"
+    ) {
+      return;
     }
-  }, [activeCaketang, vote, refresh]);
+    const success = await vote(activeCaketang.id_caketang);
+    setIsConfirmationModalOpen(false);
+    if (success) {
+      setIsResultModalOpen(true);
+    }
+    refresh();
+  }, [
+    activeCaketang,
+    isVoting,
+    sudah_memilih,
+    user?.tipe_mahasiswa,
+    vote,
+    refresh,
+  ]);
 
   return (
     <>
@@ -117,7 +130,16 @@ const PemilihanSection = ({
                 sudah_memilih ||
                 isVoting
               }
-              onClick={() => setIsConfirmationModalOpen(true)}
+              onClick={() => {
+                if (
+                  kesempatan &&
+                  user?.tipe_mahasiswa !== "pemutihan" &&
+                  !sudah_memilih &&
+                  !isVoting
+                ) {
+                  setIsConfirmationModalOpen(true);
+                }
+              }}
             >
               {isVoting
                 ? "Memproses..."

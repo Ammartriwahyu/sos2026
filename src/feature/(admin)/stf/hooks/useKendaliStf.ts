@@ -14,7 +14,17 @@ export const useKendaliStf = () => {
   } = useQuery({
     queryKey: ["sesiPapan"],
     queryFn: () => stfService.getSesiPapan(),
-    refetchInterval: 5000, // auto-refresh setiap 5 detik agar admin bisa mantau suara
+    refetchInterval: () => {
+      if (
+        typeof document !== "undefined" &&
+        document.visibilityState === "hidden"
+      ) {
+        return false;
+      }
+      return 5000;
+    },
+    refetchIntervalInBackground: false,
+    refetchOnWindowFocus: true,
   });
 
   const papanData = response?.status_code === 200 ? response.data : null;

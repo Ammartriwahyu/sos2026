@@ -3,6 +3,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { stfService, Caketang } from "@/api/services/user/stf";
+import axios from "axios";
 import {
   Trophy,
   Medal,
@@ -167,11 +168,31 @@ const DdmStfContainer = () => {
   // Polling data hasil & papan hasil secara real-time (setiap 3 detik)
   const { data: response } = useQuery({
     queryKey: ["stfHasilDdm"],
-    queryFn: () => stfService.getHasilAkhir(),
-    refetchInterval: 3000,
+    queryFn: ({ signal }) => stfService.getHasilAkhir(signal),
+    refetchInterval: (query) => {
+      if (
+        typeof document !== "undefined" &&
+        document.visibilityState === "hidden"
+      ) {
+        return false;
+      }
+      if (query.state.error && axios.isAxiosError(query.state.error)) {
+        if (query.state.error.response?.status === 429) {
+          return false;
+        }
+        return 30000;
+      }
+      return 6000;
+    },
     refetchIntervalInBackground: false,
     refetchOnWindowFocus: true,
-    staleTime: 2000,
+    staleTime: 4000,
+    retry: (failureCount, err) => {
+      if (axios.isAxiosError(err) && err.response?.status === 429) {
+        return false;
+      }
+      return failureCount < 1;
+    },
   });
 
   const { papanHasil } = useGetPapanHasil();
@@ -216,21 +237,21 @@ const DdmStfContainer = () => {
 
   // Cek apakah ada hasil prodi yang siap ditampilkan
   const adaHasilProdi = useMemo(() => {
+    if (papanHasil?.ada_hasil === false) return false;
     return prodiTayang.some((p) =>
       p.sesi?.some((s) => s.perolehan && s.perolehan.length > 0),
     );
-  }, [prodiTayang]);
+  }, [papanHasil?.ada_hasil, prodiTayang]);
 
   // Data hasil akhir resmi jika sudah final
   const finalData = (response?.data || papanHasil?.hasil_akhir) as
     { kadep?: Caketang | null; ketang?: Caketang[] } | undefined;
 
   const kadep = finalData?.kadep ?? papanHasil?.hasil_akhir?.kadep ?? null;
-  const ketangResmi =
-    finalData?.ketang ?? papanHasil?.hasil_akhir?.ketang ?? [];
-
   // Ambil daftar ketua angkatan (bisa dari hasil final atau dari per-prodi yang sudah tayang)
   const listKetang = useMemo(() => {
+    const ketangResmi =
+      finalData?.ketang ?? papanHasil?.hasil_akhir?.ketang ?? [];
     if (ketangResmi && ketangResmi.length > 0) return ketangResmi;
 
     // Tahap per prodi: jika belum finalisasi resmi, ekstrak pemenang dari masing-masing prodi yang sedang tayang
@@ -259,16 +280,7 @@ const DdmStfContainer = () => {
       }
     }
     return derived;
-  }, [ketangResmi, prodiTayang]);
-
-  const hasAnyData = Boolean(
-    kadep ||
-    listKetang.length > 0 ||
-    adaHasilProdi ||
-    papanHasil?.putaran_kadep?.sesi?.some(
-      (s) => s.perolehan && s.perolehan.length > 0,
-    ),
-  );
+  }, [finalData?.ketang, papanHasil?.hasil_akhir?.ketang, prodiTayang]);
 
   // Ambil data suara untuk kadep dari papanHasil (sesi terakhir jika ada)
   const sesiKadepList = papanHasil?.putaran_kadep?.sesi;

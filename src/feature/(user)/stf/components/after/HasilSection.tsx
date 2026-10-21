@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { stfService, Caketang } from "@/api/services/user/stf";
+import axios from "axios";
 import { Trophy, Medal, Star } from "lucide-react";
 import SpaceBackground from "@/shared/components/background/SpaceBackground";
 import GrassDivider from "@/shared/components/background/GrassDivider";
@@ -153,11 +154,34 @@ const HasilSection = () => {
     error,
   } = useQuery({
     queryKey: ["stfHasil"],
-    queryFn: () => stfService.getHasilAkhir(),
-    refetchInterval: 10000,
+    queryFn: ({ signal }) => stfService.getHasilAkhir(signal),
+    refetchInterval: (query) => {
+      if (
+        typeof document !== "undefined" &&
+        document.visibilityState === "hidden"
+      ) {
+        return false;
+      }
+      if (query.state.error && axios.isAxiosError(query.state.error)) {
+        if (query.state.error.response?.status === 429) {
+          return false;
+        }
+        return 30000;
+      }
+      return 10000;
+    },
     refetchIntervalInBackground: false,
     refetchOnWindowFocus: true,
     staleTime: 5000,
+    retry: (failureCount, err) => {
+      if (axios.isAxiosError(err)) {
+        const status = err.response?.status;
+        if (status && status >= 400 && status < 500) {
+          return false;
+        }
+      }
+      return failureCount < 1;
+    },
   });
 
   const { papanHasil } = useGetPapanHasil();

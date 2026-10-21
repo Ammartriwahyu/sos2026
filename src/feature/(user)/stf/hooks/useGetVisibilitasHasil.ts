@@ -16,9 +16,9 @@ export const useGetVisibilitasHasil = () => {
 
   const { data, isLoading, refetch } = useQuery<VisibilitasHasilData>({
     queryKey: ["stfVisibilitasHasil"],
-    queryFn: async () => {
+    queryFn: async ({ signal }) => {
       try {
-        const res = await axios.get("/api/stf/visibilitas-hasil");
+        const res = await axios.get("/api/stf/visibilitas-hasil", { signal });
         return (
           res.data?.data || {
             tampilkan_semua: false,
@@ -26,7 +26,8 @@ export const useGetVisibilitasHasil = () => {
             kadep: false,
           }
         );
-      } catch {
+      } catch (err: unknown) {
+        if (axios.isCancel(err)) throw err;
         return {
           tampilkan_semua: false,
           prodi: { SI: false, TI: false, PTI: false },
@@ -34,7 +35,15 @@ export const useGetVisibilitasHasil = () => {
         };
       }
     },
-    refetchInterval: 5000, // Polling setiap 5 detik agar sinkron real-time
+    refetchInterval: () => {
+      if (
+        typeof document !== "undefined" &&
+        document.visibilityState === "hidden"
+      ) {
+        return false;
+      }
+      return 5000;
+    },
     refetchIntervalInBackground: false,
     refetchOnWindowFocus: true,
     staleTime: 2500,

@@ -112,8 +112,8 @@ class StfService {
     return StfService.instance;
   }
 
-  async getStfData(): Promise<BackendResponse<StfData>> {
-    const response = await apiClient.get("/api/stf/pemilihan");
+  async getStfData(signal?: AbortSignal): Promise<BackendResponse<StfData>> {
+    const response = await apiClient.get("/api/stf/pemilihan", { signal });
     return response as unknown as BackendResponse<StfData>;
   }
 
@@ -124,13 +124,15 @@ class StfService {
     return response as unknown as BackendResponse<null>;
   }
 
-  async getHasilAkhir(): Promise<BackendResponse<unknown>> {
-    const response = await apiClient.get("/api/stf/hasil");
+  async getHasilAkhir(signal?: AbortSignal): Promise<BackendResponse<unknown>> {
+    const response = await apiClient.get("/api/stf/hasil", { signal });
     return response as unknown as BackendResponse<unknown>;
   }
 
-  async getPapanHasil(): Promise<BackendResponse<PapanHasilData>> {
-    const response = await apiClient.get("/api/stf/papan-hasil");
+  async getPapanHasil(
+    signal?: AbortSignal,
+  ): Promise<BackendResponse<PapanHasilData>> {
+    const response = await apiClient.get("/api/stf/papan-hasil", { signal });
     return response as unknown as BackendResponse<PapanHasilData>;
   }
 }
