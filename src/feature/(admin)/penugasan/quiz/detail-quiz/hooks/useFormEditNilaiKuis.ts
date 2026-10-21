@@ -38,7 +38,7 @@ export const useFormEditNilaiKuis = ({
         nim: submissionData.nim,
         jawaban_benar: angka,
       };
-      
+
       // DEBUG: Log request untuk troubleshoot production issue
       console.log("[DEBUG] Edit Nilai Kuis Request:", {
         method: "POST",
@@ -47,7 +47,7 @@ export const useFormEditNilaiKuis = ({
         baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
         fullURL: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/kuis/sos/admin/${kuisId}/nilai`,
       });
-      
+
       await kuisService.updateManualScore(kuisId, payload);
       onSuccess();
     } catch (error) {
