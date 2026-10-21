@@ -298,7 +298,7 @@ export const KandidatHasilCard = React.memo(
             : isJuara2
               ? "ring-[var(--color-stf-purple-light)]/40 shadow-purple-500/10"
               : "ring-white/10 shadow-black/40"
-        } group transition-all duration-300`}
+        } group transition-colors duration-300`}
       >
         {/* ── Badge Peringkat di Atas Foto ── */}
         <div className="absolute top-4 left-4 z-20">
@@ -467,19 +467,31 @@ export const HasilAngkatanSection = ({
   prodiSaya,
   adaHasil,
 }: HasilAngkatanSectionProps) => {
+  // Filter prodi yang sudah memiliki sesi ditutup dan urutkan agar prodi mahasiswa tampil paling atas
+  const prodiDenganHasil = React.useMemo(() => {
+    const list = putaranPertama.filter(
+      (p) =>
+        p.sesi &&
+        p.sesi.length > 0 &&
+        p.sesi.some((s) => s.perolehan && s.perolehan.length > 0),
+    );
+
+    if (!prodiSaya) return list;
+
+    const normProdiSaya = prodiSaya.toUpperCase().trim();
+    return [...list].sort((a, b) => {
+      const aMatch = a.prodi.toUpperCase().trim() === normProdiSaya;
+      const bMatch = b.prodi.toUpperCase().trim() === normProdiSaya;
+      if (aMatch && !bMatch) return -1;
+      if (!aMatch && bMatch) return 1;
+      return 0;
+    });
+  }, [putaranPertama, prodiSaya]);
+
   // Kontrak backend: jika ada_hasil bernilai false secara eksplisit, tidak ada data yang perlu diproses
   if (adaHasil === false) {
     return null;
   }
-
-  // Filter prodi yang sudah memiliki sesi ditutup (ada sesi perolehan suara)
-  const prodiDenganHasil = putaranPertama.filter(
-    (p) =>
-      p.sesi &&
-      p.sesi.length > 0 &&
-      p.sesi.some((s) => s.perolehan && s.perolehan.length > 0),
-  );
-
   // Cek apakah putaran kadep memiliki sesi selesai dengan data perolehan
   const kadepDenganHasil =
     putaranKadep?.sesi &&
