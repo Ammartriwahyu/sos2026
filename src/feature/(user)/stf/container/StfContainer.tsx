@@ -131,13 +131,12 @@ const StfContainer = () => {
     isFinalisasiDone;
 
   const renderContent = () => {
-    const bolehTayangHasil =
-      (isFinalisasiDone && isKadepVisible()) ||
-      adaHasilProdiDiizinkan ||
-      isProdiVisible() ||
-      tahap === "hasil";
+    // Hasil akhir HANYA mengambil alih layar penuh jika admin sudah menyelesaikan & memfinalisasi (C. Selesaikan)
+    // DAN mengaktifkan visibilitas Kadep (isKadepVisible), ATAU tahap backend memang sudah "hasil"
+    const isHasilAkhirResmi =
+      (isFinalisasiDone && isKadepVisible()) || tahap === "hasil";
 
-    if (bolehTayangHasil) {
+    if (isHasilAkhirResmi) {
       return (
         <motion.div
           key="hasil"
@@ -173,6 +172,21 @@ const StfContainer = () => {
 
       case "menunggu": {
         const isMenungguKadep = isKadepStage;
+
+        // Jika belum masuk kadep dan ada hasil prodi yang diizinkan tayang oleh panitia, tampilkan rincian hasil prodi
+        if (!isMenungguKadep && (adaHasilProdiDiizinkan || isProdiVisible())) {
+          return (
+            <motion.div
+              key="hasil-prodi-menunggu"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <HasilSection />
+            </motion.div>
+          );
+        }
 
         return (
           <motion.div
