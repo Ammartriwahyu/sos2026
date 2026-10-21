@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { stfService, BackendResponse } from "@/api/services/user/stf";
 import axios from "axios";
 import { useQueryClient } from "@tanstack/react-query";
@@ -7,10 +7,13 @@ import { toast } from "react-toastify";
 export const useVoteForCaketang = () => {
   const [isVoting, setIsVoting] = useState<boolean>(false);
   const [voteSuccess, setVoteSuccess] = useState<boolean>(false);
+  const isSubmittingRef = useRef<boolean>(false);
   const queryClient = useQueryClient();
 
   const vote = useCallback(
     async (id: string) => {
+      if (isSubmittingRef.current) return false;
+      isSubmittingRef.current = true;
       setIsVoting(true);
       setVoteSuccess(false);
       try {
@@ -52,6 +55,7 @@ export const useVoteForCaketang = () => {
         return false;
       } finally {
         setIsVoting(false);
+        isSubmittingRef.current = false;
       }
     },
     [queryClient],

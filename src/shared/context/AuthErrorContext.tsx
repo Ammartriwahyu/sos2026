@@ -2,7 +2,13 @@
 
 import { apiClient, ApiResponse } from "@/api/core/AxiosInstance";
 import { AxiosError } from "axios";
-import { createContext, ReactNode, useRef, useEffect } from "react";
+import {
+  createContext,
+  ReactNode,
+  useRef,
+  useEffect,
+  useCallback,
+} from "react";
 import { useToast } from "../hooks/useToast";
 
 interface AuthErrorContextType {
@@ -46,6 +52,22 @@ export const AuthErrorProvider = ({
   const lastRoleErrorTimeRef = useRef(0);
   const isRedirectingRef = useRef(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const isCurrentRouteProtected = useCallback((): boolean => {
+    if (!protectedRoutes || protectedRoutes.length === 0) return true;
+    if (typeof window === "undefined") return false;
+
+    const currentPath = window.location.pathname;
+
+    return protectedRoutes.some((route) => {
+      if (route.endsWith("/*")) {
+        const basePath = route.slice(0, -2);
+        return (
+          currentPath !== basePath && currentPath.startsWith(basePath + "/")
+        );
+      }
+      return currentPath === route;
+    });
+  }, [protectedRoutes]);
 
   const AUTH_ERROR_DEBOUNCE = 5000; // 5 seconds
   const NETWORK_ERROR_DEBOUNCE = 3000; // 3 seconds
@@ -282,7 +304,11 @@ export const AuthErrorProvider = ({
 
     // Handle auth errors (401)
     if (isAuthError(error)) {
-      showSessionExpiredToast();
+      if (isCurrentRouteProtected()) {
+        showSessionExpiredToast();
+      } else {
+        clearAuthSession();
+      }
     }
   };
 
@@ -293,10 +319,11 @@ export const AuthErrorProvider = ({
       handleRoleError();
       return true;
     }
-
     if (isAuthError(response)) {
       clearAuthSession();
-      showSessionExpiredToast();
+      if (isCurrentRouteProtected()) {
+        showSessionExpiredToast();
+      }
       return true;
     }
 

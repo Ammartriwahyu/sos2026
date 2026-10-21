@@ -22,9 +22,12 @@ import { useAuthContext } from "@/shared/hooks/useAuthContext";
 
 const StfContainer = () => {
   const { user, isLoading: isAuthLoading } = useAuthContext();
-  const { stfData, isLoading, error } = useGetStfData({ enabled: !!user });
-  const { papanHasil } = useGetPapanHasil();
-  const { isProdiVisible, isKadepVisible } = useGetVisibilitasHasil();
+  const { stfData, isLoading } = useGetStfData();
+  const isClosed = !stfData || stfData.tahap === "tertutup";
+  const { papanHasil } = useGetPapanHasil({ enabled: !isClosed });
+  const { isProdiVisible, isKadepVisible } = useGetVisibilitasHasil({
+    enabled: !isClosed,
+  });
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
@@ -35,9 +38,12 @@ const StfContainer = () => {
   }, [papanHasil?.putaran_pertama, isProdiVisible]);
 
   // Cek apakah ada hasil prodi yang diizinkan untuk ditampilkan oleh panitia
-  const adaHasilProdiDiizinkan = putaranPertamaTayang.some((p) =>
-    p.sesi?.some((s) => s.perolehan && s.perolehan.length > 0),
-  );
+  const adaHasilProdiDiizinkan = React.useMemo(() => {
+    if (papanHasil?.ada_hasil === false) return false;
+    return putaranPertamaTayang.some((p) =>
+      p.sesi?.some((s) => s.perolehan && s.perolehan.length > 0),
+    );
+  }, [papanHasil?.ada_hasil, putaranPertamaTayang]);
 
   useEffect(() => {
     if (!isLoading && !isAuthLoading) {
@@ -67,8 +73,8 @@ const StfContainer = () => {
     );
   }
 
-  // Jika user belum login di /stf biasa, tetap stay di halaman before (seperti sebelumnya)
-  if (!user) {
+  // Jika user belum login dan tahap tertutup (atau data belum tersedia), tetap stay di halaman before
+  if (!user && (!stfData || stfData.tahap === "tertutup")) {
     return (
       <SpaceBackground className="w-full flex flex-col h-full min-h-screen overflow-x-hidden relative">
         <motion.div

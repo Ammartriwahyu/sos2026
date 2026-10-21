@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { stfService, Caketang } from "@/api/services/user/stf";
+import axios from "axios";
 import { Trophy, Medal, Star } from "lucide-react";
 import SpaceBackground from "@/shared/components/background/SpaceBackground";
 import GrassDivider from "@/shared/components/background/GrassDivider";
@@ -20,12 +21,14 @@ const WinnerCard = React.memo(
     isKadep = false,
     jumlahSuara,
     persentase,
+    showSuara = true,
   }: {
     caketang: Caketang;
     index?: number;
     isKadep?: boolean;
     jumlahSuara?: number;
     persentase?: number;
+    showSuara?: boolean;
   }) => {
     const delay = (index ?? 0) * 0.15;
     const displaySuara = jumlahSuara ?? caketang.jumlah_suara;
@@ -91,7 +94,7 @@ const WinnerCard = React.memo(
             </div>
 
             {/* Badge & Progress Angka Perolehan Suara */}
-            {displaySuara !== undefined && (
+            {showSuara && displaySuara !== undefined && (
               <div className="w-full mt-4 pt-3 border-t border-white/10 flex flex-col gap-1.5 items-center">
                 <div className="flex items-center justify-between w-full px-2 text-xs">
                   <span className="text-white/70 font-medium">
@@ -147,22 +150,48 @@ WinnerCard.displayName = "WinnerCard";
 
 /* ─── Main Component ─────────────────────────────────────────────── */
 const HasilSection = () => {
+  const { papanHasil } = useGetPapanHasil();
+  const { isKadepVisible } = useGetVisibilitasHasil();
+  const isFinalisasiDone = Boolean(papanHasil?.hasil_akhir?.sudah_final);
+
   const {
     data: response,
     isLoading,
     error,
   } = useQuery({
     queryKey: ["stfHasil"],
-    queryFn: () => stfService.getHasilAkhir(),
-    refetchInterval: 10000,
+    queryFn: ({ signal }) => stfService.getHasilAkhir(signal),
+    refetchInterval: (query) => {
+      if (
+        typeof document !== "undefined" &&
+        document.visibilityState === "hidden"
+      ) {
+        return false;
+      }
+      if (query.state.error && axios.isAxiosError(query.state.error)) {
+        if (query.state.error.response?.status === 429) {
+          return false;
+        }
+        return 30000;
+      }
+      if (query.state.data && isFinalisasiDone) {
+        return false;
+      }
+      return 10000 + Math.floor(Math.random() * 3000);
+    },
     refetchIntervalInBackground: false,
     refetchOnWindowFocus: true,
     staleTime: 5000,
+    retry: (failureCount, err) => {
+      if (axios.isAxiosError(err)) {
+        const status = err.response?.status;
+        if (status && status >= 400 && status < 500) {
+          return false;
+        }
+      }
+      return failureCount < 1;
+    },
   });
-
-  const { papanHasil } = useGetPapanHasil();
-  const { isKadepVisible } = useGetVisibilitasHasil();
-  const isFinalisasiDone = Boolean(papanHasil?.hasil_akhir?.sudah_final);
 
   if (!isFinalisasiDone || !isKadepVisible()) {
     return (
@@ -230,30 +259,6 @@ const HasilSection = () => {
   );
   const kadepSuara = perolehanKadep?.jumlah_suara ?? kadep?.jumlah_suara;
   const kadepPersen = perolehanKadep?.persentase ?? kadep?.persentase;
-
-  // Helper untuk mengambil data suara tiap ketang
-  const getKetangSuara = (k: Caketang) => {
-    const prodiPapan = papanHasil?.putaran_pertama?.find(
-      (p) =>
-        p.prodi.toUpperCase() === k.prodi?.toUpperCase() ||
-        (k.prodi && p.nama_prodi.toLowerCase().includes(k.prodi.toLowerCase())),
-    );
-    const sesiKetangList = prodiPapan?.sesi;
-    const sesiKetangTerakhir =
-      sesiKetangList && sesiKetangList.length > 0
-        ? sesiKetangList[sesiKetangList.length - 1]
-        : null;
-    const perolehanKetang = sesiKetangTerakhir?.perolehan?.find(
-      (p) =>
-        p.id_caketang === k.id_caketang ||
-        p.nama?.toLowerCase().trim() === k.nama?.toLowerCase().trim() ||
-        p.peringkat === 1,
-    );
-    return {
-      suara: perolehanKetang?.jumlah_suara ?? k.jumlah_suara,
-      persen: perolehanKetang?.persentase ?? k.persentase,
-    };
-  };
 
   return (
     <SpaceBackground className="w-full flex flex-col min-h-screen overflow-hidden relative">
@@ -359,31 +364,24 @@ const HasilSection = () => {
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 w-full place-items-center">
-              {ketang.map((k: Caketang, index: number) => {
-                const suaraInfo = getKetangSuara(k);
-                return (
-                  <WinnerCard
-                    key={k.id_caketang}
-                    caketang={k}
-                    index={index}
-                    isKadep={false}
-                    jumlahSuara={suaraInfo.suara}
-                    persentase={suaraInfo.persen}
-                  />
-                );
-              })}
+              {ketang.map((k: Caketang, index: number) => (
+                <WinnerCard
+                  key={k.id_caketang}
+                  caketang={k}
+                  index={index}
+                  isKadep={false}
+                  showSuara={false}
+                />
+              ))}
             </div>
           </section>
         )}
 
-        {/* ── Rincian Perolehan Suara Tiap Angkatan & Putaran Kadep ── */}
-        {((papanHasil?.putaran_pertama &&
-          papanHasil.putaran_pertama.length > 0) ||
-          papanHasil?.putaran_kadep) && (
+        {/* ── Rincian Perolehan Suara Putaran Kadep ── */}
+        {papanHasil?.putaran_kadep && (
           <div className="w-full max-w-6xl mx-auto mt-6">
             <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-12" />
             <HasilAngkatanSection
-              putaranPertama={papanHasil?.putaran_pertama}
               putaranKadep={papanHasil?.putaran_kadep}
               adaHasil={papanHasil?.ada_hasil}
             />

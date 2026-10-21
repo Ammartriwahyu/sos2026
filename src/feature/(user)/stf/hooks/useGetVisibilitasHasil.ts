@@ -11,14 +11,20 @@ export interface VisibilitasHasilData {
   kadep?: boolean;
 }
 
-export const useGetVisibilitasHasil = () => {
+export interface UseGetVisibilitasHasilOptions {
+  enabled?: boolean;
+}
+
+export const useGetVisibilitasHasil = (
+  options?: UseGetVisibilitasHasilOptions,
+) => {
   const queryClient = useQueryClient();
 
   const { data, isLoading, refetch } = useQuery<VisibilitasHasilData>({
     queryKey: ["stfVisibilitasHasil"],
-    queryFn: async () => {
+    queryFn: async ({ signal }) => {
       try {
-        const res = await axios.get("/api/stf/visibilitas-hasil");
+        const res = await axios.get("/api/stf/visibilitas-hasil", { signal });
         return (
           res.data?.data || {
             tampilkan_semua: false,
@@ -26,7 +32,8 @@ export const useGetVisibilitasHasil = () => {
             kadep: false,
           }
         );
-      } catch {
+      } catch (err: unknown) {
+        if (axios.isCancel(err)) throw err;
         return {
           tampilkan_semua: false,
           prodi: { SI: false, TI: false, PTI: false },
@@ -34,10 +41,25 @@ export const useGetVisibilitasHasil = () => {
         };
       }
     },
-    refetchInterval: 5000, // Polling setiap 5 detik agar sinkron real-time
+    refetchInterval: (query) => {
+      if (
+        typeof document !== "undefined" &&
+        document.visibilityState === "hidden"
+      ) {
+        return false;
+      }
+      if (query.state.error && axios.isAxiosError(query.state.error)) {
+        if (query.state.error.response?.status === 429) {
+          return false;
+        }
+        return 30000;
+      }
+      return 8000 + Math.floor(Math.random() * 2000);
+    },
     refetchIntervalInBackground: false,
     refetchOnWindowFocus: true,
-    staleTime: 2500,
+    staleTime: 4000,
+    enabled: options?.enabled ?? true,
   });
 
   const updateMutation = useMutation({
