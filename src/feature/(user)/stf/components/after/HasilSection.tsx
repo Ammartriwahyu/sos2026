@@ -217,7 +217,45 @@ const HasilSection = () => {
 
   const kadep = finalData?.kadep ?? papanHasil?.hasil_akhir?.kadep ?? null;
 
-  const hasData = (Boolean(kadep) && showKadep) || hasProdiHasil;
+  // Ambil daftar ketua angkatan (bisa dari hasil final atau dari per-prodi yang sudah tayang)
+  const listKetang = React.useMemo(() => {
+    const ketangResmi =
+      finalData?.ketang ?? papanHasil?.hasil_akhir?.ketang ?? [];
+    if (ketangResmi && ketangResmi.length > 0) return ketangResmi;
+
+    // Tahap per prodi: jika belum finalisasi resmi, ekstrak pemenang dari masing-masing prodi yang sedang tayang
+    const derived: Caketang[] = [];
+    for (const p of prodiTayang) {
+      if (p.finalis) {
+        derived.push(p.finalis);
+      } else if (p.sesi && p.sesi.length > 0) {
+        const sesiTerakhir = p.sesi[p.sesi.length - 1];
+        const winner = sesiTerakhir.perolehan?.find(
+          (k) => k.peringkat === 1 && !k.seri,
+        );
+        if (winner) {
+          derived.push({
+            id_caketang: winner.id_caketang,
+            nama: winner.nama,
+            prodi: p.prodi,
+            foto: winner.foto || "",
+            visi: "",
+            misi: "",
+            jabatan: "ketang",
+            jumlah_suara: winner.jumlah_suara,
+            persentase: winner.persentase,
+          });
+        }
+      }
+    }
+    return derived;
+  }, [finalData?.ketang, papanHasil?.hasil_akhir?.ketang, prodiTayang]);
+
+  const showKetang = Boolean(
+    listKetang.length > 0 && (showProdi || isFinalisasiDone),
+  );
+
+  const hasData = (Boolean(kadep) && showKadep) || showKetang || hasProdiHasil;
 
   // Ambil data suara untuk kadep dari papanHasil (sesi terakhir jika ada)
   const sesiKadepList = papanHasil?.putaran_kadep?.sesi;
@@ -359,14 +397,54 @@ const HasilSection = () => {
           </section>
         )}
 
-        {/* ── Divider ── */}
-        {kadep && showKadep && hasProdiHasil && (
-          <div className="w-full max-w-3xl mx-auto px-4 py-8">
+        {/* ── Divider Kadep & Ketang ── */}
+        {kadep && showKadep && showKetang && (
+          <div className="w-full max-w-3xl mx-auto px-4 py-6">
             <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
           </div>
         )}
 
-        {/* ── Rincian Perolehan Suara Per Prodi (3 Anggota per Prodi) & Kadep ── */}
+        {/* ── Ketang Section (Ketua Angkatan Tiap Prodi) ── */}
+        {showKetang && (
+          <section className="flex flex-col items-center gap-12 w-full px-4 max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="flex items-center justify-center gap-4 text-center"
+            >
+              <div className="hidden md:block h-px w-16 bg-gradient-to-r from-transparent to-[var(--color-stf-purple-light)]/50" />
+              <h3 className="text-xl md:text-2xl font-bold text-[var(--color-stf-purple-light)] tracking-widest uppercase text-center text-balance">
+                Ketua Angkatan Terpilih
+              </h3>
+              <div className="hidden md:block h-px w-16 bg-gradient-to-l from-transparent to-[var(--color-stf-purple-light)]/50" />
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 w-full place-items-center">
+              {listKetang.map((k: Caketang, index: number) => (
+                <WinnerCard
+                  key={k.id_caketang || `${k.prodi}-${index}`}
+                  caketang={k}
+                  index={index}
+                  isKadep={false}
+                  showSuara={false}
+                />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* ── Divider sebelum Detail Suara ── */}
+        {(showKadep || showKetang) &&
+          (hasProdiHasil ||
+            (showKadep && Boolean(papanHasil?.putaran_kadep))) && (
+            <div className="w-full max-w-4xl mx-auto px-4 py-8">
+              <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+            </div>
+          )}
+
+        {/* ── Rincian Perolehan Suara Per Prodi (3 Anggota per Prodi) & Kadep (Detail yang sekarang di bawah) ── */}
         {(hasProdiHasil ||
           (showKadep && Boolean(papanHasil?.putaran_kadep))) && (
           <div className="w-full max-w-6xl mx-auto">
