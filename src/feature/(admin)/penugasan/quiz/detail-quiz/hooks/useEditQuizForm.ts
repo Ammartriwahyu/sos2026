@@ -28,6 +28,7 @@ const formatMenitToHHMM = (totalMenit: number): string => {
 // State awal untuk form
 const createDefaultState = (): UpdateQuizPayload & {
   is_visible_bool: boolean;
+  originalIsVisible: string;
 } => ({
   kuis_nama: "",
   kuis_deskripsi: "",
@@ -37,6 +38,7 @@ const createDefaultState = (): UpdateQuizPayload & {
   durasi_kuis: "60",
   is_visible: "true",
   is_visible_bool: true,
+  originalIsVisible: "true",
   pertanyaan_list: [],
 });
 
@@ -72,15 +74,23 @@ const formatDateToLocalInput = (isoString: string | undefined): string => {
 
 export const useEditQuizForm = (initialData: DetailQuiz | null) => {
   const [formData, setFormData] = useState<
-    UpdateQuizPayload & { is_visible_bool: boolean }
-  >(createDefaultState);
+    UpdateQuizPayload & { is_visible_bool: boolean; originalIsVisible: string }
+  >(createDefaultState());
   const [errors, setErrors] = useState<ValidationErrors>({});
 
   useEffect(() => {
     if (initialData) {
       // Default "true" kalau backend belum kirim field is_visible
       const rawVisible = initialData.is_visible ?? "true";
-      const isVisString = String(rawVisible) === "true" ? "true" : "false";
+      // Cek apakah nilai mewakili "true" (bisa boolean true, string "true", number 1, atau string "1")
+      // Cast ke unknown dulu karena type definition bilang string, tapi API bisa kirim boolean/number
+      const isVisible =
+        (rawVisible as unknown) === true ||
+        rawVisible === "true" ||
+        (rawVisible as unknown) === 1 ||
+        rawVisible === "1";
+
+      const normalizedIsVisible = isVisible ? "true" : "false";
       setFormData({
         kuis_nama: initialData.nama_kuis || "",
         kuis_deskripsi: initialData.deskripsi_kuis || "",
@@ -90,8 +100,9 @@ export const useEditQuizForm = (initialData: DetailQuiz | null) => {
         durasi_kuis: String(
           parseTimeToMenit(initialData.durasi_kuis || "01:00"),
         ),
-        is_visible: isVisString,
-        is_visible_bool: isVisString === "true",
+        is_visible: normalizedIsVisible,
+        is_visible_bool: normalizedIsVisible === "true",
+        originalIsVisible: normalizedIsVisible,
         pertanyaan_list: initialData.list_pertanyaan || [],
       });
     }
@@ -280,7 +291,8 @@ export const useEditQuizForm = (initialData: DetailQuiz | null) => {
       kesempatan: formData.kesempatan || 1,
       id_rangkaian: formData.id_rangkaian || "",
       durasi_kuis: formatMenitToHHMM(Number(formData.durasi_kuis) || 60),
-      is_visible: formData.is_visible || "true",
+      // Jika user ubah visibility, kirim nilai baru. Jika tidak, kirim original.
+      is_visible: formData.is_visible,
       pertanyaan_list: (formData.pertanyaan_list || []).map((q) => ({
         id_pertanyaan: q.id_pertanyaan?.startsWith("new_")
           ? undefined

@@ -63,8 +63,8 @@ export const quizStatusColumns = [
         type="button"
         onClick={() => table.options.meta?.openEditModal?.(row.original)}
         className="p-2 rounded-full hover:bg-primary-light focus:outline-none focus:ring-2 focus:ring-primary-light-active focus:ring-offset-2 transition-colors"
-        aria-label="Edit Data"
-        title="Edit Data"
+        aria-label="Edit Nilai Kuis"
+        title="Edit Nilai Kuis"
       >
         <Edit3Icon className="text-primary-normal h-5 w-5" />
       </button>

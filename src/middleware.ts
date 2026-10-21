@@ -22,7 +22,14 @@ export async function middleware(request: NextRequest) {
   const adminDashboardPath = "/admin/dashboard";
 
   const protectedUserPaths = ["/profile", "/aktivitas", "/stf"];
-  const publicUserPaths = ["/aktivitas", "/aktivitas/", "/stf", "/stf/"];
+  const publicUserPaths = [
+    "/aktivitas",
+    "/aktivitas/",
+    "/stf",
+    "/stf/",
+    "/stf/ddm",
+    "/stf/ddm/",
+  ];
 
   const adminRoles = ["admin", "superadmin", "sqc", "pjl"];
   const isAdminUser = payload && adminRoles.includes(payload.Role as string);

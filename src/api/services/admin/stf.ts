@@ -67,8 +67,10 @@ class StfService {
 
   // --- Kendali STF Endpoints ---
 
-  async getSesiPapan(): Promise<BackendResponse<SesiPapan>> {
-    const response = await apiClient.get("/api/stf/sesi/papan");
+  async getSesiPapan(
+    signal?: AbortSignal,
+  ): Promise<BackendResponse<SesiPapan>> {
+    const response = await apiClient.get("/api/stf/sesi/papan", { signal });
     return response as unknown as BackendResponse<SesiPapan>;
   }
 

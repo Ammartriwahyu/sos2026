@@ -94,10 +94,18 @@ class ApiCore {
             if (parts.length === 2) return parts.pop()?.split(";").shift();
           };
 
-          const token = getCookie("auth_session");
+          const rawToken = getCookie("auth_session");
+          const token = rawToken ? rawToken.trim() : undefined;
 
-          if (token) {
+          if (
+            token &&
+            token !== "undefined" &&
+            token !== "null" &&
+            token !== ""
+          ) {
             config.headers.Authorization = `Bearer ${token}`;
+          } else if (config.headers) {
+            delete config.headers.Authorization;
           }
         }
         return config;
@@ -117,7 +125,7 @@ class ApiCore {
         }
 
         if (error.response?.status === 401) {
-          if (this.authErrorHandler) {
+          if (this.authErrorHandler && this.isCurrentRouteProtected()) {
             await this.authErrorHandler(error);
           }
         }
