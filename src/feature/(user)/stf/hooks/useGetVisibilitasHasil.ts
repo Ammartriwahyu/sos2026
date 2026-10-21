@@ -11,7 +11,13 @@ export interface VisibilitasHasilData {
   kadep?: boolean;
 }
 
-export const useGetVisibilitasHasil = () => {
+export interface UseGetVisibilitasHasilOptions {
+  enabled?: boolean;
+}
+
+export const useGetVisibilitasHasil = (
+  options?: UseGetVisibilitasHasilOptions,
+) => {
   const queryClient = useQueryClient();
 
   const { data, isLoading, refetch } = useQuery<VisibilitasHasilData>({
@@ -35,18 +41,25 @@ export const useGetVisibilitasHasil = () => {
         };
       }
     },
-    refetchInterval: () => {
+    refetchInterval: (query) => {
       if (
         typeof document !== "undefined" &&
         document.visibilityState === "hidden"
       ) {
         return false;
       }
-      return 5000;
+      if (query.state.error && axios.isAxiosError(query.state.error)) {
+        if (query.state.error.response?.status === 429) {
+          return false;
+        }
+        return 30000;
+      }
+      return 8000 + Math.floor(Math.random() * 2000);
     },
     refetchIntervalInBackground: false,
     refetchOnWindowFocus: true,
-    staleTime: 2500,
+    staleTime: 4000,
+    enabled: options?.enabled ?? true,
   });
 
   const updateMutation = useMutation({

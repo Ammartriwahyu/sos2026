@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { stfService } from "@/api/services/admin/stf";
 import { toast } from "react-toastify";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 
 export const useKendaliStf = () => {
   const queryClient = useQueryClient();
@@ -13,13 +13,19 @@ export const useKendaliStf = () => {
     refetch,
   } = useQuery({
     queryKey: ["sesiPapan"],
-    queryFn: () => stfService.getSesiPapan(),
-    refetchInterval: () => {
+    queryFn: ({ signal }) => stfService.getSesiPapan(signal),
+    refetchInterval: (query) => {
       if (
         typeof document !== "undefined" &&
         document.visibilityState === "hidden"
       ) {
         return false;
+      }
+      if (query.state.error && axios.isAxiosError(query.state.error)) {
+        if (query.state.error.response?.status === 429) {
+          return false;
+        }
+        return 30000;
       }
       return 5000;
     },

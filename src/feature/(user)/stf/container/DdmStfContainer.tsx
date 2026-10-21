@@ -164,6 +164,8 @@ const DdmStfContainer = () => {
   const [activeTab, setActiveTab] = useState<"pemenang" | "detail">("pemenang");
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [overrideShowAll, setOverrideShowAll] = useState(false);
+  const { papanHasil } = useGetPapanHasil();
+  const { visibilitas, isProdiVisible } = useGetVisibilitasHasil();
 
   // Polling data hasil & papan hasil secara real-time (setiap 3 detik)
   const { data: response } = useQuery({
@@ -182,7 +184,10 @@ const DdmStfContainer = () => {
         }
         return 30000;
       }
-      return 6000;
+      if (papanHasil?.hasil_akhir?.sudah_final && query.state.data) {
+        return false;
+      }
+      return 6000 + Math.floor(Math.random() * 2000);
     },
     refetchIntervalInBackground: false,
     refetchOnWindowFocus: true,
@@ -194,9 +199,6 @@ const DdmStfContainer = () => {
       return failureCount < 1;
     },
   });
-
-  const { papanHasil } = useGetPapanHasil();
-  const { visibilitas, isProdiVisible } = useGetVisibilitasHasil();
 
   // Fullscreen helper untuk operator DDM proyektor
   const toggleFullscreen = () => {

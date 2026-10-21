@@ -148,6 +148,10 @@ WinnerCard.displayName = "WinnerCard";
 
 /* ─── Main Component ─────────────────────────────────────────────── */
 const HasilSection = () => {
+  const { papanHasil } = useGetPapanHasil();
+  const { isKadepVisible } = useGetVisibilitasHasil();
+  const isFinalisasiDone = Boolean(papanHasil?.hasil_akhir?.sudah_final);
+
   const {
     data: response,
     isLoading,
@@ -168,7 +172,10 @@ const HasilSection = () => {
         }
         return 30000;
       }
-      return 10000;
+      if (query.state.data && isFinalisasiDone) {
+        return false;
+      }
+      return 10000 + Math.floor(Math.random() * 3000);
     },
     refetchIntervalInBackground: false,
     refetchOnWindowFocus: true,
@@ -183,10 +190,6 @@ const HasilSection = () => {
       return failureCount < 1;
     },
   });
-
-  const { papanHasil } = useGetPapanHasil();
-  const { isKadepVisible } = useGetVisibilitasHasil();
-  const isFinalisasiDone = Boolean(papanHasil?.hasil_akhir?.sudah_final);
 
   if (!isFinalisasiDone || !isKadepVisible()) {
     return (

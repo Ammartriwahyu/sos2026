@@ -23,8 +23,11 @@ import { useAuthContext } from "@/shared/hooks/useAuthContext";
 const StfContainer = () => {
   const { user, isLoading: isAuthLoading } = useAuthContext();
   const { stfData, isLoading } = useGetStfData();
-  const { papanHasil } = useGetPapanHasil();
-  const { isProdiVisible, isKadepVisible } = useGetVisibilitasHasil();
+  const isClosed = !stfData || stfData.tahap === "tertutup";
+  const { papanHasil } = useGetPapanHasil({ enabled: !isClosed });
+  const { isProdiVisible, isKadepVisible } = useGetVisibilitasHasil({
+    enabled: !isClosed,
+  });
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 

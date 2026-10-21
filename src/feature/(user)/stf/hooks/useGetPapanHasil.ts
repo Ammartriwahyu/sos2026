@@ -5,8 +5,17 @@ import {
   BackendResponse,
 } from "@/api/services/user/stf";
 import axios from "axios";
+export interface UseGetPapanHasilOptions {
+  enabled?: boolean;
+}
 
-export const useGetPapanHasil = (enabled = true) => {
+export const useGetPapanHasil = (
+  optionsOrEnabled: UseGetPapanHasilOptions | boolean = true,
+) => {
+  const enabled =
+    typeof optionsOrEnabled === "boolean"
+      ? optionsOrEnabled
+      : (optionsOrEnabled?.enabled ?? true);
   const {
     data: response,
     isLoading,
@@ -28,7 +37,12 @@ export const useGetPapanHasil = (enabled = true) => {
         }
         return 30000;
       }
-      return 10000;
+      const data =
+        query.state.data?.status_code === 200 ? query.state.data.data : null;
+      if (data?.hasil_akhir?.sudah_final || data?.tahap === "hasil") {
+        return false;
+      }
+      return 10000 + Math.floor(Math.random() * 3000);
     },
     refetchIntervalInBackground: false,
     refetchOnWindowFocus: true,
