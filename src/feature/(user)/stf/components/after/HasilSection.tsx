@@ -151,8 +151,10 @@ WinnerCard.displayName = "WinnerCard";
 /* ─── Main Component ─────────────────────────────────────────────── */
 const HasilSection = () => {
   const { papanHasil } = useGetPapanHasil();
-  const { isKadepVisible } = useGetVisibilitasHasil();
+  const { isKadepVisible, isProdiVisible } = useGetVisibilitasHasil();
   const isFinalisasiDone = Boolean(papanHasil?.hasil_akhir?.sudah_final);
+  const showKadep = isFinalisasiDone && isKadepVisible();
+  const showProdi = isProdiVisible();
 
   const {
     data: response,
@@ -193,7 +195,7 @@ const HasilSection = () => {
     },
   });
 
-  if (!isFinalisasiDone || !isKadepVisible()) {
+  if (!showKadep && !showProdi) {
     return (
       <SpaceBackground className="w-full flex flex-col min-h-screen overflow-hidden relative">
         <Starfield />
@@ -243,7 +245,13 @@ const HasilSection = () => {
     ketang: Caketang[];
   };
 
-  const hasData = kadep || (ketang && ketang.length > 0);
+  const visibleKetang = ketang
+    ? ketang.filter((k: Caketang) => isProdiVisible(k.prodi))
+    : [];
+
+  const hasData =
+    (Boolean(kadep) && showKadep) ||
+    (visibleKetang && visibleKetang.length > 0);
 
   // Ambil data suara untuk kadep dari papanHasil (sesi terakhir jika ada)
   const sesiKadepList = papanHasil?.putaran_kadep?.sesi;
@@ -311,7 +319,7 @@ const HasilSection = () => {
         )}
 
         {/* ── Kadep Section ── */}
-        {kadep && (
+        {kadep && showKadep && (
           <section className="flex flex-col items-center gap-10 w-full px-4">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -340,14 +348,14 @@ const HasilSection = () => {
         )}
 
         {/* ── Divider ── */}
-        {kadep && ketang && ketang.length > 0 && (
+        {kadep && showKadep && visibleKetang && visibleKetang.length > 0 && (
           <div className="w-full max-w-3xl mx-auto px-4 py-8">
             <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
           </div>
         )}
 
         {/* ── Ketang Section ── */}
-        {ketang && ketang.length > 0 && (
+        {visibleKetang && visibleKetang.length > 0 && (
           <section className="flex flex-col items-center gap-12 w-full px-4 max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -364,7 +372,7 @@ const HasilSection = () => {
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 w-full place-items-center">
-              {ketang.map((k: Caketang, index: number) => (
+              {visibleKetang.map((k: Caketang, index: number) => (
                 <WinnerCard
                   key={k.id_caketang}
                   caketang={k}
@@ -378,7 +386,7 @@ const HasilSection = () => {
         )}
 
         {/* ── Rincian Perolehan Suara Putaran Kadep ── */}
-        {papanHasil?.putaran_kadep && (
+        {showKadep && papanHasil?.putaran_kadep && (
           <div className="w-full max-w-6xl mx-auto mt-6">
             <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-12" />
             <HasilAngkatanSection
