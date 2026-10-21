@@ -16,30 +16,24 @@ export interface Memori {
 export const memoriData: Memori[] = [
   {
     id: 1,
-    content: MemoriTeaser,
-    title: "Teaser",
-    link: "#",
-  },
-  {
-    id: 2,
     content: MemoriRangkaian1,
     title: "Rangkaian 1",
     link: "https://www.instagram.com/reel/Ddvef6rTAp2/",
   },
   {
-    id: 3,
+    id: 2,
     content: MemoriRangkaian2,
     title: "Rangkaian 2",
     link: "https://www.instagram.com/reel/DetDHujhnpI/",
   },
   {
-    id: 4,
+    id: 3,
     content: "COMING SOON",
     title: "Rangkaian 3",
     link: "#",
   },
   {
-    id: 5,
+    id: 4,
     content: "COMING SOON",
     title: "After Movie",
     link: "#",
