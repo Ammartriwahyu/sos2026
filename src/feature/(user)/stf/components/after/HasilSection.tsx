@@ -193,6 +193,7 @@ const HasilSection = () => {
       }
       return failureCount < 1;
     },
+    enabled: showKadep,
   });
 
   // Filter prodi yang tayang sesuai visibilitas
@@ -451,6 +452,7 @@ const HasilSection = () => {
             <HasilAngkatanSection
               putaranPertama={prodiTayang}
               putaranKadep={showKadep ? papanHasil?.putaran_kadep : null}
+              prodiSaya={papanHasil?.prodi_saya}
               adaHasil={papanHasil?.ada_hasil}
             />
           </div>

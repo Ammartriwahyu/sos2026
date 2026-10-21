@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -81,24 +82,31 @@ export const useGetVisibilitasHasil = (
     },
   });
 
-  const visibilitas: VisibilitasHasilData = data || {
-    tampilkan_semua: false,
-    prodi: { SI: false, TI: false, PTI: false },
-    kadep: false,
-  };
+  const visibilitas: VisibilitasHasilData = useMemo(() => {
+    return (
+      data || {
+        tampilkan_semua: false,
+        prodi: { SI: false, TI: false, PTI: false },
+        kadep: false,
+      }
+    );
+  }, [data]);
 
-  const isProdiVisible = (prodiKey?: string | null): boolean => {
-    if (visibilitas.tampilkan_semua) return true;
-    if (!prodiKey) {
-      return Object.values(visibilitas.prodi).some(Boolean);
-    }
-    const key = prodiKey.toUpperCase() as keyof typeof visibilitas.prodi;
-    return Boolean(visibilitas.prodi[key]);
-  };
+  const isProdiVisible = useCallback(
+    (prodiKey?: string | null): boolean => {
+      if (visibilitas.tampilkan_semua) return true;
+      if (!prodiKey) {
+        return Object.values(visibilitas.prodi).some(Boolean);
+      }
+      const key = prodiKey.toUpperCase() as keyof typeof visibilitas.prodi;
+      return Boolean(visibilitas.prodi[key]);
+    },
+    [visibilitas],
+  );
 
-  const isKadepVisible = (): boolean => {
+  const isKadepVisible = useCallback((): boolean => {
     return Boolean(visibilitas.kadep);
-  };
+  }, [visibilitas]);
 
   return {
     visibilitas,

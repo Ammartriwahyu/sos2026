@@ -52,7 +52,9 @@ const StfContainer = () => {
 
   useEffect(() => {
     if (stfData?.sudah_memilih && stfData?.pilihan_saya?.id_caketang) {
-      setActiveCardId(stfData.pilihan_saya.id_caketang);
+      if (activeCardId !== stfData.pilihan_saya.id_caketang) {
+        setActiveCardId(stfData.pilihan_saya.id_caketang);
+      }
     } else if (
       stfData?.kandidat &&
       stfData.kandidat.length > 0 &&

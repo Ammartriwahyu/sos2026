@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import PemilihanCard from "./PemilihanCard";
 import { Button } from "@/shared/components/ui/Button";
 import { Caketang } from "@/api/services/user/stf";
@@ -30,7 +30,7 @@ const PemilihanSection = ({
   const { user } = useAuthContext();
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [isResultModalOpen, setIsResultModalOpen] = useState(false);
-
+  const touchStartRef = useRef<number | null>(null);
   const activeCaketang = kandidat?.find(
     (caketang: Caketang) => caketang.id_caketang === activeCardId,
   );
@@ -114,18 +114,15 @@ const PemilihanSection = ({
             className="flex flex-row justify-center items-center w-full px-4 sm:px-0 -space-x-16 md:-space-x-24 lg:-space-x-32 pt-8 sm:pt-12 pb-12"
             onTouchStart={(e) => {
               if (sudah_memilih) return;
-              const touchDown = e.touches[0].clientX;
-              e.currentTarget.setAttribute("data-touch", touchDown.toString());
+              touchStartRef.current = e.touches[0].clientX;
             }}
             onTouchEnd={(e) => {
               if (sudah_memilih) return;
-              const touchDown = parseFloat(
-                e.currentTarget.getAttribute("data-touch") || "0",
-              );
-              if (!touchDown) return;
+              const touchDown = touchStartRef.current;
+              if (touchDown === null) return;
+              touchStartRef.current = null;
               const touchUp = e.changedTouches[0].clientX;
               const diff = touchDown - touchUp;
-
               if (Math.abs(diff) > 50) {
                 // threshold 50px
                 const activeIndex = displayKandidat.findIndex(
