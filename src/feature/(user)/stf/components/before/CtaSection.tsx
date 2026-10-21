@@ -1,4 +1,6 @@
 import React from "react";
+import Link from "next/link";
+import { Button } from "@/shared/components/ui/Button";
 
 const CtaSection = () => {
   return (
@@ -11,6 +13,14 @@ const CtaSection = () => {
           Yuk tunjukkan suaramu dan dukunganmu untuk menciptakan angkatan yang
           solid.
         </p>
+        <Link href="/login" className="mt-2">
+          <Button
+            variant="none"
+            className="bg-primary-light hover:bg-primary-light-hover text-black font-bold px-8 py-3.5 rounded-full text-base transition-all shadow-lg hover:scale-105 cursor-pointer"
+          >
+            Masuk untuk Memilih
+          </Button>
+        </Link>
       </div>
     </section>
   );

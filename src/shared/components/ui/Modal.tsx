@@ -68,9 +68,11 @@ const Modal = ({
       <Dialog.Portal>
         <Dialog.Overlay className="absolute inset-0 z-50 " />
 
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm transition-all duration-300 ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 overflow-y-auto">
+        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md transition-all duration-300 ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4 text-center">
             <Dialog.Content
+              onOpenAutoFocus={(e) => e.preventDefault()}
+              onCloseAutoFocus={(e) => e.preventDefault()}
               className={cn(
                 "relative w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all",
                 "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
