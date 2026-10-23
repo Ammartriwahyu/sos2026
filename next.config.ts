@@ -1,12 +1,17 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
         hostname: "lh3.googleusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "*.supabase.co",
       },
       {
         protocol: "https",
