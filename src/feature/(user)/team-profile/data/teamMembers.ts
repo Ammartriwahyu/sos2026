@@ -4,12 +4,12 @@ import PhotoSabrina from "@/assets/team/sabrina.jpg";
 import PhotoJennifer from "@/assets/team/jenni.jpg";
 import PhotoKeyla from "@/assets/team/keyla.jpg";
 import PhotoAmmar from "@/assets/team/ammar.jpg";
-import PhotoRafa from "@/assets/assetsos26/shared/picture-template.webp";
-import PhotoZaki from "@/assets/assetsos26/shared/picture-template.webp";
 import PhotoThoriq from "@/assets/team/thoriq.jpg";
 import PhotoDaffa from "@/assets/team/daffa.jpg";
 import PhotoRafi from "@/assets/team/rafi.jpg";
-import PhotoGaffa from "@/assets/assetsos26/shared/picture-template.webp";
+import PhotoGaffa from "@/assets/team/gaffa.png";
+import PhotoZaki from "@/assets/team/zaki.jpg";
+import PhotoRafa from "@/assets/team/rafa.jpg";
 import PhotoTeam from "@/assets/team/together.jpg";
 import type { Division, DivisionMeta, TeamMember } from "../types";
 
